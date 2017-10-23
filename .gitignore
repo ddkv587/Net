@@ -1,0 +1,3 @@
+# build temporary file
+*.o
+*.out
