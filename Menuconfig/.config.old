@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # version: 
-# Mon Oct 23 15:00:29 2017
+# Wed Oct 25 11:03:22 2017
 #
 
 #
@@ -9,5 +9,5 @@
 #
 CONFIG_LOG_ENABLE=y
 CONFIG_LOG_LEVEL=3
-CONFIG_LOG_OUT_FILE=y
-CONFIG_LOG_OUT_FILE_PREFIX="/tmp/"
+# CONFIG_LOG_OUT_FILE is not set
+CONFIG_LOG_OUT_FILE_PREFIX=""
