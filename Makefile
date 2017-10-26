@@ -1,13 +1,15 @@
-CC=g++
-RM=rm -rf
-CFLAGS=-g -o3
+include DECLARE.mk
 
-CPP_OBJECT_MIDDLE=im_Net/
-CPP_OBJECT_DIR=target/
-CONFIG_DIR=./Menuconfig
+OBJECT		:= main
 
-LIBS_DIR=
-INCLUDE_DIR=
+LIBS					:=
+LIBS_DIR				:= $(OBJECT_CORE_DIR)
+
+INCLUDE					:=
+INCLUDE_DIR				:=
+
+$(OBJECT):
+	$(MAKE) -C $(OBJECT_CORE_DIR)
 
 menuconfig:
 	$(MAKE) -C $(CONFIG_DIR) menuconfig

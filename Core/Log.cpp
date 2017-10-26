@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdarg.h>
-#include "config.h"
+#include "../config.h"
 #include "Log.h"
 
 namespace Net

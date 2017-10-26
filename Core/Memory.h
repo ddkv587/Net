@@ -1,6 +1,10 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
+#include <cstdint>
+
+#define NULL ((void*)0)
+
 template<class T> class CAllocBase_
 {
 	public:
@@ -14,23 +18,24 @@ template<class T> class CAllocBase_
 
 		T* alignPoint(void* raw)
 		{
-			T *p = reinterpet_cast<T*> (
-					(reinterpet_cast<uintptr_t>(raw) + m_uiAlign - 1)
+			T *p = reinterpret_cast<T*> (
+					(reinterpret_cast<uintptr_t>(raw) + m_uiAlign - 1)
 					& ~(m_uiAlign - 1)
 					);
 			return p;
 		}
 
-		inline unsigned int size() 	{ return m_uiSize; }
-		inline unsigned int ref()	{ return m_uiRef; }
-		inline unsigned int align()	{ return m_uiAlign; }
+		unsigned int size() 	{ return m_uiSize; }
+		unsigned int ref()		{ return m_uiRef; }
+		unsigned int align()	{ return m_uiAlign; }
 
-		inline void addRef() 		{ ++m_uiRef; }
+		void addRef() 			{ ++m_uiRef; }
 		void subRef() 
 		{
 			--m_uiRef;
 			if ( 0 == m_uiRef ) delete this;
 		}
+
 	protected:
 		virtual void alloc() 	= 0;
 		virtual void dealloc()	= 0;
@@ -38,7 +43,7 @@ template<class T> class CAllocBase_
 		CAllocBase_(const CAllocBase_& src);
 		CAllocBase_& operator=(const CAllocBase_& src);
 
-	private:
+	protected:
 		T*		m_pData;
 		void*	m_pRaw;
 		unsigned int m_uiSize;
@@ -53,7 +58,7 @@ template<class T> class CAlloc_ : public CAllocBase_<T>
 			: CAllocBase_<T>(size, align)
 		{
 			alloc();
-			addRef();
+			CAllocBase_<T>::addRef();
 		}
 
 		virtual ~CAlloc_() { dealloc(); }
@@ -61,33 +66,31 @@ template<class T> class CAlloc_ : public CAllocBase_<T>
 	protected:
 		virtual void alloc()
 		{
-			if ( 0 == m_uiSize ) {
-				m_pData = new T[1];
-				m_pRaw 	= NULL;
+			if ( 0 == CAllocBase_<T>::m_uiSize ) {
+				CAllocBase_<T>::m_pData = new T[1];
+				CAllocBase_<T>::m_pRaw 	= NULL;
 				return;
 			}
-			if ( m_uiAlign < 2 ) {
-				m_pData = new T[m_uiSize];
-				m_pRaw 	= NULL;
+			if ( CAllocBase_<T>::m_uiAlign < 2 ) {
+				CAllocBase_<T>::m_pData = new T[CAllocBase_<T>::m_uiSize];
+				CAllocBase_<T>::m_pRaw 	= NULL;
 			} else {
-				m_pRaw 	= new void[sizeof(T) * m_uiSize + m_uiAlign - 1];
-				m_pData = alignPoint(m_pRaw);
+				CAllocBase_<T>::m_pRaw 	= new void[sizeof(T) * CAllocBase_<T>::m_uiSize + CAllocBase_<T>::m_uiAlign - 1];
+				CAllocBase_<T>::m_pData = CAllocBase_<T>::alignPoint(static_cast<void *>(CAllocBase_<T>::m_pRaw));
 			}
 		}
 
 		virtual void dealloc()
 		{
-			if ( NULL == m_pRaw ) {
-				delete [] m_pRaw;
+			if ( NULL == CAllocBase_<T>::m_pRaw ) {
+				delete [] CAllocBase_<T>::m_pRaw;
 			} else {
-				delete [] m_pData;
+				delete [] CAllocBase_<T>::m_pData;
 			}
 
-			m_pRaw 	= NULL;
-			m_pData = NULL;
+			CAllocBase_<T>::m_pRaw 	= NULL;
+			CAllocBase_<T>::m_pData = NULL;
 		}
-
-		virtual void dealloc();
 
 	private:
 		CAlloc_ (const CAlloc_& src);
