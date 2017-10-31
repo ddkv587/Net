@@ -97,4 +97,32 @@ template<class T> class CAlloc_ : public CAllocBase_<T>
 		CAlloc_ operator=(const CAlloc_& src);
 };
 
+
+template<class T, class A = CAlloc_<T> >
+class CMemory
+{
+	public:
+		static CMemory& null();
+
+		CMemory();
+		explicit CMemory(unsigned int size, unsigned int align=0);
+
+		CMemory(const CMemory& src);
+		CMemory& operator= (const CMemory& src);
+
+		unsigned int 	size()			{ return m_pMemory->m_uiSize; }
+		unsigned int 	ref()			{ return m_pMemory->m_uiRef; }
+		bool			isNull()		{ return (m_pMemory == null().m_pMemory); }
+
+		const T& 		operator[] (unsigned int index) const;
+		T& 				operator[] (unsigned int index);
+
+		virtual A* 		clone();
+		void 			duplicate();
+
+	public:
+		A*		m_pMemory;
+		static	CMemory* s_pNULL;
+};
+
 #endif
