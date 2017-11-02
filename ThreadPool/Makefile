@@ -1,6 +1,6 @@
 include ../DECLARE.mk
 
-OBJECT 		:= Core
+OBJECT 		:= ThreadPool
 CFLAGS 		+= 
 
 LIBS		:=

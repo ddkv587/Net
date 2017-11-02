@@ -1,3 +1,7 @@
 # build temporary file
 *.o
 *.out
+im_*/
+
+#build out dir
+target/

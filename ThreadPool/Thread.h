@@ -1,7 +1,7 @@
 #ifndef __THREAD_H__
 #define __THREAD_H__
 
-#include <vector>
+#include "Memory.h"
 
 class CThread
 {
@@ -30,9 +30,7 @@ class CThread
 
 class CThreadPool
 {
-
+	
 	private:
-		vector<CThread> pool;
 }
-
 #endif
