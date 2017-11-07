@@ -14,7 +14,7 @@ namespace Net
 
 	template<class T, class A>
 		CMemory<T, A>::CMemory()
-		: m_pMemory(NULL)
+		: m_pMemory(nullptr)
 		{
 			m_pMemory = null().m_pMemory;
 			m_pMemory->addRef();
