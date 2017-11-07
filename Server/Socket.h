@@ -3,17 +3,27 @@
 
 class SocketBase
 {
-
+	
 };
 
-class Server
+class SocketServer
 {
+	public:
+		SocketServer(unsigned int port = 8001);
+		virtual ~SocketServer();
 
-};
+		void init();
 
-class Client
-{
+		void start();
+		void stop();
 
-};
+		void pend();
+		void block();
+
+
+	private:
+				
+		unsigned int m_uiPort;
+}
 
 #endif
