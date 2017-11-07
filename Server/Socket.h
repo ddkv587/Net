@@ -12,17 +12,10 @@ class SocketServer
 		SocketServer(unsigned int port = 8001);
 		virtual ~SocketServer();
 
-		void init();
-
-		void start();
-		void stop();
-
-		void pend();
-		void block();
-
+		int getSocketfd() { return m_iSocketfd; }
 
 	private:
-				
+		int 		m_iSocketfd;			
 		unsigned int m_uiPort;
 }
 
