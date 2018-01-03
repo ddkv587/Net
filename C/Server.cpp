@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <assert.h>
+#include "common.h"
 
 #define PORT	8000
 
@@ -30,14 +31,15 @@ void initSocket()
 	assert( -1 != listen(socket_fd, 10) );
 }
 
-void destroy()
+void destroySocket()
 {
 	if ( socket_fd > 0 ) {
 		close(socket_fd);
 	}
 }
 
-int main(int argc, const char *argv[])
+
+void* listen(void* arg)
 {
 	int client;
 	struct sockaddr_in client_addr;
@@ -45,38 +47,17 @@ int main(int argc, const char *argv[])
 	char readBuff[1024];
 	fd_set rfds;
 	int ret;
-	initSocket();	
-	client = accept(socket_fd, (struct sockaddr*)&client_addr, (socklen_t*)&addLen);
 
-	if ( client == -1 ) {
-		perror("accept");
-	}
-	printf("get socket from :%s: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
-	while (1)
+
+	while(!s_iStop)
 	{
-		FD_ZERO(&rfds);
-		FD_SET(client, &rfds);
+		client = accept(socket_fd, (struct sockaddr*)&client_addr, (socklen_t*)&addLen);
 
-		ret = select(10, &rfds, NULL, NULL, NULL);
-
-		if ( ret == -1 ) {
-			perror("select");
-		} else {
-			if ( FD_ISSET(client, &rfds) ) {
-				memset(readBuff, 0, 1024);
-				int size = read(client, readBuff, 1024);
-				if(readBuff[0] == 'q') {
-					printf("get exit msg\n");
-					break;
-				} else {
-					printf("size: %d\n", size);
-					printf("get msg[0]: %c\n", readBuff[0]);
-					printf("get msg[%d]: %x\n", size-2 , readBuff[size - 2]);
-					printf("get msg[%d]: %x\n", size-1 , readBuff[size - 1]);
-				}
-			}
+		if ( client == -1 ) {
+			perror("accept");
 		}
+
+		printf("get socket from :%s: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
 	}
-	destroy();
-	return 0;
+	return NULL;
 }
