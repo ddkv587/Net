@@ -10,6 +10,8 @@
 #define handle_error_errno(en, msg) \
 	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
 
+#define SYSTEM_LIMIT_MAX_EPOLL_EVENTS 1000
+
 extern int errno;
 static int s_iStop = 0;
 

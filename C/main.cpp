@@ -1,4 +1,6 @@
 #include "common.h"
+#include "Manager.hpp"
+#include "Listener.hpp"
 
 struct thread_info{
 	pthread_t 	thread_id;

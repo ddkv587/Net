@@ -1,5 +1,5 @@
-#ifndef __SERVERHH__
-#define __SERVERHH__
+#ifndef __LISTENERHPP__
+#define __LISTENERHPP__
 
 extern void initSocket();
 extern void destroySocket();
