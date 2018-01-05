@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <assert.h>
 
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_FAILURE); } while(0)
