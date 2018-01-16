@@ -16,7 +16,7 @@ namespace Net
 			T operator*() { return m_pData; }
 			const T operator*() const { return m_pData; }
 
-			T* alignPoint(void* raw)
+			T* alignPoint(char* raw)
 			{
 				T *p = reinterpret_cast<T*> (
 						(reinterpret_cast<uintptr_t>(raw) + m_uiAlign - 1)
@@ -45,7 +45,7 @@ namespace Net
 
 		protected:
 			T*		m_pData;
-			void*	m_pRaw;
+			char*	m_pRaw;
 			unsigned int m_uiSize;
 			unsigned int m_uiRef;
 			unsigned int m_uiAlign;
@@ -75,7 +75,7 @@ namespace Net
 					CAllocBase_<T>::m_pData = new T[CAllocBase_<T>::m_uiSize];
 					CAllocBase_<T>::m_pRaw 	= nullptr;
 				} else {
-					CAllocBase_<T>::m_pRaw 	= new void[sizeof(T) * CAllocBase_<T>::m_uiSize + CAllocBase_<T>::m_uiAlign - 1];
+					CAllocBase_<T>::m_pRaw 	= new char[sizeof(T) * CAllocBase_<T>::m_uiSize + CAllocBase_<T>::m_uiAlign - 1];
 					CAllocBase_<T>::m_pData = CAllocBase_<T>::alignPoint(static_cast<void *>(CAllocBase_<T>::m_pRaw));
 				}
 			}

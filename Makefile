@@ -1,7 +1,7 @@
 include DECLARE.mk
 
 OBJECT		:= main
-CFLAGS 		+= 
+CFLAGS 		+= -Wl,-rpath,. 
 
 CUR_DIR					:= $(shell pwd)
 OBJECT_CORE_DIR			:= $(CUR_DIR)/Core
@@ -25,7 +25,7 @@ $(OBJECT):
 	$(MKDIR) $(TARGET_OBJECT_DIR)
 	$(MKDIR) $(TARGET_OBJECT_MIDDLE)
 	$(MAKE) -C $(OBJECT_CORE_DIR) -e
-	$(CC) $(CFLAGS) -Wl,-rpath=.  $(LIBS_DIR) -I$(OBJECT_CORE_DIR) $@.cpp -o $@ $(LIBS)
+	$(CC) $(CFLAGS)  $(LIBS_DIR) -I$(OBJECT_CORE_DIR) $@.cpp -o $@ $(LIBS)
 	$(MV) $(OBJECT) $(TARGET_OBJECT_DIR) 
 
 menuconfig:

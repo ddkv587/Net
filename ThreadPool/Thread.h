@@ -11,7 +11,10 @@ namespace Net
 	virtual class ITask
 	{
 		public:
-			virtual void run() = 0;
+			virtual void start() 			= 0;
+			virtual void stop()				= 0;
+			virtual void pause()			= 0;
+			virtual void resume()			= 0;
 	};
 
 	virtual class IThreadListener
@@ -42,7 +45,7 @@ namespace Net
 
 			void initialize();
 			void run();			
-			void pend();
+			void pend(unsigned int msec);
 			void block();
 			void destroy();
 
@@ -50,11 +53,13 @@ namespace Net
 
 		private:
 			void switchStatus(EThreadStatus m_eStatus);
+			void setSleepSpan(unsigned int msec) { m_uiSleepSpan = msec; }
 
 		private:
 			EThreadStatus 				m_eStatus;
 			CMemory<ITask> 				m_pTask;
 			
+			bool		 				m_bIsAlive;
 			unsigned int 				m_uiSleepSpan;
 
 			std::thread					m_thread;
@@ -66,9 +71,9 @@ namespace Net
 	{
 		public:
 
-
 		private:
 			friend class CThread;
+			std::vector<std::thread> m_lstThreadsIdle;
 	};
 }
 #endif

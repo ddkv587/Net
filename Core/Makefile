@@ -1,7 +1,7 @@
 include ../DECLARE.mk
 
 OBJECT 		:= Core
-CFLAGS 		+= 
+CFLAGS 		+= -Wall 
 
 LIBS		:=
 LIBS_DIR	:=
