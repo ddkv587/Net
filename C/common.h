@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
+#include <thread.h>
 
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_FAILURE); } while(0)
@@ -12,6 +13,19 @@
 	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
 
 #define SYSTEM_LIMIT_MAX_EPOLL_EVENTS 1000
+
+#define NET_NONE		0
+#define NET_READABLE	1
+#define NET_WRITABLE	2
+
+#define POLL_TIMEOUT_SEC 5
+#define POLL_TIMEOUT_USEC 0
+
+struct thread_info{
+	pthread_t 	thread_id;
+	int 		thread_num;
+	char		*argv;
+};
 
 extern int errno;
 static int s_iStop = 0;

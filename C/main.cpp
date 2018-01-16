@@ -2,12 +2,6 @@
 #include "Manager.hpp"
 #include "Listener.hpp"
 
-struct thread_info{
-	pthread_t 	thread_id;
-	int 		thread_num;
-	char		*argv;
-};
-
 void init()
 {
 	initSocket();
