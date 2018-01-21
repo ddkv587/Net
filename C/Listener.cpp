@@ -7,14 +7,13 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <assert.h>
+#include <iostream>
+#include <thread>
 #include "common.h"
 #include "Listener.hpp"
 
-#define PORT	8000
-
-static int socket_fd;
-
-void initSocket()
+CListener::CListener()
+	: m_iPosi(0) 
 {
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	assert(-1 != socket_fd);
@@ -25,22 +24,30 @@ void initSocket()
 	struct sockaddr_in address;
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
-	address.sin_port = htons(PORT);
+	address.sin_port = htons(SYSTEM_SOCKET_PORT);
 
 	assert( -1 != bind(socket_fd, (struct sockaddr*)&address, sizeof(struct sockaddr_in) ));
 
 	assert( -1 != listen(socket_fd, 10) );
 }
 
-void destroySocket()
+CListener::~CListener()
 {
 	if ( socket_fd > 0 ) {
 		close(socket_fd);
 	}
 }
 
+void CListener::run()
+{
+	std::thread(&CProcesser::mainLoop, this).join();
 
-void* listen(void* arg)
+	for ( int i=0; i< 4; ++i ) {
+		process[i].run();
+	} 
+}
+
+void* CListener::mainLoop(void* arg)
 {
 	int client;
 	struct sockaddr_in client_addr;
@@ -49,7 +56,6 @@ void* listen(void* arg)
 	fd_set rfds;
 	int ret;
 
-
 	while(!s_iStop)
 	{
 		client = accept(socket_fd, (struct sockaddr*)&client_addr, (socklen_t*)&addLen);
@@ -57,8 +63,8 @@ void* listen(void* arg)
 		if ( client == -1 ) {
 			perror("accept");
 		}
-
 		printf("get socket from :%s: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
+		process[(m_iPosi++) % 4].addEvent(client);
 	}
 	return NULL;
 }

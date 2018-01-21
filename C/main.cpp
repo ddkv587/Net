@@ -1,37 +1,25 @@
 #include "common.h"
-#include "Manager.hpp"
+#include "Processer.hpp"
 #include "Listener.hpp"
 
 void init()
 {
-	initSocket();
 }
 
 void destroy()
 {
-	destroySocket();
 }
 
 int main(int argc, const char *argv[])
 {
 	int ret;
-	struct thread_info thread_listener;
-	struct thread_info thread_handover;
+	CListener listen;
 
 	init();	
 
-	ret = pthread_create(&thread_listener.thread_id, NULL, &listen, &thread_listener);
-	if ( ret != 0 ) {
-		handle_error_errno(ret, "pthread_create listen");
-	}
+	listen.run();
 
-	ret = pthread_create(&thread_handover.thread_id, NULL, &handover, &thread_handover);
-	if ( ret != 0 ) {
-		handle_error_errno(ret, "pthread_create handover");
-	}
-
-	pthread_join(thread_listener.thread_id);
-	pthread_join(thread_handover.thread_id);
+	while(!s_iStop);
 
 	destroy();
 	return 0;
