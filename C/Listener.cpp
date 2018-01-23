@@ -41,11 +41,12 @@ CListener::~CListener()
 void CListener::run()
 {
 	//std::thread(&CProcesser::mainLoop, this).join();
-	std::thread(std::bind( &CProcesser::mainLoop, std::ref( this ), std::placeholders::_1 ));
-	
-	for ( int i=0; i< 4; ++i ) {
-		process[i].run();
-	} 
+	//std::thread(std::bind( &CProcesser::mainLoop, std::ref( this ), std::placeholders::_1 ));
+	std::thread(&CProcesser::mainLoop, this).detach();
+		
+	//for ( int i=0; i< 4; ++i ) {
+	//	process[i].run();
+	//} 
 }
 
 void* CListener::mainLoop(void* arg)
