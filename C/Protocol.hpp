@@ -21,6 +21,12 @@ typedef struct tagSocketHeader
 	EProcotol protocol;
 } HEADER_MANAGER;
 
+typedef struct tagSocketPing
+{
+	int current;
+	int deadLimit;
+} PING_MANAGER;
+
 typedef struct tagSocketTime
 {
 	int second;

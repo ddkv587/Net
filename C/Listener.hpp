@@ -16,9 +16,12 @@ public:
 	virtual ~CListener();
 	
 	void run();
-	void* mainLoop(void*);
+	void mainLoop();
 
+	CListener(CListener&) = delete;
+	CListener(const CListener&) = delete;
 private:
+	void setNonBlock(int);
 
 private:
 	int socket_fd;

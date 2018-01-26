@@ -1,3 +1,6 @@
+#include <iostream>
+#include <thread>
+#include <functional>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -7,8 +10,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <assert.h>
-#include <iostream>
-#include <thread>
+#include <fcntl.h>
 #include "common.h"
 #include "Listener.hpp"
 
@@ -42,14 +44,14 @@ void CListener::run()
 {
 	//std::thread(&CProcesser::mainLoop, this).join();
 	//std::thread(std::bind( &CProcesser::mainLoop, std::ref( this ), std::placeholders::_1 ));
-	std::thread(&CProcesser::mainLoop, this).detach();
+	std::thread(&CListener::mainLoop, this).detach();
 		
-	//for ( int i=0; i< 4; ++i ) {
-	//	process[i].run();
-	//} 
+	for ( int i=0; i< 4; ++i ) {
+		process[i].run();
+	} 
 }
 
-void* CListener::mainLoop(void* arg)
+void CListener::mainLoop()
 {
 	int client;
 	struct sockaddr_in client_addr;
@@ -66,7 +68,24 @@ void* CListener::mainLoop(void* arg)
 			perror("accept");
 		}
 		printf("get socket from :%s: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
+	
+		setNonBlock(client);
 		process[(m_iPosi++) % 4].addEvent(client);
 	}
-	return NULL;
 }
+
+void CListener::setNonBlock(int fd)
+{
+	assert(fd > 0);
+	
+	int flags = fcntl(fd, F_GETFL, 0);
+
+	if ( flags == -1 ) 
+		handle_error("fcntl get");
+
+	flags |= O_NONBLOCK;
+
+	if ( fcntl(fd, F_SETFL, flags) == -1 ) 
+		handle_error("fcntl set");
+}
+
