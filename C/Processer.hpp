@@ -1,32 +1,32 @@
-#ifndef __PROCESSERHPP__
-#define __PROCESSERHPP__
-
-#include "common.h"
+#ifndef __PROCESSORHPP__
+#define __PROCESSORHPP__
 
 #include <sys/types.h>
 #include <sys/event.h>
 #include <sys/time.h>
-#include <thread>
 
-class CProcesser
+#include "ThreadBase.hpp"
+#include "Multiplex.hpp"
+
+namespace NET
 {
-public:
-	CProcesser();
-	virtual ~CProcesser();
+	class CProcessor : public ThreadBase
+	{
+		public:
+			CProcessor();
+			virtual ~CProcessor();
+			
+			int addFileEvent(int fd, int mask);
+			void delFileEvent(int fd, int mask);
 
-	int 		addEvent(int fd, int mask = NET_READABLE);
-	void		delEvent(int fd, int mask = NET_READABLE);
+			CProcessor(CProcessor&) = delete;
+			CProcessor(const CProcessor&) = delete;
 
-	void 		run();
-	void 		mainLoop();
+		protected:
+			void mainLoop(void* arg);
 
-	CProcesser(CProcesser&) = delete;
-	CProcesser(const CProcesser&) = delete;
-private:
-
-private:
-	int m_kqfd;
-	struct kevent m_events[SYSTEM_LIMIT_MAX_EPOLL_EVENTS];
-	std::thread m_thread;
-};
+		private:
+			CMultiplexManager* m_pMultiplex;
+	};
+}
 #endif

@@ -21,6 +21,11 @@ namespace NET
 			m_thread = std::thread(mainLoop, this, std::move(arg));
 		}
 
+		std::thread::id getThreadID()
+		{
+		 	return m_thread.get_id();
+		}
+
 		ThreadBase() = delete;
 		ThreadBase(ThreadBase&) = delete;
 		ThreadBase(const ThreadBase&) = delete;

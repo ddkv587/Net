@@ -11,8 +11,15 @@
 #define handle_error_errno(en, msg) \
 	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
 
+#define STRING_AUX(X) #X
+
+#define DEFINE_ONCE(name, value) \
+	STRING_AUX(ifdef) name \
+	STRING_AUX(define) name valve \
+	STRING_AUX(endif)
+
 #define SYSTEM_VERSION					0.1 
-#define SYSTEM_LIMIT_MAX_EPOLL_EVENTS 	1000
+#define SYSTEM_MAX_EVENTS 				1000
 #define SYSTEM_SOCKET_PORT				8000
 
 #define NET_NONE		0
