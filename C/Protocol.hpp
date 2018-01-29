@@ -40,4 +40,9 @@ typedef struct tagSocketHeart
 	int type;
 	int time;
 } HEART_MANAGER;
+
+const static int SIZE_HEADER_MANAGER = sizeof(HEADER_MANAGER);
+const static int SIZE_PING_MANAGER = sizeof(PING_MANAGER);
+const static int SIZE_TIME_MANAGER = sizeof(TIME_MANAGER);
+const static int SIZE_HEART_MANAGER = sizeof(HEART_MANAGER);
 #endif

@@ -8,7 +8,7 @@ namespace NET
 		std::function<void(int, void*, int)> readProc;
 		std::function<void(int, void*, int)> writeProc;
 		void* data;
-		int dataSize;
+		unsigned int dataSize;
 	} FILE_EVENT;
 
 	typedef struct tagTimeEvent {

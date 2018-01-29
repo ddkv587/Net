@@ -54,77 +54,78 @@ namespace NET
 			if ( retval > 0 ) {
 				EVENT_LOOP* eventLoop = m_pMultiplex->m_pEventLoop;
 				for ( int index = 0; index < retval; ++index ) {
-					FIRED_EVENT* event = eventLoop->fired[index];
-					if( event->mask == NET_READABLE ) {
-						FILE_EVENT* fileEvent = eventLoop->event[index];
+					FIRED_EVENT* fired = eventLoop->fired[index];
+					if( fired->mask == NET_READABLE ) {
+						FILE_EVENT* file = eventLoop->event[fired->fd];
 
-						if ( dataSzie > 0 ) {
-							recv(event)
-						}	
+						if ( file->dataSzie < SIZE_HEADER_MANAGER ) {
+							if ( file->data == NULL ) file->data = new char(SIZE_HEADER_MANAGER);
+							int size = recv(fired->fd, file->data, SIZE_HEADER_MANAGER - file->dataSzie, 0);
+							if ( size == -1 || size == 0 ) {
+								close(fired->fd);
+								delEvent(fired->fd, NET_READABLE);
+								continue;
+							}
+							file->dataSzie += size;
+							if ( file->dataSzie != SIZE_HEADER_MANAGER ) continue;
+						}
+						HEADER_MANAGER* header = (HEADER_MANAGER*)file->data;
 
+						if ( header->sync & 0x03302112 ) {
+							if ( header->protocol == EP_DISMISS ) break;
+							if ( file->dataSzie == SIZE_HEADER_MANAGER ) {
+								char *old = file->data;
+								file->data = new char(SIZE_HEADER_MANAGER + header->length);
+								memcpy(file->data, old, SIZE_HEADER_MANAGER);
+								header = file->data;
+								delete old;
+							}
+							char* buff = file->data + SIZE_HEADER_MANAGER;
+							int size = recv(fired->fd, buff, header->length - (file->dataSzie - SIZE_HEADER_MANAGER), 0);
+							if ( size == -1 || size == 0 ) {
+								close(fired->fd);
+								delEvent(fired->fd, NET_READABLE);
+								continue;
+							}
+							file->dataSzie += size;
 
-						HEADER_MANAGER* header = new HEADER_MANAGER();
-						int size = recv(e->ident, header, sizeof(HEADER_MANAGER), 0);
-						switch ( size ) {
-						case -1:
-							perror("recv");
-						case 0:
-							close(e->ident);
-							delEvent(e->ident, NET_READABLE);
-							break;
-						default:
-							if ( header->sync & 0x03302112 ) {
-								if ( header->protocol == EP_DISMISS ) break;
+							if ( size != header->length ) continue; 
 
-								printf("recv data size: %d\n", header->length);
-								char* buff = new char(header->length);
-								size = recv(e->ident, buff, header->length, 0);
+							switch( header->protocol ) {
+							case EP_ECHO:
+								printf("recv echo msg: %s\n", buff);
+								size = send(e->ident, buff, size, 0);
+								printf("send size: %d\n", size);
+								break;
+							case EP_PING:
+								{
+									printf("recv ping msg: %s\n", buff + sizeof(PING_MANAGER));
+									PING_MANAGER* ping_header = (PING_MANAGER*)buff;
+									if ( ping_header->current < ping_header->deadLimit ) {
+										printf("recv ping current: %d\n", ping_header->current);
+										ping_header->current += 1;
 
-								if ( size != header->length ) {
-									printf("read error");	
-								} else {
-									switch( header->protocol ) {
-									case EP_ECHO:
-										printf("recv echo msg: %s\n", buff);
-										size = send(e->ident, buff, size, 0);
+										char* sendBuff = (char *)malloc(size + sizeof(HEADER_MANAGER));
+
+										memcpy(sendBuff, header, sizeof(HEADER_MANAGER));
+										memcpy(sendBuff+sizeof(HEADER_MANAGER), buff, size);
+
+										size = send(e->ident, sendBuff, size + sizeof(HEADER_MANAGER), 0);
 										printf("send size: %d\n", size);
-										break;
-									case EP_PING:
-										{
-											printf("recv ping msg: %s\n", buff + sizeof(PING_MANAGER));
-											PING_MANAGER* ping_header = (PING_MANAGER*)buff;
-											if ( ping_header->current < ping_header->deadLimit ) {
-												printf("recv ping current: %d\n", ping_header->current);
-												ping_header->current += 1;
 
-												char* sendBuff = (char *)malloc(size + sizeof(HEADER_MANAGER));
-
-												memcpy(sendBuff, header, sizeof(HEADER_MANAGER));
-												memcpy(sendBuff+sizeof(HEADER_MANAGER), buff, size);
-
-												size = send(e->ident, sendBuff, size + sizeof(HEADER_MANAGER), 0);
-												printf("send size: %d\n", size);
-
-												free(sendBuff);
-											}
-										}
-										break;
-									case EP_TIME:
-										break;
-									case EP_HEART:
-										break;
-									default:break;
+										free(sendBuff);
 									}
 								}
-								delete buff;
-							} else {
-								printf("sync error");
+								break;
+							case EP_TIME:
+								break;
+							case EP_HEART:
+								break;
+							default:break;
 							}
-							break;
 						}
-						delete header;
-					} else {
-
+						file->dataSzie = 0;
+						delete file->data;
 					}
 				}
 			}
