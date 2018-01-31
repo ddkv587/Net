@@ -5,10 +5,10 @@ namespace NET
 {
 	typedef struct tagFileEvent {
 		int mask;
-		std::function<void(int, void*, int)> readProc;
-		std::function<void(int, void*, int)> writeProc;
 		void* data;
 		unsigned int dataSize;
+		std::function<int(int, void*, int)> readProc;
+		std::function<int(int, void*, int)> writeProc;
 	} FILE_EVENT;
 
 	typedef struct tagTimeEvent {
