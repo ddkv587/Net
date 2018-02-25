@@ -3,7 +3,10 @@
 
 #include <stdio.h>
 #include <errno.h>
+
+#ifndef ASSERT_DEF
 #include <assert.h>
+#endif
 
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_FAILURE); } while(0)

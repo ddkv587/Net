@@ -1,32 +1,34 @@
 #ifndef __LISTENERHPP__
 #define __LISTENERHPP__
 
-#include "Processer.hpp"
+#include <list>
+#include "ThreadBase.hpp"
 
-class IListener
+class IFileListener
 {
-	virtual int addEvent(int, int) = 0;
-	virtual int delEvent(int, int) = 0;
+	virtual int addFileEvent(int, int) = 0;
+	virtual void delFileEvent(int, int) = 0;
 };
 
-class CListener
+class CListener : public ThreadBase 
 {
 public:
 	CListener();
 	virtual ~CListener();
-	
-	void run();
+
+	void addFileListener(const IFileListener*);
+	void delFileListener(const IFileListener*); //should not be called normally
+
+	const int getSocketFD() { return m_socketFD; }
+
+protected:
 	void mainLoop();
 
-	CListener(CListener&) = delete;
-	CListener(const CListener&) = delete;
 private:
 	void setNonBlock(int);
 
 private:
-	int socket_fd;
-	int m_iPosi;
-	thread_info m_thread;
-	CProcesser process[4]; 
+	int m_socketFD;
+	std::list<IFileListener*> m_lstListener;
 };
 #endif

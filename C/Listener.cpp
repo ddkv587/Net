@@ -1,54 +1,52 @@
 #include <iostream>
 #include <thread>
+#include <chrono>
 #include <functional>
-#include <stdio.h>
-#include <string.h>
 #include <sys/types.h>
 #include <sys/times.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <assert.h>
 #include <fcntl.h>
 #include "common.h"
 #include "Listener.hpp"
 
 CListener::CListener()
-	: m_iPosi(0) 
+	: m_socketFD(-1)
 {
-	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-	assert(-1 != socket_fd);
+	m_socketFD = socket(AF_INET, SOCK_STREAM, 0);
+	assert(-1 != m_socketFD);
 
 	int on = 1;
-	setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
+	setsockopt(m_socketFD, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
 
 	struct sockaddr_in address;
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(SYSTEM_SOCKET_PORT);
 
-	assert( -1 != bind(socket_fd, (struct sockaddr*)&address, sizeof(struct sockaddr_in) ));
+	assert( -1 != bind(m_socketFD, (struct sockaddr*)&address, sizeof(struct sockaddr_in) ));
 
-	assert( -1 != listen(socket_fd, 10) );
+	assert( -1 != listen(m_socketFD, 10) );
 }
 
 CListener::~CListener()
 {
-	if ( socket_fd > 0 ) {
-		close(socket_fd);
+	if ( m_socketFD > 0 ) {
+		close(m_socketFD);
 	}
 }
 
-void CListener::run()
+void CListener::addFileListener(const IFileListener* pListener)
 {
-	//std::thread(&CProcesser::mainLoop, this).join();
-	//std::thread(std::bind( &CProcesser::mainLoop, std::ref( this ), std::placeholders::_1 ));
-	std::thread(&CListener::mainLoop, this).detach();
-		
-	for ( int i=0; i< 4; ++i ) {
-		process[i].run();
-	} 
+	assert(pListener != NULL)
+	m_lstListener.push_back(pListener);
+}
+
+void CListener::delFileListener(const IFileListener* pListener)
+{
+	m_lstListener.remove(pListener);
 }
 
 void CListener::mainLoop()
@@ -62,7 +60,13 @@ void CListener::mainLoop()
 
 	while(!s_iStop)
 	{
-		client = accept(socket_fd, (struct sockaddr*)&client_addr, (socklen_t*)&addLen);
+		if ( m_lstListener.empty() ) {
+			std::cout << " process thread not ready!! " << std::endl;
+			std::this_thread::sleep_for(std::chrono::millsecond(10));
+			continue;
+		}
+
+		client = accept(m_socketFD, (struct sockaddr*)&client_addr, (socklen_t*)&addLen);
 
 		if ( client == -1 ) {
 			perror("accept");
@@ -70,7 +74,11 @@ void CListener::mainLoop()
 		printf("get socket from :%s: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
 	
 		setNonBlock(client);
-		process[(m_iPosi++) % 4].addEvent(client);
+
+		IFileListener* pListener = m_lstListener.front();
+		pListener.addFileEvent(client, NET_READABLE);
+		m_lstListener.pop_front();
+		m_lstListener.push_back(pListener);
 	}
 }
 
