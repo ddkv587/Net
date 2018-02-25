@@ -58,36 +58,13 @@ namespace NET
 					if( fired->mask == NET_READABLE ) {
 						FILE_EVENT* file = eventLoop->event[fired->fd];
 
-						if ( file->dataSzie < SIZE_HEADER_MANAGER ) {
-							if ( file->data == NULL ) file->data = new char(SIZE_HEADER_MANAGER);
-							int size = recv(fired->fd, file->data, SIZE_HEADER_MANAGER - file->dataSzie, 0);
-							if ( size == -1 || size == 0 ) {
-								close(fired->fd);
-								delEvent(fired->fd, NET_READABLE);
-								continue;
-							}
-							file->dataSzie += size;
-							if ( file->dataSzie != SIZE_HEADER_MANAGER ) continue;
-						}
-						HEADER_MANAGER* header = (HEADER_MANAGER*)file->data;
+						int ret = file->readProc(fired->fd, file->data, file->dataSzie);
 
-						if ( header->sync & 0x03302112 ) {
-							if ( header->protocol == EP_DISMISS ) break;
-							if ( file->dataSzie == SIZE_HEADER_MANAGER ) {
-								char *old = file->data;
-								file->data = new char(SIZE_HEADER_MANAGER + header->length);
-								memcpy(file->data, old, SIZE_HEADER_MANAGER);
-								header = file->data;
-								delete old;
-							}
-							char* buff = file->data + SIZE_HEADER_MANAGER;
-							int size = recv(fired->fd, buff, header->length - (file->dataSzie - SIZE_HEADER_MANAGER), 0);
-							if ( size == -1 || size == 0 ) {
-								close(fired->fd);
-								delEvent(fired->fd, NET_READABLE);
-								continue;
-							}
-							file->dataSzie += size;
+						if ( ret == -1 ) {
+							close(fired->fd);
+							delEvent(fired->fd, NET_READABLE);
+							continue;
+						} else if ( ret ==  )
 
 							if ( size != header->length ) continue; 
 
