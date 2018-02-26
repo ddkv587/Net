@@ -17,7 +17,7 @@ public:
 	virtual ~CListener();
 
 	void addFileListener(const IFileListener*);
-	void delFileListener(const IFileListener*); //should not be called normally
+	void delFileListener(const IFileListener*); 
 
 	const int getSocketFD() { return m_socketFD; }
 

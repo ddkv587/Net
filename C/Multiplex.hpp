@@ -1,8 +1,9 @@
-#ifndef __IMULTIPLEXHPP__
-#define __IMULTIPLEXHPP__
+#ifndef __MULTIPLEXMANAGERHPP__
+#define __MULTIPLEXMANAGERHPP__
 
 #include "TypeDef.hpp"
 #include "common.h"
+#include "IMultiplex.hpp"
 #ifdef OS_BSD
 #include "MultiKqueue.hpp"
 #else
@@ -13,7 +14,6 @@
 DEFINE_ONCE(NET_READABLE, 0x01)
 DEFINE_ONCE(NET_WRITABLE, 0x02)
 
-class CProcessor;
 namespace NET
 {
 	class CMultiplexManager
@@ -27,14 +27,6 @@ namespace NET
 				EMT_SELECT,
 			};
 
-			class IMultiplex
-			{
-				public:
-					virtual int 	addFileEvent(int, int) = 0;
-					virtual void	delFileEvent(int, int) = 0;
-					virtual int 	eventLoop(EVENT_LOOP*, int) = 0;
-			};
-
 		public:
 			CMultiplexManager(EMultip_Type type = EMT_EPOLL, int size = SYSTEM_MAX_EVENTS);
 			virtual ~CMultiplexManager();
@@ -45,11 +37,11 @@ namespace NET
 			void 	addFileEvent(int fd, int mask);
 			void 	delFileEvent(int fd, int mask);
 			int		eventLoop(void* timeout);
+
+			EVENT_LOOP* getEventLoop() { return m_pEventLoop; } 
 			
 			CMultiplexManager(CMultiplexManager&) = delete;
 			CMultiplexManager(const CMultiplexManager&) = delete;
-
-			friend class CProcessor;
 
 		private:
 			EVENT_LOOP* m_pEventLoop;

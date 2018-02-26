@@ -10,7 +10,7 @@ namespace NET
 	CProcessor::CProcessor()
 		: m_pMultiplex(NULL)
 	{
-		m_pMultiplex = new CMultiplexManager(EMT_EPOLL);
+		m_pMultiplex = new CMultiplexManager(CMultiplexManager::EMT_KQUEUE);
 
 		assert(NULL != m_pMultiplex);
 	}
@@ -33,14 +33,6 @@ namespace NET
 		m_pMultiplex->delFileEvent(fd, mask);
 	}
 
-	void CProcesser::run()
-	{
-		m_thread = std::thread(&CProcesser::mainLoop, this);
-		m_thread.detach();
-
-		std::cout << "start thread: %d" << getThreadID();
-	}
-
 	void CProcesser::mainLoop() 
 	{
 		struct timespec timeout;
@@ -52,7 +44,7 @@ namespace NET
 
 			int retval = m_pMultiplex->eventLoop(&timeout);
 			if ( retval > 0 ) {
-				EVENT_LOOP* eventLoop = m_pMultiplex->m_pEventLoop;
+				EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
 				for ( int index = 0; index < retval; ++index ) {
 					FIRED_EVENT* fired = eventLoop->fired[index];
 					if( fired->mask == NET_READABLE ) {

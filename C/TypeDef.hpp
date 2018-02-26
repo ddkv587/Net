@@ -23,11 +23,21 @@ namespace NET
 	} FIRED_EVENT;
 
 	typedef struct tagEventLoop {
+		tagFileEvent(int size)
+			: maxfd(-1)
+			, size(size)
+			, event(NULL)
+			, fired(NULL)
+			, arg(NULL)
+		{
+			event = new struct FILE_EVENT[size];
+			fired = new struct FIRED_EVENT[size];
+		}
+
 		int maxfd;
 		int size;
 		FILE_EVENT *event;
 		FIRED_EVENT *fired;
-		TIME_EVENT *timeEvent;
 		void* arg;
 	} EVENT_LOOP;
 }
