@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-#ifndef ASSERT_DEF
+#ifndef DEF_ASSERT
 #include <assert.h>
 #endif
 
@@ -17,7 +17,7 @@
 #define STRING_AUX(X) #X
 
 #define DEFINE_ONCE(name, value) \
-	STRING_AUX(ifdef) name \
+	STRING_AUX(ifndef) name \
 	STRING_AUX(define) name valve \
 	STRING_AUX(endif)
 

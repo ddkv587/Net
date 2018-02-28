@@ -10,8 +10,11 @@ namespace NET
 	CProcessor::CProcessor()
 		: m_pMultiplex(NULL)
 	{
+#ifdef OS_BSD
 		m_pMultiplex = new CMultiplexManager(CMultiplexManager::EMT_KQUEUE);
-
+#else
+		m_pMultiplex = new CMultiplexManager(CMultiplexManager::EMT_EPOLL);
+		
 		assert(NULL != m_pMultiplex);
 	}
 

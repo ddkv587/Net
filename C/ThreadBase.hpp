@@ -18,7 +18,7 @@ namespace NET
 
 		void run(void* arg = NULL)
 		{
-			m_thread = std::thread(mainLoop, this, std::move(arg));
+			m_thread = std::thread(mainLoop, this, arg);
 		}
 
 		std::thread::id getThreadID()
@@ -36,6 +36,6 @@ namespace NET
 
 	private:
 		std::thread m_thread;
-	}
+	};
 }
 #endif

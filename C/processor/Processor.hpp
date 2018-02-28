@@ -2,7 +2,6 @@
 #define __PROCESSORHPP__
 
 #include <sys/types.h>
-#include <sys/event.h>
 #include <sys/time.h>
 
 #include "ThreadBase.hpp"
