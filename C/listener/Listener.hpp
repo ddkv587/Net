@@ -4,31 +4,34 @@
 #include <list>
 #include "ThreadBase.hpp"
 
-class IFileListener
+namespace NET
 {
-	virtual int addFileEvent(int, int) = 0;
-	virtual void delFileEvent(int, int) = 0;
-};
+	class IFileListener
+	{
+		virtual int addFileEvent(int, int) = 0;
+		virtual void delFileEvent(int, int) = 0;
+	};
 
-class CListener : public ThreadBase 
-{
-public:
-	CListener();
-	virtual ~CListener();
+	class CListener : public ThreadBase 
+	{
+		public:
+			CListener();
+			virtual ~CListener();
 
-	void addFileListener(const IFileListener*);
-	void delFileListener(const IFileListener*); 
+			void addFileListener(const IFileListener*);
+			void delFileListener(const IFileListener*); 
 
-	const int getSocketFD() { return m_socketFD; }
+			const int getSocketFD() { return m_socketFD; }
 
-protected:
-	void mainLoop();
+		protected:
+			void mainLoop();
 
-private:
-	void setNonBlock(int);
+		private:
+			void setNonBlock(int);
 
-private:
-	int m_socketFD;
-	std::list<IFileListener*> m_lstListener;
-};
+		private:
+			int m_socketFD;
+			std::list<IFileListener*> m_lstListener;
+	};
+}
 #endif

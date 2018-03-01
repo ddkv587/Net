@@ -18,7 +18,7 @@ namespace NET
 
 		void run(void* arg = NULL)
 		{
-			m_thread = std::thread(mainLoop, this, arg);
+			m_thread = std::thread(&ThreadBase::mainLoop, this, std::move(arg));
 		}
 
 		std::thread::id getThreadID()
