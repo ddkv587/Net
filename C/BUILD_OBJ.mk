@@ -6,6 +6,7 @@ CPP_APP_OBJECT		:= $(foreach filename, $(CPP_SRC:%.cpp=%.o), $(subst $(CPP_SRCDI
 
 $(CPP_APP_OBJECT): $(BUILD_MIDDLE_PATH)%.o: $(CPP_SRCDIR)%.cpp
 	@echo $(notdir $<)
-	$(CXX) $(CPP_INCLUDE) $(CPPFLAGS) -o $@ $<
+	@$(MKDIR) $(dir $@)
+	$(CXX) -c $(CPP_INCLUDE) $(CPPFLAGS) -o $@ $<
 
 .PHONY: all clean debug release

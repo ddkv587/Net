@@ -2,13 +2,17 @@
 #define __THREADBASEHPP__
 
 #include <thread>
-#include <utility>
-
 namespace NET
 {
 	class ThreadBase
 	{
 	public:
+		ThreadBase()
+			: m_thread()
+		{
+			;
+		}
+
 		virtual ~ThreadBase() 
 		{
 			if ( m_thread.joinable() ) {
@@ -26,13 +30,15 @@ namespace NET
 		 	return m_thread.get_id();
 		}
 
-		ThreadBase() = delete;
 		ThreadBase(ThreadBase&) = delete;
 		ThreadBase(const ThreadBase&) = delete;
 		ThreadBase& operator=(const ThreadBase&) = delete;
 
 	protected:
-		virtual void mainLoop(void* arg) = 0;
+		virtual void mainLoop(void* arg)
+		{
+			;
+		}
 
 	private:
 		std::thread m_thread;

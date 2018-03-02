@@ -28,5 +28,5 @@ do_make()
 }
 
 do_make listener
+do_make processor
 #do_make multiplex
-#do_make processor

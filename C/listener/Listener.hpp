@@ -8,8 +8,9 @@ namespace NET
 {
 	class IFileListener
 	{
-		virtual int addFileEvent(int, int) = 0;
-		virtual void delFileEvent(int, int) = 0;
+		public:
+			virtual int addFileEvent(int, int) = 0;
+			virtual void delFileEvent(int, int) = 0;
 	};
 
 	class CListener : public ThreadBase 
@@ -18,13 +19,13 @@ namespace NET
 			CListener();
 			virtual ~CListener();
 
-			void addFileListener(const IFileListener*);
-			void delFileListener(const IFileListener*); 
+			void addFileListener(IFileListener*);
+			void delFileListener(IFileListener*); 
 
 			const int getSocketFD() { return m_socketFD; }
 
 		protected:
-			void mainLoop();
+			void mainLoop(void* arg);
 
 		private:
 			void setNonBlock(int);

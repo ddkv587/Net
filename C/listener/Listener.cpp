@@ -1,7 +1,4 @@
 #include <iostream>
-#include <thread>
-#include <chrono>
-#include <functional>
 #include <sys/types.h>
 #include <sys/times.h>
 #include <sys/socket.h>
@@ -11,7 +8,6 @@
 #include <fcntl.h>
 #include "common.h"
 #include "Listener.hpp"
-#include "ThreadBase.hpp"
 
 namespace NET
 {
@@ -41,31 +37,28 @@ namespace NET
 		}
 	}
 
-	void CListener::addFileListener(const IFileListener* pListener)
+	void CListener::addFileListener(IFileListener* pListener)
 	{
-		assert(pListener != NULL)
-			m_lstListener.push_back(pListener);
+		assert(pListener != NULL);
+		m_lstListener.push_back(pListener);
 	}
 
-	void CListener::delFileListener(const IFileListener* pListener)
+	void CListener::delFileListener(IFileListener* pListener)
 	{
 		m_lstListener.remove(pListener);
 	}
 
-	void CListener::mainLoop()
+	void CListener::mainLoop(void* arg)
 	{
 		int client;
 		struct sockaddr_in client_addr;
 		int addLen = sizeof(struct sockaddr_in);
-		char readBuff[1024];
-		fd_set rfds;
-		int ret;
 
 		while(!s_iStop)
 		{
 			if ( m_lstListener.empty() ) {
 				std::cout << " process thread not ready!! " << std::endl;
-				std::this_thread::sleep_for(std::chrono::millsecond(10));
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 				continue;
 			}
 
@@ -79,7 +72,7 @@ namespace NET
 			setNonBlock(client);
 
 			IFileListener* pListener = m_lstListener.front();
-			pListener.addFileEvent(client, NET_READABLE);
+			pListener->addFileEvent(client, NET_READABLE);
 			m_lstListener.pop_front();
 			m_lstListener.push_back(pListener);
 		}
