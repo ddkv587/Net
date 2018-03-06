@@ -1,3 +1,5 @@
+#ifdef OS_BSD
+
 #include <sys/time.h>
 #include "MultiKqueue.hpp"
 
@@ -82,3 +84,4 @@ int CMultiKqueue::eventLoop(EVENT_LOOP *loop, void* timeout)
     }
     return retval;
 }
+#endif

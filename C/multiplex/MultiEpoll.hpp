@@ -2,14 +2,17 @@
 #define __MULTIEPOLLHPP__
 
 #include "IMultiplex.hpp"
-class CMultiEpoll : CMultiplexManager::IMultiplex
+namespace NET
 {
-	public:
-		CMultiEpoll();
-		virtual ~CMultiEpoll();
+	class CMultiEpoll : CMultiplexManager::IMultiplex
+	{
+		public:
+			CMultiEpoll();
+			virtual ~CMultiEpoll();
 
-		int 	addFileEvent(int, int);
-		void	delFileEvent(int, int);
-		int 	eventLoop(EVENT_LOOP*, int);
-};
+			int 	addFileEvent(int, int);
+			void	delFileEvent(int, int);
+			int 	eventLoop(EVENT_LOOP*, int);
+	};
+}
 #endif

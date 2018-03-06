@@ -1,6 +1,6 @@
 #build temp obj
 
-BUILD_MIDDLE_PATH 	:=$(IM_PATH)/$(TARGET_MODULE)
+BUILD_MIDDLE_PATH 	:= $(IM_PATH)/$(TARGET_MODULE)
 
 CPP_APP_OBJECT		:= $(foreach filename, $(CPP_SRC:%.cpp=%.o), $(subst $(CPP_SRCDIR), $(BUILD_MIDDLE_PATH), $(filename)))
 

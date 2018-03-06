@@ -1,6 +1,7 @@
 #ifndef __MULTIKQUEUEHPP__
 #define __MULTIKQUEUEHPP__
 
+#ifdef OS_BSD
 #include <sys/types.h>
 #include <sys/event.h>
 #include "IMultiplex.hpp"
@@ -19,5 +20,6 @@ class CMultiKqueue : IMultiplex
 		int m_kqfd;
 		struct kevent *m_events;
 }
+#endif
 
 #endif

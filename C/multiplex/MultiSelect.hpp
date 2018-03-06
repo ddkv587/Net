@@ -2,15 +2,18 @@
 #define __MULTISELECTHPP__
 
 #include "IMultiplex.hpp"
-class CMultiSelect : IMultiplex
+
+namespace NET
 {
-	public:
-		CMultiKqueue();
-		virtual ~CMultiKqueue();
+	class CMultiSelect : IMultiplex
+	{
+		public:
+			CMultiKqueue();
+			virtual ~CMultiKqueue();
 
-		int 	addFileEvent(int, int) = 0;
-		void	delFileEvent(int, int) = 0;
-		int 	eventLoop(EVENT_LOOP*, int) = 0;
+			int 	addFileEvent(int, int) = 0;
+			void	delFileEvent(int, int) = 0;
+			int 	eventLoop(EVENT_LOOP*, int) = 0;
+	};
 }
-
 #endif

@@ -5,9 +5,10 @@
 #include <sys/time.h>
 
 #include "ThreadBase.hpp"
+#include "IFileListener.hpp"
 
 class CMultiplexManager;
-class IFileListener;
+
 namespace NET
 {
 	class CProcessor : public ThreadBase, public IFileListener

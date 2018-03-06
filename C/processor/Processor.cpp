@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <iostream>
-#include "Processer.hpp"
+#include "Processor.hpp"
 #include "Protocol.hpp"
 #include "common.h"
 
@@ -14,6 +14,7 @@ namespace NET
 		m_pMultiplex = new CMultiplexManager(CMultiplexManager::EMT_KQUEUE);
 #else
 		m_pMultiplex = new CMultiplexManager(CMultiplexManager::EMT_EPOLL);
+#endif
 		
 		assert(NULL != m_pMultiplex);
 	}

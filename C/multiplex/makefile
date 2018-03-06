@@ -1,10 +1,10 @@
 include $(CLEAR_VARS)
 
-TARGET_MODULE := Listener
+TARGET_MODULE := Processor
 
 CPP_INCLUDE		:= -I$(ROOT_PATH) \
 				   -I.
-CPP_SRCDIR		:= .
+CPP_SRCDIR		:= $(shell pwd)
 CPP_SRC			:= $(shell find $(CPP_SRCDIR) -name "*.cpp")
 
 LIBS			+=

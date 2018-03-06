@@ -3,16 +3,10 @@
 
 #include <list>
 #include "ThreadBase.hpp"
+#include "IFileListener.hpp"
 
 namespace NET
 {
-	class IFileListener
-	{
-		public:
-			virtual int addFileEvent(int, int) = 0;
-			virtual void delFileEvent(int, int) = 0;
-	};
-
 	class CListener : public ThreadBase 
 	{
 		public:
