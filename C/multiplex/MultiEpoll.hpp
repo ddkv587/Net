@@ -1,10 +1,11 @@
 #ifndef __MULTIEPOLLHPP__
 #define __MULTIEPOLLHPP__
 
-#include "IMultiplex.hpp"
+#include <sys/epoll.h>
+
 namespace NET
 {
-	class CMultiEpoll : CMultiplexManager::IMultiplex
+	class CMultiEpoll : CMultiBase
 	{
 		public:
 			CMultiEpoll();
@@ -12,7 +13,11 @@ namespace NET
 
 			int 	addFileEvent(int, int);
 			void	delFileEvent(int, int);
-			int 	eventLoop(EVENT_LOOP*, int);
+			int 	eventLoop(void*);
+
+		private:
+			int m_epfd;
+			struct epoll_event *m_pEvents;
 	};
 }
 #endif
