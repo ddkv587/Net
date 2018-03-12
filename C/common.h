@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <vector>
 
 #ifndef DEF_ASSERT
 #include <assert.h>
@@ -14,32 +15,30 @@
 #define handle_error_errno(en, msg) \
 	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
 
+#define CHECK(X) \
+	do { if (!(X)) return; } while(0)
+
+#define CHECK_R(X, R) \
+	do { if (!(X)) return (R); } while(0)
+
 #define STRING_AUX(X) #X
 
 #define DEFINE_ONCE(name, value) \
 	STRING_AUX(ifndef) name \
-	STRING_AUX(define) name valve \
-	STRING_AUX(endif)
+	STRING_AUX(define) name value \
+	STRING_AUX(endif)			//error
 
 #define SYSTEM_VERSION					0.1 
 #define SYSTEM_MAX_EVENTS 				1000
 #define SYSTEM_SOCKET_PORT				8000
 
-#define NET_NONE		0
-#define NET_READABLE	1
-#define NET_WRITABLE	2
-
 #define POLL_TIMEOUT_SEC 5
 #define POLL_TIMEOUT_USEC 0
 
-struct thread_info{
-//	pthread_t 	thread_id;
-	int 		thread_num;
-	char		*argv;
-};
+#define NET_READABLE 0x01
+#define NET_WRITABLE 0x02
 
 extern int errno;
-static int s_iStop = 0;
 
 extern "C" {
 /*
