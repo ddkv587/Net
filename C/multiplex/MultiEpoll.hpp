@@ -15,7 +15,7 @@ namespace NET
 			void	delFileEvent(int, int);
 			int 	eventLoop(void*);
 
-		private:
+			private:
 			int m_epfd;
 			struct epoll_event *m_pEvents;
 	};

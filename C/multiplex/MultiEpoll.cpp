@@ -17,9 +17,17 @@ namespace NET
 		;
 	}
 
-	int CMultiEpoll::addFileEvent(int, int)
+	int CMultiEpoll::addFileEvent(int fd, int mask)
 	{
-		;
+		struct epoll_event ee = {0};
+
+		ee.events = 0;
+		if ( mask & NET_READABLE ) ee.events |= EPOLLIN;
+		if ( mask & NET_WRITABLE ) ee.events |= EPOLLOUT;
+
+		ee.data.fd = fd;
+
+		CHECK_R( -1 != epoll_ctl() )
 	}
 
 	void CMultiEpoll::delFileEvent(int, int)
