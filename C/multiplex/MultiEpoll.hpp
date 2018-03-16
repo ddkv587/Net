@@ -1,7 +1,7 @@
 #ifndef __MULTIEPOLLHPP__
 #define __MULTIEPOLLHPP__
 
-#include <sys/epoll.h>
+#include "Multiplex.hpp"
 
 namespace NET
 {

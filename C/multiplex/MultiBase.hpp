@@ -1,8 +1,7 @@
 #ifndef __MULTIPLEXMANAGERHPP__
 #define __MULTIPLEXMANAGERHPP__
 
-#include "TypeDef.hpp"
-#include "common.h"
+#include "Multiplex.hpp"
 
 namespace NET
 {

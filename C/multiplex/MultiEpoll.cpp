@@ -1,4 +1,4 @@
-#include "MultiEpool.hpp"
+#include "MultiEpoll.hpp"
 
 namespace NET
 {
@@ -27,7 +27,9 @@ namespace NET
 
 		ee.data.fd = fd;
 
-		CHECK_R( -1 != epoll_ctl() )
+		CHECK_R( -1 != epoll_ctl(), -1 );
+
+		return 0;
 	}
 
 	void CMultiEpoll::delFileEvent(int, int)
