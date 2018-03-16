@@ -1,19 +1,17 @@
 #ifndef __MULTISELECTHPP__
 #define __MULTISELECTHPP__
 
-#include "Multiplex.hpp"
-
 namespace NET
 {
-	class CMultiSelect : IMultiplex
+	class CMultiSelect : public CMultiBase
 	{
 		public:
 			CMultiSelect();
 			virtual ~CMultiSelect();
 
-			int 	addFileEvent(int, int) = 0;
-			void	delFileEvent(int, int) = 0;
-			int 	eventLoop(EVENT_LOOP*, int) = 0;
+			int 	addFileEvent(int, int);
+			void	delFileEvent(int, int);
+			int 	eventLoop(void *);
 	};
 }
 #endif

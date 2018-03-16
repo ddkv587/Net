@@ -24,7 +24,7 @@ namespace NET
 #include "MultiSelect.hpp"
 #endif
 
-#include "TypeDef.hpp"
-#include "common.h"
+#include "../TypeDef.hpp"
+#include "../common.h"
 
 #endif

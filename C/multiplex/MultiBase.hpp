@@ -1,7 +1,7 @@
 #ifndef __MULTIPLEXMANAGERHPP__
 #define __MULTIPLEXMANAGERHPP__
 
-#include "Multiplex.hpp"
+#include "../TypeDef.hpp"
 
 namespace NET
 {
@@ -20,11 +20,10 @@ namespace NET
 			virtual ~CMultiBase();
 
 			EMultiType		getType() const 			{ return m_eType; }
-			EVENT_LOOP* 	getEventLoop() 				{ return m_pEventLoop; } 
 
 			int 			setSize(int size);
 
-			virtual void 	addFileEvent(int fd, int mask);
+			virtual int 	addFileEvent(int fd, int mask);
 			virtual void 	delFileEvent(int fd, int mask);
 			virtual int		eventLoop(void* timeout);
 			
@@ -33,10 +32,11 @@ namespace NET
 
 		protected:
 			CMultiBase();
-
-		private:
 			EMultiType		m_eType;
 			EVENT_LOOP* 	m_pEventLoop;
+
+		private:
+	
 	};
 }
 #endif

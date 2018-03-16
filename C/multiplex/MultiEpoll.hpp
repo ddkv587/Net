@@ -1,11 +1,9 @@
 #ifndef __MULTIEPOLLHPP__
 #define __MULTIEPOLLHPP__
 
-#include "Multiplex.hpp"
-
 namespace NET
 {
-	class CMultiEpoll : CMultiBase
+	class CMultiEpoll : public CMultiBase
 	{
 		public:
 			CMultiEpoll();
