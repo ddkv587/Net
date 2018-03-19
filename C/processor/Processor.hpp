@@ -1,14 +1,6 @@
 #ifndef __PROCESSORHPP__
 #define __PROCESSORHPP__
 
-#include <sys/types.h>
-#include <sys/time.h>
-
-#include "ThreadBase.hpp"
-#include "IFileListener.hpp"
-
-class CMultiplexManager;
-
 namespace NET
 {
 	class CProcessor : public ThreadBase, public IFileListener
@@ -27,7 +19,7 @@ namespace NET
 			void mainLoop(void* arg);
 
 		private:
-			CMultiplexManager* m_pMultiplex;
+			CMultiBase* m_pMultiplex;
 	};
 }
 #endif

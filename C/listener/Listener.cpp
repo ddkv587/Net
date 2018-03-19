@@ -1,13 +1,4 @@
-#include <iostream>
-#include <sys/types.h>
-#include <sys/times.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "common.h"
-#include "Listener.hpp"
+#include "NET_Listener.hpp"
 
 namespace NET
 {
@@ -54,10 +45,10 @@ namespace NET
 		struct sockaddr_in client_addr;
 		int addLen = sizeof(struct sockaddr_in);
 
-		while(!s_iStop)
+		while(!m_bStop)
 		{
 			if ( m_lstListener.empty() ) {
-				std::cout << " process thread not ready!! " << std::endl;
+				printf(" process thread not ready!! \n");
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 				continue;
 			}

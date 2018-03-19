@@ -8,7 +8,7 @@ namespace NET
 	{
 	public:
 		ThreadBase()
-			: m_thread()
+			: m_bStop(false)
 		{
 			;
 		}
@@ -25,6 +25,11 @@ namespace NET
 			m_thread = std::thread(&ThreadBase::mainLoop, this, std::move(arg));
 		}
 
+		void stop()
+		{
+			m_bStop = true;
+		}
+
 		std::thread::id getThreadID()
 		{
 		 	return m_thread.get_id();
@@ -37,8 +42,13 @@ namespace NET
 	protected:
 		virtual void mainLoop(void* arg)
 		{
-			;
+			while ( !m_bStop ) {
+				;
+			}
 		}
+
+	protected:
+		bool 		m_bStop;
 
 	private:
 		std::thread m_thread;

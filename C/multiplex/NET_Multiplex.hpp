@@ -1,5 +1,5 @@
-#ifndef __MULTIPLEXHPP__
-#define __MULTIPLEXHPP__
+#ifndef __NETMULTIPLEXHPP__
+#define __NETMULTIPLEXHPP__
 
 namespace NET
 {

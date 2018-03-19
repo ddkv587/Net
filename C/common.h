@@ -35,8 +35,9 @@
 #define POLL_TIMEOUT_SEC 5
 #define POLL_TIMEOUT_USEC 0
 
-#define NET_READABLE 0x01
-#define NET_WRITABLE 0x02
+#define NET_NONE 		0x00
+#define NET_READABLE 	0x01
+#define NET_WRITABLE 	0x02
 
 extern int errno;
 

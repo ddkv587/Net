@@ -20,6 +20,7 @@ namespace NET
 			virtual ~CMultiBase();
 
 			EMultiType		getType() const 			{ return m_eType; }
+			EVENT_LOOP* 	getEventLoop()				{ return m_eventLoop; }
 
 			int 			setSize(int size);
 
@@ -32,8 +33,9 @@ namespace NET
 
 		protected:
 			CMultiBase();
+
 			EMultiType		m_eType;
-			EVENT_LOOP* 	m_pEventLoop;
+			EVENT_LOOP* 	m_eventLoop;
 
 		private:
 	

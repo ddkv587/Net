@@ -1,9 +1,4 @@
-#include <unistd.h>
-#include <sys/socket.h>
-#include <iostream>
-#include "Processor.hpp"
-#include "Protocol.hpp"
-#include "common.h"
+#include "NET_Processor.hpp"
 
 namespace NET
 {
@@ -11,56 +6,58 @@ namespace NET
 		: m_pMultiplex(NULL)
 	{
 #ifdef OS_BSD
-		m_pMultiplex = new CMultiplexManager(CMultiplexManager::EMT_KQUEUE);
+		m_pMultiplex = new CMultiKqueue();
 #else
-		m_pMultiplex = new CMultiplexManager(CMultiplexManager::EMT_EPOLL);
+		m_pMultiplex = new CMultiEpoll();
 #endif
 		
 		assert(NULL != m_pMultiplex);
+
+		m_pMultiplex->setSize(1024);
 	}
 
-	CProcesser::~CProcesser()
+	CProcessor::~CProcessor()
 	{
 		if ( NULL != m_pMultiplex ) {
 			delete m_pMultiplex;
 		}
 	}
 
-	int CProcesser::addFileEvent(int fd, int mask) 
+	int CProcessor::addFileEvent(int fd, int mask) 
 	{
 		m_pMultiplex->addFileEvent(fd, mask);
 		return 0;
 	}
 
-	void CProcesser::delFileEvent(int fd, int mask)
+	void CProcessor::delFileEvent(int fd, int mask)
 	{
 		m_pMultiplex->delFileEvent(fd, mask);
 	}
 
-	void CProcesser::mainLoop() 
+	void CProcessor::mainLoop(void* arg) 
 	{
-		struct timespec timeout;
+		struct timeval timeout;
 
-		while(!s_iStop)
+		while(!m_bStop)
 		{
 			timeout.tv_sec = POLL_TIMEOUT_SEC;
-			timeout.tv_nsec = POLL_TIMEOUT_USEC * 1000;
+			timeout.tv_usec = POLL_TIMEOUT_USEC;
 
 			int retval = m_pMultiplex->eventLoop(&timeout);
 			if ( retval > 0 ) {
 				EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
+			
 				for ( int index = 0; index < retval; ++index ) {
-					FIRED_EVENT* fired = eventLoop->fired[index];
+					FIRED_EVENT* fired = eventLoop->fired + index;
 					if( fired->mask == NET_READABLE ) {
-						FILE_EVENT* file = eventLoop->event[fired->fd];
-
-						int ret = file->readProc(fired->fd, file->data, file->dataSzie);
+						FILE_EVENT* file = eventLoop->event + fired->fd;
+						int ret = 0; //file->readProc(fired->fd, file->data, file->dataSzie);
 
 						if ( ret == -1 ) {
 							close(fired->fd);
 							delEvent(fired->fd, NET_READABLE);
 							continue;
-						} else if ( ret ==  )
+						} else
 
 							if ( size != header->length ) continue; 
 

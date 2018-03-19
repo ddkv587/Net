@@ -1,10 +1,6 @@
 #ifndef __LISTENERHPP__
 #define __LISTENERHPP__
 
-#include <list>
-#include "ThreadBase.hpp"
-#include "IFileListener.hpp"
-
 namespace NET
 {
 	class CListener : public ThreadBase 
@@ -26,7 +22,7 @@ namespace NET
 
 		private:
 			int m_socketFD;
-			std::list<IFileListener*> m_lstListener;
+			::std::list<IFileListener*> m_lstListener;
 	};
 }
 #endif

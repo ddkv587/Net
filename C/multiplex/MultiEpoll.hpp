@@ -11,11 +11,11 @@ namespace NET
 
 			int 	addFileEvent(int, int);
 			void	delFileEvent(int, int);
-			int 	eventLoop(void*);
+			int 	eventLoop(void*); // struct timeval
 
 			private:
 			int m_epfd;
-			struct epoll_event *m_pEvents;
+			struct epoll_event *m_events;
 	};
 }
 #endif
