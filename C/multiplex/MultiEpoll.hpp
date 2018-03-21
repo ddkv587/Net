@@ -9,9 +9,11 @@ namespace NET
 			CMultiEpoll();
 			virtual ~CMultiEpoll();
 
+			int 	setSize(int size);
+
 			int 	addFileEvent(int, int);
 			void	delFileEvent(int, int);
-			int 	eventLoop(void*); // struct timeval
+			int 	eventLoop(void* timeout = NULL); // struct timeval
 
 			private:
 			int m_epfd;

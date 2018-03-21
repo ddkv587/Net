@@ -38,6 +38,25 @@ namespace NET
 	{
 		m_lstListener.remove(pListener);
 	}
+	
+	void CListener::printListener()
+	{
+		::std::list<IFileListener*>::iterator itor = m_lstListener.begin();
+		for(; itor != m_lstListener.end(); ++itor ) {
+			printf( "processor%d size: %d\n", ::std::distance( m_lstListener.begin(), itor ), (*itor)->size() );
+		}
+	}
+	
+	IFileListener* CListener::scheduling(::std::list<IFileListener*>& lstListener)
+	{
+		CHECK_R(m_lstListener.size() != 0, NULL);	
+
+		IFileListener* pListener = lstListener.front();
+		lstListener.pop_front();
+		lstListener.push_back(pListener);
+
+		return pListener;
+	}
 
 	void CListener::mainLoop(void* arg)
 	{
@@ -58,14 +77,16 @@ namespace NET
 			if ( client == -1 ) {
 				perror("accept");
 			}
-			printf("get socket from :%s: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
+			printf("get socket from :%s: %d, clinet: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port, client);
 
 			setNonBlock(client);
+			
+			IFileListener* pListener = scheduling(m_lstListener);
 
-			IFileListener* pListener = m_lstListener.front();
-			pListener->addFileEvent(client, NET_READABLE);
-			m_lstListener.pop_front();
-			m_lstListener.push_back(pListener);
+			if ( NULL != pListener ) {
+				pListener->addFileEvent(client, NET_READABLE);
+			}
+			printListener();
 		}
 	}
 

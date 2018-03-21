@@ -9,12 +9,16 @@ namespace NET
 			CListener();
 			virtual ~CListener();
 
-			void addFileListener(IFileListener*);
-			void delFileListener(IFileListener*); 
+			virtual void 	addFileListener(IFileListener*);
+			virtual void 	delFileListener(IFileListener*); 
 
-			const int getSocketFD() { return m_socketFD; }
+			int 			getSocketFD() const  	{ return m_socketFD; }
+
+			void 			printListener();
 
 		protected:
+			virtual IFileListener* scheduling(::std::list<IFileListener*>&);
+			
 			void mainLoop(void* arg);
 
 		private:

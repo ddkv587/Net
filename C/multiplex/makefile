@@ -1,6 +1,6 @@
 include $(CLEAR_VARS)
 
-TARGET_MODULE := Processor
+TARGET_MODULE := Multiplex
 
 CPP_INCLUDE		:= -I$(ROOT_PATH) \
 				   -I.

@@ -22,7 +22,7 @@ namespace NET
 			EMultiType		getType() const 			{ return m_eType; }
 			EVENT_LOOP* 	getEventLoop()				{ return m_eventLoop; }
 
-			int 			setSize(int size);
+			virtual int 	setSize(int size);
 
 			virtual int 	addFileEvent(int fd, int mask);
 			virtual void 	delFileEvent(int fd, int mask);

@@ -29,7 +29,7 @@
 	STRING_AUX(endif)			//error
 
 #define SYSTEM_VERSION					0.1 
-#define SYSTEM_MAX_EVENTS 				1000
+#define SYSTEM_MAX_EVENTS 				1024
 #define SYSTEM_SOCKET_PORT				8000
 
 #define POLL_TIMEOUT_SEC 5

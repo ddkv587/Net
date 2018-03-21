@@ -9,8 +9,10 @@ namespace NET
 			CProcessor();
 			virtual ~CProcessor();
 			
-			int addFileEvent(int fd, int mask);
-			void delFileEvent(int fd, int mask);
+			virtual int 	addFileEvent(int fd, int mask);
+			virtual void 	delFileEvent(int fd, int mask);
+			
+			unsigned int 	size() const { return m_uiSize;	}
 
 			CProcessor(CProcessor&) = delete;
 			CProcessor(const CProcessor&) = delete;
@@ -19,7 +21,8 @@ namespace NET
 			void mainLoop(void* arg);
 
 		private:
-			CMultiBase* m_pMultiplex;
+			unsigned int 	m_uiSize;
+			CMultiBase* 	m_pMultiplex;
 	};
 }
 #endif

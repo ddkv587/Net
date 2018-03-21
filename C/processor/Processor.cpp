@@ -3,7 +3,8 @@
 namespace NET
 {
 	CProcessor::CProcessor()
-		: m_pMultiplex(NULL)
+		: m_uiSize(0)
+		, m_pMultiplex(NULL)
 	{
 #ifdef OS_BSD
 		m_pMultiplex = new CMultiKqueue();
@@ -13,7 +14,7 @@ namespace NET
 		
 		assert(NULL != m_pMultiplex);
 
-		m_pMultiplex->setSize(1024);
+		printf( " set size %d\n", m_pMultiplex->setSize(1024) );
 	}
 
 	CProcessor::~CProcessor()
@@ -26,14 +27,18 @@ namespace NET
 	int CProcessor::addFileEvent(int fd, int mask) 
 	{
 		m_pMultiplex->addFileEvent(fd, mask);
+		
+		++m_uiSize;
 		return 0;
 	}
 
 	void CProcessor::delFileEvent(int fd, int mask)
 	{
 		m_pMultiplex->delFileEvent(fd, mask);
+		
+		m_uiSize > 0 ? --m_uiSize : 0;
 	}
-
+	
 	void CProcessor::mainLoop(void* arg) 
 	{
 		struct timeval timeout;
@@ -48,57 +53,23 @@ namespace NET
 				EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
 			
 				for ( int index = 0; index < retval; ++index ) {
-					FIRED_EVENT* fired = eventLoop->fired + index;
-					if( fired->mask == NET_READABLE ) {
-						FILE_EVENT* file = eventLoop->event + fired->fd;
-						int ret = 0; //file->readProc(fired->fd, file->data, file->dataSzie);
-
-						if ( ret == -1 ) {
-							close(fired->fd);
-							delEvent(fired->fd, NET_READABLE);
+					FIRED_EVENT fired = eventLoop->fired[index];
+					if( fired.mask == NET_READABLE ) {
+						FILE_EVENT file = eventLoop->event[fired.fd];
+						// int ret = file->readProc(fired->fd, file->data, file->dataSzie);
+						char buff[1024];
+						int ret = recv(fired.fd, buff, 1024, 0);
+						if ( ret == -1 || ret == 0) {
+							close(fired.fd);
+							delFileEvent(fired.fd, NET_READABLE);
+							printf("close socket: %d\n", fired.fd);
 							continue;
-						} else
-
-							if ( size != header->length ) continue; 
-
-							switch( header->protocol ) {
-							case EP_ECHO:
-								printf("recv echo msg: %s\n", buff);
-								size = send(e->ident, buff, size, 0);
-								printf("send size: %d\n", size);
-								break;
-							case EP_PING:
-								{
-									printf("recv ping msg: %s\n", buff + sizeof(PING_MANAGER));
-									PING_MANAGER* ping_header = (PING_MANAGER*)buff;
-									if ( ping_header->current < ping_header->deadLimit ) {
-										printf("recv ping current: %d\n", ping_header->current);
-										ping_header->current += 1;
-
-										char* sendBuff = (char *)malloc(size + sizeof(HEADER_MANAGER));
-
-										memcpy(sendBuff, header, sizeof(HEADER_MANAGER));
-										memcpy(sendBuff+sizeof(HEADER_MANAGER), buff, size);
-
-										size = send(e->ident, sendBuff, size + sizeof(HEADER_MANAGER), 0);
-										printf("send size: %d\n", size);
-
-										free(sendBuff);
-									}
-								}
-								break;
-							case EP_TIME:
-								break;
-							case EP_HEART:
-								break;
-							default:break;
-							}
+						} else {
+							printf("recv msg: %s, size: %d\n", buff, ret);
 						}
-						file->dataSzie = 0;
-						delete file->data;
 					}
-				}
-			}
-		}
+				} //for
+			} //if retval > 0
+		} //while
 	}
 }
