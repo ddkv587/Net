@@ -1,8 +1,11 @@
+#include "NET_Log.hpp"
 #include "NET_Listener.hpp"
 #include "NET_Processor.hpp"
 
 int main(int argc, const char *argv[])
 {
+	NET::CLog::initLog(argv[0]);
+
 	NET::CListener listen;
 	NET::CProcessor process1;
 	NET::CProcessor process2;

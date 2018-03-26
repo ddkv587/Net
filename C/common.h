@@ -9,14 +9,13 @@
 #include <assert.h>
 #endif
 
+#include "log/NET_Log.hpp"
+
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
 #define handle_error_errno(en, msg) \
 	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
-
-#define CHECK(X) \
-	do { if (!(X)) return; } while(0)
 
 #define CHECK_R(X, R) \
 	do { if (!(X)) return (R); } while(0)

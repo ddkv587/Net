@@ -1,0 +1,5 @@
+Log file created at: 2018/03/26 11:19:07
+Running on machine: ddk
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+E0326 11:19:07.196028 32528 main.cpp:16] test error
+F0326 11:19:07.196256 32528 main.cpp:17] test fatal

@@ -15,8 +15,8 @@ namespace NET
 #include "ThreadBase.hpp"
 #include "listener/NET_Listener.hpp"
 #include "multiplex/NET_Multiplex.hpp"
+#include "protocol/Protocol.hpp"
 
-#include "Protocol.hpp"
 #include "Processor.hpp"
 
 #endif

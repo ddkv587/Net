@@ -20,6 +20,7 @@ do_make()
 
 rm -rf im_build
 
+do_make log
 do_make multiplex
 do_make listener
 do_make processor
