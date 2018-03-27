@@ -9,6 +9,10 @@ namespace NET
 #include <glog/logging.h>
 using namespace google;
 
+#include <stdio.h>
+#include <errno.h>
 #include "Log.hpp"
+
+extern int errno;
 
 #endif

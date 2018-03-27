@@ -10,8 +10,8 @@ namespace NET
 		int mask;
 		void* data;
 		unsigned int dataSize;
-		::std::function<int(int, void*, int)> readProc;
-		::std::function<int(int, void*, int)> writeProc;
+		::std::function<int(void*, int, int)> readProc;
+		::std::function<int(void*, int, int)> writeProc;
 	} FILE_EVENT;
 
 	typedef struct tagFiredEvent {

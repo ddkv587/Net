@@ -15,13 +15,15 @@ namespace NET
 			};
 
 		public:
-			static void initLog(const char*);
-			static void setDirection(char*);
-			static void setDirection(LOG_LEVEL, char*);
-			static void setFilter(LOG_LEVEL);
+			static void 		initLog(const char*);
+			static void 		setDirection(char*);
+			static void 		setDirection(LOG_LEVEL, char*);
+			static void 		setFilter(LOG_LEVEL);
 
-			static void enableToStderr(bool);
-			static void enableColor(bool);
+			static void 		enableToStderr(bool);
+			static void 		enableColor(bool);
+
+			static std::string  format(const char* fmt, ...);
 
 		protected:
 			CLog() = delete;

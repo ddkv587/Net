@@ -1,0 +1,6 @@
+
+namespace NET
+{
+	extern "C" {
+	}
+}

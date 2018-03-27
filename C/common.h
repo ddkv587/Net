@@ -1,8 +1,6 @@
 #ifndef __COMMONHH__
 #define __COMMONHH__
 
-#include <stdio.h>
-#include <errno.h>
 #include <vector>
 
 #ifndef DEF_ASSERT
@@ -37,8 +35,6 @@
 #define NET_NONE 		0x00
 #define NET_READABLE 	0x01
 #define NET_WRITABLE 	0x02
-
-extern int errno;
 
 extern "C" {
 /*

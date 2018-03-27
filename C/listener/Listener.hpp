@@ -25,7 +25,7 @@ namespace NET
 			void setNonBlock(int);
 
 		private:
-			int m_socketFD;
+			CSocket m_server;
 			::std::list<IFileListener*> m_lstListener;
 	};
 }
