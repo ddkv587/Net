@@ -12,8 +12,6 @@ namespace NET
 			virtual void 	addFileListener(IFileListener*);
 			virtual void 	delFileListener(IFileListener*); 
 
-			int 			getSocketFD() const  	{ return m_socketFD; }
-
 			void 			printListener();
 
 		protected:
@@ -25,7 +23,7 @@ namespace NET
 			void setNonBlock(int);
 
 		private:
-			CSocket m_server;
+			CSocketServer 				m_server;
 			::std::list<IFileListener*> m_lstListener;
 	};
 }

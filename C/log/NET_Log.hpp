@@ -10,6 +10,7 @@ namespace NET
 using namespace google;
 
 #include <stdio.h>
+#include <string.h>
 #include <errno.h>
 #include "Log.hpp"
 

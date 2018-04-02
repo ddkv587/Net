@@ -17,6 +17,8 @@ namespace NET
 
 #include "common.h"
 
+#include "socket/NET_Socket.hpp"
+
 #include "ThreadBase.hpp"
 #include "IFileListener.hpp"
 #include "Listener.hpp"

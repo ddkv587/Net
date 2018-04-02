@@ -4,6 +4,7 @@ TARGET_MODULE := Demo
 
 CPP_INCLUDE		:= -I$(ROOT_PATH) \
 				   -I$(ROOT_PATH)/log \
+				   -I$(ROOT_PATH)/socket \
 				   -I$(ROOT_PATH)/listener \
 				   -I$(ROOT_PATH)/multiplex \
 				   -I$(ROOT_PATH)/processor \

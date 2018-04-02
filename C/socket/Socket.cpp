@@ -3,34 +3,60 @@
 namespace NET
 {
 	CSocket::CSocket()
-		: fd(-1)
+		: m_fd(-1)
 	{
 		
 	}
 	
 	CSocket::~CSocket()
 	{
-		if ( fd ) close(fd);
+		if ( m_fd ) close(m_fd);
 	}
 
-	void CSocket::setKeepAlive(bool on, int idle, int interval, int count)
+	void CSocket::setKeepAlive(bool on, int interval)
 	{
-		LOG_IF( CLog::LL_ERROR, -1 == setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, &on, sizeof(on)) 
-				<< CLog::format("[%s, %s], set socket to keep alive error: %s", __FILE__, __LINE__, perror(errno)) );	
-		
-		LOG_IF( CLog::LL_ERROR, -1 == setsockopt(fd, IPPROTO_TCP, TCP_KEEPIDLE, &idle, sizeof(idle)) 
-				<< CLog::format("[%s, %s], set socket to keep alive idle error: %s", __FILE__, __LINE__, perror(errno)) );	
+		int val = 0;
 
-		LOG_IF( CLog::LL_ERROR, -1 == setsockopt(fd, IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(interval))
-				<< CLog::format("[%s, %s], set socket to keep alive interval error: %s", __FILE__, __LINE__, perror(errno)) );	
+		on ? val = 1 : val = 0;
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_KEEPALIVE, &val, sizeof(val)) )
+				<< CLog::format( "[%s, %d]  set socket to keep alive error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 
-		LOG_IF( CLog::LL_ERROR, -1 == setsockopt(fd, IPPROTO_TCP, TCP_KEEPCNT, &count, sizeof(count))
-				<< CLog::format("[%s, %s], set socket to keep alive count error: %s", __FILE__, __LINE__, perror(errno)) );	
+		if ( !on ) return;
+
+		val = interval;
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPIDLE, &val, sizeof(val)) ) 
+				<< CLog::format( "[%s, %d]  set socket to keep alive idle error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+
+		val = interval / 3;
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPINTVL, &val, sizeof(val)) )
+				<< CLog::format( "[%s, %d]  set socket to keep alive interval error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+
+		val = 3;
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPCNT, &val, sizeof(val)) )
+				<< CLog::format( "[%s, %d]  set socket to keep alive count error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
 	
 	void CSocket::setTimeOut(int timeout)
 	{
-		LOG_IF( CLog::LL_ERROR, -1 == setsockopt(fd, IPPROTO_TCP, TCP_USER_TIMEOUT, &timeout, sizeof(timeout))
-				<< CLog::format("[%s, %s], set socket timeout error: %s", __FILE__, __LINE__, perror(errno)) );	
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_USER_TIMEOUT, &timeout, sizeof(timeout)) )
+				<< CLog::format( "[%s, %d]  set socket timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+
+	void CSocket::setReuseAddr(bool on)
+	{
+		int val = 0;
+
+		on ? val = 1 : val = 0;
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) )
+				<< CLog::format( "[%s, %d]  set socket reuue addr error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+
+	void CSocket::setReusePort(bool on)
+	{
+		int val = 0;
+
+		on ? val = 1 : val = 0;
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val)) )
+				<< CLog::format( "[%s, %d]  set socket reu e port error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
 }

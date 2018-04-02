@@ -9,19 +9,23 @@ namespace NET
 			CSocketServer();
 			virtual ~CSocketServer();
 	
-			void init();
-			void destroy();
+			void 	init();
+			void 	destroy();
 
-			void setPort(int iPort) 	{ m_port = iPort; }
-			int  getPort() const		{ return m_port; }
+			void 			setServerIP(char* ip)	{ strncpy(m_serverIp, ip, 16); }
+			const char* 	getServerIP() const 	{ return m_serverIp; };
 
-			void setReuseAddr(bool on);
+			void 	setPort(int iPort) 		{ m_serverPort = iPort; }
+			int  	port() const			{ return m_serverPort; }
+			
+			void	bindAndListen();
 
 			CSocketServer(CSocketServer&) = delete;
 			CSocketServer(const CSocketServer&) = delete;
 
 		private:
-			int m_port;
+			char 	m_serverIp[16];		//max is 255.255.255.255
+			int 	m_serverPort;
 	};
 }
 

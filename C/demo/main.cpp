@@ -1,4 +1,5 @@
 #include "NET_Log.hpp"
+#include "NET_Socket.hpp"
 #include "NET_Listener.hpp"
 #include "NET_Processor.hpp"
 

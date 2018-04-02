@@ -3,29 +3,20 @@
 namespace NET
 {
 	CListener::CListener()
-		: m_socketFD(-1)
 	{
-		m_socketFD = socket(AF_INET, SOCK_STREAM, 0);
-		assert(-1 != m_socketFD);
+		m_server.init();
 
-		int on = 1;
-		setsockopt(m_socketFD, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
+		m_server.setPort(SYSTEM_SOCKET_PORT);
+		m_server.setKeepAlive(true, 30);
+		m_server.setTimeOut(30);
+		m_server.setReuseAddr(true);
 
-		struct sockaddr_in address;
-		address.sin_family = AF_INET;
-		address.sin_addr.s_addr = INADDR_ANY;
-		address.sin_port = htons(SYSTEM_SOCKET_PORT);
-
-		assert( -1 != bind(m_socketFD, (struct sockaddr*)&address, sizeof(struct sockaddr_in) ));
-
-		assert( -1 != listen(m_socketFD, 10) );
+		m_server.bindAndListen();
 	}
 
 	CListener::~CListener()
 	{
-		if ( m_socketFD > 0 ) {
-			close(m_socketFD);
-		}
+		;
 	}
 
 	void CListener::addFileListener(IFileListener* pListener)
@@ -43,7 +34,7 @@ namespace NET
 	{
 		::std::list<IFileListener*>::iterator itor = m_lstListener.begin();
 		for(; itor != m_lstListener.end(); ++itor ) {
-			printf( "processor%d size: %d\n", ::std::distance( m_lstListener.begin(), itor ), (*itor)->size() );
+			printf( "processor %d size: %d\n", ::std::distance( m_lstListener.begin(), itor ), (*itor)->size() );
 		}
 	}
 	
@@ -72,12 +63,15 @@ namespace NET
 				continue;
 			}
 
-			client = accept(m_socketFD, (struct sockaddr*)&client_addr, (socklen_t*)&addLen);
-
-			if ( client == -1 ) {
-				perror("accept");
+			if ( -1 == ( client = accept(m_server.getSocketFD(), (struct sockaddr*)&client_addr, (socklen_t*)&addLen) ) ) {
+				LOG(ERROR) << CLog::format( "[%s, %d]  accept error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+				continue;
 			}
-			printf("get socket from :%s: %d, clinet: %d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port, client);
+
+			LOG(INFO) << CLog::format("get socket from: %s, port: %d, clinet: %d\n", 
+					inet_ntoa(client_addr.sin_addr),
+					ntohs(client_addr.sin_port),
+					client);
 
 			setNonBlock(client);
 			
@@ -92,7 +86,7 @@ namespace NET
 
 	void CListener::setNonBlock(int fd)
 	{
-		assert(fd > 0);
+		assert( fd > 0 );
 
 		int flags = fcntl(fd, F_GETFL, 0);
 
@@ -101,7 +95,7 @@ namespace NET
 
 		flags |= O_NONBLOCK;
 
-		if ( fcntl(fd, F_SETFL, flags) == -1 ) 
+		if ( fcntl( fd, F_SETFL, flags ) == -1 ) 
 			handle_error("fcntl set");
 	}
 }

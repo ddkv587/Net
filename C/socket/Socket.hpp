@@ -6,8 +6,13 @@ namespace NET
 	class CSocket
 	{
 		public:
-			void setKeepAlive(bool, int, int, int);
-			void setTimeOut(int);
+			void 	setKeepAlive(bool, int);
+			void 	setTimeOut(int);
+
+			void 	setReuseAddr(bool);
+			void 	setReusePort(bool);
+
+			int 	getSocketFD()	const 		{ return m_fd; }
 
 		protected:
 			CSocket();
@@ -16,8 +21,8 @@ namespace NET
 			CSocket(CSocket&) = delete;
 			CSocket(const CSocket&) = delete;
 
-		private:
-			int fd;
+		protected:
+			int 	m_fd;
 	};
 }
 
