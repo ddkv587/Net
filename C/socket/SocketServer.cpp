@@ -14,17 +14,6 @@ namespace NET
 		;
 	}
 
-	void CSocketServer::init()
-	{
-		LOG_IF( ERROR, -1 == ( m_fd = socket(AF_INET, SOCK_STREAM, 0) ) )  
-			<< CLog::format( "[%s, %d]  set socket to keep alive error: %s" ,__FILE__, __LINE__, strerror(errno) );
-	}
-
-	void CSocketServer::destroy()
-	{
-		;
-	}
-
 	void CSocketServer::bindAndListen()
 	{
 		CHECK( -1 != m_fd );

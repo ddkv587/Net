@@ -7,11 +7,12 @@
 namespace NET
 {
 	typedef struct tagFileEvent {
+		int fd;
 		int mask;
 		void* data;
 		unsigned int dataSize;
-		::std::function<int(void*, int, int)> readProc;
-		::std::function<int(void*, int, int)> writeProc;
+		::std::function<int(struct tagFileEvent*)> readProc;
+		::std::function<int(struct tagFileEvent*)> writeProc;
 	} FILE_EVENT;
 
 	typedef struct tagFiredEvent {
@@ -26,5 +27,16 @@ namespace NET
 		::std::vector<FIRED_EVENT> fired;
 		void* arg;
 	} EVENT_LOOP;
+
+	extern "C" {
+		int readProc(struct tagFileEvent* file)
+		{
+			if ( NULL == file ) return -1;
+
+			return -1;
+		}
+
+		int writeProc(struct tagFileEvent* file)
+	}
 }
 #endif

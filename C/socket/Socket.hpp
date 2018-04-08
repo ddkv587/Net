@@ -6,6 +6,9 @@ namespace NET
 	class CSocket
 	{
 		public:
+			void 	init();
+			void 	destroy();
+			
 			void 	setKeepAlive(bool, int);
 			void 	setTimeOut(int);
 

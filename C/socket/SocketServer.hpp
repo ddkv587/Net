@@ -8,17 +8,14 @@ namespace NET
 		public:
 			CSocketServer();
 			virtual ~CSocketServer();
-	
-			void 	init();
-			void 	destroy();
 
-			void 			setServerIP(char* ip)	{ strncpy(m_serverIp, ip, 16); }
-			const char* 	getServerIP() const 	{ return m_serverIp; };
+			void 			setServerIP(const char* ip)		{ strncpy(m_serverIp, ip, 16); }
+			const char* 	getServerIP() const 			{ return m_serverIp; };
 
-			void 	setPort(int iPort) 		{ m_serverPort = iPort; }
-			int  	port() const			{ return m_serverPort; }
+			void 			setPort(int iPort) 				{ m_serverPort = iPort; }
+			int  			port() const					{ return m_serverPort; }
 			
-			void	bindAndListen();
+			void			bindAndListen();
 
 			CSocketServer(CSocketServer&) = delete;
 			CSocketServer(const CSocketServer&) = delete;

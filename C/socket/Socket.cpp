@@ -5,12 +5,23 @@ namespace NET
 	CSocket::CSocket()
 		: m_fd(-1)
 	{
-		
+		;	
 	}
 	
 	CSocket::~CSocket()
 	{
 		if ( m_fd ) close(m_fd);
+	}
+
+	void CSocket::init()
+	{
+		LOG_IF( ERROR, -1 == ( m_fd = socket(AF_INET, SOCK_STREAM, 0) ) )  
+			<< CLog::format( "[%s, %d]  set socket to keep alive error: %s" ,__FILE__, __LINE__, strerror(errno) );
+	}
+
+	void CSocket::destroy()
+	{
+		;
 	}
 
 	void CSocket::setKeepAlive(bool on, int interval)
