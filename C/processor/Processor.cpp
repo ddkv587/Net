@@ -56,16 +56,40 @@ namespace NET
 					FIRED_EVENT fired = eventLoop->fired[index];
 					if( fired.mask == NET_READABLE ) {
 						FILE_EVENT file = eventLoop->event[fired.fd];
-						// int ret = file->readProc(fired->fd, file->data, file->dataSzie);
+						int ret = file->readProc(fired->fd, file->data, file->dataSzie);
+						
 						char buff[1024];
 						int ret = recv(fired.fd, buff, 1024, 0);
 						if ( ret == -1 || ret == 0) {
 							close(fired.fd);
 							delFileEvent(fired.fd, NET_READABLE);
-							printf("close socket: %d\n", fired.fd);
 							continue;
 						} else {
-							printf("recv msg: %s, size: %d\n", buff, ret);
+							if ( file->dataSzie > SIZE_HEADER_MANAGER ) {
+								IProtocol protocol;
+								int type = protocol.analyse(file->data);
+								
+								if ( type == -1 ) {
+									//support but not enough, wait for next loop
+									;
+								} else if ( type == 0 ) {
+									//not support
+									file.clean();
+								} else {
+									OBJECT* target = NULL;
+									ret = protocol.callSpecialFunc(type, target);
+									if ( ret == 0 && NULL != target ) {
+										//need send 
+										int sendSize = target.size + SIZE_HEADER_MANAGER;
+										char* sendBuff = new char(sendSize);
+										protocol.package(type, target, sendBuff);
+										ret = 0;
+										while ( ( ret += send(fired.fd, sendBuff + ret, sendSize - ret, 0) ) == sendSize );
+										delete sendBuff;
+									}
+									if ( NULL != target ) delete target;
+								}
+							}
 						}
 					}
 				} //for

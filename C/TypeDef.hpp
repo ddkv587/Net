@@ -13,6 +13,14 @@ namespace NET
 		unsigned int dataSize;
 		::std::function<int(struct tagFileEvent*)> readProc;
 		::std::function<int(struct tagFileEvent*)> writeProc;
+		
+		void clean() {
+			if ( NULL != data ) {
+				delete data;
+				data = NULL;
+			}
+			dataSize = 0;
+		}
 	} FILE_EVENT;
 
 	typedef struct tagFiredEvent {
@@ -27,16 +35,5 @@ namespace NET
 		::std::vector<FIRED_EVENT> fired;
 		void* arg;
 	} EVENT_LOOP;
-
-	extern "C" {
-		int readProc(struct tagFileEvent* file)
-		{
-			if ( NULL == file ) return -1;
-
-			return -1;
-		}
-
-		int writeProc(struct tagFileEvent* file)
-	}
 }
 #endif
