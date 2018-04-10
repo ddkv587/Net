@@ -45,6 +45,7 @@ namespace NET
 			m_eventLoop->size = size;
 
 			for ( int index=0; index < size; ++index ) {
+				m_eventLoop->event[index].fd = index;	
 				m_eventLoop->event[index].mask = NET_NONE;	
 			}
 		} else {
@@ -57,6 +58,7 @@ namespace NET
 			m_eventLoop->size = size;
 
 			for ( int index=oldSize; index < size; ++index ) {
+				m_eventLoop->event[index].fd = index;	
 				m_eventLoop->event[index].mask = NET_NONE;	
 			}
 		}

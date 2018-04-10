@@ -45,16 +45,18 @@ namespace NET
 			CProtocolBase();
 			virtual ~CProtocolBase();
 
-			virtual int analyse(char*);
+			virtual int analyse(int, char*);
 			virtual int package(int, OBJECT*, char*);
 
-			virtual int callSpecialFunc(int, OBJECT*);
+			virtual int callSpecialFunc(int, int, const char*, OBJECT*);
 
 		private:
-			void innerPackageECHO(OBJECT*, char*);
-			void innerPackagePING();
-			void innerPackageTIME();
-			void innerPackageHEART();
+			bool 	checkProtocol(int);
+			int  	checkSize(int, int);
+			int		innerPackageECHO(OBJECT*, char*);
+			int 	innerPackagePING(OBJECT*, char*);
+			void	innerPackageTIME();
+			void 	innerPackageHEART();
 
 			CProtocolBase(CProtocolBase&) = delete;
 			CProtocolBase(const CProtocolBase&) = delete;

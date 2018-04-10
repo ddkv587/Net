@@ -9,7 +9,7 @@ namespace NET
 	typedef struct tagFileEvent {
 		int fd;
 		int mask;
-		void* data;
+		char* data;
 		unsigned int dataSize;
 		::std::function<int(struct tagFileEvent*)> readProc;
 		::std::function<int(struct tagFileEvent*)> writeProc;
