@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <iostream>
-#include "common.h"
+#include "../common.h"
 #include "Protocol.hpp"
 
 #define CONNECT_CLIENT 1
@@ -29,7 +29,7 @@ int main(int argc, const char *argv[])
 #ifdef ECHO
 	header->sync = SYNC_FLAG;
 	header->protocol = EP_ECHO;
-	header->length = 6;
+	header->size = 6;
 
 	char* body = buff + sizeof(HEADER_MANAGER);
 	strncpy(body, "hello!", 6);
@@ -52,9 +52,9 @@ int main(int argc, const char *argv[])
 	char* body = (char*)(buff + sizeof(HEADER_MANAGER) + sizeof(PING_MANAGER));
 	strncpy(body, "hello!", 6);
 
-	header->length = sizeof(PING_MANAGER) + 6;
+	header->size = sizeof(PING_MANAGER) + 6;
 
-	int size = send(fd, buff, header->length + sizeof(HEADER_MANAGER), 0);
+	int size = send(fd, buff, header->size + sizeof(HEADER_MANAGER), 0);
 	std::cout<<"send bytes: "<<size<<std::endl;
 
 	while (1)
