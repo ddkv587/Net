@@ -15,16 +15,16 @@ int main(int argc, const char *argv[])
 	NET::CProcessor process5;
 
 	listen.addFileListener(&process1);
-	listen.addFileListener(&process2);
-	listen.addFileListener(&process3);
-	listen.addFileListener(&process4);
-	listen.addFileListener(&process5);
+	//listen.addFileListener(&process2);
+	//listen.addFileListener(&process3);
+	//listen.addFileListener(&process4);
+	//listen.addFileListener(&process5);
 
 	process1.run();
-	process2.run();
-	process3.run();
-	process4.run();
-	process5.run();
+	//process2.run();
+	//process3.run();
+	//process4.run();
+	//process5.run();
 
 	listen.run();
 

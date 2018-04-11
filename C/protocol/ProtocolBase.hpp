@@ -46,15 +46,15 @@ namespace NET
 			virtual ~CProtocolBase();
 
 			virtual int analyse(int, char*);
-			virtual int package(int, OBJECT*, char*);
+			virtual int package(int, const OBJECT*, char*&);
 
-			virtual int callSpecialFunc(int, int, const char*, OBJECT*);
+			virtual int callSpecialFunc(int, int, const char*, OBJECT*&);
 
 		private:
 			bool 	checkProtocol(int);
 			int  	checkSize(int, int);
-			int		innerPackageECHO(OBJECT*, char*);
-			int 	innerPackagePING(OBJECT*, char*);
+			int		innerPackageECHO(const OBJECT*, char*&);
+			int 	innerPackagePING(const OBJECT*, char*&);
 			void	innerPackageTIME();
 			void 	innerPackageHEART();
 

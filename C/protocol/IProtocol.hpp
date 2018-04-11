@@ -18,12 +18,12 @@ namespace NET
 		typedef struct tagObject
 		{
 			int size;
-			void* data;
+			char* data;
 
 			tagObject(int s) 
 			{
 				size = s;
-				data = (void*)new char(s);
+				data = new char(s);
 			}
 
 			~tagObject() 
@@ -39,9 +39,9 @@ namespace NET
 
 		public:
 			virtual int analyse(int, char*) = 0;
-			virtual int package(int, OBJECT*, char*) = 0;
+			virtual int package(int, const OBJECT*, char*&) = 0;
 
-			virtual int callSpecialFunc(int, int, const char*, OBJECT*) = 0;
+			virtual int callSpecialFunc(int, int, const char*, OBJECT*&) = 0;
 	};
 }
 #endif

@@ -50,12 +50,11 @@ int main(int argc, const char *argv[])
 	ping_header->current = 0;
 	ping_header->deadLimit = 10000;
 	char* body = (char*)(buff + sizeof(HEADER_MANAGER) + sizeof(PING_MANAGER));
-	strncpy(body, "hello!", 6);
 
-	header->size = sizeof(PING_MANAGER) + 6;
+	header->size = sizeof(PING_MANAGER);
 
 	int size = send(fd, buff, header->size + sizeof(HEADER_MANAGER), 0);
-	std::cout<<"send bytes: "<<size<<std::endl;
+	std::cout<<"ping send bytes: "<<size<<std::endl;
 
 	while (1)
 	{

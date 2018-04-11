@@ -23,7 +23,7 @@ namespace NET
 		return pHeader->size - size;
 	}
 
-	int CProtocolBase::package(int type, OBJECT* src, char* des)
+	int CProtocolBase::package(int type,const OBJECT* src, char* &des)
 	{
 		switch(type) {
 		case EP_ECHO:
@@ -35,7 +35,7 @@ namespace NET
 		}
 	}
 
-	int CProtocolBase::callSpecialFunc(int type, int size,const char* src, OBJECT* target)
+	int CProtocolBase::callSpecialFunc(int type, int size,const char* src, OBJECT* &target)
 	{
 		CHECK_R(NULL != src, -1);
 		switch(type) {
@@ -46,12 +46,11 @@ namespace NET
 				 target = new OBJECT( size );
 
 				 memcpy(target->data, src, size);
-			} break;
+			} return 0;
 		case EP_PING: {
 			 CHECK_R(size == SIZE_PING_MANAGER, -1);
 
 			 PING_MANAGER* pPing = (PING_MANAGER*)src;
-
 			 printf("recv ping msg, current: %d, deadLimit: %d\n", \
 					 pPing->current, \
 					 pPing->deadLimit);
@@ -59,12 +58,17 @@ namespace NET
 			 CHECK_R(pPing->deadLimit != pPing->current, 1);	
 
 			 if ( NULL != target ) delete target;
-				 target = new OBJECT( size );
+			 target = new OBJECT( SIZE_PING_MANAGER );
 
-				 memcpy(pPing, src, SIZE_PING_MANAGER);
-				 pPing = (PING_MANAGER*)target->data;
-				 pPing->current += 1;
-			 } break;
+			 LOG(INFO) 
+				<< CLog::format( "[%s, %d] begin to copy ping" ,__FILE__, __LINE__);									
+
+			 memcpy(target->data, src, SIZE_PING_MANAGER);
+			 pPing = (PING_MANAGER*)target->data;
+			 pPing->current += 1;
+			 LOG(INFO) 
+				<< CLog::format( "[%s, %d] ready to send ping, target: %p" ,__FILE__, __LINE__, target);	
+			 } return 0;
 		default:
 			 return -1;
 		}
@@ -83,7 +87,7 @@ namespace NET
 		return 0;
 	}
 
-	int CProtocolBase::innerPackageECHO(OBJECT* src, char* des)
+	int CProtocolBase::innerPackageECHO(const OBJECT* src, char* &des)
 	{
 		CHECK_R( NULL != src, -1 );
 
@@ -100,21 +104,27 @@ namespace NET
 		return pHeader->size;
 	}
 
-	int CProtocolBase::innerPackagePING(OBJECT* src, char* des)
+	int CProtocolBase::innerPackagePING(const OBJECT* src, char* &des)
 	{
+		LOG(INFO) 
+			<< CLog::format( "[%s, %d] begin to innerPackagePING,size: %d" ,__FILE__, __LINE__, src->size);									
+
 		CHECK_R( NULL != src, -1 );
 
 		if ( NULL != des ) delete des;
 
-		des = new char(src->size + SIZE_HEADER_MANAGER);
+		des = (char*)malloc(src->size + SIZE_HEADER_MANAGER);
 		HEADER_MANAGER* pHeader = (HEADER_MANAGER*)des;
 		pHeader->sync = SYNC_FLAG;
-		pHeader->size = src->size + SIZE_HEADER_MANAGER;
+		pHeader->size = src->size;
 		pHeader->protocol = EP_PING;
 
-		memcpy(des + SIZE_HEADER_MANAGER, src, src->size);
+		memcpy(des + SIZE_HEADER_MANAGER, src->data, src->size);
 
-		return pHeader->size;
+		LOG(INFO) 
+				<< CLog::format( "[%s, %d] ready send: %d" ,__FILE__, __LINE__, pHeader->size);									
+
+		return pHeader->size + SIZE_HEADER_MANAGER;
 	}
 
 	void CProtocolBase::innerPackageTIME()
