@@ -4,7 +4,7 @@ namespace NET
 {
 	CProcessor::CProcessor()
 		: m_uiSize(0)
-		  , m_pMultiplex(NULL)
+		, m_pMultiplex(NULL)
 	{
 #ifdef OS_BSD
 		m_pMultiplex = new CMultiKqueue();
@@ -71,7 +71,7 @@ namespace NET
 
 						if ( file->dataSize >= IProtocol::SIZE_HEADER_MANAGER ) {
 							IProtocol* protocol = new CProtocolBase();
-							int ret = protocol->analyse(file->dataSize, (char*)file->data);
+							int ret = protocol->analyse(file->dataSize - IProtocol::SIZE_HEADER_MANAGER, (char*)file->data);
 
 							if ( ret == -1 ) {
 								//not support
@@ -81,10 +81,10 @@ namespace NET
 									//not enough, need recv <ret> bytes
 									if ( file->dataSize == IProtocol::SIZE_HEADER_MANAGER ) {
 										IProtocol::HEADER_MANAGER* pHeader = (IProtocol::HEADER_MANAGER*)file->data;
-										file->data = new char(pHeader->size + IProtocol::SIZE_HEADER_MANAGER);
+										file->data = (char*)malloc(pHeader->size + IProtocol::SIZE_HEADER_MANAGER);
 										memcpy(file->data, pHeader, IProtocol::SIZE_HEADER_MANAGER);
 										file->dataSize = IProtocol::SIZE_HEADER_MANAGER;		//next step is recv, increase or close
-										delete pHeader;
+										delete []pHeader;
 									}
 
 									int size = recv(file->fd, file->data + file->dataSize, ret, 0);		
@@ -109,7 +109,7 @@ namespace NET
 									if ( -1 == sendSize ) continue;
 
 									while ( ( ret += send(fired.fd, sendBuff + ret, sendSize - ret, 0) ) == sendSize );
-									delete sendBuff;
+									delete []sendBuff;
 								}
 								if ( NULL != target ) delete target;
 							} 

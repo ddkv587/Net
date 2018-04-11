@@ -14,7 +14,7 @@ namespace NET
 
 	int CProtocolBase::analyse(int size, char* buff)
 	{
-		CHECK_R( NULL != buff && size >= SIZE_HEADER_MANAGER, -1 );
+		CHECK_R( NULL != buff, -1 );
 		HEADER_MANAGER* pHeader = (HEADER_MANAGER*)buff;
 
 		CHECK_R( pHeader->sync == SYNC_FLAG, -1 );

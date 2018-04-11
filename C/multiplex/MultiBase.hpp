@@ -28,6 +28,8 @@ namespace NET
 			virtual void 	delFileEvent(int fd, int mask);
 			virtual int		eventLoop(void* timeout);
 			
+			void			enableEdgeTrigger(bool on = true) 	{ m_isEdgeTrigger = on; }
+
 			CMultiBase(CMultiBase&) = delete;
 			CMultiBase(const CMultiBase&) = delete;
 
@@ -36,9 +38,10 @@ namespace NET
 
 			EMultiType		m_eType;
 			EVENT_LOOP* 	m_eventLoop;
-
+			
+			bool			m_isEdgeTrigger;
 		private:
-	
+
 	};
 }
 #endif

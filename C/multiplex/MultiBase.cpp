@@ -6,6 +6,7 @@ namespace NET
 	CMultiBase::CMultiBase()
 		: m_eType(EMT_NONE)
 		, m_eventLoop(NULL)
+		, m_isEdgeTrigger(false)
 	{
 		;
 	}

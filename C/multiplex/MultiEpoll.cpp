@@ -39,7 +39,13 @@ namespace NET
 
 		ee.events = 0;
 		mask |= m_eventLoop->event[fd].mask;
-		if ( mask & NET_READABLE ) { ee.events = EPOLLIN | EPOLLET; printf("add read flag\n"); }
+		if ( mask & NET_READABLE ) 
+		{ 
+			ee.events = EPOLLIN;
+			if (m_isEdgeTrigger) ee.events |= EPOLLET;
+			printf("add read flag\n"); 
+		}
+
 		if ( mask & NET_WRITABLE ) { ee.events = EPOLLOUT; printf("add write flag\n"); }
 
 		ee.data.fd = fd;
