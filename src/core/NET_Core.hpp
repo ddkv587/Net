@@ -63,6 +63,10 @@ using namespace google;
 
 extern int errno;
 
+//=========== load helper =========
+#include <dlfcn.h>
+#include "loadHelper/CLoadHelper.hpp"
+
 //=========== thread ===============
 #include <thread>
 #include "thread/CThreadBase.hpp"
