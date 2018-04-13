@@ -1,6 +1,0 @@
-
-namespace NET
-{
-	extern "C" {
-	}
-}

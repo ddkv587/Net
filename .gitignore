@@ -1,7 +1,9 @@
 # build temporary file
 *.o
 *.out
-im_*/
+.im_*/
+.out/
+.recy/
 
 #build out dir
 target/
