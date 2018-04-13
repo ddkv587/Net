@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CListener : public ThreadBase 
+	class CListener : public CThreadBase 
 	{
 		public:
 			CListener();

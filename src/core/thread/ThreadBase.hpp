@@ -3,16 +3,16 @@
 
 namespace NET
 {
-	class ThreadBase
+	class CThreadBase
 	{
 	public:
-		ThreadBase()
+		CThreadBase()
 			: m_bStop(false)
 		{
 			;
 		}
 
-		virtual ~ThreadBase() 
+		virtual ~CThreadBase() 
 		{
 			if ( m_thread.joinable() ) {
 				m_thread.join();
@@ -21,7 +21,7 @@ namespace NET
 
 		void run(void* arg = NULL)
 		{
-			m_thread = ::std::thread(&ThreadBase::mainLoop, this, std::move(arg));
+			m_thread = ::std::thread(&CThreadBase::mainLoop, this, std::move(arg));
 		}
 
 		void stop()
@@ -34,9 +34,9 @@ namespace NET
 		 	return m_thread.get_id();
 		}
 
-		ThreadBase(ThreadBase&) = delete;
-		ThreadBase(const ThreadBase&) = delete;
-		ThreadBase& operator=(const ThreadBase&) = delete;
+		CThreadBase(CThreadBase&) = delete;
+		CThreadBase(const CThreadBase&) = delete;
+		CThreadBase& operator=(const CThreadBase&) = delete;
 
 	protected:
 		virtual void mainLoop(void* arg)

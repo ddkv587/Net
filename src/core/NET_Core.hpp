@@ -7,7 +7,10 @@ namespace NET
 	class CLog;
 
 	//====== thread ========
-	class ThreadBase;
+	class CThreadBase;
+
+	//====== load helper =====
+	class CLoadHelper;
 
 	//====== socket ===========
 	class CSocket;
@@ -62,7 +65,7 @@ extern int errno;
 
 //=========== thread ===============
 #include <thread>
-#include "thread/ThreadBase.hpp"
+#include "thread/CThreadBase.hpp"
 
 //=========== socket ================
 #include <sys/types.h>

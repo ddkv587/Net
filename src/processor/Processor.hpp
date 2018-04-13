@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CProcessor : public ThreadBase, public IFileListener
+	class CProcessor : public CThreadBase, public IFileListener
 	{
 		public:
 			CProcessor();
