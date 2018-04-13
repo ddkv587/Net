@@ -16,8 +16,8 @@ namespace NET
 
 		public:
 			static void 		initLog(const char*);
-			static void 		setDirection(char*);
-			static void 		setDirection(LOG_LEVEL, char*);
+			static void 		setDirection(const char*);
+			static void 		setDirection(LOG_LEVEL, const char*);
 			static void 		setFilter(LOG_LEVEL);
 
 			static void 		enableToStderr(bool);
@@ -29,6 +29,9 @@ namespace NET
 			CLog() = delete;
 			CLog(CLog&) = delete;
 			~CLog() {};
+
+		private:
+			static bool			checkDirection(const char* strPath);
 	};
 }
 #endif

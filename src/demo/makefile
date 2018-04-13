@@ -12,7 +12,7 @@ CPP_INCLUDE		:= -I$(ROOT_PATH) \
 CPP_SRCDIR		:= $(shell pwd)
 CPP_SRC			:= $(shell find $(CPP_SRCDIR) -name "*.cpp")
 
-LIBS			+= -lCore -lListener -lProcessor -lProtocol
+LIBS			+= -ldl -lglog -lCore -lListener -lProcessor -lProtocol
 LIBS_DIR		+= -L$(TARGET_PATH) 
 
 include $(BUILD_EXECUTE)

@@ -1,5 +1,8 @@
 #include <string>
 #include <cstdarg>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "NET_Core.hpp"
 
 namespace NET
@@ -11,15 +14,21 @@ namespace NET
 		FLAGS_alsologtostderr = true;
 		FLAGS_colorlogtostderr = true;
 		FLAGS_minloglevel = LL_INFO;
+
+		checkDirection("/tmp/log");
 	}
 
-	void CLog::setDirection(char* strPath)
+	void CLog::setDirection(const char* strPath)
 	{
+		if ( !checkDirection(strPath) ) return;
+		
 		FLAGS_log_dir = strPath;
 	}
 
-	void CLog::setDirection(LOG_LEVEL level, char* strPath)
+	void CLog::setDirection(LOG_LEVEL level, const char* strPath)
 	{
+		if ( !checkDirection(strPath) ) return;
+
 		google::SetLogDestination(level, strPath);
 	}
 
@@ -58,5 +67,18 @@ namespace NET
 			delete[] buff;
 			
 			return ret;
+	}
+
+	bool CLog::checkDirection(const char* strPath)
+	{
+		DIR* dir = opendir(strPath);
+		if ( dir ) {
+			closedir(dir);
+			return true;
+		} else if ( ENOENT == errno ) {
+			return ( 0 == mkdir(strPath, 0774) );
+		} else {
+			return false;
+		}
 	}
 }
