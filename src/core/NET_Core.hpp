@@ -65,7 +65,7 @@ extern int errno;
 
 //=========== load helper =========
 #include <dlfcn.h>
-#include "loadHelper/CLoadHelper.hpp"
+#include "loadHelper/LoadHelper.hpp"
 
 //=========== thread ===============
 #include <thread>
