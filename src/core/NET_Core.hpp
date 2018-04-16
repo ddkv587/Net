@@ -69,7 +69,7 @@ extern int errno;
 
 //=========== thread ===============
 #include <thread>
-#include "thread/CThreadBase.hpp"
+#include "thread/ThreadBase.hpp"
 
 //=========== socket ================
 #include <sys/types.h>

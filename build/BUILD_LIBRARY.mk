@@ -9,7 +9,7 @@ all: $(TARGET_MODULE)
 $(CPP_APP_OBJECT): $(BUILD_MIDDLE_PATH)%.o: $(CPP_SRCDIR)%.cpp
 	@echo $(notdir $<)
 	@$(MKDIR) $(dir $@)
-	@$(CXX) -c $(CPP_INCLUDE) $(CPP_FLAGS) -fPIC -o $@ $<
+	$(CXX) -c $(CPP_INCLUDE) $(CPP_FLAGS) -fPIC -o $@ $<
 
 $(TARGET_MODULE): $(CPP_APP_OBJECT)
 	@echo link lib$(TARGET_MODULE).so ...

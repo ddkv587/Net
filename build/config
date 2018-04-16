@@ -3,6 +3,7 @@ CUR_DIR=`pwd`
 export ROOT_PATH=${CUR_DIR}
 export TARGET_PATH=${CUR_DIR}/.out
 export IM_PATH=${CUR_DIR}/.im_build
+export SRC_ROOT_PATH=${ROOT_PATH}/../src
 
 export CLEAR_VARS=${CUR_DIR}/CLEAR.mk
 export BUILD_OBJECT=${CUR_DIR}/BUILD_OBJECT.mk
