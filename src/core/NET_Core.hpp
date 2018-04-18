@@ -52,6 +52,12 @@ namespace NET
 #define POLL_TIMEOUT_SEC 				5
 #define POLL_TIMEOUT_USEC 				0
 
+//============ xml ==============
+#include "xml/rapidxml.hpp"
+#include "xml/rapidxml_iterators.hpp"
+#include "xml/rapidxml_print.hpp"
+#include "xml/rapidxml_utils.hpp"
+
 //============ log ==============
 #include <glog/logging.h>
 using namespace google;
