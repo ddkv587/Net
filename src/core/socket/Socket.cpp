@@ -59,7 +59,7 @@ namespace NET
 
 		on ? val = 1 : val = 0;
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) )
-				<< CLog::format( "[%s, %d]  set socket reuue addr error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+				<< CLog::format( "[%s, %d]  set socket reuse addr error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
 
 	void CSocket::setReusePort(bool on)
@@ -68,6 +68,30 @@ namespace NET
 
 		on ? val = 1 : val = 0;
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val)) )
-				<< CLog::format( "[%s, %d]  set socket reu e port error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+				<< CLog::format( "[%s, %d]  set socket reuse port error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+
+	void CSocket::setSendBuffSize(int size)
+	{
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size)) )
+				<< CLog::format( "[%s, %d]  set socket send buff size error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+			
+	void CSocket::setSendTimeOut(int timeout)
+	{
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_SNDTIMEO, &size, sizeof(size)) )
+				<< CLog::format( "[%s, %d]  set socket timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+
+	void CSocket::setRecvBuffSize(int size)
+	{
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size)) )
+				<< CLog::format( "[%s, %d]  set socket recv buff size error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+
+	void CSocket::setRecvTimeOut(int timeout)
+	{
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_RCVTIMEO, &size, sizeof(size)) )
+				<< CLog::format( "[%s, %d]  set socket recv timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
 }
