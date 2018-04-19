@@ -1,6 +1,6 @@
 # Net
 
-A sample demo integrate the knowledge of the server I have learned.
+A sample demo for network server.
 
 main loop:
 	
