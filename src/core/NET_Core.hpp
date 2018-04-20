@@ -24,6 +24,10 @@ namespace NET
 	class CMultiEpoll;
 	class CMultiSelect;
 #endif
+
+	//======= message =============
+	class CBaseMessage;
+	class CMessgaeQueue;
 }
 
 //============ common ==============
@@ -98,5 +102,9 @@ extern int errno;
 #include "multiplex/MultiEpoll.hpp"
 #include "multiplex/MultiSelect.hpp"
 #endif
+
+//=========== message =============
+#include "message/BaseMessage.hpp"
+#include "message/MessageQueue.hpp"
 
 #endif

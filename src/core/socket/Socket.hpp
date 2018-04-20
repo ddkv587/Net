@@ -15,7 +15,13 @@ namespace NET
 			void 	setReuseAddr(bool);
 			void 	setReusePort(bool);
 
-			int 	getSocketFD()	const 		{ return m_fd; }
+			void	setSendBuffSize(int);
+			void 	setSendTimeOut(int);
+
+			void	setRecvBuffSize(int);
+			void 	setRecvTimeOut(int);
+
+			int 	getSocketFD()		 	{ return m_fd; }
 
 		protected:
 			CSocket();
