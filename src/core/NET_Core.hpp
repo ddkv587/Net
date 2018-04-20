@@ -54,9 +54,6 @@ namespace NET
 
 //============ xml ==============
 #include "xml/rapidxml.hpp"
-#include "xml/rapidxml_iterators.hpp"
-#include "xml/rapidxml_print.hpp"
-#include "xml/rapidxml_utils.hpp"
 
 //============ log ==============
 #include <glog/logging.h>
