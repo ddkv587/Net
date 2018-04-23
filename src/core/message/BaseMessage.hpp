@@ -9,7 +9,7 @@ namespace NET
 			enum EMessageType
 			{
 				EMT_INVALID = -1,
-				EMT_ACCEPT,
+				EMT_LISTENER,
 				EMT_SEND,
 				EMT_RECV,
 				EMT_UPDATE,
@@ -26,14 +26,15 @@ namespace NET
 
 			virtual ~CBaseMessage() {}
 
-			virtual EMessageType	getMessageType() 	{ return m_type; } 
+			EMessageType			getMessageType() 		{ return m_type; } 
 			virtual void 			handleMessage(void*) = 0;
 
 		protected:
 			CBaseMessage(CBaseMessage&) = delete;
 			CBaseMessage(const CBaseMessage&) = delete;
+			CBaseMessage& operator=(const CBaseMessage&) = delete;
 
-		private:
+		protected:
 			EMessageType	m_type;
 	};
 }

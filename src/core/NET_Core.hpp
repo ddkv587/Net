@@ -3,6 +3,9 @@
 
 namespace NET
 {
+	//====== common ========
+	class Object;
+
 	//====== log =======
 	class CLog;
 
@@ -32,9 +35,13 @@ namespace NET
 
 //============ common ==============
 #include <vector>
+#include <queue>
+#include <mutex>
 #ifndef DEF_ASSERT
 #include <assert.h>
 #endif
+
+#include "common/Object.hpp"
 
 #define CHECK_R(X, R) \
 	do { if (!(X)) return (R); } while(0)
@@ -63,7 +70,6 @@ namespace NET
 #include <glog/logging.h>
 using namespace google;
 
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include "log/Log.hpp"
@@ -76,6 +82,7 @@ extern int errno;
 
 //=========== thread ===============
 #include <thread>
+#include <string>
 #include "thread/ThreadBase.hpp"
 
 //=========== socket ================

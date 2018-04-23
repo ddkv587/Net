@@ -104,8 +104,6 @@ namespace NET
 																	file->dataSize - IProtocol::SIZE_HEADER_MANAGER, \
 																	file->data + IProtocol::SIZE_HEADER_MANAGER, \
 																	target);
-									LOG(INFO) 
-										<< CLog::format( "[%s, %d] callSpecialFunc end; %d, %p" ,__FILE__, __LINE__, ret, target);
 
 									if ( ret == 0 && NULL != target ) {
 										//need send 
@@ -113,12 +111,7 @@ namespace NET
 										int sendSize = protocol->package(pHeader->protocol, target, sendBuff);
 										
 										if ( -1 == sendSize ) continue;
-										LOG(INFO) 
-												<< CLog::format( "[%s, %d] begin to send size; %d" ,__FILE__, __LINE__, sendSize );	
-										while ( ( ret += send(file->fd, sendBuff + ret, sendSize - ret, 0) ) != sendSize ) {
-											LOG(INFO) 
-												<< CLog::format( "[%s, %d] send size; %d" ,__FILE__, __LINE__, ret );	
-										}
+										while ( ( ret += send(file->fd, sendBuff + ret, sendSize - ret, 0) ) != sendSize );
 										delete []sendBuff;
 									}
 									if ( NULL != target ) delete target;

@@ -3,6 +3,7 @@
 
 namespace NET
 {
+	class CMsgListener;
 	class CListener;
 }
 
@@ -17,6 +18,7 @@ namespace NET
 
 #include "core/NET_Core.hpp"
 
+#include "MsgListener.hpp"
 #include "IFileListener.hpp"
 #include "Listener.hpp"
 #include "ListenerHelper.hpp"

@@ -15,12 +15,12 @@ namespace NET
 			void 			printListener();
 
 		protected:
-			virtual IFileListener* scheduling(::std::list<IFileListener*>&);
+			virtual IFileListener* 	scheduling(::std::list<IFileListener*>&);
 			
-			void mainLoop(void* arg);
+			void 			mainLoop(void* arg);
 
 		private:
-			void setNonBlock(int);
+			void 			setNonBlock(int);
 
 		private:
 			CSocketServer 				m_server;

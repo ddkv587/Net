@@ -23,6 +23,9 @@ namespace NET
 
 			int 	getSocketFD()		 	{ return m_fd; }
 
+			CSocket& operator<<(const Object& data);
+			CSocket& operator<<(const ::std::string& str);
+
 		protected:
 			CSocket();
 			virtual ~CSocket();
@@ -34,5 +37,4 @@ namespace NET
 			int 	m_fd;
 	};
 }
-
 #endif

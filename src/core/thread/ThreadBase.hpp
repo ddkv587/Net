@@ -8,6 +8,7 @@ namespace NET
 	public:
 		CThreadBase()
 			: m_bStop(false)
+			, m_strName("Unknow")
 		{
 			;
 		}
@@ -21,7 +22,7 @@ namespace NET
 
 		void run(void* arg = NULL)
 		{
-			m_thread = ::std::thread(&CThreadBase::mainLoop, this, std::move(arg));
+			m_thread = ::std::thread(&CThreadBase::mainLoop, this, ::std::move(arg));
 		}
 
 		void stop()
@@ -32,6 +33,26 @@ namespace NET
 		::std::thread::id getThreadID()
 		{
 		 	return m_thread.get_id();
+		}
+
+		void setName(::std::string strName)
+		{
+			m_strName = strName;
+		}
+		
+		::std::string getName()
+		{
+			return m_strName; 
+		}
+
+		virtual void setPriority(int pri)
+		{
+			int temp;
+			sched_param sch;
+			pthread_getschedparam(m_thread.native_handle(), &temp, &sch);
+
+			sch.sched_priority = pri;
+			pthread_setschedparam(m_thread.native_handle(), SCHED_FIFO, &sch);	//FIFO is preset
 		}
 
 		CThreadBase(CThreadBase&) = delete;
@@ -50,6 +71,7 @@ namespace NET
 		bool 		m_bStop;
 
 	private:
+		::std::string m_strName;
 		::std::thread m_thread;
 	};
 }

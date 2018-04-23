@@ -79,7 +79,7 @@ namespace NET
 			
 	void CSocket::setSendTimeOut(int timeout)
 	{
-		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_SNDTIMEO, &size, sizeof(size)) )
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(timeout)) )
 				<< CLog::format( "[%s, %d]  set socket timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
 
@@ -91,7 +91,30 @@ namespace NET
 
 	void CSocket::setRecvTimeOut(int timeout)
 	{
-		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_RCVTIMEO, &size, sizeof(size)) )
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) )
 				<< CLog::format( "[%s, %d]  set socket recv timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+
+	CSocket& operator<<(const Object& data)
+	{
+		assert( m_fd == -1 );
+
+		if ( data->size() > 0 ) {
+			int size = 0;
+			while ( ( size = size + send(m_fd, data.date(), data.size(), 0) ) < data.size() );
+		}
+		return *this;
+	}
+
+	CSocket& operator<<(const ::std::string& str)
+	{
+		assert( m_fd == -1 );
+
+		if ( str.size() > 0 ) {
+			int size = 0;
+			while ( ( size = size + send(m_fd, str.data(), str.size(), 0) ) < str.size() );
+		}
+
+		return *this;
 	}
 }
