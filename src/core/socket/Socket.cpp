@@ -95,7 +95,7 @@ namespace NET
 				<< CLog::format( "[%s, %d]  set socket recv timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
 
-	CSocket& operator<<(const Object& data)
+	CSocket& CSocket::operator<<(const Object& data)
 	{
 		assert( m_fd == -1 );
 
@@ -103,10 +103,11 @@ namespace NET
 			int size = 0;
 			while ( ( size = size + send(m_fd, data.date(), data.size(), 0) ) < data.size() );
 		}
+
 		return *this;
 	}
 
-	CSocket& operator<<(const ::std::string& str)
+	CSocket& CSocket::operator<<(const ::std::string& str)
 	{
 		assert( m_fd == -1 );
 

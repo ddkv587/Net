@@ -28,7 +28,7 @@ namespace NET
 				release();
 			}
 
-			void* alloc(::std::size_t size, bool bForceDelete)
+			void* alloc(::std::size_t size, bool bForceDelete = true)
 			{
 				if ( m_data != NULL ) {
 					if ( bForceDelete ) 

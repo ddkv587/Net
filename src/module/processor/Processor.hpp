@@ -14,10 +14,10 @@ namespace NET
 			
 			unsigned int 	size() const { return m_uiSize;	}
 
+		protected:
 			CProcessor(CProcessor&) = delete;
 			CProcessor(const CProcessor&) = delete;
-
-		protected:
+			
 			void mainLoop(void* arg);
 
 		private:

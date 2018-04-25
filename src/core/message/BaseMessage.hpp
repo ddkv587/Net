@@ -9,11 +9,12 @@ namespace NET
 			enum EMessageType
 			{
 				EMT_INVALID = -1,
-				EMT_LISTENER,
+				EMT_ACCEPT,
 				EMT_SEND,
 				EMT_RECV,
 				EMT_UPDATE,
 				EMT_RESET,
+				EMT_OTHER,
 				EMT_MAX
 			};
 

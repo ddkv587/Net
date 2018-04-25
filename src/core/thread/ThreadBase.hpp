@@ -68,11 +68,11 @@ namespace NET
 		}
 
 	protected:
-		bool 		m_bStop;
+		bool 			m_bStop;
 
 	private:
-		::std::string m_strName;
-		::std::thread m_thread;
+		::std::string 	m_strName;
+		::std::thread 	m_thread;
 	};
 }
 #endif
