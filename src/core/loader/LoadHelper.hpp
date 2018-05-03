@@ -3,7 +3,5 @@
 
 class CLoadHelper
 {
-	public:
-
 };
 #endif

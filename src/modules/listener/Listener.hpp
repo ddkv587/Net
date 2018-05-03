@@ -3,11 +3,16 @@
 
 namespace NET
 {
-	class CListener : public CThreadBase 
+	class CListener : public CThreadBase, public CModule 
 	{
 		public:
 			CListener();
 			virtual ~CListener();
+
+			bool			load();
+			void 			remove();
+			bool			initialize();
+			void			unInitialize();
 
 			virtual void 	addFileListener(IFileListener*);
 			virtual void 	delFileListener(IFileListener*); 

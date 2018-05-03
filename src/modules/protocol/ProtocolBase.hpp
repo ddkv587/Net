@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CProtocolBase : public IProtocol 
+	class CProtocolBase : public IProtocol, public CModule 
 	{
 		public:
 			enum EProcotol
@@ -44,6 +44,12 @@ namespace NET
 		public:
 			CProtocolBase();
 			virtual ~CProtocolBase();
+
+			//======= module function ============
+			bool		load();
+			void		remove();
+			bool 		initialize();
+			void		unInitialize();
 
 			virtual int analyse(int, char*);
 			virtual int package(int, const OBJECT*, char*&);
