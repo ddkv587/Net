@@ -64,7 +64,9 @@ namespace NET
 #define POLL_TIMEOUT_USEC 				0
 
 //============ xml ==============
-#include "xml/rapidxml.hpp"
+#include "xml/rapidxml/rapidxml.hpp"
+using namespace rapidxml;
+#include "xml/XMLHelper.hpp"
 
 //============ log ==============
 #include <glog/logging.h>

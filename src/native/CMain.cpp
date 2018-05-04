@@ -46,7 +46,6 @@ namespace NET
 		fread(pBuff, buffSize)
 
 		rapidxml::xml_document<> doc;
-
 		//load config
 
 

@@ -34,10 +34,8 @@ namespace NET
 			virtual ~CModule() {}
 
 		protected:
-			bool				m_bInitialized;
-			tagModuleConfig 	m_config;
-
-			::std::queue<void*>	
+			bool					m_bInitialized;
+			tagModuleConfig 		m_config;
 	};
 }
 #endif
