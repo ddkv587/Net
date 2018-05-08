@@ -32,14 +32,7 @@ namespace NET
 #include <assert.h>
 #endif
 
-#define CHECK_R(X, R) \
-	do { if (!(X)) return (R); } while(0)
-
-#define handle_error(msg) \
-	do { perror(msg); exit(EXIT_FAILURE); } while(0)
-
-#define handle_error_errno(en, msg) \
-	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
+#include "common/TypeDef.hpp"
 
 #define NET_NONE 		0x00
 #define NET_READABLE 	0x01
