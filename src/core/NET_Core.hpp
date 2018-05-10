@@ -32,7 +32,7 @@ namespace NET
 #include <assert.h>
 #endif
 
-#include "common/TypeDef.hpp"
+#include "platform/TypeDefine.hpp"
 
 #define NET_NONE 		0x00
 #define NET_READABLE 	0x01

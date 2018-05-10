@@ -23,6 +23,7 @@ namespace NET
 	typedef 	INT64			LLONG;
 	typedef		UINT64			ULLONG;
 	typedef 	INT64			POINT;
+	typedef 	::std::string	STRING;
 
 #define TRUE	true 
 #define FALSE	false
@@ -39,5 +40,7 @@ namespace NET
 
 #define handle_error_errno(en, msg) \
 	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
+
+#define UNUSED(X) (void)(X)
 
 #endif
