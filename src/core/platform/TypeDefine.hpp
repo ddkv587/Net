@@ -25,8 +25,10 @@ namespace NET
 	typedef 	INT64			POINT;
 	typedef 	::std::string	STRING;
 
-#define TRUE	true 
-#define FALSE	false
+#define TRUE			true 
+#define FALSE			false
+
+#define STRING_NULL		""
 
 #define MIN(x, y) 	( (x) < (y) ? (x) : (y) )
 #define MAX(x, y) 	( (x) > (y) ? (x) : (y) )
