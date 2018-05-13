@@ -6,11 +6,15 @@ namespace NET
 	//====== log =======
 	class CLog;
 
-	//====== thread ========
-	class CThreadBase;
+    //====== format ========
+    class XMLHelper;
+    class XMLElement;
 
 	//====== load helper =====
 	class CLoadHelper;
+    
+    //====== thread ========
+    class CThreadBase;
 
 	//====== socket ===========
 	class CSocket;
@@ -28,22 +32,12 @@ namespace NET
 
 //============ common ==============
 #include <vector>
+#include <fstream>
 #ifndef DEF_ASSERT
 #include <assert.h>
 #endif
 
 #include "platform/TypeDefine.hpp"
-
-#define NET_NONE 		0x00
-#define NET_READABLE 	0x01
-#define NET_WRITABLE 	0x02
-
-#define SYSTEM_VERSION					0.1 
-#define SYSTEM_MAX_EVENTS 				1024
-#define SYSTEM_SOCKET_PORT				8000
-
-#define POLL_TIMEOUT_SEC 				5
-#define POLL_TIMEOUT_USEC 				0
 
 //============ log ==============
 #include <glog/logging.h>
@@ -53,8 +47,12 @@ using namespace google;
 #include <string.h>
 #include <errno.h>
 #include "log/Log.hpp"
-
 extern int errno;
+
+//=========== format =========
+#include "rapidxml/rapidxml.hpp"
+#include "XMLElement.hpp"
+#include "XMLHelper.hpp"
 
 //=========== load helper =========
 #include <dlfcn.h>
@@ -75,8 +73,8 @@ extern int errno;
 #include "socket/Socket.hpp"
 #include "socket/SocketServer.hpp"
 
-//========== multiplex ==============
-#include "multiplex/TypeDef.hpp"
+//========== platform ==============
+#include "multiplex/MultiStruct.hpp"
 #include "multiplex/MultiBase.hpp"
 
 #ifdef OS_BSD
@@ -87,6 +85,7 @@ extern int errno;
 #include <sys/epoll.h>
 #include "multiplex/MultiEpoll.hpp"
 #include "multiplex/MultiSelect.hpp"
+
 #endif
 
 #endif

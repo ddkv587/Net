@@ -3,15 +3,11 @@
 namespace NET
 {
 	CListener::CListener()
+        : m_pServer(NULL)
 	{
-		m_server.init();
-
-		m_server.setPort(SYSTEM_SOCKET_PORT);
-		m_server.setKeepAlive(true, 30);
-		m_server.setTimeOut(30);
-		m_server.setReuseAddr(true);
-
-		m_server.bindAndListen();
+        m_pServer = new CSocketServer();
+        
+		m_pServer.init();
 	}
 
 	CListener::~CListener()
@@ -38,7 +34,7 @@ namespace NET
 		}
 	}
 	
-	IFileListener* CListener::scheduling(::std::list<IFileListener*>& lstListener)
+	IFileListener* CListener::balance(::std::list<IFileListener*>& lstListener)
 	{
 		CHECK_R(m_lstListener.size() != 0, NULL);	
 
@@ -51,9 +47,14 @@ namespace NET
 
 	void CListener::mainLoop(void* arg)
 	{
-		int client;
-		struct sockaddr_in client_addr;
-		int addLen = sizeof(struct sockaddr_in);
+        if ( !m_pServer->bindAndListen() ) {
+            LOG(ERROR) << CLog::format( "[%s, %d]  CListener bind and listen error, quit...", __FILE__, __LINE__ );
+            return;
+        }
+        
+        int client;
+        struct sockaddr_in client_addr;
+        int addLen = sizeof(struct sockaddr_in);
 
 		while(!m_bStop)
 		{

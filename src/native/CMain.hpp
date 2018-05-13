@@ -15,13 +15,9 @@ namespace NET
 		public:
 			static CMain*	getInstance();
 
-			bool			loadConfig();
-			void			saveConfig();
-
 			bool			initialize();
 			void 			unInitialize();
-
-			void			reload();
+            void            reload();
 
 		protected:
 			CMain();
@@ -31,20 +27,22 @@ namespace NET
 		private:
 			CMain(CMain&) = delete;
 			CMain(const CMain&) = delete;
-
-			void 			innerInitModule();
-			void 			innerRemoveModule();
-
-			void			innerInitProcessor();
-			void			innerInitListener();
-
-			void			buildSystemInfo();
-
+        
+            BOOLEAN         innerInitListener();
+            BOOLEAN         innerInitProcessor();
+            BOOLEAN         innerInitUpdate();
+        
+            void            innerDestroyListener();
+            void            innerDestroyProcessor();
+            void            innerDestroyUpdate();
+        
 		private:
-			static CMain* 	s_pInstance;
+			static CMain* 	            s_pInstance;
 
-			bool			m_bInitialized;	
-			::std::forward_list<CModule> m_lstModule;
+            CListener*                  m_pListener;
+            CUpdate*                    m_pUpdate;
+            ::std::vector<CProcessor>   m_lstProcessor;
+			bool			            m_bInitialized;
 	};
 }
 #endif

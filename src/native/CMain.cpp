@@ -1,8 +1,5 @@
 #include "NET_Native.hpp"
 
-#define CONFIG_PATH				"./config.xml"
-#define CONFIG_PATH_BAK			"./.config.bak.xml"
-
 namespace NET 
 {
 	CMain* CMain::s_pInstance = NULL;
@@ -26,96 +23,31 @@ namespace NET
 		return s_pInstance;
 	}
 
-	bool CMain::loadConfig()
+	BOOLEAN CMain::initialize()
 	{
-		/*
-		::std::string strPath = CONFIG_PATH;
-		FILE* fp = fopen(strPath, "r");
-		if ( fp == NULL ) {
-			strPath = CONFIG_PATH_BAK;
-			fp = fopen(strPath, "r");
-		}
-		CHECK_R(fp != NULL, false);
-
-		struct stat statBuff;
-		CHECK_R( -1 != stat(strPath, &statBuff), false );
-
-
-		int buffSize = statBuff.st_size + 1;
-		char *pBuff = new char[buffSize];
-
-		fread(pBuff, buffSize)
-
-		rapidxml::xml_document<> doc;
-		//load config
-
-
-
-
-		//load module
-		
-
-		*/
-		CConfig::getInstance()->initialize();
-	}
-
-	void CMain::saveConfig()
-	{
-		;	
-	}
-
-	bool CMain::initialize()
-	{
-		if ( !loadConfig() ) return false;
-
-		innerInitModule();
+        CHECK_R( ConfigParser::getInstance()->initialize(), FALSE);
+        if ( !innerInitListener() ) goto err_listener;
+        if ( !innerInitProcessor() ) goto err_processor;
+        if ( !innerInitUpdate() ) goto err_update();
+        
 		m_bInitialized = true;
 		return true;
+
+    err_update:
+        innerDestroyProcessor();
+    err_processor:
+        innerDestroyListener();
+    err_listener:
+        
+        return FALSE;
 	}
 
 	void CMain::unInitialize()
 	{
-		innerRemoveModule();
+        innerDestroyUpdate();
+        innerDestroyProcessor();
+        innerDestroyListener();
 		m_bInitialized = false;
-	}
-
-	void CMain::reload()
-	{
-		unInitialize();
-
-		initialize();
-	}
-
-	void CMain::innerInitModule()
-	{
-		/*
-		for ( CModule& module: m_lstModule ) {
-			if ( module.isInitialized() ) continue;
-			if ( !module.load() ) goto err;
-			if ( !module.initialize() ) module.remove();	
-err:
-			LOG(WARNING) 
-				<< CLog::format("load module %d failed", m_config.getConfig().strName);
-		}
-		*/
-	}
-	
-	void CMain::innerRemoveModule()
-	{
-		;
-	}
-
-	void CMain::innerInitProcessor()
-	{
-		//start N-1 processor
-		unsigned int uiCount = CConfig::getInstance()->getSystemInfo().m_uiThreadCount - 1;
-
-		for (  )
-	}
-
-	void CMain::innerInitListener()
-	{
-		//start 1 listener
 	}
 
 	void CMain::mainLoop(void* arg)
@@ -129,7 +61,62 @@ err:
 		LOG_IF(FATAL, index == 10) << "initialize failed! stop...";
 
 		while (true) {
-				
+            ;       //main loop just sleep now;
 		}
 	}
+    
+    BOOLEAN CMain::innerInitListener()
+    {
+        m_pListener = new CListener();
+        
+        tagSocketInfo& info = ConfigParser::getInstance()->getSocketInfo();
+        m_pListener->getSocketServer()->setPort( info.uiPort );
+        m_pListener->getSocketServer()->setKeepAlive( info.bKeepAlive, info.uiAliveValue );
+        m_pListener->getSocketServer()->setTimeOut( info.uiTimeOut );
+        if ( info.bReusePort )
+            m_pListener->getSocketServer()->setReusePort( true );
+        else
+            m_pListener->getSocketServer()->setReuseAddress( true );
+        
+        m_pListener->run();
+        return TRUE;
+    }
+    
+    BOOLEAN CMain::innerInitProcessor()
+    {
+        tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
+        
+        for ( UINT uiIndex=0; uiIndex < info.m_uiThreadCount - 1; ++uiIndex ) {
+            CProcessor* processor = new CProcessor();
+            m_lstProcessor.add
+        }
+        
+        return TRUE;
+    }
+    
+    BOOLEAN CMain::innerInitUpdate()
+    {
+        return TRUE;
+    }
+    
+    void CMain::innerDestroyListener()
+    {
+        if ( NULL != m_pListener ) {
+            m_pListener->stop();
+           
+            delete m_pListener;
+        }
+    }
+    
+    void CMain::innerDestroyProcessor()
+    {
+        
+        
+    }
+    
+    void CMain::innerDestroyUpdate()
+    {
+        
+        
+    }
 }
