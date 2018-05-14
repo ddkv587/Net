@@ -6,23 +6,23 @@ namespace NET
 	class CSocketServer : public CSocket
 	{
 		public:
-			CSocketServer();
+			CSocketServer(STRING ip = STRING_NULL, UINT port = 8000);
 			virtual ~CSocketServer();
 
-			void 			setServerIP(const char* ip)		{ strncpy(m_serverIp, ip, 16); }
-			const char* 	getServerIP() const 			{ return m_serverIp; };
+            void 			setIP(STRING ip)		        { m_strIP = ip; }
+			const STRING& 	ip() const 			            { return m_strIP; };
 
-			void 			setPort(int iPort) 				{ m_serverPort = iPort; }
-			int  			port() const					{ return m_serverPort; }
+			void 			setPort(UINT iPort) 			{ m_uiPort = iPort; }
+			UINT  			port() const					{ return m_uiPort; }
 			
-			void			bindAndListen();
+			BOOLEAN			bindAndListen();
 
 			CSocketServer(CSocketServer&) = delete;
 			CSocketServer(const CSocketServer&) = delete;
 
 		private:
-			char 	m_serverIp[16];		//max is 255.255.255.255
-			int 	m_serverPort;
+			STRING 	    m_strIP;
+			UINT 	    m_uiPort;
 	};
 }
 

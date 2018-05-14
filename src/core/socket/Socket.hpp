@@ -12,9 +12,9 @@ namespace NET
 			void 	setKeepAlive(bool, int);
 			void 	setTimeOut(int);
 
-			void 	setReuseAddr(bool);
-			void 	setReusePort(bool);
-
+            void    setReusePort(bool);
+			void 	setReuseAddress(bool);
+			
 			int 	getSocketFD()	const 		{ return m_fd; }
 
 		protected:

@@ -13,43 +13,52 @@ namespace NET
 
 	XMLHelper::~XMLHelper()
 	{
-		if ( NULL != m_pXmlDoc ) delete m_pXmlDoc;
 		if ( NULL != m_pRootElement ) delete m_pRootElement;
+        
+        if ( NULL != m_pXmlDoc ) delete m_pXmlDoc;
 	}
 
 	BOOLEAN	XMLHelper::parseFrom(const CHAR* strPath)
 	{
-		struct stat st;
-		CHECK_R(-1 != stat(strPath, &st), false);
-		
-		INT fp = fopen(strPath, "r");
-		CHAR* buff = new CHAR[st.st_size + 1];
-		CHECK_R(buff != NULL, false);
-
-		CHECK_R( st.st_size == read(fd, buff, st_size), false);
-		buff[st.st_size] = 0;
-		
-		BOOLEAN ret = parse(buff);
-		delete buff;
-
-		return ret;
+		CHECK_R(-1 != stat(strPath, &st), FALSE);
+       
+        ifstream in(strPath);
+        in.seekg(0, std::ios::end);
+        size_t size = in.tellg();
+        
+        STRING strBuff(size + 1, '\0');
+        in.seekg(0, std::ios::beg);
+        in.read(strBuff.data(), size);
+        in.close();
+   
+        return parse(strBuff.data());
 	}
 
 	BOOLEAN XMLHelper::saveTo(const CHAR* strPath)
 	{
-		;
+        CHECK_R(m_pXmlDoc != NULL, FALSE);
+        
+        std::ofstream out(strPath);
+        out << m_pXmlDoc;
+        
+        return TRUE;
 	}
 
 	void XMLHelper::create()
 	{
 		m_pXmlDoc = new xml_document<>();
 
-		STRING strHeader = "xml version=" + ( m_eVersion == VERSION_1_0 ? "'1.0'" : "'2.0'" ) + \
-								" encoding=" + ( m_eEncoding == ENCODING_UTF8 ? "'utf-8'" : "'utf-16'");
-		xml_node<>* pNode = m_xmlDoc->allocate_node( rapidxml::node_pi, \
+		STRING strHeader = "xml version=" + \
+                            ( m_eVersion == VERSION_1_0 ? "'1.0'" : "'2.0'" ) + \
+                            " encoding=" + \
+                            ( m_eEncoding == ENCODING_UTF8 ? "'utf-8'" : "'utf-16'");
+        
+		xml_node<>* node = m_xmlDoc->allocate_node( rapidxml::node_pi, \
 					m_xmlDoc.allocate_string(strHeader) );
-
-		m_pXmlDoc->append_node(pNode);
+		m_pXmlDoc->append_node(node);
+        
+        m_pRootElement = new XMLElement(node);
+        m_pRootElement.setName(L"ROOT");
 	}
 	
 	BOOLEAN XMLHelper::parse(const CHAR* strContent)
@@ -62,17 +71,22 @@ namespace NET
 		} catch (const rapidxml::parse_error& e) {
 			LOG(WARNING) << e.what();
 			
-			return false;
+			return FALSE;
 		}
+        
+        xml_node<>* node = m_xmlDoc->first_node();
+        if ( NULL != node ) m_pRootElement = new XMLElement(node);
 
-		return true;
+		return TRUE;
 	}
 
 	void XMLHelper::deleteRootElement()
 	{
 		if ( NULL != m_pRootElement )
 		{
-			delete m_pRootElement;
+			m_xmlDoc.remove_node(m_pRootElement->getXMLNode());
+            m_pRootElement->setXMLNode(NULL);
+            delete m_pRootElement;
 			m_pRootElement = NULL;
 		}
 	}

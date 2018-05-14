@@ -59,6 +59,13 @@ namespace NET
 			++index;
 		}
 		LOG_IF(FATAL, index == 10) << "initialize failed! stop...";
+        
+        //thread start
+        ::std::list<CProcessor*>::iterator itor = m_lstProcessor.begin();
+        for(; itor != m_lstProcessor.end(); ++itor ) {
+            (*itor)->run();
+        }
+        m_pListener->run();
 
 		while (true) {
             ;       //main loop just sleep now;
@@ -77,8 +84,7 @@ namespace NET
             m_pListener->getSocketServer()->setReusePort( true );
         else
             m_pListener->getSocketServer()->setReuseAddress( true );
-        
-        m_pListener->run();
+
         return TRUE;
     }
     
@@ -87,8 +93,11 @@ namespace NET
         tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
         
         for ( UINT uiIndex=0; uiIndex < info.m_uiThreadCount - 1; ++uiIndex ) {
+            
             CProcessor* processor = new CProcessor();
-            m_lstProcessor.add
+            
+            m_lstProcessor.push_back(processor);
+            if ( NULL != m_lstListener ) m_lstListener->addFileListener(processor);
         }
         
         return TRUE;
@@ -105,18 +114,22 @@ namespace NET
             m_pListener->stop();
            
             delete m_pListener;
+            m_pListener = NULL;
         }
     }
     
     void CMain::innerDestroyProcessor()
     {
-        
-        
+        ::std::list<CProcessor*>::iterator itor = m_lstProcessor.begin();
+        for(; itor != m_lstProcessor.end(); ++itor ) {
+            (*itor)->stop();
+            delete (*itor);
+        }
+        m_lstProcessor.clear();
     }
     
     void CMain::innerDestroyUpdate()
     {
-        
-        
+        ;
     }
 }

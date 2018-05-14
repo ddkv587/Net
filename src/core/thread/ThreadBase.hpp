@@ -7,7 +7,7 @@ namespace NET
 	{
 	public:
 		CThreadBase()
-			: m_bStop(false)
+			: m_bStop(FALSE)
 		{
 			;
 		}
@@ -26,7 +26,7 @@ namespace NET
 
 		void stop()
 		{
-			m_bStop = true;
+			m_bStop = TRUE;
 		}
 
 		::std::thread::id getThreadID()

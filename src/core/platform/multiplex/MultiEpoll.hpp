@@ -15,9 +15,9 @@ namespace NET
 			void	delFileEvent(int, int);
 			int 	eventLoop(void* timeout = NULL); // struct timeval
 
-			private:
-			int m_epfd;
-			struct epoll_event *m_events;
+		private:
+			int                     m_epfd;
+			struct epoll_event*     m_events;
 	};
 }
 #endif

@@ -52,22 +52,22 @@ namespace NET
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_USER_TIMEOUT, &timeout, sizeof(timeout)) )
 				<< CLog::format( "[%s, %d]  set socket timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
+    
+    void CSocket::setReusePort(bool on)
+    {
+        int val = 0;
+        
+        on ? val = 1 : val = 0;
+        LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val)) )
+        << CLog::format( "[%s, %d]  set socket reu e port error: %s" ,__FILE__, __LINE__, strerror(errno) );
+    }
 
-	void CSocket::setReuseAddr(bool on)
+	void CSocket::setReuseAddress(bool on)
 	{
 		int val = 0;
 
 		on ? val = 1 : val = 0;
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) )
 				<< CLog::format( "[%s, %d]  set socket reuue addr error: %s" ,__FILE__, __LINE__, strerror(errno) );	
-	}
-
-	void CSocket::setReusePort(bool on)
-	{
-		int val = 0;
-
-		on ? val = 1 : val = 0;
-		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val)) )
-				<< CLog::format( "[%s, %d]  set socket reu e port error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 	}
 }

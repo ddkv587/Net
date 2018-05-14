@@ -4,32 +4,19 @@ namespace NET
 {
 #define		DEF_DEFAULT_VALUE	""
 	XMLElement::XMLElement(xml_node<>* root)
-		: m_uiElementSize(0)
-		, m_uiAttributeSize(0)
-		, strName(STRING_NULL)
+        : strName(STRING_NULL)
 		, strValue(STRING_NULL)
 		, m_pXMLNode(root)
 	{
-		if ( NULL != root ) {
-			xml_node<>* pNode = root->first_node();
-			while ( pNode != root->last_node() )
-				++m_uiElementSize;
-		
-			xml_attribute<>* pAtt = root->first_attribute();
-			while ( pAtt != root->last_attribute() )
-				++m_uiAttributeSize;
-
-			strName 	= root->name();
-			strValue 	= root->value(); 
-		}
+        assert ( NULL != root );
+        
+        strName 	= root->name();
+        strValue 	= root->value();
 	}
 			
 	XMLElement::~XMLElement()
 	{
-		if ( NULL != m_pXMLNode ) {
-			delete m_pXMLNode;
-			m_pXMLNode = NULL;
-		}
+        ;
 	}
 
 	void XMLElement::setName(const STRING& strName)		
@@ -48,7 +35,7 @@ namespace NET
 
 	BOOLEAN	XMLElement::hasAttributes()
 	{
-		return m_uiAttributeSize != 0;
+		return  m_pXMLNode->first_attribute() != NULL;
 	}
 
 	BOOLEAN XMLElement::hasAttribute(const STRING& strName)
@@ -58,16 +45,21 @@ namespace NET
 
 	UINT XMLElement::getAttributeCount()
 	{
-		return m_uiAttributeSize;	
+        UINT uiCount = 0;
+        xml_attribute<>* att = m_pXMLNode->first_attribute();
+        while ( att && att != m_pXMLNode->last_attribute() ) {
+            ++uiCount;
+            att = att->next_attribute();
+        }
+        
+        return uiCount;
 	}
 
 	STRING	XMLElement::getAttributeByIndex(UINT uiIndex)
-	{	
-		if ( uiIndex >= m_uiAttributeSize ) return STRING_NULL;
-
+	{
 		xml_attribute<>* att = m_pXMLNode->first_attribute();
        	for ( UINT ui=1; ui < uiIndex; ++ui ) {
-	   		assert(NULL != att);
+            if ( NULL == att ) return STRING_NULL;
 			att = att->next_attribute();
 	   	}
 		return att->value();
@@ -76,9 +68,7 @@ namespace NET
 	STRING XMLElement::getAttributeString(const STRING& strName) 
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att && 0 == strName.compare(att->name()) ) {
-			return STRING( att->value() );
-		}
+		if ( att ) return STRING( att->value() );
 
 		return STRING_NULL;
 	}
@@ -86,9 +76,7 @@ namespace NET
 	INT XMLElement::getAttributeINT(const STRING& strName)
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att && 0 == strName.compare(att->name()) ) {
-			return atoi( att->value() );
-		}
+		if ( att ) return atoi( att->value() );
 
 		return 0;
 	}
@@ -96,9 +84,7 @@ namespace NET
 	UINT XMLElement::getAttributeUINT(const STRING& strName)
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att && 0 == strName.compare(att->name()) ) {
-			return UINT( atoi( att->value() ) );
-		}
+		if ( att ) return UINT( atoi( att->value() ) );
 
 		return 0;
 	}
@@ -106,9 +92,7 @@ namespace NET
 	LLONG XMLElement::getAttributeLLONG(const STRING& strName)
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att && 0 == strName.compare(att->name()) ) {
-			return atoll(att->value());
-		}
+		if ( att ) return atoll(att->value());
 
 		return 0;
 	}
@@ -116,9 +100,7 @@ namespace NET
 	FLOAT XMLElement::getAttributeFLOAT(const STRING& strName)
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att && 0 == strName.compare(att->name()) ) {
-			return atof(att->value());
-		}
+		if ( att ) return atof(att->value());
 
 		return 0.0f;
 	}
@@ -126,7 +108,7 @@ namespace NET
 	BOOLEAN XMLElement::getAttributeBOOLEAN(const STRING& strName)
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att && 0 == strName.compare(att->name()) ) {
+		if ( att ) {
 			if ( strncmp(att->value(), "true", 4) == 0 || 
 					strncmp(att->value(), "TRUE", 4) == 0 ) 
 				return TRUE;
@@ -138,15 +120,13 @@ namespace NET
 	void XMLElement::setAttribute(const STRING& strName, const STRING& strValue)
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
-		if ( att && 0 == strName.compare(att->name()) ) {
-			att->value(strValue.data(), strValue.size());
-		}
+		if ( att ) att->value(strValue.data(), strValue.size());
 	}
 
 	void XMLElement::setAttribute(const STRING& strName, INT iValue)
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
-		if ( att && 0 == strName.compare(att->name()) ) {
+		if ( att ) {
 			STRING strValve = ::std::to_string(iValue);
 
 			att->value(strValue.data(), strValue.size());
@@ -156,7 +136,7 @@ namespace NET
 	void XMLElement::setAttribute(const STRING& strName, UINT uiValue)
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
-		if ( att && 0 == strName.compare(att->name()) ) {
+		if ( att ) {
 			STRING strValve = ::std::to_string(uiValue);
 
 			att->value(strValue.data(), strValue.size());
@@ -166,7 +146,7 @@ namespace NET
 	void XMLElement::setAttribute(const STRING& strName, LLONG lValue)
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
-		if ( att && 0 == strName.compare(att->name()) ) {
+		if ( att ) {
 			STRING strValve = ::std::to_string(lValue);
 
 			att->value(strValue.data(), strValue.size());
@@ -176,7 +156,7 @@ namespace NET
 	void XMLElement::setAttribute(const STRING& strName, FLOAT fValue)
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
-		if ( att && 0 == strName.compare(att->name()) ) {
+		if ( att ) {
 			STRING strValve = ::std::to_string(fValue);
 
 			att->value(strValue.data(), strValue.size());
@@ -186,17 +166,17 @@ namespace NET
 	void XMLElement::setAttribute(const STRING& strName, BOOLEAN bValue)
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
-		if ( att && 0 == strName.compare(att->name()) ) {
+		if ( att ) {
 			STRING strValve = bValue ? "true" : "false";
 
 			att->value(strValue.data(), strValue.size());
 		}
 	}
 
-	void XMLElement::deleteAttribute(const STRING strName)
+	void XMLElement::deleteAttribute(const STRING& strName)
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att && 0 == strName.compare(att->name()) ) {
+		if ( att ) {
 			m_pXMLNode->remove_attribute(att);
 
 			--m_uiAttributeSize;
@@ -207,32 +187,37 @@ namespace NET
 	{
 		assert( NULL != m_pXMLNode );
 		m_pXMLNode->remove_all_attributes();
-
-		m_uiAttributeSize = 0;
 	}
 
 	BOOLEAN XMLElement::hasElements()
 	{
-		return m_uiElementSize != 0;
+		return m_pXMLNode->first_node() != NULL;
 	}
 
-	BOOLEAN	XMLElement::hasElement(const STRING strName)
+	BOOLEAN	XMLElement::hasElement(const STRING& strName)
 	{
-		return m_pXMLNode->first_node(strName.data(), strName.) != NULL;	
+		return m_pXMLNode->first_node(strName.data(), strName.size()) != NULL;	
 	}
 
 	UINT XMLElement::getElementsCount()
 	{
-		return m_uiElementSize;
+        UINT uiCount = 0;
+        
+        xml_node<>* node = root->first_node();
+        while ( node && node != root->last_node() )
+        {
+            ++uiCount;
+            node = node->next_sibling();
+        }
+        
+        return uiCount;
 	}
 
 	XMLElement*	XMLElement::getElementByIndex(UINT uiIndex)
-	{
-		if ( uiIndex >= m_uiElementSize ) return NULL;
-
+    {
 		xml_node<>* node = m_pXMLNode->first_node();
        	for ( UINT ui=1; ui < uiIndex; ++ui ) {
-	   		assert(NULL != node);
+            if ( NULL == node ) return NULL;
 			node = node->next_sibling();
 	   	}
 		
@@ -241,7 +226,7 @@ namespace NET
 		return NULL;
 	}
 
-	XMLElement*	XMLElement::getElement(const STRING strName)
+	XMLElement*	XMLElement::getElement(const STRING& strName)
 	{
 		xml_node<>* node = m_pXMLNode->getElement(strName);
 		if ( NULL != node ) return new XMLElement(node);
@@ -249,7 +234,7 @@ namespace NET
 		return NULL;
 	}
 	
-	XMLElement*	XMLElement::addElement(const STRING strName)
+	XMLElement*	XMLElement::addElement(const STRING& strName)
 	{
 		xml_node<>* node = getElement(strName, TRUE);
 		if ( NULL != node ) return new XMLElement(node);
@@ -257,11 +242,11 @@ namespace NET
 		return NULL;
 	}
 	
-	void XMLElement::deleteElement(const STRING strName)
+	void XMLElement::deleteElement(const STRING& strName)
 	{
 		xml_node<>* node = getElement(strName);
 
-		if ( NULL != node ) remove_node(node);
+		if ( NULL != node ) m_pXMLNode->remove_node(node);
 	}
 
 	void XMLElement::clearElements()
@@ -276,13 +261,9 @@ namespace NET
 
 	xml_attribute<>* XMLElement::getAttribute(const STRING& strName, BOOLEAN bAdd)
 	{
-		xml_attribute<>* att = m_pXMLNode->first_attribute();
-       	for ( UINT ui=0; ui < m_uiAttributeSize; ++ui ) {
-			if ( att && 0 == strName.compare(att->name()) ) {
-				return att;
-			}
-			att = att->next_attribute();
-		}
+		xml_attribute<>* att = m_pXMLNode->first_attribute(strName.data(), strName.size());
+		if ( NULL != att ) return att;
+		
 		if ( bAdd ) {
 			att = m_pXMLNode->allocate_attribute( 
 					strName.data(), \
@@ -297,13 +278,9 @@ namespace NET
 
 	xml_node<>*	XMLElement::getElement(const STRING& strName, BOOLEAN bAdd)
 	{
-		xml_node<>* node = m_pXMLNode->first_node();
-       	for ( UINT ui=0; ui < m_uiElementSize; ++ui ) {
-			if ( att && 0 == strName.compare(node->name()) ) {
-				return node;
-			}
-			node = node->next_sibling();
-		}	
+		xml_node<>* node = m_pXMLNode->first_node(strName.data(), strName.size());
+		if ( NULL != node ) return node;
+
 		if ( bAdd ) {
 			node = m_pXMLNode->allocate_node(
 					rapidxml::node_element, \

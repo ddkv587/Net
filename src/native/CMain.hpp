@@ -41,7 +41,7 @@ namespace NET
 
             CListener*                  m_pListener;
             CUpdate*                    m_pUpdate;
-            ::std::vector<CProcessor>   m_lstProcessor;
+            ::std::list<CProcessor*>    m_lstProcessor;
 			bool			            m_bInitialized;
 	};
 }

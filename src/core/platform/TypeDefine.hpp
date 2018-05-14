@@ -45,4 +45,15 @@ namespace NET
 
 #define UNUSED(X) (void)(X)
 
+#define NET_NONE                            0x00
+#define NET_READABLE                        0x01
+#define NET_WRITABLE                        0x02
+
+#define SYSTEM_VERSION                      0.1
+#define SYSTEM_MAX_EVENTS                   1024
+#define SYSTEM_SOCKET_PORT                  8000
+
+#define POLL_TIMEOUT_SEC                    5
+#define POLL_TIMEOUT_USEC                   0
+
 #endif

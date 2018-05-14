@@ -2,11 +2,11 @@
 
 namespace NET
 {
-	CSocketServer::CSocketServer()
-		: m_serverIp("0.0.0.0")
-		, m_serverPort(8000)
+	CSocketServer::CSocketServer(STRING ip, UINT port)
+		: m_strIP(ip)
+		, m_uiPort(port)
 	{
-		;
+        if ( ip == STRING_NULL ) m_strIP = "0.0.0.0";
 	}
 
 	CSocketServer::~CSocketServer()
@@ -14,19 +14,21 @@ namespace NET
 		;
 	}
 
-	void CSocketServer::bindAndListen()
+	BOOLEAN CSocketServer::bindAndListen()
 	{
 		CHECK( -1 != m_fd );
 
 		struct sockaddr_in address;
 
 		address.sin_family = AF_INET;
-		address.sin_port = htons(m_serverPort);
-		LOG_IF( ERROR, INADDR_NONE == ( address.sin_addr.s_addr = inet_addr(m_serverIp) ) )  
+		address.sin_port = htons(m_uiPort);
+		LOG_IF( ERROR, INADDR_NONE == ( address.sin_addr.s_addr = inet_addr(m_strIP.data()) ) )
 			<< CLog::format( "[%s, %d]  server ip is error: %s" ,__FILE__, __LINE__, strerror(errno) );
 	
-		CHECK( -1 != bind( m_fd, (struct sockaddr*)&address, sizeof(struct sockaddr_in) ) );
+		CHECK_R( -1 != bind( m_fd, (struct sockaddr*)&address, sizeof(struct sockaddr_in) ), FALSE );
 		
-		CHECK( -1 != listen( m_fd, SOMAXCONN) );
+		CHECK_R( -1 != listen( m_fd, SOMAXCONN), FALSE );
+        
+        return TRUE;
 	}		
 }

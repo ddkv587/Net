@@ -6,15 +6,15 @@ namespace NET
 	class XMLElement
 	{
 		public:
-			XMLElement(xml_node<>* root = NULL);
-			virtual ~XMLElement();
+			XMLElement(xml_node<>* root);
+            virtual ~XMLElement();
 
 			//name 
-			const STRING&			getName()							{ return m_strName }
+			STRING			        getName()							{ return m_strName }
 			void					setName(const STRING& strName);
 
 			//text
-			const STRING&			getValue()							{ return m_strValue; }
+			STRING			        getValue()							{ return m_strValue; }
 			void					setValue(const STRING& strValue);
 
 			// attributes
@@ -50,10 +50,12 @@ namespace NET
 			XMLElement*				addElement(const STRING strName);
 			BOOLEAN					deleteElement(const STRING strName);
 			BOOLEAN					clearElements();
-
+        
 		protected:
 			void					setXMLNode(xml_node<>* pNode)		{ m_pXMLNode = pNode; }
 			xml_node<>*				getXMLNode() const 					{ return m_pXMLNode; }
+        
+        friend class XMLHelper;
 
 		private:
 			BOOLEAN					checkString(const STRING& str);
@@ -61,9 +63,6 @@ namespace NET
 			xml_node<>*				getElement(const STRING& strName, BOOLEAN bAdd = FALSE);
 	
 		private:
-			UINT					m_uiElementSize;
-			UINT					m_uiAttributeSize;
-
 			STRING					m_strName;
 			STRING					m_strValue;
 			xml_node<>*				m_pXMLNode;

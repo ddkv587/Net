@@ -89,7 +89,7 @@ namespace NET
 			int mask = 0;
 			struct epoll_event* e = m_events + index;
 
-			if ( e->events & EPOLLIN ) mask |= NET_READABLE;
+			if ( e->events & EPOLLIN )  mask |= NET_READABLE;
 			if ( e->events & EPOLLOUT ) mask |= NET_WRITABLE;
 			if ( e->events & EPOLLERR ) mask |= NET_WRITABLE;
 			if ( e->events & EPOLLHUP ) mask |= NET_WRITABLE;
