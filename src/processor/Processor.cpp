@@ -51,15 +51,16 @@ namespace NET
 
 			int retval = m_pMultiplex->eventLoop(&timeout);
 			if ( retval > 0 ) {
+				// reloop form multiplex
 				EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
 
 				for ( int index = 0; index < retval; ++index ) {
+					
 					FIRED_EVENT fired = eventLoop->fired[index];
 					if( fired.mask == NET_READABLE ) {
 						FILE_EVENT* file = &(eventLoop->event[fired.fd]);
 
-						while(1)
-						{
+						while (TRUE) {
 							if ( NULL == file->data ) {
 								file->data = new char(IProtocol::SIZE_HEADER_MANAGER);
 								file->dataSize = 0;

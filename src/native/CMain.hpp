@@ -8,8 +8,9 @@ namespace NET
 		public:
 			struct tagSystemInfo
 			{
-				unsigned int m_uiPriority;
-				unsigned int m_uiThreadCount;
+				UINT m_uiPriority;
+				UINT m_uiThreadCount;
+				UINT m_uiShortTurnLimit;
 			};
 
 		public:
@@ -37,12 +38,13 @@ namespace NET
             void            innerDestroyUpdate();
         
 		private:
-			static CMain* 	            s_pInstance;
+			static CMain* 	            		s_pInstance;
 
-            CListener*                  m_pListener;
-            CUpdate*                    m_pUpdate;
-            ::std::list<CProcessor*>    m_lstProcessor;
-			bool			            m_bInitialized;
+            CUpdate*                   		 	m_pUpdate;
+            CListener*                  		m_pListener;
+            ::std::forward_list<CProcessor*>    m_lstShortTurn;
+            ::std::forward_list<CProcessor*>    m_lstLongTurn;
+			bool			            		m_bInitialized;
 	};
 }
 #endif

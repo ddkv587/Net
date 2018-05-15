@@ -2,11 +2,14 @@
 #include "NET_Core.hpp"
 #include "NET_Listener.hpp"
 #include "NET_Processor.hpp"
+#include "NET_Native.hpp"
 
 int main(int argc, const char *argv[])
 {
 	NET::CLog::initLog(argv[0]);
 
+	CMain::getInstance()->run();
+	/*
 	void* listener_handle = NULL; 
 
 	LOG_IF( ERROR, NULL == ( listener_handle = dlopen("./libListener.so", RTLD_NOW) ) ) 
@@ -51,6 +54,7 @@ int main(int argc, const char *argv[])
 	while(true);
 
 	listener_destroy(listen);
+	*/
 
 	return 0;
 }

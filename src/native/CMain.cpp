@@ -60,9 +60,9 @@ namespace NET
 		}
 		LOG_IF(FATAL, index == 10) << "initialize failed! stop...";
         
-        //thread start
-        ::std::list<CProcessor*>::iterator itor = m_lstProcessor.begin();
-        for(; itor != m_lstProcessor.end(); ++itor ) {
+        //run procrssor thread
+        ::std::list<CProcessor*>::iterator itor = m_lstShortTurn.begin();
+        for(; itor != m_lstShortTurn.end(); ++itor ) {
             (*itor)->run();
         }
         m_pListener->run();
@@ -90,13 +90,13 @@ namespace NET
     
     BOOLEAN CMain::innerInitProcessor()
     {
+		// init two type processor: short turn or long turn
         tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
         
         for ( UINT uiIndex=0; uiIndex < info.m_uiThreadCount - 1; ++uiIndex ) {
-            
             CProcessor* processor = new CProcessor();
             
-            m_lstProcessor.push_back(processor);
+            m_lstShortTurn.push_front(processor);
             if ( NULL != m_lstListener ) m_lstListener->addFileListener(processor);
         }
         
