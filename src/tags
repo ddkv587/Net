@@ -9,7 +9,6 @@ BASE_RAW_LOGGING_H_	.recy/log/glog/raw_logging.h	37;"	d
 BASE_VLOG_IS_ON_H_	.recy/log/glog/vlog_is_on.h	62;"	d
 BOOLEAN	core/platform/TypeDefine.hpp	/^	typedef 	bool			BOOLEAN;$/;"	t	namespace:NET
 BYTE	core/platform/TypeDefine.hpp	/^	typedef 	UINT8			BYTE;$/;"	t	namespace:NET
-CConfig	core/config/Config.cpp	/^	CConfig::CConfig()$/;"	f	class:NET::CConfig
 CHAR	core/platform/TypeDefine.hpp	/^	typedef 	char 			CHAR;$/;"	t	namespace:NET
 CHECK	.recy/log/glog/logging.h	584;"	d
 CHECK_BOUND	.recy/log/glog/logging.h	834;"	d
@@ -26,7 +25,7 @@ CHECK_NEAR	.recy/log/glog/logging.h	842;"	d
 CHECK_NOTNULL	.recy/log/glog/logging.h	798;"	d
 CHECK_OP	.recy/log/glog/logging.h	763;"	d
 CHECK_OP_LOG	.recy/log/glog/logging.h	730;"	d
-CHECK_R	core/platform/TypeDefine.hpp	34;"	d
+CHECK_R	core/platform/TypeDefine.hpp	36;"	d
 CHECK_STRCASEEQ	.recy/log/glog/logging.h	830;"	d
 CHECK_STRCASENE	.recy/log/glog/logging.h	831;"	d
 CHECK_STREQ	.recy/log/glog/logging.h	828;"	d
@@ -37,7 +36,6 @@ CListener	listener/Listener.hpp	/^	class CListener : public CThreadBase $/;"	c	n
 CLoadHelper	core/loadHelper/CLoadHelper.hpp	/^class CLoadHelper$/;"	c
 CLog	core/log/Log.hpp	/^	class CLog $/;"	c	namespace:NET
 CMain	native/CMain.cpp	/^	CMain::CMain()$/;"	f	class:NET::CMain
-CMain	native/CMain.hpp	/^	class CMain : public CThreadBase$/;"	c	namespace:NET
 CMultiBase	core/platform/multiplex/MultiBase.cpp	/^	CMultiBase::CMultiBase()$/;"	f	class:NET::CMultiBase
 CMultiBase	core/platform/multiplex/MultiBase.hpp	/^	class CMultiBase$/;"	c	namespace:NET
 CMultiEpoll	core/platform/multiplex/MultiEpoll.cpp	/^	CMultiEpoll::CMultiEpoll()$/;"	f	class:NET::CMultiEpoll
@@ -58,35 +56,29 @@ COMPACT_GOOGLE_LOG_INFO	.recy/log/glog/logging.h	395;"	d
 COMPACT_GOOGLE_LOG_INFO	.recy/log/glog/logging.h	400;"	d
 COMPACT_GOOGLE_LOG_WARNING	.recy/log/glog/logging.h	405;"	d
 COMPACT_GOOGLE_LOG_WARNING	.recy/log/glog/logging.h	410;"	d
-CONFIG_PATH	native/CMain.cpp	3;"	d	file:
-CONFIG_PATH_BAK	native/CMain.cpp	4;"	d	file:
+CONFIG_PATH	core/config/ConfigParser.cpp	5;"	d	file:
+CONFIG_PATH_BAK	core/config/ConfigParser.cpp	6;"	d	file:
 CONNECT_CLIENT	client/client.cpp	10;"	d	file:
 COUNTER	.recy/log/glog/logging.h	/^enum PRIVATE_Counter {COUNTER};$/;"	e	enum:google::PRIVATE_Counter
-CPP_INCLUDE	core/log/makefile	/^CPP_INCLUDE		:= -I$(ROOT_PATH) \\$/;"	m
-CPP_INCLUDE	core/platform/multiplex/makefile	/^CPP_INCLUDE		:= -I$(ROOT_PATH) \\$/;"	m
-CPP_INCLUDE	core/socket/makefile	/^CPP_INCLUDE		:= -I$(ROOT_PATH) \\$/;"	m
-CPP_SRC	core/log/makefile	/^CPP_SRC			:= $(shell find $(CPP_SRCDIR) -name "*.cpp")$/;"	m
-CPP_SRC	core/platform/multiplex/makefile	/^CPP_SRC			:= $(shell find $(CPP_SRCDIR) -name "*.cpp")$/;"	m
-CPP_SRC	core/socket/makefile	/^CPP_SRC			:= $(shell find $(CPP_SRCDIR) -name "*.cpp")$/;"	m
-CPP_SRCDIR	core/log/makefile	/^CPP_SRCDIR		:= $(shell pwd)$/;"	m
-CPP_SRCDIR	core/platform/multiplex/makefile	/^CPP_SRCDIR		:= $(shell pwd)$/;"	m
-CPP_SRCDIR	core/socket/makefile	/^CPP_SRCDIR		:= $(shell pwd)$/;"	m
 CProcessor	processor/Processor.cpp	/^	CProcessor::CProcessor()$/;"	f	class:NET::CProcessor
 CProcessor	processor/Processor.hpp	/^	class CProcessor : public CThreadBase, public IFileListener$/;"	c	namespace:NET
 CProtocolBase	protocol/ProtocolBase.cpp	/^	CProtocolBase::CProtocolBase()$/;"	f	class:NET::CProtocolBase
 CProtocolBase	protocol/ProtocolBase.hpp	/^	class CProtocolBase : public IProtocol $/;"	c	namespace:NET
 CSocket	core/socket/Socket.cpp	/^	CSocket::CSocket()$/;"	f	class:NET::CSocket
 CSocket	core/socket/Socket.hpp	/^	class CSocket$/;"	c	namespace:NET
-CSocketServer	core/socket/SocketServer.cpp	/^	CSocketServer::CSocketServer()$/;"	f	class:NET::CSocketServer
+CSocketServer	core/socket/SocketServer.cpp	/^	CSocketServer::CSocketServer(STRING ip, UINT port)$/;"	f	class:NET::CSocketServer
 CSocketServer	core/socket/SocketServer.hpp	/^	class CSocketServer : public CSocket$/;"	c	namespace:NET
 CThreadBase	core/thread/ThreadBase.hpp	/^		CThreadBase()$/;"	f	class:NET::CThreadBase
 CThreadBase	core/thread/ThreadBase.hpp	/^	class CThreadBase$/;"	c	namespace:NET
+CUpdate	update/Update.cpp	/^	CUpdate::CUpdate()$/;"	f	class:NET::CUpdate
+CUpdate	update/Update.hpp	/^	class CUpdate : public CThreadBase$/;"	c	namespace:NET
 CheckNotNull	.recy/log/glog/logging.h	/^T CheckNotNull(const char* file, int line, const char* names, T&& t) {$/;"	f	namespace:google
 CheckNotNull	.recy/log/glog/logging.h	/^T* CheckNotNull(const char *file, int line, const char *names, T* t) {$/;"	f	namespace:google
 CheckOpMessageBuilder	.recy/log/glog/logging.h	/^class GOOGLE_GLOG_DLL_DECL CheckOpMessageBuilder {$/;"	c	namespace:google::base
 CheckOpString	.recy/log/glog/logging.h	/^  CheckOpString(std::string* str) : str_(str) { }$/;"	f	struct:google::CheckOpString
 CheckOpString	.recy/log/glog/logging.h	/^struct CheckOpString {$/;"	s	namespace:google
 CompileAssert	.recy/log/glog/logging.h	/^struct CompileAssert {$/;"	s	namespace:google::glog_internal_namespace_
+ConfigParser	core/config/ConfigParser.cpp	/^	ConfigParser::ConfigParser()$/;"	f	class:NET::ConfigParser
 DCHECK	.recy/log/glog/logging.h	1026;"	d
 DCHECK	.recy/log/glog/logging.h	991;"	d
 DCHECK_EQ	.recy/log/glog/logging.h	1031;"	d
@@ -128,6 +120,7 @@ DECLARE_string	.recy/log/glog/logging.h	384;"	d
 DEFINE_CHECK_OP_IMPL	.recy/log/glog/logging.h	702;"	d
 DEFINE_CHECK_OP_IMPL	.recy/log/glog/logging.h	723;"	d
 DEFINE_ONCE	.recy/common.h	6;"	d
+DEF_DEFAULT_VALUE	core/format/XMLElement.cpp	5;"	d	file:
 DFATAL_LEVEL	.recy/log/glog/log_severity.h	59;"	d
 DFATAL_LEVEL	.recy/log/glog/log_severity.h	61;"	d
 DLOG	.recy/log/glog/logging.h	1006;"	d
@@ -168,12 +161,12 @@ EP_TIME	protocol/ProtocolBase.hpp	/^				EP_TIME,$/;"	e	enum:NET::CProtocolBase::
 EProcotol	client/Protocol.hpp	/^enum EProcotol$/;"	g
 EProcotol	protocol/ProtocolBase.hpp	/^			enum EProcotol$/;"	g	class:NET::CProtocolBase
 ERROR	.recy/log/glog/log_severity.h	/^  ERROR = GLOG_ERROR, FATAL = GLOG_FATAL;$/;"	v
-EVENT_LOOP	core/platform/multiplex/TypeDef.hpp	/^	} EVENT_LOOP;$/;"	t	namespace:NET	typeref:struct:NET::tagEventLoop
+EVENT_LOOP	core/platform/multiplex/MultiStruct.hpp	/^	} EVENT_LOOP;$/;"	t	namespace:NET	typeref:struct:NET::tagEventLoop
 ErrnoLogMessage	.recy/log/glog/logging.h	/^class GOOGLE_GLOG_DLL_DECL ErrnoLogMessage : public LogMessage {$/;"	c	namespace:google
 FALSE	core/platform/TypeDefine.hpp	29;"	d
 FATAL	.recy/log/glog/log_severity.h	/^  ERROR = GLOG_ERROR, FATAL = GLOG_FATAL;$/;"	v
-FILE_EVENT	core/platform/multiplex/TypeDef.hpp	/^	} FILE_EVENT;$/;"	t	namespace:NET	typeref:struct:NET::tagFileEvent
-FIRED_EVENT	core/platform/multiplex/TypeDef.hpp	/^	} FIRED_EVENT;$/;"	t	namespace:NET	typeref:struct:NET::tagFiredEvent
+FILE_EVENT	core/platform/multiplex/MultiStruct.hpp	/^	} FILE_EVENT;$/;"	t	namespace:NET	typeref:struct:NET::tagFileEvent
+FIRED_EVENT	core/platform/multiplex/MultiStruct.hpp	/^	} FIRED_EVENT;$/;"	t	namespace:NET	typeref:struct:NET::tagFiredEvent
 FLOAT	core/platform/TypeDefine.hpp	/^	typedef 	float			FLOAT;$/;"	t	namespace:NET
 ForVar1	.recy/log/glog/logging.h	/^  std::ostream* ForVar1() { return stream_; }$/;"	f	class:google::base::CheckOpMessageBuilder
 GLOG_0	.recy/log/glog/logging.h	/^const LogSeverity GLOG_0 = GLOG_ERROR;$/;"	m	namespace:google
@@ -274,28 +267,29 @@ LogStream	.recy/log/glog/logging.h	/^  class GOOGLE_GLOG_DLL_DECL LogStream : pu
 LogStreamBuf	.recy/log/glog/logging.h	/^  LogStreamBuf(char *buf, int len) {$/;"	f	class:google::base_logging::LogStreamBuf
 LogStreamBuf	.recy/log/glog/logging.h	/^class GOOGLE_GLOG_DLL_DECL LogStreamBuf : public std::streambuf {$/;"	c	namespace:google::base_logging
 Logger	.recy/log/glog/logging.h	/^class GOOGLE_GLOG_DLL_DECL Logger {$/;"	c	namespace:google::base
-MAX	core/platform/TypeDefine.hpp	32;"	d
-MIN	core/platform/TypeDefine.hpp	31;"	d
+MAX	core/platform/TypeDefine.hpp	34;"	d
+MIN	core/platform/TypeDefine.hpp	33;"	d
 MUST_UNDEF_GFLAGS_DECLARE_MACROS	.recy/log/glog/logging.h	309;"	d
 MUST_UNDEF_GFLAGS_DECLARE_MACROS	.recy/log/glog/logging.h	380;"	d
 MakeCheckOpString	.recy/log/glog/logging.h	/^std::string* MakeCheckOpString(const T1& v1, const T2& v2, const char* exprtext) {$/;"	f	namespace:google
 MakeCheckOpValueString	.recy/log/glog/logging.h	/^inline void MakeCheckOpValueString(std::ostream* os, const T& v) {$/;"	f	namespace:google
 NET	core/NET_Core.hpp	/^namespace NET$/;"	n
-NET	core/config/Config.cpp	/^namespace NET $/;"	n	file:
-NET	core/config/Config.hpp	/^namespace NET$/;"	n
+NET	core/config/ConfigParser.cpp	/^namespace NET $/;"	n	file:
+NET	core/config/ConfigParser.hpp	/^namespace NET$/;"	n
+NET	core/format/XMLElement.cpp	/^namespace NET $/;"	n	file:
 NET	core/format/XMLElement.hpp	/^namespace NET $/;"	n
 NET	core/format/XMLHelper.cpp	/^namespace NET $/;"	n	file:
 NET	core/format/XMLHelper.hpp	/^namespace NET$/;"	n
-NET	core/format/XMLhelper.cpp	/^namespace NET $/;"	n	file:
 NET	core/log/Log.cpp	/^namespace NET$/;"	n	file:
 NET	core/log/Log.hpp	/^namespace NET$/;"	n
+NET	core/platform/Command.hpp	/^namespace NET $/;"	n
 NET	core/platform/TypeDefine.hpp	/^namespace NET$/;"	n
 NET	core/platform/multiplex/MultiBase.cpp	/^namespace NET$/;"	n	file:
 NET	core/platform/multiplex/MultiBase.hpp	/^namespace NET$/;"	n
 NET	core/platform/multiplex/MultiEpoll.cpp	/^namespace NET$/;"	n	file:
 NET	core/platform/multiplex/MultiEpoll.hpp	/^namespace NET$/;"	n
 NET	core/platform/multiplex/MultiSelect.hpp	/^namespace NET$/;"	n
-NET	core/platform/multiplex/TypeDef.hpp	/^namespace NET$/;"	n
+NET	core/platform/multiplex/MultiStruct.hpp	/^namespace NET$/;"	n
 NET	core/socket/Socket.cpp	/^namespace NET$/;"	n	file:
 NET	core/socket/Socket.hpp	/^namespace NET$/;"	n
 NET	core/socket/SocketServer.cpp	/^namespace NET$/;"	n	file:
@@ -314,9 +308,12 @@ NET	protocol/IProtocol.hpp	/^namespace NET$/;"	n
 NET	protocol/NET_Protocol.hpp	/^namespace NET$/;"	n
 NET	protocol/ProtocolBase.cpp	/^namespace NET $/;"	n	file:
 NET	protocol/ProtocolBase.hpp	/^namespace NET$/;"	n
-NET_NONE	core/NET_Core.hpp	37;"	d
-NET_READABLE	core/NET_Core.hpp	38;"	d
-NET_WRITABLE	core/NET_Core.hpp	39;"	d
+NET	update/NET_Update.hpp	/^namespace NET$/;"	n
+NET	update/Update.cpp	/^namespace NET $/;"	n	file:
+NET	update/Update.hpp	/^namespace NET$/;"	n
+NET_NONE	core/platform/TypeDefine.hpp	48;"	d
+NET_READABLE	core/platform/TypeDefine.hpp	49;"	d
+NET_WRITABLE	core/platform/TypeDefine.hpp	50;"	d
 NUM_SEVERITIES	.recy/log/glog/log_severity.h	/^  NUM_SEVERITIES = 4;$/;"	v
 NullStream	.recy/log/glog/logging.h	/^  NullStream() : LogMessage::LogStream(message_buffer_, 1, 0) { }$/;"	f	class:google::NullStream
 NullStream	.recy/log/glog/logging.h	/^  NullStream(const char* \/*file*\/, int \/*line*\/,$/;"	f	class:google::NullStream
@@ -340,8 +337,8 @@ PLOG	.recy/log/glog/logging.h	854;"	d
 PLOG_EVERY_N	.recy/log/glog/logging.h	944;"	d
 PLOG_IF	.recy/log/glog/logging.h	861;"	d
 POINT	core/platform/TypeDefine.hpp	/^	typedef 	INT64			POINT;$/;"	t	namespace:NET
-POLL_TIMEOUT_SEC	core/NET_Core.hpp	45;"	d
-POLL_TIMEOUT_USEC	core/NET_Core.hpp	46;"	d
+POLL_TIMEOUT_SEC	core/platform/TypeDefine.hpp	56;"	d
+POLL_TIMEOUT_USEC	core/platform/TypeDefine.hpp	57;"	d
 PRIVATE_Counter	.recy/log/glog/logging.h	/^enum PRIVATE_Counter {COUNTER};$/;"	g	namespace:google
 PrintSequence	.recy/log/glog/stl_logging.h	/^inline void PrintSequence(std::ostream& out, Iter begin, Iter end) {$/;"	f	namespace:google
 RAPIDXML_ALIGNMENT	core/format/rapidxml/rapidxml.hpp	131;"	d
@@ -377,6 +374,7 @@ SOME_KIND_OF_LOG_IF_EVERY_N	.recy/log/glog/logging.h	900;"	d
 SOME_KIND_OF_PLOG_EVERY_N	.recy/log/glog/logging.h	909;"	d
 STRING	core/platform/TypeDefine.hpp	/^	typedef 	::std::string	STRING;$/;"	t	namespace:NET
 STRING_AUX	.recy/common.h	4;"	d
+STRING_NULL	core/platform/TypeDefine.hpp	31;"	d
 SYNC_FLAG	client/Protocol.hpp	4;"	d
 SYNC_FLAG	protocol/IProtocol.hpp	9;"	d
 SYSLOG	.recy/log/glog/logging.h	507;"	d
@@ -390,13 +388,12 @@ SYSLOG_FATAL	.recy/log/glog/logging.h	470;"	d
 SYSLOG_IF	.recy/log/glog/logging.h	572;"	d
 SYSLOG_INFO	.recy/log/glog/logging.h	452;"	d
 SYSLOG_WARNING	.recy/log/glog/logging.h	458;"	d
-SYSTEM_MAX_EVENTS	core/NET_Core.hpp	42;"	d
-SYSTEM_SOCKET_PORT	core/NET_Core.hpp	43;"	d
-SYSTEM_VERSION	core/NET_Core.hpp	41;"	d
+SYSTEM_MAX_EVENTS	core/platform/TypeDefine.hpp	53;"	d
+SYSTEM_SOCKET_PORT	core/platform/TypeDefine.hpp	54;"	d
+SYSTEM_VERSION	core/platform/TypeDefine.hpp	52;"	d
 SendMethod	.recy/log/glog/logging.h	/^  typedef void (LogMessage::*SendMethod)();$/;"	t	class:google::LogMessage
-TARGET_MODULE	core/log/makefile	/^TARGET_MODULE := Log$/;"	m
-TARGET_MODULE	core/platform/multiplex/makefile	/^TARGET_MODULE := Multiplex$/;"	m
-TARGET_MODULE	core/socket/makefile	/^TARGET_MODULE := Socket$/;"	m
+TAG_SOCKET_INFO	core/config/ConfigParser.cpp	9;"	d	file:
+TAG_SYSTEM_INFO	core/config/ConfigParser.cpp	8;"	d	file:
 TIME_MANAGER	client/Protocol.hpp	/^} TIME_MANAGER;$/;"	t	typeref:struct:tagSocketTime
 TIME_MANAGER	protocol/ProtocolBase.hpp	/^			} TIME_MANAGER;$/;"	t	class:NET::CProtocolBase	typeref:struct:NET::CProtocolBase::tagSocketTime
 TRUE	core/platform/TypeDefine.hpp	28;"	d
@@ -406,7 +403,7 @@ UINT64	core/platform/TypeDefine.hpp	/^	typedef		uint64_t		UINT64;$/;"	t	namespac
 UINT8	core/platform/TypeDefine.hpp	/^	typedef		uint8_t			UINT8;$/;"	t	namespace:NET
 ULLONG	core/platform/TypeDefine.hpp	/^	typedef		UINT64			ULLONG;$/;"	t	namespace:NET
 ULONG	core/platform/TypeDefine.hpp	/^	typedef		UINT64			ULONG;$/;"	t	namespace:NET
-UNUSED	core/platform/TypeDefine.hpp	44;"	d
+UNUSED	core/platform/TypeDefine.hpp	46;"	d
 UTIL_GTL_STL_LOGGING_INL_H_	.recy/log/glog/stl_logging.h	48;"	d
 VERSION_1_0	core/format/XMLHelper.hpp	/^				VERSION_1_0,$/;"	e	enum:NET::XMLHelper::XMLVersion
 VERSION_2_0	core/format/XMLHelper.hpp	/^				VERSION_2_0$/;"	e	enum:NET::XMLHelper::XMLVersion
@@ -417,17 +414,18 @@ VLOG_IF_EVERY_N	.recy/log/glog/logging.h	1097;"	d
 VLOG_IS_ON	.recy/log/glog/vlog_is_on.h	82;"	d
 VLOG_IS_ON	.recy/log/glog/vlog_is_on.h	93;"	d
 WARNING	.recy/log/glog/log_severity.h	/^const int INFO = GLOG_INFO, WARNING = GLOG_WARNING,$/;"	v
+XMLElement	core/format/XMLElement.cpp	/^	XMLElement::XMLElement(xml_node<>* root)$/;"	f	class:NET::XMLElement
 XMLElement	core/format/XMLElement.hpp	/^	class XMLElement$/;"	c	namespace:NET
 XMLEncoding	core/format/XMLHelper.hpp	/^			enum XMLEncoding$/;"	g	class:NET::XMLHelper
-XMLHelper	core/format/XMLHelper.cpp	/^	XMLHelper(XMLVersion version, XMLEncoding encoding)$/;"	f	namespace:NET
+XMLHelper	core/format/XMLHelper.cpp	/^	XMLHelper::XMLHelper(XMLVersion version, XMLEncoding encoding)$/;"	f	class:NET::XMLHelper
 XMLHelper	core/format/XMLHelper.hpp	/^	class XMLHelper$/;"	c	namespace:NET
-XMLHelper	core/format/XMLhelper.cpp	/^	XMLHelper::XMLHelper()$/;"	f	class:NET::XMLHelper
 XMLVersion	core/format/XMLHelper.hpp	/^			enum XMLVersion$/;"	g	class:NET::XMLHelper
 _LOGGING_H_	.recy/log/glog/logging.h	37;"	d
 __CLOADHELPERHPP__	core/loadHelper/CLoadHelper.hpp	2;"	d
 __CMAINHPP__	native/CMain.hpp	2;"	d
+__COMMANDHPP__	core/platform/Command.hpp	2;"	d
 __COMMONHH__	.recy/common.h	2;"	d
-__CONFIGHPP__	core/config/Config.hpp	2;"	d
+__CONFIGPARSERHPP__	core/config/ConfigParser.hpp	2;"	d
 __IFILELISTENERHPP__	listener/IFileListener.hpp	2;"	d
 __IPROTOCOLHPP__	protocol/IProtocol.hpp	2;"	d
 __LISTENERHELPERHPP__	listener/ListenerHelper.hpp	2;"	d
@@ -443,6 +441,7 @@ __NETLISTENERHPP__	listener/NET_Listener.hpp	2;"	d
 __NETNATIVEHPP__	native/NET_Native.hpp	2;"	d
 __NETPROCESSORHPP__	processor/NET_Processor.hpp	2;"	d
 __NETPROTOCOLHPP__	protocol/NET_Protocol.hpp	2;"	d
+__NETUPDATEHPP__	update/NET_Update.hpp	2;"	d
 __NET_COREHPP__	core/NET_Core.hpp	2;"	d
 __PROCESSORHPP__	processor/Processor.hpp	2;"	d
 __PROTOCOLBASEHPP__	protocol/ProtocolBase.hpp	2;"	d
@@ -450,16 +449,19 @@ __PROTOCOLHPP__	client/Protocol.hpp	2;"	d
 __SOCKETHPP__	core/socket/Socket.hpp	2;"	d
 __SOCKETSERVERHPP__	core/socket/SocketServer.hpp	2;"	d
 __THREADBASEHPP__	core/thread/ThreadBase.hpp	2;"	d
-__TYPEDEFHPP__	core/platform/multiplex/TypeDef.hpp	2;"	d
+__TYPEDEFHPP__	core/platform/multiplex/MultiStruct.hpp	2;"	d
 __TYPEDEFINEHPP__	core/platform/TypeDefine.hpp	2;"	d
+__UPDATEHPP__	update/Update.hpp	2;"	d
 __XMLELEMENTHPP__	core/format/XMLElement.hpp	2;"	d
 __XMLHELPERHPP__	core/format/XMLHelper.hpp	2;"	d
 addCtrl	.recy/Manager.cpp	/^void addCtrl(int fd)$/;"	f
+addElement	core/format/XMLElement.cpp	/^	XMLElement*	XMLElement::addElement(const STRING& strName)$/;"	f	class:NET::XMLElement
 addFileEvent	core/platform/multiplex/MultiBase.cpp	/^	int CMultiBase::addFileEvent(int fd, int mask)$/;"	f	class:NET::CMultiBase
 addFileEvent	core/platform/multiplex/MultiEpoll.cpp	/^	int CMultiEpoll::addFileEvent(int fd, int mask)$/;"	f	class:NET::CMultiEpoll
 addFileEvent	core/platform/multiplex/MultiKqueue.cpp	/^int CMultiKqueue::addFileEvent(int fd, int mask)$/;"	f	class:CMultiKqueue
 addFileEvent	processor/Processor.cpp	/^	int CProcessor::addFileEvent(int fd, int mask) $/;"	f	class:NET::CProcessor
 addFileListener	listener/Listener.cpp	/^	void CListener::addFileListener(IFileListener* pListener)$/;"	f	class:NET::CListener
+addRootElement	core/format/XMLHelper.hpp	/^			void					addRootElement(XMLElement* pElement)	{ m_pRootElement = pElement; }$/;"	f	class:NET::XMLHelper
 align	core/format/rapidxml/rapidxml.hpp	/^        char *align(char *ptr)$/;"	f	class:rapidxml::memory_pool
 alloc_func	core/format/rapidxml/rapidxml.hpp	/^        typedef void *(alloc_func)(std::size_t);       \/\/ Type of user-defined function used to allocate memory$/;"	t	class:rapidxml::memory_pool
 allocate_aligned	core/format/rapidxml/rapidxml.hpp	/^        void *allocate_aligned(std::size_t size)$/;"	f	class:rapidxml::memory_pool
@@ -472,33 +474,40 @@ alsologtostderr	.recy/log/glog/logging.h	/^DECLARE_bool(alsologtostderr);$/;"	v
 analyse	protocol/ProtocolBase.cpp	/^	int CProtocolBase::analyse(int size, char* buff)$/;"	f	class:NET::CProtocolBase
 append_attribute	core/format/rapidxml/rapidxml.hpp	/^        void append_attribute(xml_attribute<Ch> *attribute)$/;"	f	class:rapidxml::xml_node
 append_node	core/format/rapidxml/rapidxml.hpp	/^        void append_node(xml_node<Ch> *child)$/;"	f	class:rapidxml::xml_node
-arg	core/platform/multiplex/TypeDef.hpp	/^		void* arg;$/;"	m	struct:NET::tagEventLoop
+arg	core/platform/multiplex/MultiStruct.hpp	/^		void* arg;$/;"	m	struct:NET::tagEventLoop
 attribute_iterator	core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator()$/;"	f	class:rapidxml::attribute_iterator
 attribute_iterator	core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator(xml_node<Ch> *node)$/;"	f	class:rapidxml::attribute_iterator
 attribute_iterator	core/format/rapidxml/rapidxml_iterators.hpp	/^    class attribute_iterator$/;"	c	namespace:rapidxml
 attribute_name_pred	core/format/rapidxml/rapidxml.hpp	/^        struct attribute_name_pred$/;"	s	class:rapidxml::xml_document
 attribute_value_pred	core/format/rapidxml/rapidxml.hpp	/^        struct attribute_value_pred$/;"	s	class:rapidxml::xml_document
 attribute_value_pure_pred	core/format/rapidxml/rapidxml.hpp	/^        struct attribute_value_pure_pred$/;"	s	class:rapidxml::xml_document
+bKeepAlive	core/config/ConfigParser.hpp	/^                BOOLEAN     bKeepAlive;$/;"	m	struct:NET::final::tagSocketInfo
+bReuseAddress	core/config/ConfigParser.hpp	/^                BOOLEAN     bReuseAddress;$/;"	m	struct:NET::final::tagSocketInfo
+bReusePort	core/config/ConfigParser.hpp	/^                BOOLEAN     bReusePort;$/;"	m	struct:NET::final::tagSocketInfo
+balance	listener/Listener.cpp	/^	IFileListener* CListener::balance(::std::list<IFileListener*>& lstListener)$/;"	f	class:NET::CListener
 base	.recy/log/glog/logging.h	/^namespace base {$/;"	n	namespace:google
 base_logging	.recy/log/glog/logging.h	/^namespace base_logging {$/;"	n	namespace:google
-bindAndListen	core/socket/SocketServer.cpp	/^	void CSocketServer::bindAndListen()$/;"	f	class:NET::CSocketServer
-buildSystenInfo	core/config/Config.cpp	/^	void CConfig::buildSystenInfo()$/;"	f	class:NET::CConfig
+bindAndListen	core/socket/SocketServer.cpp	/^	BOOLEAN CSocketServer::bindAndListen()$/;"	f	class:NET::CSocketServer
 callSpecialFunc	protocol/ProtocolBase.cpp	/^	int CProtocolBase::callSpecialFunc(int type, int size,const char* src, OBJECT* &target)$/;"	f	class:NET::CProtocolBase
 checkDirection	core/log/Log.cpp	/^	bool CLog::checkDirection(const char* strPath)$/;"	f	class:NET::CLog
 checkProtocol	protocol/ProtocolBase.cpp	/^	bool CProtocolBase::checkProtocol(int protocol)$/;"	f	class:NET::CProtocolBase
 checkSize	protocol/ProtocolBase.cpp	/^	int CProtocolBase::checkSize(int protocol, int size)$/;"	f	class:NET::CProtocolBase
-clean	core/platform/multiplex/TypeDef.hpp	/^		void clean() {$/;"	f	struct:NET::tagFileEvent
+checkString	core/format/XMLElement.cpp	/^	BOOLEAN XMLElement::checkString(const STRING& str)$/;"	f	class:NET::XMLElement
+clean	core/platform/multiplex/MultiStruct.hpp	/^		void clean() {$/;"	f	struct:NET::tagFileEvent
 clear	core/format/rapidxml/rapidxml.hpp	/^        void clear()$/;"	f	class:rapidxml::memory_pool
 clear	core/format/rapidxml/rapidxml.hpp	/^        void clear()$/;"	f	class:rapidxml::xml_document
+clearAttributes	core/format/XMLElement.cpp	/^	void XMLElement::clearAttributes()$/;"	f	class:NET::XMLElement
+clearElements	core/format/XMLElement.cpp	/^	void XMLElement::clearElements()$/;"	f	class:NET::XMLElement
 clone_node	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *clone_node(const xml_node<Ch> *source, xml_node<Ch> *result = 0)$/;"	f	class:rapidxml::memory_pool
 colorlogtostderr	.recy/log/glog/logging.h	/^DECLARE_bool(colorlogtostderr);$/;"	v
 compare	core/format/rapidxml/rapidxml.hpp	/^        inline bool compare(const Ch *p1, std::size_t size1, const Ch *p2, std::size_t size2, bool case_sensitive)$/;"	f	namespace:rapidxml::internal
+copy	core/platform/Command.hpp	/^		void copy(STRING srcFile, STRING desFile) $/;"	f
 copy_and_expand_chars	core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt copy_and_expand_chars(const Ch *begin, const Ch *end, Ch noexpand, OutIt out)$/;"	f	namespace:rapidxml::internal
 copy_chars	core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt copy_chars(const Ch *begin, const Ch *end, OutIt out)$/;"	f	namespace:rapidxml::internal
 count_attributes	core/format/rapidxml/rapidxml_utils.hpp	/^    inline std::size_t count_attributes(xml_node<Ch> *node)$/;"	f	namespace:rapidxml
 count_children	core/format/rapidxml/rapidxml_utils.hpp	/^    inline std::size_t count_children(xml_node<Ch> *node)$/;"	f	namespace:rapidxml
 create	core/format/XMLHelper.cpp	/^	void XMLHelper::create()$/;"	f	class:NET::XMLHelper
-create	core/format/XMLhelper.cpp	/^	void XMLHelper::create()$/;"	f	class:NET::XMLHelper
+create	core/platform/Command.hpp	/^		void create(STRING srcFile)$/;"	f
 create	listener/ListenerHelper.hpp	/^	CListener* create()$/;"	f
 ctr	.recy/log/glog/logging.h	/^    int ctr() const { return ctr_; }$/;"	f	class:google::LogMessage::LogStream
 ctr_	.recy/log/glog/logging.h	/^    int ctr_;  \/\/ Counter hack (for the LOG_EVERY_X() macro)$/;"	m	class:google::LogMessage::LogStream
@@ -506,9 +515,9 @@ current	client/Protocol.hpp	/^	int current;$/;"	m	struct:tagSocketPing
 current	protocol/ProtocolBase.hpp	/^				int current;$/;"	m	struct:NET::CProtocolBase::tagSocketPing
 data	core/format/rapidxml/rapidxml_utils.hpp	/^        Ch *data()$/;"	f	class:rapidxml::file
 data	core/format/rapidxml/rapidxml_utils.hpp	/^        const Ch *data() const$/;"	f	class:rapidxml::file
-data	core/platform/multiplex/TypeDef.hpp	/^		char* data;$/;"	m	struct:NET::tagFileEvent
+data	core/platform/multiplex/MultiStruct.hpp	/^		char* data;$/;"	m	struct:NET::tagFileEvent
 data	protocol/IProtocol.hpp	/^			char* data;$/;"	m	struct:NET::IProtocol::tagObject
-dataSize	core/platform/multiplex/TypeDef.hpp	/^		unsigned int dataSize;$/;"	m	struct:NET::tagFileEvent
+dataSize	core/platform/multiplex/MultiStruct.hpp	/^		unsigned int dataSize;$/;"	m	struct:NET::tagFileEvent
 data_	.recy/log/glog/logging.h	/^  LogMessageData* data_;$/;"	m	class:google::LogMessage
 deadLimit	client/Protocol.hpp	/^	int deadLimit;$/;"	m	struct:tagSocketPing
 deadLimit	protocol/ProtocolBase.hpp	/^				int deadLimit;$/;"	m	struct:NET::CProtocolBase::tagSocketPing
@@ -517,6 +526,9 @@ delFileEvent	core/platform/multiplex/MultiEpoll.cpp	/^	void CMultiEpoll::delFile
 delFileEvent	core/platform/multiplex/MultiKqueue.cpp	/^void CMultiKqueue::delFileEvent(int fd, int mask)$/;"	f	class:CMultiKqueue
 delFileEvent	processor/Processor.cpp	/^	void CProcessor::delFileEvent(int fd, int mask)$/;"	f	class:NET::CProcessor
 delFileListener	listener/Listener.cpp	/^	void CListener::delFileListener(IFileListener* pListener)$/;"	f	class:NET::CListener
+deleteAttribute	core/format/XMLElement.cpp	/^	void XMLElement::deleteAttribute(const STRING& strName)$/;"	f	class:NET::XMLElement
+deleteElement	core/format/XMLElement.cpp	/^	void XMLElement::deleteElement(const STRING& strName)$/;"	f	class:NET::XMLElement
+deleteRootElement	core/format/XMLHelper.cpp	/^	void XMLHelper::deleteRootElement()$/;"	f	class:NET::XMLHelper
 destroy	core/socket/Socket.cpp	/^	void CSocket::destroy()$/;"	f	class:NET::CSocket
 destroy	listener/ListenerHelper.hpp	/^	void destroy(CListener* p)$/;"	f
 destroyManager	.recy/Manager.cpp	/^void destroyManager()$/;"	f
@@ -529,56 +541,81 @@ enableEdgeTrigger	core/platform/multiplex/MultiBase.hpp	/^			void			enableEdgeTr
 enableToStderr	core/log/Log.cpp	/^	void CLog::enableToStderr(bool bEnable)$/;"	f	class:NET::CLog
 epollfd	.recy/Manager.cpp	/^static int epollfd;$/;"	v	file:
 ev	.recy/Manager.cpp	/^struct epoll_event ev, events[SYSTEM_LIMIT_MAX_EPOLL_EVENTS];$/;"	v	typeref:struct:epoll_event
-event	core/platform/multiplex/TypeDef.hpp	/^		::std::vector<FILE_EVENT> event;$/;"	m	struct:NET::tagEventLoop
+event	core/platform/multiplex/MultiStruct.hpp	/^		::std::vector<FILE_EVENT> event;$/;"	m	struct:NET::tagEventLoop
 eventLoop	core/platform/multiplex/MultiBase.cpp	/^	int CMultiBase::eventLoop(void* timeout)$/;"	f	class:NET::CMultiBase
 eventLoop	core/platform/multiplex/MultiEpoll.cpp	/^	int CMultiEpoll::eventLoop(void* timeout)$/;"	f	class:NET::CMultiEpoll
 eventLoop	core/platform/multiplex/MultiKqueue.cpp	/^int CMultiKqueue::eventLoop(EVENT_LOOP *loop, void* timeout)$/;"	f	class:CMultiKqueue
 events	.recy/Manager.cpp	/^struct epoll_event ev, events[SYSTEM_LIMIT_MAX_EPOLL_EVENTS];$/;"	v	typeref:struct:
-fd	core/platform/multiplex/TypeDef.hpp	/^		int fd;$/;"	m	struct:NET::tagFileEvent
-fd	core/platform/multiplex/TypeDef.hpp	/^		int fd;$/;"	m	struct:NET::tagFiredEvent
+fd	core/platform/multiplex/MultiStruct.hpp	/^		int fd;$/;"	m	struct:NET::tagFileEvent
+fd	core/platform/multiplex/MultiStruct.hpp	/^		int fd;$/;"	m	struct:NET::tagFiredEvent
 file	core/format/rapidxml/rapidxml_utils.hpp	/^        file(const char *filename)$/;"	f	class:rapidxml::file
 file	core/format/rapidxml/rapidxml_utils.hpp	/^        file(std::basic_istream<Ch> &stream)$/;"	f	class:rapidxml::file
 file	core/format/rapidxml/rapidxml_utils.hpp	/^    class file$/;"	c	namespace:rapidxml
 fill_chars	core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt fill_chars(OutIt out, int n, Ch ch)$/;"	f	namespace:rapidxml::internal
-final	core/config/Config.hpp	/^	class CConfig final$/;"	c	namespace:NET
+final	core/config/ConfigParser.hpp	/^	class ConfigParser final$/;"	c	namespace:NET
+final	native/CMain.hpp	/^	class CMain final$/;"	c	namespace:NET
 find_char	core/format/rapidxml/rapidxml_print.hpp	/^        inline bool find_char(const Ch *begin, const Ch *end)$/;"	f	namespace:rapidxml::internal
-fired	core/platform/multiplex/TypeDef.hpp	/^		::std::vector<FIRED_EVENT> fired;$/;"	m	struct:NET::tagEventLoop
+fired	core/platform/multiplex/MultiStruct.hpp	/^		::std::vector<FIRED_EVENT> fired;$/;"	m	struct:NET::tagEventLoop
 first_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *first_attribute(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
 first_node	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *first_node(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
 format	core/log/Log.cpp	/^	std::string CLog::format(const char* fmt, ...) $/;"	f	class:NET::CLog
 free_func	core/format/rapidxml/rapidxml.hpp	/^        typedef void (free_func)(void *);              \/\/ Type of user-defined function used to free memory$/;"	t	class:rapidxml::memory_pool
+getAttribute	core/format/XMLElement.cpp	/^	xml_attribute<>* XMLElement::getAttribute(const STRING& strName, BOOLEAN bAdd)$/;"	f	class:NET::XMLElement
+getAttributeBOOLEAN	core/format/XMLElement.cpp	/^	BOOLEAN XMLElement::getAttributeBOOLEAN(const STRING& strName)$/;"	f	class:NET::XMLElement
+getAttributeByIndex	core/format/XMLElement.cpp	/^	STRING XMLElement::getAttributeByIndex(UINT uiIndex)$/;"	f	class:NET::XMLElement
+getAttributeCount	core/format/XMLElement.cpp	/^	UINT XMLElement::getAttributeCount()$/;"	f	class:NET::XMLElement
+getAttributeFLOAT	core/format/XMLElement.cpp	/^	FLOAT XMLElement::getAttributeFLOAT(const STRING& strName)$/;"	f	class:NET::XMLElement
+getAttributeINT	core/format/XMLElement.cpp	/^	INT XMLElement::getAttributeINT(const STRING& strName)$/;"	f	class:NET::XMLElement
+getAttributeLLONG	core/format/XMLElement.cpp	/^	LLONG XMLElement::getAttributeLLONG(const STRING& strName)$/;"	f	class:NET::XMLElement
+getAttributeString	core/format/XMLElement.cpp	/^	STRING XMLElement::getAttributeString(const STRING& strName) $/;"	f	class:NET::XMLElement
+getAttributeUINT	core/format/XMLElement.cpp	/^	UINT XMLElement::getAttributeUINT(const STRING& strName)$/;"	f	class:NET::XMLElement
+getElement	core/format/XMLElement.cpp	/^	xml_node<>*	XMLElement::getElement(const STRING& strName, BOOLEAN bAdd)$/;"	f	class:NET::XMLElement
+getElementByIndex	core/format/XMLElement.cpp	/^	XMLElement*	XMLElement::getElementByIndex(UINT uiIndex)$/;"	f	class:NET::XMLElement
+getElementByName	core/format/XMLElement.cpp	/^	XMLElement*	XMLElement::getElementByName(const STRING& strName) const$/;"	f	class:NET::XMLElement
+getElementsCount	core/format/XMLElement.cpp	/^	UINT XMLElement::getElementsCount()$/;"	f	class:NET::XMLElement
 getEventLoop	core/platform/multiplex/MultiBase.hpp	/^			EVENT_LOOP* 	getEventLoop()				{ return m_eventLoop; }$/;"	f	class:NET::CMultiBase
-getInstance	core/config/Config.cpp	/^	CConfig* CConfig::getInstance()$/;"	f	class:NET::CConfig
+getInstance	core/config/ConfigParser.cpp	/^	ConfigParser* ConfigParser::getInstance()$/;"	f	class:NET::ConfigParser
 getInstance	native/CMain.cpp	/^	CMain* CMain::getInstance()$/;"	f	class:NET::CMain
+getName	core/format/XMLElement.hpp	/^			STRING			        getName()							{ return m_strName; }$/;"	f	class:NET::XMLElement
 getRootElement	core/format/XMLHelper.hpp	/^			XMLElement*				getRootElement()						{ return m_pRootElement; }$/;"	f	class:NET::XMLHelper
-getServerIP	core/socket/SocketServer.hpp	/^			const char* 	getServerIP() const 			{ return m_serverIp; };$/;"	f	class:NET::CSocketServer
 getSocketFD	core/socket/Socket.hpp	/^			int 	getSocketFD()	const 		{ return m_fd; }$/;"	f	class:NET::CSocket
-getSystemInfo	core/config/Config.hpp	/^			inline tagSystemInfo&	getSystemInfo()	const	{ return m_tagSysInfo; }$/;"	f	class:NET::final
+getSocketInfo	core/config/ConfigParser.hpp	/^            inline const tagSocketInfo&         getSocketInfo() const       { return m_tagSocketInfo; }$/;"	f	class:NET::final
+getSocketServer	listener/Listener.hpp	/^            CSocketServer*              getSocketServer() const                 { return m_pServer; }$/;"	f	class:NET::CListener
+getSystemInfo	core/config/ConfigParser.hpp	/^			inline const tagSystemInfo&		    getSystemInfo()	const	    { return m_tagSysInfo; }$/;"	f	class:NET::final
 getThreadID	core/thread/ThreadBase.hpp	/^		::std::thread::id getThreadID()$/;"	f	class:NET::CThreadBase
 getType	core/platform/multiplex/MultiBase.hpp	/^			EMultiType		getType() const 			{ return m_eType; }$/;"	f	class:NET::CMultiBase
+getValue	core/format/XMLElement.hpp	/^			STRING			        getValue()							{ return m_strValue; }$/;"	f	class:NET::XMLElement
+getXMLDocument	core/format/XMLElement.cpp	/^	xml_document<>*	XMLElement::getXMLDocument()$/;"	f	class:NET::XMLElement
+getXMLNode	core/format/XMLElement.hpp	/^			xml_node<>*				getXMLNode() const 					{ return m_pXMLNode; }$/;"	f	class:NET::XMLElement
 glog_internal_namespace_	.recy/log/glog/logging.h	/^namespace glog_internal_namespace_ {$/;"	n	namespace:google
 google	.recy/log/glog/logging.h	/^namespace google {$/;"	n
 google	.recy/log/glog/raw_logging.h	/^namespace google {$/;"	n
 google	.recy/log/glog/stl_logging.h	/^namespace google {$/;"	n
-handle_error	core/platform/TypeDefine.hpp	38;"	d
-handle_error_errno	core/platform/TypeDefine.hpp	41;"	d
+handle_error	core/platform/TypeDefine.hpp	40;"	d
+handle_error_errno	core/platform/TypeDefine.hpp	43;"	d
 handover	.recy/Manager.cpp	/^void* handover(void* arg)$/;"	f
+hasAttribute	core/format/XMLElement.cpp	/^	BOOLEAN XMLElement::hasAttribute(const STRING& strName)$/;"	f	class:NET::XMLElement
+hasAttributes	core/format/XMLElement.cpp	/^	BOOLEAN	XMLElement::hasAttributes()$/;"	f	class:NET::XMLElement
+hasElement	core/format/XMLElement.cpp	/^	BOOLEAN	XMLElement::hasElement(const STRING& strName)$/;"	f	class:NET::XMLElement
+hasElements	core/format/XMLElement.cpp	/^	BOOLEAN XMLElement::hasElements()$/;"	f	class:NET::XMLElement
 hasRootElement	core/format/XMLHelper.hpp	/^			BOOLEAN					hasRootElement()						{ return m_pRootElement == NULL; }$/;"	f	class:NET::XMLHelper
 header	core/format/rapidxml/rapidxml.hpp	/^        struct header$/;"	s	class:rapidxml::memory_pool
 init	core/format/rapidxml/rapidxml.hpp	/^        void init()$/;"	f	class:rapidxml::memory_pool
 init	core/socket/Socket.cpp	/^	void CSocket::init()$/;"	f	class:NET::CSocket
 initLog	core/log/Log.cpp	/^	void CLog::initLog(const char* name)$/;"	f	class:NET::CLog
 initManager	.recy/Manager.cpp	/^void initManager()$/;"	f
-initialize	core/config/Config.cpp	/^	void CConfig::initialize()$/;"	f	class:NET::CConfig
-initialize	native/CMain.cpp	/^	bool CMain::initialize()$/;"	f	class:NET::CMain
-innerInitListener	native/CMain.cpp	/^	void CMain::innerInitListener()$/;"	f	class:NET::CMain
-innerInitModule	native/CMain.cpp	/^	void CMain::innerInitModule()$/;"	f	class:NET::CMain
-innerInitProcessor	native/CMain.cpp	/^	void CMain::innerInitProcessor()$/;"	f	class:NET::CMain
+initialize	core/config/ConfigParser.cpp	/^	BOOLEAN ConfigParser::initialize()$/;"	f	class:NET::ConfigParser
+initialize	native/CMain.cpp	/^	BOOLEAN CMain::initialize()$/;"	f	class:NET::CMain
+innerDestroyListener	native/CMain.cpp	/^    void CMain::innerDestroyListener()$/;"	f	class:NET::CMain
+innerDestroyProcessor	native/CMain.cpp	/^    void CMain::innerDestroyProcessor()$/;"	f	class:NET::CMain
+innerDestroyUpdate	native/CMain.cpp	/^    void CMain::innerDestroyUpdate()$/;"	f	class:NET::CMain
+innerInitListener	native/CMain.cpp	/^    BOOLEAN CMain::innerInitListener()$/;"	f	class:NET::CMain
+innerInitProcessor	native/CMain.cpp	/^    BOOLEAN CMain::innerInitProcessor()$/;"	f	class:NET::CMain
+innerInitUpdate	native/CMain.cpp	/^    BOOLEAN CMain::innerInitUpdate()$/;"	f	class:NET::CMain
 innerPackageECHO	protocol/ProtocolBase.cpp	/^	int CProtocolBase::innerPackageECHO(const OBJECT* src, char* &des)$/;"	f	class:NET::CProtocolBase
 innerPackageHEART	protocol/ProtocolBase.cpp	/^	void CProtocolBase::innerPackageHEART()$/;"	f	class:NET::CProtocolBase
 innerPackagePING	protocol/ProtocolBase.cpp	/^	int CProtocolBase::innerPackagePING(const OBJECT* src, char* &des)$/;"	f	class:NET::CProtocolBase
 innerPackageTIME	protocol/ProtocolBase.cpp	/^	void CProtocolBase::innerPackageTIME()$/;"	f	class:NET::CProtocolBase
-innerRemoveModule	native/CMain.cpp	/^	void CMain::innerRemoveModule()$/;"	f	class:NET::CMain
 insert_attribute	core/format/rapidxml/rapidxml.hpp	/^        void insert_attribute(xml_attribute<Ch> *where, xml_attribute<Ch> *attribute)$/;"	f	class:rapidxml::xml_node
 insert_coded_character	core/format/rapidxml/rapidxml.hpp	/^        static void insert_coded_character(Ch *&text, unsigned long code)$/;"	f	class:rapidxml::xml_document
 insert_node	core/format/rapidxml/rapidxml.hpp	/^        void insert_node(xml_node<Ch> *where, xml_node<Ch> *child)$/;"	f	class:rapidxml::xml_node
@@ -587,13 +624,16 @@ int64	.recy/log/glog/logging.h	/^typedef int64_t int64;$/;"	t	namespace:google
 internal	.recy/log/glog/logging.h	/^namespace internal {$/;"	n	namespace:google::base
 internal	core/format/rapidxml/rapidxml.hpp	/^    namespace internal$/;"	n	namespace:rapidxml
 internal	core/format/rapidxml/rapidxml_print.hpp	/^    namespace internal$/;"	n	namespace:rapidxml
+ip	core/socket/SocketServer.hpp	/^			const STRING& 	ip() const 			            { return m_strIP; };$/;"	f	class:NET::CSocketServer
 iterator_category	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef std::bidirectional_iterator_tag iterator_category;$/;"	t	class:rapidxml::attribute_iterator
 iterator_category	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef std::bidirectional_iterator_tag iterator_category;$/;"	t	class:rapidxml::node_iterator
 kMaxLogMessageLen	.recy/log/glog/logging.h	/^  static const size_t kMaxLogMessageLen;$/;"	m	class:google::LogMessage
 kNoLogPrefix	.recy/log/glog/logging.h	/^    kNoLogPrefix = -1$/;"	e	enum:google::LogMessage::__anon1
 last_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *last_attribute(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
 last_node	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *last_node(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
-loadConfig	native/CMain.cpp	/^	bool CMain::loadConfig()$/;"	f	class:NET::CMain
+load	core/config/ConfigParser.cpp	/^    BOOLEAN ConfigParser::load()$/;"	f	class:NET::ConfigParser
+loadSocketInfo	core/config/ConfigParser.cpp	/^    void ConfigParser::loadSocketInfo(const XMLElement* socket)$/;"	f	class:NET::ConfigParser
+loadSystemInfo	core/config/ConfigParser.cpp	/^	void ConfigParser::loadSystemInfo(const XMLElement* system)$/;"	f	class:NET::ConfigParser
 log_dir	.recy/log/glog/logging.h	/^DECLARE_string(log_dir);$/;"	v
 log_link	.recy/log/glog/logging.h	/^DECLARE_string(log_link);$/;"	v
 log_prefix	.recy/log/glog/logging.h	/^DECLARE_bool(log_prefix);$/;"	v
@@ -627,17 +667,17 @@ lookup_whitespace	core/format/rapidxml/rapidxml.hpp	/^            static const u
 lookup_whitespace	core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_whitespace[256] = $/;"	m	class:rapidxml::internal::lookup_tables
 m_alloc_func	core/format/rapidxml/rapidxml.hpp	/^        alloc_func *m_alloc_func;                           \/\/ Allocator function, or 0 if default is to be used$/;"	m	class:rapidxml::memory_pool
 m_attribute	core/format/rapidxml/rapidxml_iterators.hpp	/^        xml_attribute<Ch> *m_attribute;$/;"	m	class:rapidxml::attribute_iterator
-m_bInitialized	native/CMain.hpp	/^			bool			m_bInitialized;	$/;"	m	class:NET::CMain
-m_bStop	core/thread/ThreadBase.hpp	/^		bool 		m_bStop;$/;"	m	class:NET::CThreadBase
+m_bInitialized	native/CMain.hpp	/^			BOOLEAN			            		m_bInitialized;$/;"	m	class:NET::final
+m_bStop	core/thread/ThreadBase.hpp	/^		BOOLEAN 		m_bStop;$/;"	m	class:NET::CThreadBase
 m_begin	core/format/rapidxml/rapidxml.hpp	/^        char *m_begin;                                      \/\/ Start of raw memory making up current pool$/;"	m	class:rapidxml::memory_pool
 m_data	core/format/rapidxml/rapidxml_utils.hpp	/^        std::vector<Ch> m_data;   \/\/ File data$/;"	m	class:rapidxml::file
 m_eEncoding	core/format/XMLHelper.hpp	/^			XMLEncoding				m_eEncoding;$/;"	m	class:NET::XMLHelper
 m_eType	core/platform/multiplex/MultiBase.hpp	/^			EMultiType		m_eType;$/;"	m	class:NET::CMultiBase
 m_eVersion	core/format/XMLHelper.hpp	/^			XMLVersion				m_eVersion;$/;"	m	class:NET::XMLHelper
 m_end	core/format/rapidxml/rapidxml.hpp	/^        char *m_end;                                        \/\/ One past last available byte in current pool$/;"	m	class:rapidxml::memory_pool
-m_epfd	core/platform/multiplex/MultiEpoll.hpp	/^			int m_epfd;$/;"	m	class:NET::CMultiEpoll
+m_epfd	core/platform/multiplex/MultiEpoll.hpp	/^			int                     m_epfd;$/;"	m	class:NET::CMultiEpoll
 m_eventLoop	core/platform/multiplex/MultiBase.hpp	/^			EVENT_LOOP* 	m_eventLoop;$/;"	m	class:NET::CMultiBase
-m_events	core/platform/multiplex/MultiEpoll.hpp	/^			struct epoll_event *m_events;$/;"	m	class:NET::CMultiEpoll	typeref:struct:NET::CMultiEpoll::epoll_event
+m_events	core/platform/multiplex/MultiEpoll.hpp	/^			struct epoll_event*     m_events;$/;"	m	class:NET::CMultiEpoll	typeref:struct:NET::CMultiEpoll::epoll_event
 m_events	core/platform/multiplex/MultiKqueue.hpp	/^		struct kevent *m_events;$/;"	m	class:CMultiKqueue	typeref:struct:CMultiKqueue::kevent
 m_fd	core/socket/Socket.hpp	/^			int 	m_fd;$/;"	m	class:NET::CSocket
 m_first_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_first_attribute;   \/\/ Pointer to first attribute of node, or 0 if none; always valid$/;"	m	class:rapidxml::xml_node
@@ -648,46 +688,51 @@ m_kqfd	core/platform/multiplex/MultiKqueue.hpp	/^		int m_kqfd;$/;"	m	class:CMult
 m_last_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_last_attribute;    \/\/ Pointer to last attribute of node, or 0 if none; this value is only valid if m_first_attribute is non-zero$/;"	m	class:rapidxml::xml_node
 m_last_node	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_last_node;              \/\/ Pointer to last child node, or 0 if none; this value is only valid if m_first_node is non-zero$/;"	m	class:rapidxml::xml_node
 m_lstListener	listener/Listener.hpp	/^			::std::list<IFileListener*> m_lstListener;$/;"	m	class:NET::CListener
-m_lstModule	native/CMain.hpp	/^			::std::forward_list<CModule> m_lstModule;$/;"	m	class:NET::CMain
+m_lstLongTurn	native/CMain.hpp	/^            ::std::list<CProcessor*>    		m_lstLongTurn;$/;"	m	class:NET::final
+m_lstShortTurn	native/CMain.hpp	/^            ::std::list<CProcessor*>    		m_lstShortTurn;$/;"	m	class:NET::final
 m_name	core/format/rapidxml/rapidxml.hpp	/^        Ch *m_name;                         \/\/ Name of node, or 0 if no name$/;"	m	class:rapidxml::xml_base
 m_name_size	core/format/rapidxml/rapidxml.hpp	/^        std::size_t m_name_size;            \/\/ Length of node name, or undefined of no name$/;"	m	class:rapidxml::xml_base
 m_next_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_next_attribute;        \/\/ Pointer to next sibling of attribute, or 0 if none; only valid if parent is non-zero$/;"	m	class:rapidxml::xml_attribute
 m_next_sibling	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_next_sibling;           \/\/ Pointer to next sibling of node, or 0 if none; this value is only valid if m_parent is non-zero$/;"	m	class:rapidxml::xml_node
 m_node	core/format/rapidxml/rapidxml_iterators.hpp	/^        xml_node<Ch> *m_node;$/;"	m	class:rapidxml::node_iterator
-m_pInstance	core/config/Config.cpp	/^	CConfig* CConfig::m_pInstance = NULL;$/;"	m	class:NET::CConfig	file:
-m_pInstance	core/config/Config.hpp	/^			static CConfig* m_pInstance;$/;"	m	class:NET::final
+m_pInstance	core/config/ConfigParser.cpp	/^	ConfigParser* ConfigParser::m_pInstance = NULL;$/;"	m	class:NET::ConfigParser	file:
+m_pInstance	core/config/ConfigParser.hpp	/^			static ConfigParser*        m_pInstance;$/;"	m	class:NET::final
+m_pListener	native/CMain.hpp	/^            CListener*                  		m_pListener;$/;"	m	class:NET::final
 m_pMultiplex	processor/Processor.hpp	/^			CMultiBase* 	m_pMultiplex;$/;"	m	class:NET::CProcessor
 m_pRootElement	core/format/XMLHelper.hpp	/^			XMLElement*				m_pRootElement;$/;"	m	class:NET::XMLHelper
+m_pServer	listener/Listener.hpp	/^			CSocketServer* 				m_pServer;$/;"	m	class:NET::CListener
+m_pUpdate	native/CMain.hpp	/^            CUpdate*                   		 	m_pUpdate;$/;"	m	class:NET::final
+m_pXMLDocument	core/format/XMLElement.hpp	/^			xml_document<>*			m_pXMLDocument;$/;"	m	class:NET::XMLElement
+m_pXMLNode	core/format/XMLElement.hpp	/^			xml_node<>*				m_pXMLNode;$/;"	m	class:NET::XMLElement
 m_pXmlDoc	core/format/XMLHelper.hpp	/^			xml_document<>*			m_pXmlDoc;$/;"	m	class:NET::XMLHelper
 m_parent	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_parent;             \/\/ Pointer to parent node, or 0 if none$/;"	m	class:rapidxml::xml_base
 m_prev_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_prev_attribute;        \/\/ Pointer to previous sibling of attribute, or 0 if none; only valid if parent is non-zero$/;"	m	class:rapidxml::xml_attribute
 m_prev_sibling	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_prev_sibling;           \/\/ Pointer to previous sibling of node, or 0 if none; this value is only valid if m_parent is non-zero$/;"	m	class:rapidxml::xml_node
 m_ptr	core/format/rapidxml/rapidxml.hpp	/^        char *m_ptr;                                        \/\/ First free byte in current pool$/;"	m	class:rapidxml::memory_pool
-m_server	listener/Listener.hpp	/^			CSocketServer 				m_server;$/;"	m	class:NET::CListener
-m_serverIp	core/socket/SocketServer.hpp	/^			char 	m_serverIp[16];		\/\/max is 255.255.255.255$/;"	m	class:NET::CSocketServer
-m_serverPort	core/socket/SocketServer.hpp	/^			int 	m_serverPort;$/;"	m	class:NET::CSocketServer
 m_static_memory	core/format/rapidxml/rapidxml.hpp	/^        char m_static_memory[RAPIDXML_STATIC_POOL_SIZE];    \/\/ Static raw memory$/;"	m	class:rapidxml::memory_pool
-m_tagSysInfo	core/config/Config.hpp	/^			tagSystemInfo	m_tagSysInfo;$/;"	m	class:NET::final
-m_thread	core/thread/ThreadBase.hpp	/^		::std::thread m_thread;$/;"	m	class:NET::CThreadBase
+m_strIP	core/socket/SocketServer.hpp	/^			STRING 	    m_strIP;$/;"	m	class:NET::CSocketServer
+m_strName	core/format/XMLElement.hpp	/^			STRING					m_strName;$/;"	m	class:NET::XMLElement
+m_strValue	core/format/XMLElement.hpp	/^			STRING					m_strValue;$/;"	m	class:NET::XMLElement
+m_tagSocketInfo	core/config/ConfigParser.hpp	/^            tagSocketInfo               m_tagSocketInfo;$/;"	m	class:NET::final
+m_tagSysInfo	core/config/ConfigParser.hpp	/^			tagSystemInfo	            m_tagSysInfo;$/;"	m	class:NET::final
+m_thread	core/thread/ThreadBase.hpp	/^		::std::thread 	m_thread;$/;"	m	class:NET::CThreadBase
 m_type	core/format/rapidxml/rapidxml.hpp	/^        node_type m_type;                       \/\/ Type of node; always valid$/;"	m	class:rapidxml::xml_node
-m_uiPriority	core/config/Config.hpp	/^				unsigned int m_uiPriority;$/;"	m	struct:NET::final::tagSystemInfo
-m_uiPriority	native/CMain.hpp	/^				unsigned int m_uiPriority;$/;"	m	struct:NET::CMain::tagSystemInfo
+m_uiPort	core/socket/SocketServer.hpp	/^			UINT 	    m_uiPort;$/;"	m	class:NET::CSocketServer
 m_uiSize	processor/Processor.hpp	/^			unsigned int 	m_uiSize;$/;"	m	class:NET::CProcessor
-m_uiThreadCount	core/config/Config.hpp	/^				unsigned int m_uiThreadCount;$/;"	m	struct:NET::final::tagSystemInfo
-m_uiThreadCount	native/CMain.hpp	/^				unsigned int m_uiThreadCount;$/;"	m	struct:NET::CMain::tagSystemInfo
 m_value	core/format/rapidxml/rapidxml.hpp	/^        Ch *m_value;                        \/\/ Value of node, or 0 if no value$/;"	m	class:rapidxml::xml_base
 m_value_size	core/format/rapidxml/rapidxml.hpp	/^        std::size_t m_value_size;           \/\/ Length of node value, or undefined if no value$/;"	m	class:rapidxml::xml_base
+m_xmlHelper	core/config/ConfigParser.hpp	/^            XMLHelper*                  m_xmlHelper;$/;"	m	class:NET::final
 main	client/client.cpp	/^int main(int argc, const char *argv[])$/;"	f
 main	demo/main.cpp	/^int main(int argc, const char *argv[])$/;"	f
 mainLoop	core/thread/ThreadBase.hpp	/^		virtual void mainLoop(void* arg)$/;"	f	class:NET::CThreadBase
 mainLoop	listener/Listener.cpp	/^	void CListener::mainLoop(void* arg)$/;"	f	class:NET::CListener
-mainLoop	native/CMain.cpp	/^	void CMain::mainLoop(void* arg)$/;"	f	class:NET::CMain
 mainLoop	processor/Processor.cpp	/^	void CProcessor::mainLoop(void* arg) $/;"	f	class:NET::CProcessor
+mainLoop	update/Update.cpp	/^	void CUpdate::mainLoop(void* arg)$/;"	f	class:NET::CUpdate
 manager_queue	.recy/Manager.cpp	/^std::queue<int> manager_queue;$/;"	v
-mask	core/platform/multiplex/TypeDef.hpp	/^		int mask;$/;"	m	struct:NET::tagFileEvent
-mask	core/platform/multiplex/TypeDef.hpp	/^		int mask;$/;"	m	struct:NET::tagFiredEvent
+mask	core/platform/multiplex/MultiStruct.hpp	/^		int mask;$/;"	m	struct:NET::tagFileEvent
+mask	core/platform/multiplex/MultiStruct.hpp	/^		int mask;$/;"	m	struct:NET::tagFiredEvent
 max_log_size	.recy/log/glog/logging.h	/^DECLARE_int32(max_log_size);$/;"	v
-maxfd	core/platform/multiplex/TypeDef.hpp	/^		int maxfd;$/;"	m	struct:NET::tagEventLoop
+maxfd	core/platform/multiplex/MultiStruct.hpp	/^		int maxfd;$/;"	m	struct:NET::tagEventLoop
 measure	core/format/rapidxml/rapidxml.hpp	/^        inline std::size_t measure(const Ch *p)$/;"	f	namespace:rapidxml::internal
 memory_pool	core/format/rapidxml/rapidxml.hpp	/^        memory_pool()$/;"	f	class:rapidxml::memory_pool
 memory_pool	core/format/rapidxml/rapidxml.hpp	/^    class memory_pool$/;"	c	namespace:rapidxml
@@ -744,11 +789,9 @@ operator bool	.recy/log/glog/logging.h	/^  operator bool() const {$/;"	f	struct:
 overflow	.recy/log/glog/logging.h	/^  virtual int_type overflow(int_type ch) {$/;"	f	class:google::base_logging::LogStreamBuf
 package	protocol/ProtocolBase.cpp	/^	int CProtocolBase::package(int type,const OBJECT* src, char* &des)$/;"	f	class:NET::CProtocolBase
 parent	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parent() const$/;"	f	class:rapidxml::xml_base
-parse	core/format/XMLHelper.cpp	/^	BOOLEAN XMLHelper::parse(const CHAR* strContent)$/;"	f	class:NET::XMLHelper
-parse	core/format/XMLhelper.cpp	/^	BOOLEAN XMLHelper::parse(const CHAR* strContent)$/;"	f	class:NET::XMLHelper
+parse	core/format/XMLHelper.cpp	/^	BOOLEAN XMLHelper::parse(CHAR* strContent)$/;"	f	class:NET::XMLHelper
 parse	core/format/rapidxml/rapidxml.hpp	/^        void parse(Ch *text)$/;"	f	class:rapidxml::xml_document
 parseFrom	core/format/XMLHelper.cpp	/^	BOOLEAN	XMLHelper::parseFrom(const CHAR* strPath)$/;"	f	class:NET::XMLHelper
-parseFrom	core/format/XMLhelper.cpp	/^	BOOLEAN	XMLHelper::parseFrom(const CHAR* strPath)$/;"	f	class:NET::XMLHelper
 parse_and_append_data	core/format/rapidxml/rapidxml.hpp	/^        Ch parse_and_append_data(xml_node<Ch> *node, Ch *&text, Ch *contents_start)$/;"	f	class:rapidxml::xml_document
 parse_bom	core/format/rapidxml/rapidxml.hpp	/^        void parse_bom(Ch *&text)$/;"	f	class:rapidxml::xml_document
 parse_cdata	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_cdata(Ch *&text)$/;"	f	class:rapidxml::xml_document
@@ -782,9 +825,10 @@ pcount	.recy/log/glog/logging.h	/^    size_t pcount() const { return streambuf_.
 pcount	.recy/log/glog/logging.h	/^  size_t pcount() const { return pptr() - pbase(); }$/;"	f	class:google::base_logging::LogStreamBuf
 pointer	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_attribute<Ch> *pointer;$/;"	t	class:rapidxml::attribute_iterator
 pointer	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_node<Ch> *pointer;$/;"	t	class:rapidxml::node_iterator
-port	core/socket/SocketServer.hpp	/^			int  			port() const					{ return m_serverPort; }$/;"	f	class:NET::CSocketServer
+port	core/socket/SocketServer.hpp	/^			UINT  			port() const					{ return m_uiPort; }$/;"	f	class:NET::CSocketServer
 prepend_attribute	core/format/rapidxml/rapidxml.hpp	/^        void prepend_attribute(xml_attribute<Ch> *attribute)$/;"	f	class:rapidxml::xml_node
 prepend_node	core/format/rapidxml/rapidxml.hpp	/^        void prepend_node(xml_node<Ch> *child)$/;"	f	class:rapidxml::xml_node
+preset	core/config/ConfigParser.cpp	/^    void ConfigParser::preset()$/;"	f	class:NET::ConfigParser
 previous_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *previous_attribute(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_attribute
 previous_begin	core/format/rapidxml/rapidxml.hpp	/^            char *previous_begin;$/;"	m	struct:rapidxml::memory_pool::header
 previous_sibling	core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *previous_sibling(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
@@ -808,10 +852,10 @@ rapidxml	core/format/rapidxml/rapidxml.hpp	/^namespace rapidxml$/;"	n
 rapidxml	core/format/rapidxml/rapidxml_iterators.hpp	/^namespace rapidxml$/;"	n
 rapidxml	core/format/rapidxml/rapidxml_print.hpp	/^namespace rapidxml$/;"	n
 rapidxml	core/format/rapidxml/rapidxml_utils.hpp	/^namespace rapidxml$/;"	n
-readProc	core/platform/multiplex/TypeDef.hpp	/^		::std::function<int(struct tagFileEvent*)> readProc;$/;"	m	struct:NET::tagFileEvent
+readProc	core/platform/multiplex/MultiStruct.hpp	/^		::std::function<int(struct tagFileEvent*)> readProc;$/;"	m	struct:NET::tagFileEvent
 reference	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_attribute<Ch> &reference;$/;"	t	class:rapidxml::attribute_iterator
 reference	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_node<Ch> &reference;$/;"	t	class:rapidxml::node_iterator
-reload	native/CMain.cpp	/^	void CMain::reload()$/;"	f	class:NET::CMain
+remove	core/platform/Command.hpp	/^		void remove(STRING srcFile)$/;"	f
 remove_all_attributes	core/format/rapidxml/rapidxml.hpp	/^        void remove_all_attributes()$/;"	f	class:rapidxml::xml_node
 remove_all_nodes	core/format/rapidxml/rapidxml.hpp	/^        void remove_all_nodes()$/;"	f	class:rapidxml::xml_node
 remove_attribute	core/format/rapidxml/rapidxml.hpp	/^        void remove_attribute(xml_attribute<Ch> *where)$/;"	f	class:rapidxml::xml_node
@@ -823,39 +867,48 @@ remove_node	core/format/rapidxml/rapidxml.hpp	/^        void remove_node(xml_nod
 resize	core/platform/multiplex/MultiKqueue.cpp	/^int CMultiKqueue::resize(int size)$/;"	f	class:CMultiKqueue
 run	core/thread/ThreadBase.hpp	/^		void run(void* arg = NULL)$/;"	f	class:NET::CThreadBase
 s_pInstance	native/CMain.cpp	/^	CMain* CMain::s_pInstance = NULL;$/;"	m	class:NET::CMain	file:
-s_pInstance	native/CMain.hpp	/^			static CMain* 	s_pInstance;$/;"	m	class:NET::CMain
-saveConfig	native/CMain.cpp	/^	void CMain::saveConfig()$/;"	f	class:NET::CMain
+s_pInstance	native/CMain.hpp	/^			static CMain* 	            		s_pInstance;$/;"	m	class:NET::final
+save	core/config/ConfigParser.cpp	/^    BOOLEAN ConfigParser::save()$/;"	f	class:NET::ConfigParser
+saveSocketInfo	core/config/ConfigParser.cpp	/^    void ConfigParser::saveSocketInfo(const XMLElement* root)$/;"	f	class:NET::ConfigParser
+saveSystemInfo	core/config/ConfigParser.cpp	/^	void ConfigParser::saveSystemInfo(const XMLElement* root)$/;"	f	class:NET::ConfigParser
 saveTo	core/format/XMLHelper.cpp	/^	BOOLEAN XMLHelper::saveTo(const CHAR* strPath)$/;"	f	class:NET::XMLHelper
-saveTo	core/format/XMLhelper.cpp	/^	BOOLEAN XMLHelper::saveTo(const CHAR* strPath)$/;"	f	class:NET::XMLHelper
-scheduling	listener/Listener.cpp	/^	IFileListener* CListener::scheduling(::std::list<IFileListener*>& lstListener)$/;"	f	class:NET::CListener
 second	client/Protocol.hpp	/^	int second;$/;"	m	struct:tagSocketTime
 second	protocol/ProtocolBase.hpp	/^				int second;$/;"	m	struct:NET::CProtocolBase::tagSocketTime
 self	.recy/log/glog/logging.h	/^    LogStream* self() const { return self_; }$/;"	f	class:google::LogMessage::LogStream
 self_	.recy/log/glog/logging.h	/^    LogStream *self_;  \/\/ Consistency check hack$/;"	m	class:google::LogMessage::LogStream
+setAttribute	core/format/XMLElement.cpp	/^	void XMLElement::setAttribute(const STRING& strName, BOOLEAN bValue)$/;"	f	class:NET::XMLElement
+setAttribute	core/format/XMLElement.cpp	/^	void XMLElement::setAttribute(const STRING& strName, FLOAT fValue)$/;"	f	class:NET::XMLElement
+setAttribute	core/format/XMLElement.cpp	/^	void XMLElement::setAttribute(const STRING& strName, INT iValue)$/;"	f	class:NET::XMLElement
+setAttribute	core/format/XMLElement.cpp	/^	void XMLElement::setAttribute(const STRING& strName, LLONG lValue)$/;"	f	class:NET::XMLElement
+setAttribute	core/format/XMLElement.cpp	/^	void XMLElement::setAttribute(const STRING& strName, UINT uiValue)$/;"	f	class:NET::XMLElement
+setAttribute	core/format/XMLElement.cpp	/^	void XMLElement::setAttribute(const STRING& strName, const STRING& strValue)$/;"	f	class:NET::XMLElement
 setDirection	core/log/Log.cpp	/^	void CLog::setDirection(LOG_LEVEL level, const char* strPath)$/;"	f	class:NET::CLog
 setDirection	core/log/Log.cpp	/^	void CLog::setDirection(const char* strPath)$/;"	f	class:NET::CLog
 setFilter	core/log/Log.cpp	/^	void CLog::setFilter(LOG_LEVEL level)$/;"	f	class:NET::CLog
+setIP	core/socket/SocketServer.hpp	/^            void 			setIP(STRING ip)		        { m_strIP = ip; }$/;"	f	class:NET::CSocketServer
 setKeepAlive	core/socket/Socket.cpp	/^	void CSocket::setKeepAlive(bool on, int interval)$/;"	f	class:NET::CSocket
+setName	core/format/XMLElement.cpp	/^	void XMLElement::setName(const STRING& strName)		$/;"	f	class:NET::XMLElement
 setNonBlock	.recy/Manager.cpp	/^void setNonBlock(int fd)$/;"	f
 setNonBlock	listener/Listener.cpp	/^	void CListener::setNonBlock(int fd)$/;"	f	class:NET::CListener
-setPort	core/socket/SocketServer.hpp	/^			void 			setPort(int iPort) 				{ m_serverPort = iPort; }$/;"	f	class:NET::CSocketServer
-setReuseAddr	core/socket/Socket.cpp	/^	void CSocket::setReuseAddr(bool on)$/;"	f	class:NET::CSocket
-setReusePort	core/socket/Socket.cpp	/^	void CSocket::setReusePort(bool on)$/;"	f	class:NET::CSocket
-setRootElement	core/format/XMLHelper.hpp	/^			void					setRootElement(XMLElement* pElement)	{ m_pRootElement = pElement; }$/;"	f	class:NET::XMLHelper
-setServerIP	core/socket/SocketServer.hpp	/^			void 			setServerIP(const char* ip)		{ strncpy(m_serverIp, ip, 16); }$/;"	f	class:NET::CSocketServer
+setPort	core/socket/SocketServer.hpp	/^			void 			setPort(UINT iPort) 			{ m_uiPort = iPort; }$/;"	f	class:NET::CSocketServer
+setReuseAddress	core/socket/Socket.cpp	/^	void CSocket::setReuseAddress(bool on)$/;"	f	class:NET::CSocket
+setReusePort	core/socket/Socket.cpp	/^    void CSocket::setReusePort(bool on)$/;"	f	class:NET::CSocket
 setSize	core/platform/multiplex/MultiBase.cpp	/^	int CMultiBase::setSize(int size)$/;"	f	class:NET::CMultiBase
 setSize	core/platform/multiplex/MultiEpoll.cpp	/^	int CMultiEpoll::setSize(int size)$/;"	f	class:NET::CMultiEpoll
 setTimeOut	core/socket/Socket.cpp	/^	void CSocket::setTimeOut(int timeout)$/;"	f	class:NET::CSocket
+setValue	core/format/XMLElement.cpp	/^	void XMLElement::setValue(const STRING& strValue)		$/;"	f	class:NET::XMLElement
+setXMLNode	core/format/XMLElement.hpp	/^			void					setXMLNode(xml_node<>* pNode)		{ m_pXMLNode = pNode; }$/;"	f	class:NET::XMLElement
 set_allocator	core/format/rapidxml/rapidxml.hpp	/^        void set_allocator(alloc_func *af, free_func *ff)$/;"	f	class:rapidxml::memory_pool
 set_ctr	.recy/log/glog/logging.h	/^    void set_ctr(int ctr) { ctr_ = ctr; }$/;"	f	class:google::LogMessage::LogStream
 size	client/Protocol.hpp	/^	int size;$/;"	m	struct:tagSocketHeader
 size	core/format/rapidxml/rapidxml_utils.hpp	/^        std::size_t size() const$/;"	f	class:rapidxml::file
-size	core/platform/multiplex/TypeDef.hpp	/^		int size;$/;"	m	struct:NET::tagEventLoop
+size	core/platform/multiplex/MultiStruct.hpp	/^		int size;$/;"	m	struct:NET::tagEventLoop
 size	processor/Processor.hpp	/^			unsigned int 	size() const { return m_uiSize;	}$/;"	f	class:NET::CProcessor
 size	protocol/IProtocol.hpp	/^			int size;$/;"	m	struct:NET::IProtocol::tagObject
 size	protocol/IProtocol.hpp	/^			int size;$/;"	m	struct:NET::IProtocol::tagSocketHeader
 skip	core/format/rapidxml/rapidxml.hpp	/^        static void skip(Ch *&text)$/;"	f	class:rapidxml::xml_document
 skip_and_expand_character_refs	core/format/rapidxml/rapidxml.hpp	/^        static Ch *skip_and_expand_character_refs(Ch *&text)$/;"	f	class:rapidxml::xml_document
+start	native/CMain.cpp	/^	void CMain::start(void* arg)$/;"	f	class:NET::CMain
 std	.recy/log/glog/stl_logging.h	/^namespace std { using ::operator<<; }$/;"	n
 stderrthreshold	.recy/log/glog/logging.h	/^DECLARE_int32(stderrthreshold);$/;"	v
 stop	core/thread/ThreadBase.hpp	/^		void stop()$/;"	f	class:NET::CThreadBase
@@ -867,21 +920,21 @@ stream_	.recy/log/glog/logging.h	/^  std::ostringstream *stream_;$/;"	m	class:go
 streambuf_	.recy/log/glog/logging.h	/^    base_logging::LogStreamBuf streambuf_;$/;"	m	class:google::LogMessage::LogStream
 sync	client/Protocol.hpp	/^	int sync;$/;"	m	struct:tagSocketHeader
 sync	protocol/IProtocol.hpp	/^			int sync;$/;"	m	struct:NET::IProtocol::tagSocketHeader
-tagEventLoop	core/platform/multiplex/TypeDef.hpp	/^	typedef struct tagEventLoop {$/;"	s	namespace:NET
-tagFileEvent	core/platform/multiplex/TypeDef.hpp	/^	typedef struct tagFileEvent {$/;"	s	namespace:NET
-tagFiredEvent	core/platform/multiplex/TypeDef.hpp	/^	typedef struct tagFiredEvent {$/;"	s	namespace:NET
+tagEventLoop	core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagEventLoop {$/;"	s	namespace:NET
+tagFileEvent	core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagFileEvent {$/;"	s	namespace:NET
+tagFiredEvent	core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagFiredEvent {$/;"	s	namespace:NET
 tagObject	protocol/IProtocol.hpp	/^			tagObject(int s) $/;"	f	struct:NET::IProtocol::tagObject
 tagObject	protocol/IProtocol.hpp	/^		typedef struct tagObject$/;"	s	class:NET::IProtocol
 tagSocketHeader	client/Protocol.hpp	/^typedef struct tagSocketHeader$/;"	s
 tagSocketHeader	protocol/IProtocol.hpp	/^		typedef struct tagSocketHeader$/;"	s	class:NET::IProtocol
 tagSocketHeart	client/Protocol.hpp	/^typedef struct tagSocketHeart$/;"	s
 tagSocketHeart	protocol/ProtocolBase.hpp	/^			typedef struct tagSocketHeart$/;"	s	class:NET::CProtocolBase
+tagSocketInfo	core/config/ConfigParser.hpp	/^            struct tagSocketInfo {$/;"	s	class:NET::final
 tagSocketPing	client/Protocol.hpp	/^typedef struct tagSocketPing$/;"	s
 tagSocketPing	protocol/ProtocolBase.hpp	/^			typedef struct tagSocketPing$/;"	s	class:NET::CProtocolBase
 tagSocketTime	client/Protocol.hpp	/^typedef struct tagSocketTime$/;"	s
 tagSocketTime	protocol/ProtocolBase.hpp	/^			typedef struct tagSocketTime$/;"	s	class:NET::CProtocolBase
-tagSystemInfo	core/config/Config.hpp	/^			struct tagSystemInfo$/;"	s	class:NET::final
-tagSystemInfo	native/CMain.hpp	/^			struct tagSystemInfo$/;"	s	class:NET::CMain
+tagSystemInfo	core/config/ConfigParser.hpp	/^			struct tagSystemInfo {$/;"	s	class:NET::final
 test	core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::attribute_name_pred
 test	core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::attribute_value_pred
 test	core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::attribute_value_pure_pred
@@ -901,6 +954,12 @@ type	core/format/rapidxml/rapidxml.hpp	/^        node_type type() const$/;"	f	cl
 type	core/format/rapidxml/rapidxml.hpp	/^        void type(node_type type)$/;"	f	class:rapidxml::xml_node
 type	protocol/ProtocolBase.hpp	/^				int type;$/;"	m	struct:NET::CProtocolBase::tagSocketHeart
 type	protocol/ProtocolBase.hpp	/^				int type;$/;"	m	struct:NET::CProtocolBase::tagSocketTime
+uiAliveValue	core/config/ConfigParser.hpp	/^                UINT        uiAliveValue;$/;"	m	struct:NET::final::tagSocketInfo
+uiPort	core/config/ConfigParser.hpp	/^                UINT        uiPort;$/;"	m	struct:NET::final::tagSocketInfo
+uiPriority	core/config/ConfigParser.hpp	/^				UINT    uiPriority;$/;"	m	struct:NET::final::tagSystemInfo
+uiShortTurnLimit	core/config/ConfigParser.hpp	/^				UINT 	uiShortTurnLimit;$/;"	m	struct:NET::final::tagSystemInfo
+uiThreadCount	core/config/ConfigParser.hpp	/^				UINT    uiThreadCount;$/;"	m	struct:NET::final::tagSystemInfo
+uiTimeOut	core/config/ConfigParser.hpp	/^                UINT        uiTimeOut;$/;"	m	struct:NET::final::tagSocketInfo
 uint32	.recy/log/glog/logging.h	/^typedef uint32_t uint32;$/;"	t	namespace:google
 uint64	.recy/log/glog/logging.h	/^typedef uint64_t uint64;$/;"	t	namespace:google
 unInitialize	native/CMain.cpp	/^	void CMain::unInitialize()$/;"	f	class:NET::CMain
@@ -912,7 +971,7 @@ value_size	core/format/rapidxml/rapidxml.hpp	/^        std::size_t value_size() 
 value_type	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_attribute<Ch> value_type;$/;"	t	class:rapidxml::attribute_iterator
 value_type	core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_node<Ch> value_type;$/;"	t	class:rapidxml::node_iterator
 whitespace_pred	core/format/rapidxml/rapidxml.hpp	/^        struct whitespace_pred$/;"	s	class:rapidxml::xml_document
-writeProc	core/platform/multiplex/TypeDef.hpp	/^		::std::function<int(struct tagFileEvent*)> writeProc;$/;"	m	struct:NET::tagFileEvent
+writeProc	core/platform/multiplex/MultiStruct.hpp	/^		::std::function<int(struct tagFileEvent*)> writeProc;$/;"	m	struct:NET::tagFileEvent
 xml_attribute	core/format/rapidxml/rapidxml.hpp	/^        xml_attribute()$/;"	f	class:rapidxml::xml_attribute
 xml_attribute	core/format/rapidxml/rapidxml.hpp	/^    class xml_attribute: public xml_base<Ch>$/;"	c	namespace:rapidxml
 xml_base	core/format/rapidxml/rapidxml.hpp	/^        xml_base()$/;"	f	class:rapidxml::xml_base
@@ -921,7 +980,6 @@ xml_document	core/format/rapidxml/rapidxml.hpp	/^        xml_document()$/;"	f	cl
 xml_document	core/format/rapidxml/rapidxml.hpp	/^    class xml_document: public xml_node<Ch>, public memory_pool<Ch>$/;"	c	namespace:rapidxml
 xml_node	core/format/rapidxml/rapidxml.hpp	/^        xml_node(node_type type)$/;"	f	class:rapidxml::xml_node
 xml_node	core/format/rapidxml/rapidxml.hpp	/^    class xml_node: public xml_base<Ch>$/;"	c	namespace:rapidxml
-~CConfig	core/config/Config.cpp	/^	CConfig::~CConfig()$/;"	f	class:NET::CConfig
 ~CListener	listener/Listener.cpp	/^	CListener::~CListener()$/;"	f	class:NET::CListener
 ~CLog	core/log/Log.hpp	/^			~CLog() {};$/;"	f	class:NET::CLog
 ~CMain	native/CMain.cpp	/^	CMain::~CMain()$/;"	f	class:NET::CMain
@@ -933,8 +991,10 @@ xml_node	core/format/rapidxml/rapidxml.hpp	/^    class xml_node: public xml_base
 ~CSocket	core/socket/Socket.cpp	/^	CSocket::~CSocket()$/;"	f	class:NET::CSocket
 ~CSocketServer	core/socket/SocketServer.cpp	/^	CSocketServer::~CSocketServer()$/;"	f	class:NET::CSocketServer
 ~CThreadBase	core/thread/ThreadBase.hpp	/^		virtual ~CThreadBase() $/;"	f	class:NET::CThreadBase
+~CUpdate	update/Update.cpp	/^	CUpdate::~CUpdate()$/;"	f	class:NET::CUpdate
+~ConfigParser	core/config/ConfigParser.cpp	/^	ConfigParser::~ConfigParser()$/;"	f	class:NET::ConfigParser
 ~NullStreamFatal	.recy/log/glog/logging.h	/^  __attribute__ ((noreturn)) ~NullStreamFatal() throw () { _exit(1); }$/;"	f	class:google::NullStreamFatal
+~XMLElement	core/format/XMLElement.cpp	/^	XMLElement::~XMLElement()$/;"	f	class:NET::XMLElement
 ~XMLHelper	core/format/XMLHelper.cpp	/^	XMLHelper::~XMLHelper()$/;"	f	class:NET::XMLHelper
-~XMLHelper	core/format/XMLhelper.cpp	/^	virtual XMLHelper::~XMLHelper()$/;"	f	class:NET::XMLHelper
 ~memory_pool	core/format/rapidxml/rapidxml.hpp	/^        ~memory_pool()$/;"	f	class:rapidxml::memory_pool
 ~tagObject	protocol/IProtocol.hpp	/^			~tagObject() $/;"	f	struct:NET::IProtocol::tagObject

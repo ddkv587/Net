@@ -18,7 +18,7 @@ do_make()
 	fi
 }
 
-rm -rf $IM_PATH
+#rm -rf $IM_PATH
 
 if [ ! -e $TARGET_PATH ];then
 	mkdir $TARGET_PATH
@@ -32,5 +32,7 @@ do_make core
 do_make listener
 do_make protocol
 do_make processor
+do_make update
+do_make native
 
 do_make demo

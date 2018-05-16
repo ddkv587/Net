@@ -3,27 +3,22 @@
 
 namespace NET
 {
-	class CMain : public CThreadBase
+	class CMain final
 	{
 		public:
-			struct tagSystemInfo
-			{
-				UINT m_uiPriority;
-				UINT m_uiThreadCount;
-				UINT m_uiShortTurnLimit;
-			};
 
 		public:
 			static CMain*	getInstance();
 
-			bool			initialize();
+			BOOLEAN			initialize();
 			void 			unInitialize();
             void            reload();
 
+			void 			start(void* arg = NULL);
+
 		protected:
 			CMain();
-			virtual ~CMain();
-			void 			mainLoop(void* arg);
+			~CMain();
 
 		private:
 			CMain(CMain&) = delete;
@@ -42,9 +37,9 @@ namespace NET
 
             CUpdate*                   		 	m_pUpdate;
             CListener*                  		m_pListener;
-            ::std::forward_list<CProcessor*>    m_lstShortTurn;
-            ::std::forward_list<CProcessor*>    m_lstLongTurn;
-			bool			            		m_bInitialized;
+            ::std::list<CProcessor*>    		m_lstShortTurn;
+            ::std::list<CProcessor*>    		m_lstLongTurn;
+			BOOLEAN			            		m_bInitialized;
 	};
 }
 #endif

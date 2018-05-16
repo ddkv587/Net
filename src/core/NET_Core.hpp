@@ -3,16 +3,22 @@
 
 namespace NET
 {
+	//====== common =======
+	class CMD;
+
 	//====== log =======
 	class CLog;
 
     //====== format ========
-    class XMLHelper;
     class XMLElement;
+    class XMLHelper;
 
+	//====== config =====
+	class ConfigParser;
+    
 	//====== load helper =====
 	class CLoadHelper;
-    
+
     //====== thread ========
     class CThreadBase;
 
@@ -38,6 +44,7 @@ namespace NET
 #endif
 
 #include "platform/TypeDefine.hpp"
+#include "platform/Command.hpp"
 
 //============ log ==============
 #include <glog/logging.h>
@@ -50,9 +57,13 @@ using namespace google;
 extern int errno;
 
 //=========== format =========
-#include "rapidxml/rapidxml.hpp"
-#include "XMLElement.hpp"
-#include "XMLHelper.hpp"
+#include "format/rapidxml/rapidxml.hpp"
+using namespace rapidxml;
+#include "format/XMLElement.hpp"
+#include "format/XMLHelper.hpp"
+
+//====== config =====
+#include "config/ConfigParser.hpp"
 
 //=========== load helper =========
 #include <dlfcn.h>
@@ -74,17 +85,17 @@ extern int errno;
 #include "socket/SocketServer.hpp"
 
 //========== platform ==============
-#include "multiplex/MultiStruct.hpp"
-#include "multiplex/MultiBase.hpp"
+#include "platform/multiplex/MultiStruct.hpp"
+#include "platform/multiplex/MultiBase.hpp"
 
 #ifdef OS_BSD
 #include <sys/types.h>
 #include <sys/event.h>
-#include "multiplex/MultiKqueue.hpp"
+#include "platform/multiplex/MultiKqueue.hpp"
 #else
 #include <sys/epoll.h>
-#include "multiplex/MultiEpoll.hpp"
-#include "multiplex/MultiSelect.hpp"
+#include "platform/multiplex/MultiEpoll.hpp"
+#include "platform/multiplex/MultiSelect.hpp"
 
 #endif
 

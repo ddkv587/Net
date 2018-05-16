@@ -41,16 +41,17 @@ namespace NET
 	protected:
 		virtual void mainLoop(void* arg)
 		{
+			UNUSED(arg);
 			while ( !m_bStop ) {
 				;
 			}
 		}
 
 	protected:
-		bool 		m_bStop;
+		BOOLEAN 		m_bStop;
 
 	private:
-		::std::thread m_thread;
+		::std::thread 	m_thread;
 	};
 }
 #endif

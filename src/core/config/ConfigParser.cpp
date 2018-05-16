@@ -34,8 +34,11 @@ namespace NET
 	BOOLEAN ConfigParser::initialize()
 	{
         if( !load() ) {
-            save();
-        }
+			LOG(WARNING) << "config file load error...";
+			m_xmlHelper->create();
+    		save();
+		} else
+			CMD::COPY(CONFIG_PATH, CONFIG_PATH_BAK);	
         return TRUE;
 	}
     
@@ -56,51 +59,84 @@ namespace NET
     
     BOOLEAN ConfigParser::load()
     {
-        if ( !m_xmlHelper->parserFrom(CONFIG_PATH) )
-            CHECK_R( m_xmlHelper->parserFrom(CONFIG_PATH_BAK), FALSE );
+        if ( !m_xmlHelper->parseFrom(CONFIG_PATH) )
+            CHECK_R( m_xmlHelper->parseFrom(CONFIG_PATH_BAK), FALSE );
         
         XMLElement* root = m_xmlHelper->getRootElement();
         
-        XMLElement* system = root->getElement(TAG_SYSTEM_INFO);
-        if ( NULL != system ) buildSystemInfo(system);
+        XMLElement* system = root->getElementByName(TAG_SYSTEM_INFO);
+        if ( NULL != system ) loadSystemInfo(system);
         
-        XMLElement* socket = root->getElement(TAG_SOCKET_INFO);
-        if ( NULL != socket ) buildSocketInfo(socket)
+        XMLElement* socket = root->getElementByName(TAG_SOCKET_INFO);
+        if ( NULL != socket ) loadSocketInfo(socket);
         
         return TRUE;
     }
     
     BOOLEAN ConfigParser::save()
     {
-        //if (  )
+		saveSystemInfo(m_xmlHelper->getRootElement());
+		saveSocketInfo(m_xmlHelper->getRootElement());
+
+		m_xmlHelper->saveTo(CONFIG_PATH);
+
+		return TRUE;
     }
 
-	void ConfigParser::buildSystemInfo(const XMLElement* system)
+	void ConfigParser::loadSystemInfo(const XMLElement* system)
 	{
-		m_tagSysInfo.m_uiThreadCount = 0;
+		m_tagSysInfo.uiThreadCount = 0;
 
 		unsigned int hardware = ::std::thread::hardware_concurrency();
-		m_tagSysInfo.m_uiThreadCount = MIN(hardware != 0 ? hardware : 6, m_tagSysInfo.m_uiThreadCount);
+		m_tagSysInfo.uiThreadCount = MIN(hardware != 0 ? hardware : 6, m_tagSysInfo.uiThreadCount);
 	}
     
-    void ConfigParser::buildSocketInfo(const XMLElement* socket)
+    void ConfigParser::loadSocketInfo(const XMLElement* socket)
     {
         CHECK(NULL != socket);
         
-        XMLElement* port = socket->getElement("port");
-        if ( NULL != port ) m_tagSocketInfo.uiPort = port->getValue().toInt();
+        XMLElement* port = socket->getElementByName("port");
+        if ( NULL != port ) m_tagSocketInfo.uiPort = ::std::stoi(port->getValue());
         
-        XMLElement* alive = socket->getElement("keep-alive");
+        XMLElement* alive = socket->getElementByName("keep-alive");
         if ( NULL != alive ) {
             m_tagSocketInfo.bKeepAlive      = alive->getAttributeBOOLEAN("IsKeepAlive");
             m_tagSocketInfo.uiAliveValue    = alive->getAttributeINT("KeepAliveValue");
             m_tagSocketInfo.uiTimeOut       = alive->getAttributeINT("TimeOut");
         }
         
-        XMLElement* reuse = socket->getElement("reuse");
+        XMLElement* reuse = socket->getElementByName("reuse");
         if ( NULL != reuse ) {
-            m_tagSocketInfo.bReusePort      = alive->getAttributeBOOLEAN("IsReusePort");
-            m_tagSocketInfo.bReuseAddress   = alive->getAttributeBOOLEAN("IsReuseAddress");
+            m_tagSocketInfo.bReusePort      = reuse->getAttributeBOOLEAN("IsReusePort");
+            m_tagSocketInfo.bReuseAddress   = reuse->getAttributeBOOLEAN("IsReuseAddress");
         }
     }
+
+	void ConfigParser::saveSystemInfo(const XMLElement* root)
+	{
+		;
+	}
+
+    void ConfigParser::saveSocketInfo(const XMLElement* root)
+	{
+		CHECK(NULL != root);
+
+		XMLElement* socket = root->addElement(TAG_SOCKET_INFO);
+		assert(socket != NULL);
+
+        XMLElement* port = socket->addElement("port");
+		assert(port != NULL);
+		port->setValue( ::std::to_string(m_tagSocketInfo.uiPort) );
+        
+        XMLElement* alive = socket->addElement("keep-alive");
+        assert ( NULL != alive );
+		alive->setAttribute("IsKeepAlive", m_tagSocketInfo.bKeepAlive);
+        alive->setAttribute("KeepAliveValue", m_tagSocketInfo.uiAliveValue);
+        alive->setAttribute("TimeOut", m_tagSocketInfo.uiTimeOut);
+        
+        XMLElement* reuse = socket->addElement("reuse");
+        assert ( NULL != reuse );
+        reuse->setAttribute("IsReusePort", m_tagSocketInfo.bReusePort);
+        reuse->setAttribute("IsReuseAddress", m_tagSocketInfo.bReuseAddress);
+	}
 }

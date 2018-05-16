@@ -10,7 +10,7 @@ namespace NET
             virtual ~XMLElement();
 
 			//name 
-			STRING			        getName()							{ return m_strName }
+			STRING			        getName()							{ return m_strName; }
 			void					setName(const STRING& strName);
 
 			//text
@@ -23,7 +23,7 @@ namespace NET
 			UINT 					getAttributeCount();
 			STRING					getAttributeByIndex(UINT uiIndex);
 			
-			STRING					getAttributeString(const STRING& strName) const;
+			STRING					getAttributeString(const STRING& strName);
 			INT						getAttributeINT(const STRING& strName);
 			UINT					getAttributeUINT(const STRING& strName);
 			LLONG					getAttributeLLONG(const STRING& strName);
@@ -37,19 +37,19 @@ namespace NET
 			void					setAttribute(const STRING& strName, FLOAT fValue);
 			void					setAttribute(const STRING& strName, BOOLEAN bValue);
 
-			void					deleteAttribute(const STRING strName);
+			void					deleteAttribute(const STRING& strName);
 			void					clearAttributes();
 
 			//child
 			BOOLEAN					hasElements();
-			BOOLEAN					hasElement(const STRING strName);
+			BOOLEAN					hasElement(const STRING& strName);
 			UINT					getElementsCount();
 			XMLElement*				getElementByIndex(UINT uiIndex);
-			XMLElement*				getElement(const STRING strName);
+			XMLElement*				getElementByName(const STRING& strName) const;
 	
-			XMLElement*				addElement(const STRING strName);
-			BOOLEAN					deleteElement(const STRING strName);
-			BOOLEAN					clearElements();
+			XMLElement*				addElement(const STRING& strName);
+			void					deleteElement(const STRING& strName);
+			void					clearElements();
         
 		protected:
 			void					setXMLNode(xml_node<>* pNode)		{ m_pXMLNode = pNode; }
@@ -61,11 +61,13 @@ namespace NET
 			BOOLEAN					checkString(const STRING& str);
 			xml_attribute<>*		getAttribute(const STRING& strName, BOOLEAN bAdd = FALSE);
 			xml_node<>*				getElement(const STRING& strName, BOOLEAN bAdd = FALSE);
+			xml_document<>*			getXMLDocument();
 	
 		private:
 			STRING					m_strName;
 			STRING					m_strValue;
 			xml_node<>*				m_pXMLNode;
+			xml_document<>*			m_pXMLDocument;
 	};
 }
 #endif

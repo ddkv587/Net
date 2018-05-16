@@ -1,17 +1,17 @@
-#include "NET_CORE.hpp"
+#include "NET_Core.hpp"
 
 namespace NET 
 {
 #define		DEF_DEFAULT_VALUE	""
 	XMLElement::XMLElement(xml_node<>* root)
-        : strName(STRING_NULL)
-		, strValue(STRING_NULL)
+        : m_strName(STRING_NULL)
+		, m_strValue(STRING_NULL)
 		, m_pXMLNode(root)
 	{
         assert ( NULL != root );
         
-        strName 	= root->name();
-        strValue 	= root->value();
+        m_strName 	= root->name();
+        m_strValue 	= root->value();
 	}
 			
 	XMLElement::~XMLElement()
@@ -23,14 +23,14 @@ namespace NET
 	{ 
 		m_strName = strName; 
 
-		m_pXMLNode->name(strName, strName.size());
+		m_pXMLNode->name(strName.data(), strName.size());
 	}
 
 	void XMLElement::setValue(const STRING& strValue)		
 	{
 		m_strValue = strValue; 
 
-		m_pXMLNode->value(strValue, strValue.size());
+		m_pXMLNode->value(strValue.data(), strValue.size());
 	}
 
 	BOOLEAN	XMLElement::hasAttributes()
@@ -55,7 +55,7 @@ namespace NET
         return uiCount;
 	}
 
-	STRING	XMLElement::getAttributeByIndex(UINT uiIndex)
+	STRING XMLElement::getAttributeByIndex(UINT uiIndex)
 	{
 		xml_attribute<>* att = m_pXMLNode->first_attribute();
        	for ( UINT ui=1; ui < uiIndex; ++ui ) {
@@ -127,7 +127,7 @@ namespace NET
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
 		if ( att ) {
-			STRING strValve = ::std::to_string(iValue);
+			STRING strValue = ::std::to_string(iValue);
 
 			att->value(strValue.data(), strValue.size());
 		}
@@ -137,7 +137,7 @@ namespace NET
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
 		if ( att ) {
-			STRING strValve = ::std::to_string(uiValue);
+			STRING strValue = ::std::to_string(uiValue);
 
 			att->value(strValue.data(), strValue.size());
 		}
@@ -147,7 +147,7 @@ namespace NET
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
 		if ( att ) {
-			STRING strValve = ::std::to_string(lValue);
+			STRING strValue = ::std::to_string(lValue);
 
 			att->value(strValue.data(), strValue.size());
 		}	
@@ -157,7 +157,7 @@ namespace NET
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
 		if ( att ) {
-			STRING strValve = ::std::to_string(fValue);
+			STRING strValue = ::std::to_string(fValue);
 
 			att->value(strValue.data(), strValue.size());
 		}
@@ -167,7 +167,7 @@ namespace NET
 	{
 		xml_attribute<>* att = getAttribute(strName, TRUE);
 		if ( att ) {
-			STRING strValve = bValue ? "true" : "false";
+			STRING strValue = bValue ? "true" : "false";
 
 			att->value(strValue.data(), strValue.size());
 		}
@@ -176,11 +176,7 @@ namespace NET
 	void XMLElement::deleteAttribute(const STRING& strName)
 	{
 		xml_attribute<>* att = getAttribute(strName);
-		if ( att ) {
-			m_pXMLNode->remove_attribute(att);
-
-			--m_uiAttributeSize;
-		}	
+		if ( att ) m_pXMLNode->remove_attribute(att);
 	}
 	
 	void XMLElement::clearAttributes()
@@ -203,8 +199,8 @@ namespace NET
 	{
         UINT uiCount = 0;
         
-        xml_node<>* node = root->first_node();
-        while ( node && node != root->last_node() )
+        xml_node<>* node = m_pXMLNode->first_node();
+        while ( node && node != m_pXMLNode->last_node() )
         {
             ++uiCount;
             node = node->next_sibling();
@@ -226,9 +222,9 @@ namespace NET
 		return NULL;
 	}
 
-	XMLElement*	XMLElement::getElement(const STRING& strName)
+	XMLElement*	XMLElement::getElementByName(const STRING& strName) const
 	{
-		xml_node<>* node = m_pXMLNode->getElement(strName);
+		xml_node<>* node = m_pXMLNode->first_node(strName.data(), strName.size());
 		if ( NULL != node ) return new XMLElement(node);
 
 		return NULL;
@@ -265,7 +261,8 @@ namespace NET
 		if ( NULL != att ) return att;
 		
 		if ( bAdd ) {
-			att = m_pXMLNode->allocate_attribute( 
+			CHECK_R( getXMLDocument(), NULL );
+			att = m_pXMLDocument->allocate_attribute( 
 					strName.data(), \
 					NULL, \
 					strName.size(), \
@@ -282,7 +279,8 @@ namespace NET
 		if ( NULL != node ) return node;
 
 		if ( bAdd ) {
-			node = m_pXMLNode->allocate_node(
+			CHECK_R( getXMLDocument(), NULL );
+			node = m_pXMLDocument->allocate_node(
 					rapidxml::node_element, \
 					strName.data(), \
 					NULL, \
@@ -291,6 +289,18 @@ namespace NET
 			m_pXMLNode->append_node(node);
 			return node;
 		}
+		return NULL;
+	}
+
+	xml_document<>*	XMLElement::getXMLDocument()
+	{
+		if ( m_pXMLDocument ) return m_pXMLDocument;
+
+		if ( m_pXMLNode ) {
+			m_pXMLDocument = m_pXMLNode->document();
+			return m_pXMLDocument;
+		}
+
 		return NULL;
 	}
 }

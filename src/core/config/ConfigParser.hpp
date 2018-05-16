@@ -9,6 +9,7 @@ namespace NET
 			struct tagSystemInfo {
 				UINT    uiPriority;
 				UINT    uiThreadCount;
+				UINT 	uiShortTurnLimit;
 			};
         
             struct tagSocketInfo {
@@ -38,8 +39,11 @@ namespace NET
             BOOLEAN                     load();
             BOOLEAN                     save();
         
-			void		                buildSystemInfo(const XMLElement*);
-            void                        buildSocketInfo(const XMLElement*);
+			void		                loadSystemInfo(const XMLElement*);
+            void                        loadSocketInfo(const XMLElement*);
+
+			void		                saveSystemInfo(const XMLElement*);
+            void                        saveSocketInfo(const XMLElement*);
 	
 		private:
 			static ConfigParser*        m_pInstance;

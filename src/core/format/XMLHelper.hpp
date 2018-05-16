@@ -26,7 +26,7 @@ namespace NET
 			BOOLEAN					saveTo(const CHAR* strPath);
 
 			void					create();
-			BOOLEAN					parse(const CHAR* strContent);
+			BOOLEAN					parse(CHAR* strContent);
 
 			BOOLEAN					hasRootElement()						{ return m_pRootElement == NULL; }
 			XMLElement*				getRootElement()						{ return m_pRootElement; }

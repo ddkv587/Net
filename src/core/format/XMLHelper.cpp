@@ -1,14 +1,14 @@
-#include "NET_CORE.hpp"
+#include "NET_Core.hpp"
 
 namespace NET 
 {
-	XMLHelper(XMLVersion version, XMLEncoding encoding)
+	XMLHelper::XMLHelper(XMLVersion version, XMLEncoding encoding)
 		: m_eVersion(version)
 		, m_eEncoding(encoding)
 		, m_pXmlDoc(NULL)
 	 	, m_pRootElement(NULL)
 	{
-		;
+		create();
 	}
 
 	XMLHelper::~XMLHelper()
@@ -20,25 +20,24 @@ namespace NET
 
 	BOOLEAN	XMLHelper::parseFrom(const CHAR* strPath)
 	{
-		CHECK_R(-1 != stat(strPath, &st), FALSE);
-       
-        ifstream in(strPath);
-        in.seekg(0, std::ios::end);
+        ::std::ifstream in(strPath);
+        in.seekg(0, in.end);
         size_t size = in.tellg();
         
-        STRING strBuff(size + 1, '\0');
-        in.seekg(0, std::ios::beg);
-        in.read(strBuff.data(), size);
+        CHAR* strBuff = new CHAR[size + 1];
+		strBuff[size] = '\0';
+        in.seekg(0, in.beg);
+        in.read(strBuff, size);
         in.close();
    
-        return parse(strBuff.data());
+        return parse(strBuff);
 	}
 
 	BOOLEAN XMLHelper::saveTo(const CHAR* strPath)
 	{
         CHECK_R(m_pXmlDoc != NULL, FALSE);
         
-        std::ofstream out(strPath);
+        ::std::ofstream out(strPath);
         out << m_pXmlDoc;
         
         return TRUE;
@@ -48,25 +47,24 @@ namespace NET
 	{
 		m_pXmlDoc = new xml_document<>();
 
-		STRING strHeader = "xml version=" + \
-                            ( m_eVersion == VERSION_1_0 ? "'1.0'" : "'2.0'" ) + \
-                            " encoding=" + \
-                            ( m_eEncoding == ENCODING_UTF8 ? "'utf-8'" : "'utf-16'");
+		STRING strHead = STRING("xml version=") + \
+                            ( m_eVersion == VERSION_1_0 ? STRING("'1.0'") : STRING("'2.0'") ) + \
+                           	STRING(" encoding=") + \
+                            ( m_eEncoding == ENCODING_UTF8 ? STRING("'utf-8'") : STRING("'utf-16'"));
         
-		xml_node<>* node = m_xmlDoc->allocate_node( rapidxml::node_pi, \
-					m_xmlDoc.allocate_string(strHeader) );
+		xml_node<>* node = m_pXmlDoc->allocate_node( rapidxml::node_pi, \
+					m_pXmlDoc->allocate_string(strHead.data(), strHead.size()) );
 		m_pXmlDoc->append_node(node);
         
         m_pRootElement = new XMLElement(node);
-        m_pRootElement.setName(L"ROOT");
+        m_pRootElement->setName("ROOT");
 	}
 	
-	BOOLEAN XMLHelper::parse(const CHAR* strContent)
+	BOOLEAN XMLHelper::parse(CHAR* strContent)
 	{
-		assert(m_pXmlDoc != NULL);
 		try
 		{
-			m_xmlDoc.parse<0>(strContent);
+			m_pXmlDoc->parse<0>(strContent);
 	
 		} catch (const rapidxml::parse_error& e) {
 			LOG(WARNING) << e.what();
@@ -74,7 +72,7 @@ namespace NET
 			return FALSE;
 		}
         
-        xml_node<>* node = m_xmlDoc->first_node();
+        xml_node<>* node = m_pXmlDoc->first_node();
         if ( NULL != node ) m_pRootElement = new XMLElement(node);
 
 		return TRUE;
@@ -84,7 +82,7 @@ namespace NET
 	{
 		if ( NULL != m_pRootElement )
 		{
-			m_xmlDoc.remove_node(m_pRootElement->getXMLNode());
+			m_pXmlDoc->remove_node(m_pRootElement->getXMLNode());
             m_pRootElement->setXMLNode(NULL);
             delete m_pRootElement;
 			m_pRootElement = NULL;

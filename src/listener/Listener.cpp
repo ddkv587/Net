@@ -7,7 +7,7 @@ namespace NET
 	{
         m_pServer = new CSocketServer();
         
-		m_pServer.init();
+		m_pServer->init();
 	}
 
 	CListener::~CListener()
@@ -47,7 +47,7 @@ namespace NET
 
 	void CListener::mainLoop(void* arg)
 	{
-        if ( !m_pServer->bindAndListen() ) {
+        if ( !m_pServer || !m_pServer->bindAndListen() ) {
             LOG(ERROR) << CLog::format( "[%s, %d]  CListener bind and listen error, quit...", __FILE__, __LINE__ );
             return;
         }
@@ -64,7 +64,7 @@ namespace NET
 				continue;
 			}
 
-			if ( -1 == ( client = accept(m_server.getSocketFD(), (struct sockaddr*)&client_addr, (socklen_t*)&addLen) ) ) {
+			if ( -1 == ( client = accept(m_pServer->getSocketFD(), (struct sockaddr*)&client_addr, (socklen_t*)&addLen) ) ) {
 				LOG(ERROR) << CLog::format( "[%s, %d]  accept error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 				continue;
 			}
@@ -76,7 +76,7 @@ namespace NET
 
 			setNonBlock(client);
 			
-			IFileListener* pListener = scheduling(m_lstListener);
+			IFileListener* pListener = balance(m_lstListener);
 
 			if ( NULL != pListener ) {
 				pListener->addFileEvent(client, NET_READABLE);
