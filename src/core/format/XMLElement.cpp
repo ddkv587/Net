@@ -7,6 +7,7 @@ namespace NET
         : m_strName(STRING_NULL)
 		, m_strValue(STRING_NULL)
 		, m_pXMLNode(root)
+		, m_pXMLDocument(NULL)
 	{
         assert ( NULL != root );
         

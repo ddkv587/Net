@@ -35,7 +35,6 @@ namespace NET
 	{
         if( !load() ) {
 			LOG(WARNING) << "config file load error...";
-			m_xmlHelper->create();
     		save();
 		} else
 			CMD::COPY(CONFIG_PATH, CONFIG_PATH_BAK);	
@@ -75,6 +74,9 @@ namespace NET
     
     BOOLEAN ConfigParser::save()
     {
+		if ( NULL == m_xmlHelper->getRootElement() ) 
+			m_xmlHelper->create();
+
 		saveSystemInfo(m_xmlHelper->getRootElement());
 		saveSocketInfo(m_xmlHelper->getRootElement());
 

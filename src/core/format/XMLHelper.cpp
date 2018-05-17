@@ -8,6 +8,16 @@ namespace NET
 		, m_pXmlDoc(NULL)
 	 	, m_pRootElement(NULL)
 	{
+		m_pXmlDoc = new xml_document<>();
+		STRING strHeader = STRING("xml version=") + \
+                            ( m_eVersion == VERSION_1_0 ? STRING("'1.0'") : STRING("'2.0'") ) + \
+                           	STRING(" encoding=") + \
+                            ( m_eEncoding == ENCODING_UTF8 ? STRING("'utf-8'") : STRING("'utf-16'"));
+        
+		xml_node<>* header = m_pXmlDoc->allocate_node( node_pi, \
+					m_pXmlDoc->allocate_string(strHeader.data(), strHeader.size()) );
+		m_pXmlDoc->append_node(header);
+
 		create();
 	}
 
@@ -38,37 +48,29 @@ namespace NET
         CHECK_R(m_pXmlDoc != NULL, FALSE);
         
         ::std::ofstream out(strPath);
-        out << m_pXmlDoc;
+        out << (*m_pXmlDoc);
         
         return TRUE;
 	}
 
 	void XMLHelper::create()
 	{
-		m_pXmlDoc = new xml_document<>();
+		xml_node<>* node = m_pXmlDoc->allocate_node( node_element, "ROOT");
+        m_pXmlDoc->append_node(node);
 
-		STRING strHead = STRING("xml version=") + \
-                            ( m_eVersion == VERSION_1_0 ? STRING("'1.0'") : STRING("'2.0'") ) + \
-                           	STRING(" encoding=") + \
-                            ( m_eEncoding == ENCODING_UTF8 ? STRING("'utf-8'") : STRING("'utf-16'"));
-        
-		xml_node<>* node = m_pXmlDoc->allocate_node( rapidxml::node_pi, \
-					m_pXmlDoc->allocate_string(strHead.data(), strHead.size()) );
-		m_pXmlDoc->append_node(node);
-        
         m_pRootElement = new XMLElement(node);
         m_pRootElement->setName("ROOT");
 	}
 	
 	BOOLEAN XMLHelper::parse(CHAR* strContent)
 	{
-		try
-		{
+		try {
 			m_pXmlDoc->parse<0>(strContent);
-	
 		} catch (const rapidxml::parse_error& e) {
 			LOG(WARNING) << e.what();
-			
+
+			delete m_pRootElement; 
+			m_pRootElement = NULL;	
 			return FALSE;
 		}
         
@@ -80,8 +82,7 @@ namespace NET
 
 	void XMLHelper::deleteRootElement()
 	{
-		if ( NULL != m_pRootElement )
-		{
+		if ( NULL != m_pRootElement ) {
 			m_pXmlDoc->remove_node(m_pRootElement->getXMLNode());
             m_pRootElement->setXMLNode(NULL);
             delete m_pRootElement;

@@ -58,6 +58,8 @@ extern int errno;
 
 //=========== format =========
 #include "format/rapidxml/rapidxml.hpp"
+#include "format/rapidxml/rapidxml_utils.hpp"
+#include "format/rapidxml/rapidxml_print.hpp"
 using namespace rapidxml;
 #include "format/XMLElement.hpp"
 #include "format/XMLHelper.hpp"
