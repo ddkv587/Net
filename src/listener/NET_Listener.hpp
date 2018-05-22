@@ -19,6 +19,5 @@ namespace NET
 
 #include "IFileListener.hpp"
 #include "Listener.hpp"
-#include "ListenerHelper.hpp"
 
 #endif

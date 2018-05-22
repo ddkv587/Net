@@ -8,7 +8,7 @@ int main(int argc, const char *argv[])
 {
 	NET::CLog::initLog(argv[0]);
 
-	CMain::getInstance()->start();
+	NET::CMain::getInstance()->start();
 	/*
 	void* listener_handle = NULL; 
 

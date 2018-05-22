@@ -1,44 +1,47 @@
 #ifndef __XMLHELPERHPP__
 #define __XMLHELPERHPP__
 
-namespace NET
-{
-	class XMLHelper
-	{
-		public:
-			enum XMLVersion
-			{
-				VERSION_1_0,
-				VERSION_2_0
-			};
+namespace NET {
 
-			enum XMLEncoding
-			{
-				ENCODING_UTF8,
-				ENCODING_UTF16,
-			};
+    class XMLHelper {
+    public:
 
-		public:
-			XMLHelper(XMLVersion version = VERSION_1_0, XMLEncoding encoding = ENCODING_UTF8);
-			virtual ~XMLHelper();
+        enum XMLVersion {
+            VERSION_1_0,
+            VERSION_2_0
+        };
 
-			BOOLEAN 				parseFrom(const CHAR* strPath);
-			BOOLEAN					saveTo(const CHAR* strPath);
+        enum XMLEncoding {
+            ENCODING_UTF8,
+            ENCODING_UTF16,
+        };
 
-			void					create();
-			BOOLEAN					parse(CHAR* strContent);
+    public:
+        XMLHelper(XMLVersion version = VERSION_1_0, XMLEncoding encoding = ENCODING_UTF8);
+        virtual ~XMLHelper();
 
-			BOOLEAN					hasRootElement()						{ return m_pRootElement == NULL; }
-			XMLElement*				getRootElement()						{ return m_pRootElement; }
-			void					addRootElement(XMLElement* pElement)	{ m_pRootElement = pElement; }
-			void					deleteRootElement();
+        BOOLEAN parseFrom(const CHAR* strPath);
+        BOOLEAN saveTo(const CHAR* strPath);
 
-		private:
-			XMLVersion				m_eVersion;
-			XMLEncoding				m_eEncoding;
+        void create();
+        BOOLEAN parse(CHAR* strContent);
 
-			xml_document<>*			m_pXmlDoc;
-			XMLElement*				m_pRootElement;
-	};
+        BOOLEAN hasRootElement() {
+            return m_pRootElement == NULL;
+        }
+
+        XMLElement* getRootElement() {
+            return m_pRootElement;
+        }
+
+        void deleteRootElement();
+
+    private:
+        XMLVersion m_eVersion;
+        XMLEncoding m_eEncoding;
+
+        xml_document<>* m_pXmlDoc;
+        XMLElement* m_pRootElement;
+    };
 }
 #endif
