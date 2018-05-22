@@ -4,7 +4,7 @@ namespace NET
 {
 	CMultiEpoll::CMultiEpoll()
 		: m_epfd(-1)
-		, m_events(NULL)
+		, m_events(nullptr)
 	{
 		m_epfd = epoll_create(1024);
 		CHECK( -1 != m_epfd );
@@ -16,7 +16,11 @@ namespace NET
 
 	CMultiEpoll::~CMultiEpoll()
 	{
-		;
+        close(m_epfd);
+        
+        if ( NULL != m_events ) {
+            delete m_events;
+        }
 	}
 	
 	int CMultiEpoll::setSize(int size)
@@ -75,7 +79,7 @@ namespace NET
 
 	int CMultiEpoll::eventLoop(void* timeout)
 	{
-		int retval;
+		int retval = 0;
 
 		struct timeval* tvl = timeout ? (struct timeval*)timeout : NULL;
 
@@ -95,7 +99,7 @@ namespace NET
 			if ( e->events & EPOLLHUP ) mask |= NET_WRITABLE;
 
 			m_eventLoop->fired[index].fd = e->data.fd;
-			m_eventLoop->fired[index].mask = mask;
+			m_eventLoop->fired[index].fd = mask;
 		}
 		return retval;
 	}

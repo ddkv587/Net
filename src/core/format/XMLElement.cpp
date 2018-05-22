@@ -8,7 +8,8 @@ namespace NET {
     , m_strValue(STRING_NULL)
     , m_pXMLNode(root)
     , m_pXMLDocument(NULL) {
-        assert(NULL != root);
+        m_pXMLDocument = m_pXMLNode->document();
+        assert(NULL != m_pXMLNode || m_pXMLDocument == NULL);
 
         m_strName = root->name();
         m_strValue = root->value();
@@ -21,14 +22,12 @@ namespace NET {
     void XMLElement::setName(const STRING& strName) {
         m_strName = strName;
 
-        CHECK( getXMLDocument() );
         m_pXMLNode->name( m_pXMLDocument->allocate_string( strName.data(), strName.size() ), strName.size() );
     }
 
     void XMLElement::setValue(const STRING& strValue) {
         m_strValue = strValue;
 
-        CHECK( getXMLDocument() );
         m_pXMLNode->value( m_pXMLDocument->allocate_string( strValue.data(), strValue.size() ), strValue.size() );
  
     }
@@ -110,7 +109,6 @@ namespace NET {
     void XMLElement::setAttribute(const STRING& strName, const STRING& strValue) {
         xml_attribute<>* att = getAttribute(strName, TRUE);
         if (att) {
-            CHECK( getXMLDocument() );
             att->value( m_pXMLDocument->allocate_string( strValue.data(), strValue.size() ), strValue.size());
         }
     }
@@ -120,7 +118,6 @@ namespace NET {
         if (att) {
             STRING strValue = ::std::to_string(iValue);
 
-            CHECK( getXMLDocument() );
             att->value( m_pXMLDocument->allocate_string( strValue.data(), strValue.size() ), strValue.size());
         }
     }
@@ -130,7 +127,6 @@ namespace NET {
         if (att) {
             STRING strValue = ::std::to_string(uiValue);
 
-            CHECK( getXMLDocument() );
             att->value( m_pXMLDocument->allocate_string( strValue.data(), strValue.size() ), strValue.size());
         }
     }
@@ -140,7 +136,6 @@ namespace NET {
         if (att) {
             STRING strValue = ::std::to_string(lValue);
 
-            CHECK( getXMLDocument() );
             att->value( m_pXMLDocument->allocate_string( strValue.data(), strValue.size() ), strValue.size());
         }
     }
@@ -150,7 +145,6 @@ namespace NET {
         if (att) {
             STRING strValue = ::std::to_string(fValue);
 
-            CHECK( getXMLDocument() );
             att->value( m_pXMLDocument->allocate_string( strValue.data(), strValue.size() ), strValue.size());
         }
     }
@@ -160,7 +154,6 @@ namespace NET {
         if (att) {
             STRING strValue = bValue ? "true" : "false";
 
-            CHECK( getXMLDocument() );
             att->value( m_pXMLDocument->allocate_string( strValue.data(), strValue.size() ), strValue.size());
         }
     }
@@ -214,7 +207,7 @@ namespace NET {
         return NULL;
     }
 
-    XMLElement* XMLElement::addElement(const STRING& strName) {
+    XMLElement* XMLElement::addElement(const STRING& strName) const {
         xml_node<>* node = getElement(strName, TRUE);
         if (NULL != node) return new XMLElement(node);
 
@@ -240,7 +233,6 @@ namespace NET {
         if (NULL != att) return att;
 
         if (bAdd) {
-            CHECK_R(getXMLDocument(), NULL);
             att = m_pXMLDocument->allocate_attribute( \
                                         m_pXMLDocument->allocate_string( strName.data(), strName.size() ),\
 					NULL, \
@@ -252,12 +244,11 @@ namespace NET {
         return NULL;
     }
 
-    xml_node<>* XMLElement::getElement(const STRING& strName, BOOLEAN bAdd) {
+    xml_node<>* XMLElement::getElement(const STRING& strName, BOOLEAN bAdd) const noexcept {
         xml_node<>* node = m_pXMLNode->first_node(strName.data(), strName.size());
         if (NULL != node) return node;
 
         if (bAdd) {
-            CHECK_R(getXMLDocument(), NULL);
             node = m_pXMLDocument->allocate_node( \
                                         rapidxml::node_element, \
 					m_pXMLDocument->allocate_string( strName.data(), strName.size() ),\
@@ -267,17 +258,6 @@ namespace NET {
             m_pXMLNode->append_node(node);
             return node;
         }
-        return NULL;
-    }
-
-    xml_document<>* XMLElement::getXMLDocument() {
-        if (m_pXMLDocument) return m_pXMLDocument;
-
-        if (m_pXMLNode) {
-            m_pXMLDocument = m_pXMLNode->document();
-            return m_pXMLDocument;
-        }
-
         return NULL;
     }
 }

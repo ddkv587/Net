@@ -52,7 +52,7 @@ namespace NET {
         XMLElement* getElementByIndex(UINT uiIndex);
         XMLElement* getElementByName(const STRING& strName) const;
 
-        XMLElement* addElement(const STRING& strName);
+        XMLElement* addElement(const STRING& strName) const;
         void deleteElement(const STRING& strName);
         void clearElements();
 
@@ -71,8 +71,7 @@ namespace NET {
     private:
         BOOLEAN checkString(const STRING& str);
         xml_attribute<>* getAttribute(const STRING& strName, BOOLEAN bAdd = FALSE);
-        xml_node<>* getElement(const STRING& strName, BOOLEAN bAdd = FALSE);
-        xml_document<>* getXMLDocument();
+        xml_node<>* getElement(const STRING& strName, BOOLEAN bAdd = FALSE) const noexcept;
 
     private:
         STRING m_strName;

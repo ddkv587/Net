@@ -38,6 +38,7 @@ namespace NET
 			EVENT_LOOP* 	m_eventLoop;
 			
 			bool			m_isEdgeTrigger;
+        
 		private:
 
 	};

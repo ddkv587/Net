@@ -1,21 +1,24 @@
 #ifndef __MULTIKQUEUEHPP__
 #define __MULTIKQUEUEHPP__
 
-#include "Multiplex.hpp"
-
-class CMultiKqueue : IMultiplex
+namespace NET
 {
-	public:
-		CMultiKqueue(int size);
-		virtual ~CMultiKqueue();
-
-		int 	addFileEvent(int, int);
-		void	delFileEvent(int, int);
-		int 	eventLoop(EVENT_LOOP*, void*);
-	
-	private:
-		int m_kqfd;
-		struct kevent *m_events;
+    class CMultiKqueue : CMultiBase
+    {
+        public:
+            CMultiKqueue();
+            virtual ~CMultiKqueue();
+        
+            int             setSize(int size);
+        
+            int             addFileEvent(int, int);
+            void            delFileEvent(int, int);
+            int             eventLoop(void* timeout = NULL); // struct timeval
+        
+        private:
+            int             m_kqfd;
+            struct kevent*  m_events;
+    };
 }
 
 #endif
