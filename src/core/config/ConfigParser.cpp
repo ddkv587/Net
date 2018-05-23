@@ -28,17 +28,20 @@ namespace NET {
     }
 
     BOOLEAN ConfigParser::initialize() {
-        //if (!load()) {
+        LOG(INFO) << "begin to initialize ConfigParser...";
+        
+        if (!load()) {
             LOG(WARNING) << "config file load error...";
             save();
-       // } else
-        //    CMD::COPY(CONFIG_PATH, CONFIG_PATH_BAK);
+        } else
+            CMD::COPY(CONFIG_PATH, CONFIG_PATH_BAK);
         return TRUE;
     }
 
     void ConfigParser::preset() {
         m_tagSysInfo.uiPriority = 0; //nice value
         m_tagSysInfo.uiThreadCount = 10; //default max thread count
+        m_tagSysInfo.uiShortTurnLimit = 100; 
 
         m_tagSocketInfo.uiPort = 8000;
 
@@ -78,8 +81,17 @@ namespace NET {
     }
 
     void ConfigParser::loadSystemInfo(const XMLElement* system) {
-        m_tagSysInfo.uiThreadCount = 0;
-
+        CHECK(NULL != system);
+        
+        XMLElement* priority = system->getElementByName("priority");
+        if (NULL != priority) m_tagSysInfo.uiPriority = ::std::stoi(priority->getValue());
+        
+        XMLElement* threadCount = system->getElementByName("threadCount");
+        if (NULL != threadCount) m_tagSysInfo.uiThreadCount = ::std::stoi(threadCount->getValue());
+        
+        XMLElement* shortTurnLimit = system->getElementByName("shortTurnLimit");
+        if (NULL != shortTurnLimit) m_tagSysInfo.uiShortTurnLimit = ::std::stoi(shortTurnLimit->getValue());
+        
         unsigned int hardware = ::std::thread::hardware_concurrency();
         m_tagSysInfo.uiThreadCount = MIN(hardware != 0 ? hardware : 6, m_tagSysInfo.uiThreadCount);
     }
@@ -109,6 +121,18 @@ namespace NET {
 
         XMLElement* system = root->addElement(TAG_SYSTEM_INFO);
         assert(system != NULL);
+        
+        XMLElement* priority = system->addElement("priority");
+        assert(priority != NULL);
+        priority->setValue(::std::to_string(m_tagSysInfo.uiPriority));
+        
+        XMLElement* threadCount = system->addElement("threadCount");
+        assert(threadCount != NULL);
+        threadCount->setValue(::std::to_string(m_tagSysInfo.uiThreadCount));
+        
+        XMLElement* shortTurnLimit = system->addElement("shortTurnLimit");
+        assert(shortTurnLimit != NULL);
+        shortTurnLimit->setValue(::std::to_string(m_tagSysInfo.uiShortTurnLimit));
     }
 
     void ConfigParser::saveSocketInfo(const XMLElement* root) {

@@ -91,6 +91,7 @@ namespace NET
         m_pListener = new CListener();
         
 		const ConfigParser::tagSocketInfo& info = ConfigParser::getInstance()->getSocketInfo();
+        
         m_pListener->getSocketServer()->setPort( info.uiPort );
         m_pListener->getSocketServer()->setKeepAlive( info.bKeepAlive, info.uiAliveValue );
         m_pListener->getSocketServer()->setTimeOut( info.uiTimeOut );
@@ -109,7 +110,7 @@ namespace NET
 		// init two type processor: short turn or long turn
 		const ConfigParser::tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
         
-        for ( UINT uiIndex=0; uiIndex < info.uiThreadCount - 1; ++uiIndex ) {
+        for ( INT i=0; i < info.uiThreadCount - 1; ++i ) {
             CProcessor* processor = new CProcessor();
             
             m_lstShortTurn.push_back(processor);

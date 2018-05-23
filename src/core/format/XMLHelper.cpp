@@ -28,6 +28,7 @@ namespace NET {
 
     BOOLEAN XMLHelper::parseFrom(const CHAR* strPath) {
         ::std::ifstream in(strPath);
+        CHECK_R(in.is_open(), FALSE);
         in.seekg(0, in.end);
         size_t size = in.tellg();
 
