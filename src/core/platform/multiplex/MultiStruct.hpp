@@ -6,32 +6,43 @@
 
 namespace NET
 {
+	enum EVENT_TYPE
+	{
+		ET_NONE = 0,
+		ET_FILE,
+		ET_TIME,
+		ET_MAX,
+	};
+
+	typedef ::std::function<INT(INT fd, void* dataBuff, INT mask)> fileProc;
+	typedef ::std::function<INT(INT id, INT repeat)> timeProc;
+
 	typedef struct tagFileEvent {
 		int fd;
 		int mask;
-		char* data;
-		unsigned int dataSize;
-		::std::function<int(struct tagFileEvent*)> readProc;
-		::std::function<int(struct tagFileEvent*)> writeProc;
-		
-		void clean() {
-			if ( NULL != data ) {
-				delete data;
-				data = NULL;
-			}
-			dataSize = 0;
-		}
+		fileProc* readProc;
+		fileProc* writeProc;
 	} FILE_EVENT;
 
 	typedef struct tagFiredEvent {
-		int fd;
-		int mask;
+		int 			fd;
+		int 			mask;
+		EVENT_TYPE		type;
 	} FIRED_EVENT;
+
+	typedef struct tagTimeEvent {
+		INT				id;
+		UINT 			uiValue;
+		UINT 			uiInterval;
+		INT  			iRepeat;
+		timeProc*		handle;
+	} TIME_EVENT;
 
 	typedef struct tagEventLoop {
 		int maxfd;
 		int size;
 		::std::vector<FILE_EVENT> event;
+		::std::vector<TIME_EVENT> event;
 		::std::vector<FIRED_EVENT> fired;
 		void* arg;
 	} EVENT_LOOP;

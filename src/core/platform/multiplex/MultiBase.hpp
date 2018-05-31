@@ -14,6 +14,23 @@ namespace NET
 				EMT_SELECT,
 			};
 
+			struct tagTimer
+			{
+				CTimer* pTimer;
+				CTimer* pParent;
+				CTimer* pLChild;
+				CTimer* pRChild;
+
+				tagTimer(CTimer* timer)
+					: pTimer(timer)
+					, pParent(NULL)
+					, pLChild(NULL)
+					, pRChild(NULL)
+				{
+				
+				}
+			};
+
 		public:
 			virtual ~CMultiBase();
 
@@ -28,19 +45,22 @@ namespace NET
 			
 			void			enableEdgeTrigger(bool on = true) 	{ m_isEdgeTrigger = on; }
 
+			void			addTimer(CTimer);
+			CTimer*			getNearestTimer();
+
 			CMultiBase(CMultiBase&) = delete;
 			CMultiBase(const CMultiBase&) = delete;
 
 		protected:
 			CMultiBase();
 
-			EMultiType		m_eType;
-			EVENT_LOOP* 	m_eventLoop;
+			EMultiType				m_eType;
+			EVENT_LOOP* 			m_eventLoop;
 			
-			bool			m_isEdgeTrigger;
+			bool					m_isEdgeTrigger;
         
 		private:
-
+			::std::vector<tagTimer>	m_listCtimer;
 	};
 }
 #endif
