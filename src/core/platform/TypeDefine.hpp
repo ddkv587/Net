@@ -22,7 +22,7 @@ namespace NET
 	typedef		UINT64			ULONG;
 	typedef 	INT64			LLONG;
 	typedef		UINT64			ULLONG;
-	typedef 	INT64			POINT;
+	typedef 	void*			POINT;
 	typedef 	::std::string	STRING;
 
 #define TRUE			true 

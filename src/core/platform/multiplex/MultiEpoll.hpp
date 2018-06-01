@@ -11,9 +11,9 @@ namespace NET
 
 			int 	setSize(int size);
 
-			int 	addFileEvent(int, int);
-			void	delFileEvent(int, int);
-			int 	eventLoop(void* timeout = NULL); // struct timeval
+			int 	addFileEvent(int, int) override;
+			void	delFileEvent(int, int) override;
+			int 	eventLoop(void* timeout = NULL) override; // struct timeval
 
 		private:
 			int                     m_epfd;

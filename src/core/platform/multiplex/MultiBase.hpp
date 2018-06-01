@@ -14,23 +14,6 @@ namespace NET
 				EMT_SELECT,
 			};
 
-			struct tagTimer
-			{
-				CTimer* pTimer;
-				CTimer* pParent;
-				CTimer* pLChild;
-				CTimer* pRChild;
-
-				tagTimer(CTimer* timer)
-					: pTimer(timer)
-					, pParent(NULL)
-					, pLChild(NULL)
-					, pRChild(NULL)
-				{
-				
-				}
-			};
-
 		public:
 			virtual ~CMultiBase();
 
@@ -43,11 +26,12 @@ namespace NET
 			virtual void 	delFileEvent(int fd, int mask);
 			virtual int		eventLoop(void* timeout);
 			
-			void			enableEdgeTrigger(bool on = true) 	{ m_isEdgeTrigger = on; }
+			void			enableEdgeTrigger(BOOLEAN on = TRUE) 	{ m_bIsEdgeTrigger = on; }
 
-			void			addTimer(CTimer);
+			void			addTimer(const CTimer*);
 			CTimer*			getNearestTimer();
 
+		protected:
 			CMultiBase(CMultiBase&) = delete;
 			CMultiBase(const CMultiBase&) = delete;
 
@@ -57,10 +41,10 @@ namespace NET
 			EMultiType				m_eType;
 			EVENT_LOOP* 			m_eventLoop;
 			
-			bool					m_isEdgeTrigger;
+			BOOLEAN					m_bIsEdgeTrigger;
         
 		private:
-			::std::vector<tagTimer>	m_listCtimer;
+			::std::list<CTimer*>	m_lstTimer;
 	};
 }
 #endif
