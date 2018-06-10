@@ -1,0 +1,16 @@
+called: /usr/bin/g++
+	/Users/ddk/Desktop/WorkSpace/Net/build/script/core
+	/usr/bin/g++
+	-c
+	-I/Users/ddk/Desktop/WorkSpace/Net/build/script/../../src/core
+	-DOS_BSD
+	-Wall
+	-std=c++11
+	-Os
+	-fpermissive
+	-g3
+	-fPIC
+	-o
+	/Users/ddk/Desktop/WorkSpace/Net/build/script/.im_build/Core/config/ConfigParser.o
+	/Users/ddk/Desktop/WorkSpace/Net/build/script/../../src/core/config/ConfigParser.cpp
+

@@ -39,12 +39,12 @@ namespace NET
 	} TIME_EVENT;
 
 	typedef struct tagEventLoop {
-		int maxfd;
-		int size;
-		::std::vector<FILE_EVENT> event;
-		::std::vector<TIME_EVENT> event;
-		::std::vector<FIRED_EVENT> fired;
-		void* arg;
+		INT     maxfd;
+		INT     size;
+                void*   arg;
+		::std::vector<FILE_EVENT>   event;
+		::std::vector<TIME_EVENT>   timeEvent;
+		::std::vector<FIRED_EVENT>  fired;
 	} EVENT_LOOP;
 }
 #endif

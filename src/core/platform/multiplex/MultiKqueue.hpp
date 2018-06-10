@@ -3,7 +3,7 @@
 
 namespace NET
 {
-    class CMultiKqueue : CMultiBase
+    class CMultiKqueue : public CMultiBase
     {
         public:
             CMultiKqueue();
@@ -13,7 +13,7 @@ namespace NET
         
             int             addFileEvent(int, int);
             void            delFileEvent(int, int);
-            int             eventLoop(void* timeout = NULL); // struct timeval
+            int             eventLoop(void* timeout);   // struct timeval
         
         private:
             int             m_kqfd;

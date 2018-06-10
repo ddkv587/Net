@@ -58,8 +58,9 @@ namespace NET
 					
 					FIRED_EVENT fired = eventLoop->fired[index];
 					if( fired.mask == NET_READABLE ) {
+                                            /*
 						FILE_EVENT* file = &(eventLoop->event[fired.fd]);
-
+                                              
 						while (TRUE) {
 							if ( NULL == file->data ) {
 								file->data = new char(IProtocol::SIZE_HEADER_MANAGER);
@@ -135,7 +136,8 @@ err_recv:
 							file->clean();
 							delFileEvent(file->fd, NET_READABLE);
 						}
-					}
+                                              */
+					}              
 				} //for
 			} //if retval > 0
 		} //while

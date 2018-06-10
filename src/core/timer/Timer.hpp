@@ -21,7 +21,7 @@ namespace NET
 			void 			reset() noexcept;
 			BOOLEAN			isRunning() noexcept { return m_bIsRunning; }
 
-			void 			addListener(const ITimerListener*) noexcept;
+			void 			addListener(ITimerListener*) noexcept;
 			void			delListener(const ITimerListener*) noexcept;
 
 			CTimer& 		operator=(CTimer&&);	//std::move

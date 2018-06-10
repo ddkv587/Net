@@ -25,6 +25,9 @@ namespace NET
 	//====== socket ===========
 	class CSocket;
 	class CSocketServer;
+        
+        //====== timer ============
+        class CTimer;
 
 	//======= multiplex ============
 	class CMultiBase;
@@ -85,6 +88,9 @@ using namespace rapidxml;
 
 #include "socket/Socket.hpp"
 #include "socket/SocketServer.hpp"
+
+#include "timer/ITimerListener.hpp"
+#include "timer/Timer.hpp"
 
 //========== platform ==============
 #include "platform/multiplex/MultiStruct.hpp"

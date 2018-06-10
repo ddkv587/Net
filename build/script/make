@@ -1,3 +1,4 @@
+#!/bin/bash
 source ./config
 
 do_make()
@@ -18,7 +19,6 @@ do_make()
 	fi
 }
 
-#rm -rf $IM_PATH
 
 if [ ! -e $TARGET_PATH ];then
 	mkdir $TARGET_PATH
@@ -28,11 +28,15 @@ if [ ! -e $IM_PATH ];then
 	mkdir $IM_PATH
 fi
 
-do_make core
-do_make listener
-do_make protocol
-do_make processor
-do_make update
-do_make native
+if [ "$1" = "clean" ];then
+	rm -rf $IM_PATH
+else
+	do_make core
+	do_make listener
+	do_make protocol
+	do_make processor
+	do_make update
+	do_make native
 
-do_make demo
+	do_make demo
+fi
