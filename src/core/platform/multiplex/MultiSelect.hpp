@@ -9,9 +9,13 @@ namespace NET
 			CMultiSelect();
 			virtual ~CMultiSelect();
 
-			int 	addFileEvent(int, int);
+			void	init();
+			void	destroy();
+
+			INT		setSize(INT);
+			INT		addFileEvent(int, int);
 			void	delFileEvent(int, int);
-			int 	eventLoop(void *);
+			INT		eventLoop(void *);
 	};
 }
 #endif

@@ -8,15 +8,17 @@ namespace NET
 		public:
 			CMultiEpoll();
 			virtual ~CMultiEpoll();
+			
+			void	init() override;
+			void	destroy() override;
+			INT 	setSize(INT size) override;
 
-			int 	setSize(int size);
-
-			int 	addFileEvent(int, int) override;
-			void	delFileEvent(int, int) override;
-			int 	eventLoop(void* timeout = NULL) override; // struct timeval
+			INT 	addFileEvent(INT, INT) override;
+			void	delFileEvent(INT, INT) override;
+			INT 	eventLoop(void*) override; 			// struct timeval
 
 		private:
-			int                     m_epfd;
+			INT                     m_epfd;
 			struct epoll_event*     m_events;
 	};
 }

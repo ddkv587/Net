@@ -8,25 +8,35 @@ namespace  NET
     : m_kqfd(-1)
     , m_events(nullptr)
     {
-        m_kqfd = kqueue();
-        CHECK( -1 != m_kqfd);
-        
         m_eType = EMT_KQUEUE;
     }
 
     CMultiKqueue::~CMultiKqueue()
     {
-        close(m_kqfd);
-
-        if ( NULL != m_events ) {
-            delete m_events;
-        }
+		;
     }
+	
+	void CMultiKqueue::init()
+	{
+        m_kqfd = kqueue();
+        CHECK( -1 != m_kqfd);
+	}
 
-    int CMultiKqueue::setSize(int size)
+	void CMultiKqueue::destroy()
+	{
+        if ( -1 != m_kqfd ) {
+			close(m_kqfd);
+			m_kqfd = -1;
+		}
+
+        if ( nullptr != m_events ) {
+            delete m_events;
+  			m_events = nullptr;
+		}
+	}
+
+    INT CMultiKqueue::setSize(INT size)
     {
-        size = CMultiBase::setSize(size);
-        
         if ( NULL != m_events ) {
             delete m_events;
         }
@@ -35,7 +45,7 @@ namespace  NET
         return size;
     }
 
-    int CMultiKqueue::addFileEvent(int fd, int mask)
+    INT CMultiKqueue::addFileEvent(INT fd, INT mask)
     {
         struct kevent ke;
         if ( mask & NET_READABLE ) {
@@ -50,7 +60,7 @@ namespace  NET
         return 0;
     }
 
-    void CMultiKqueue::delFileEvent(int fd, int mask)
+    void CMultiKqueue::delFileEvent(INT fd, INT mask)
     {
         struct kevent ke;
 
@@ -65,9 +75,9 @@ namespace  NET
         }
     }
 
-    int CMultiKqueue::eventLoop(void* timeout)
+    INT CMultiKqueue::eventLoop(void* timeout)
     {
-        int retval = 0;
+        INT retval = 0;
         
         if ( NULL != timeout ) {
             struct timespec ts;
@@ -78,15 +88,15 @@ namespace  NET
             retval = kevent(m_kqfd, NULL, 0, m_events, m_eventLoop->size, NULL);
         }
         
-        for(int i = 0; i < retval; ++i) {
-            int mask = 0;
+        for(INT i = 0; i < retval; ++i) {
+            INT mask = 0;
             struct kevent *e = m_events + i;
 
             if (e->filter == EVFILT_READ) mask |= NET_READABLE;
             if (e->filter == EVFILT_WRITE) mask |= NET_WRITABLE;
             
-            m_eventLoop->fired[i].fd = e->ident;
-            m_eventLoop->fired[i].fd = mask;
+            m_eventLoop->lstFired[i].fd = e->ident;
+            m_eventLoop->lstFired[i].fd = mask;
         }
         return retval;
     }

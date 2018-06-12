@@ -41,10 +41,10 @@ namespace NET
 	typedef struct tagEventLoop {
 		INT     maxfd;
 		INT     size;
-                void*   arg;
-		::std::vector<FILE_EVENT>   event;
-		::std::vector<TIME_EVENT>   timeEvent;
-		::std::vector<FIRED_EVENT>  fired;
+        void*   arg;
+		::std::vector<TIME_EVENT>   lstTimeEvent;
+		::std::vector<FILE_EVENT>   lstFileEvent;
+		::std::vector<FIRED_EVENT>  lstFired;
 	} EVENT_LOOP;
 }
 #endif

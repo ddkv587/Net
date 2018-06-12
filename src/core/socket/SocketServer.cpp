@@ -14,6 +14,24 @@ namespace NET
 		;
 	}
 
+	void CSocketServer::init() noexcept
+	{
+		CSocket::init();		
+
+		setReuseAddress(TRUE);	
+		setNonBlock(TRUE);
+		setLinger(FALSE, 0);
+		setNoDelay(FALSE);
+
+		setSendBuffSize(1 * 1024 * 1024);		//1M
+		setRecvBuffSize(1 * 1024 * 1024);		//1M
+	}
+
+	void CSocketServer::destroy() noexcept
+	{
+		CSocket::destroy();
+	}
+
 	BOOLEAN CSocketServer::bindAndListen()
 	{
 		CHECK( -1 != m_fd );

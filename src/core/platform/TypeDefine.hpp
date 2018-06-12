@@ -28,6 +28,7 @@ namespace NET
 #define TRUE			true 
 #define FALSE			false
 
+#define NULL			nullptr
 #define STRING_NULL		""
 
 #define MIN(x, y) 	( (x) < (y) ? (x) : (y) )

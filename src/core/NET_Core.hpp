@@ -26,11 +26,12 @@ namespace NET
 	class CSocket;
 	class CSocketServer;
         
-        //====== timer ============
-        class CTimer;
+    //====== timer ============
+    class CTimer;
 
 	//======= multiplex ============
-	class CMultiBase;
+	class IMultiBase;
+	class CMultiManager;
 #ifdef OS_BSD
 	class CMultiKqueue;
 #else
@@ -42,6 +43,7 @@ namespace NET
 //============ common ==============
 #include <vector>
 #include <fstream>
+#include <mutex>
 #ifndef DEF_ASSERT
 #include <assert.h>
 #endif
@@ -84,7 +86,8 @@ using namespace rapidxml;
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
-#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #include "socket/Socket.hpp"
 #include "socket/SocketServer.hpp"

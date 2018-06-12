@@ -52,12 +52,12 @@ namespace NET {
         void saveSocketInfo(const XMLElement*);
 
     private:
-        static ConfigParser* m_pInstance;
+        static ConfigParser* 	m_pInstance;
 
-        tagSystemInfo m_tagSysInfo;
-        tagSocketInfo m_tagSocketInfo;
+        tagSystemInfo 			m_tagSysInfo;
+        tagSocketInfo 			m_tagSocketInfo;
 
-        XMLHelper* m_xmlHelper;
+        XMLHelper* 				m_xmlHelper;
     };
 }
 #endif

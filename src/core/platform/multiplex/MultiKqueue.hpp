@@ -9,14 +9,16 @@ namespace NET
             CMultiKqueue();
             virtual ~CMultiKqueue();
         
-            int             setSize(int size);
+			void 			init();
+			void			destroy();
+            INT             setSize(INT);
         
-            int             addFileEvent(int, int);
-            void            delFileEvent(int, int);
-            int             eventLoop(void* timeout);   // struct timeval
+            INT             addFileEvent(INT, INT);
+            void            delFileEvent(INT, INT);
+            INT             eventLoop(void*);   // struct timeval
         
         private:
-            int             m_kqfd;
+            INT             m_kqfd;
             struct kevent*  m_events;
     };
 }

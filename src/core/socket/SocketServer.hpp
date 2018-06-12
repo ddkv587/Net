@@ -9,11 +9,14 @@ namespace NET
 			CSocketServer(STRING ip = STRING_NULL, UINT port = 8000);
 			virtual ~CSocketServer();
 
-            void 			setIP(STRING ip)		        { m_strIP = ip; }
-			const STRING& 	ip() const 			            { return m_strIP; };
+			virtual void	init() noexcept;
+			virtual void 	destroy() noexcept;
 
-			void 			setPort(UINT iPort) 			{ m_uiPort = iPort; }
-			UINT  			port() const					{ return m_uiPort; }
+            void 			setIP(const STRING& ip)		        { m_strIP = ip; }
+			const STRING& 	ip() const 			    	        { return m_strIP; };
+
+			void 			setPort(UINT iPort) 				{ m_uiPort = iPort; }
+			UINT  			port() const						{ return m_uiPort; }
 			
 			BOOLEAN			bindAndListen();
 
@@ -25,5 +28,4 @@ namespace NET
 			UINT 	    m_uiPort;
 	};
 }
-
 #endif

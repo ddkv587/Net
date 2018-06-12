@@ -33,8 +33,10 @@ namespace NET {
         if (!load()) {
             LOG(WARNING) << "config file load error...";
             save();
-        } else
+        } else {
             CMD::COPY(CONFIG_PATH, CONFIG_PATH_BAK);
+            CMD::COPY(CONFIG_PATH_BAK, CONFIG_PATH);
+		}
         return TRUE;
     }
 
@@ -54,8 +56,8 @@ namespace NET {
     }
 
     BOOLEAN ConfigParser::load() {
-        if (!m_xmlHelper->parseFrom(CONFIG_PATH))
-            CHECK_R(m_xmlHelper->parseFrom(CONFIG_PATH_BAK), FALSE);
+        if ( !m_xmlHelper->parseFrom(CONFIG_PATH) )
+            CHECK_R( m_xmlHelper->parseFrom(CONFIG_PATH_BAK), FALSE );
 
         XMLElement* root = m_xmlHelper->getRootElement();
 

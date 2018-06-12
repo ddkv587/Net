@@ -4,31 +4,35 @@ namespace NET
 {
 	CSocket::CSocket()
 		: m_fd(-1)
+		, m_bIsOpenning(FALSE)
 	{
 		;	
 	}
 	
 	CSocket::~CSocket()
 	{
-		if ( m_fd ) close(m_fd);
+		destroy();
 	}
 
-	void CSocket::init()
+	void CSocket::init() noexcept
 	{
 		LOG_IF( ERROR, -1 == ( m_fd = socket(AF_INET, SOCK_STREAM, 0) ) )  
 			<< CLog::format( "[%s, %d]  set socket to keep alive error: %s" ,__FILE__, __LINE__, strerror(errno) );
+		m_bIsOpenning = TRUE;
 	}
 
-	void CSocket::destroy()
+	void CSocket::destroy() noexcept
 	{
-		;
+		if ( m_bIsOpenning ) {
+			close(m_fd);
+			m_bIsOpenning = FALSE;
+		}
 	}
 
-	void CSocket::setKeepAlive(bool on, int interval)
+	void CSocket::setKeepAlive(BOOLEAN on, INT interval) noexcept
 	{
-		int val = 0;
+		INT val = on ? 1 : 0;
 
-		on ? val = 1 : val = 0;
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_KEEPALIVE, &val, sizeof(val)) )
 				<< CLog::format( "[%s, %d]  set socket to keep alive error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 
@@ -54,7 +58,7 @@ namespace NET
 #endif
         }
 	
-	void CSocket::setTimeOut(int timeout)
+	void CSocket::setTimeOut(INT timeout) noexcept
 	{
 #ifndef OS_BSD
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_USER_TIMEOUT, &timeout, sizeof(timeout)) )
@@ -62,21 +66,58 @@ namespace NET
 #endif
 	}
     
-    void CSocket::setReusePort(bool on)
+    void CSocket::setReusePort(BOOLEAN on) noexcept
     {
-        int val = 0;
-        
-        on ? val = 1 : val = 0;
+        INT val = on ? 1 : 0;
+
         LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val)) )
-        << CLog::format( "[%s, %d]  set socket reu e port error: %s" ,__FILE__, __LINE__, strerror(errno) );
+        << CLog::format( "[%s, %d]  set socket reuse port error: %s" ,__FILE__, __LINE__, strerror(errno) );
     }
 
-	void CSocket::setReuseAddress(bool on)
+	void CSocket::setReuseAddress(BOOLEAN on) noexcept
 	{
-		int val = 0;
+		INT val = on ? 1 : 0;
 
-		on ? val = 1 : val = 0;
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) )
-				<< CLog::format( "[%s, %d]  set socket reuue addr error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+				<< CLog::format( "[%s, %d]  set socket reuse addr error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+	}
+	
+	void CSocket::setNonBlock(BOOLEAN on) noexcept
+	{
+		INT flags = fcntl(m_fd, F_GETFL, 0);
+		INT ret = on ? fcntl(m_fd, F_SETFL, flags | O_NONBLOCK) : fcntl(m_fd, F_SETFL, flags & ~O_NONBLOCK);
+
+		LOG_IF( ERROR, -1 == ret )
+				<< CLog::format( "[%s, %d]  set socket O_NONBLOCK error: %s" ,__FILE__, __LINE__, strerror(errno) );
+	}
+
+	void CSocket::setLinger(BOOLEAN on, INT val) noexcept
+	{
+	  	struct linger li;
+  		li.l_onoff = on ? 1 : 0;
+  		li.l_linger = val; 
+
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_LINGER, &li, sizeof(li)) )
+				<< CLog::format( "[%s, %d]  set socket SO_LINGER error: %s" ,__FILE__, __LINE__, strerror(errno) );
+	}
+
+	void CSocket::setNoDelay(BOOLEAN on) noexcept
+	{
+	  	INT val = on ? 1 : 0;
+
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_NODELAY, &val, sizeof(val)) )
+				<< CLog::format( "[%s, %d]  set socket TCP_NODELAY error: %s" ,__FILE__, __LINE__, strerror(errno) );
+	}
+
+	void CSocket::setSendBuffSize(INT64 size) noexcept
+	{
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size)) )
+				<< CLog::format( "[%s, %d]  set socket SO_SNDBUF error: %s" ,__FILE__, __LINE__, strerror(errno) );
+	}
+
+	void CSocket::setRecvBuffSize(INT64 size) noexcept
+	{
+		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size)) )
+				<< CLog::format( "[%s, %d]  set socket SO_RCVBUF error: %s" ,__FILE__, __LINE__, strerror(errno) );
 	}
 }

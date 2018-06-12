@@ -13,8 +13,7 @@ namespace NET
 		m_pMultiplex->enableEdgeTrigger();
 #endif
 
-		assert(NULL != m_pMultiplex);
-		
+		assert(NULL != m_pMultiplex);	
 		LOG(INFO) << CLog::format( " %ld initialize, set size %d\n", getThreadID(), m_pMultiplex->setSize(1024) );
 	}
 

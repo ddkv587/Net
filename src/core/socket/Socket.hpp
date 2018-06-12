@@ -6,16 +6,22 @@ namespace NET
 	class CSocket
 	{
 		public:
-			void 	init();
-			void 	destroy();
+			virtual void 	init() noexcept;
+			virtual void 	destroy() noexcept;
 			
-			void 	setKeepAlive(bool, int);
-			void 	setTimeOut(int);
+			void 			setKeepAlive(BOOLEAN, INT) noexcept;
+			void 			setTimeOut(INT) noexcept;
 
-            void    setReusePort(bool);
-			void 	setReuseAddress(bool);
+            void    		setReusePort(BOOLEAN) noexcept;
+			void 			setReuseAddress(BOOLEAN) noexcept;
+			void			setNonBlock(BOOLEAN) noexcept;
+			void			setLinger(BOOLEAN, INT) noexcept;
+			void 			setNoDelay(BOOLEAN) noexcept;
+
+			void			setSendBuffSize(INT64) noexcept;
+			void 			setRecvBuffSize(INT64) noexcept;
 			
-			int 	getSocketFD()	const 		{ return m_fd; }
+			inline INT 		getSocketFD()				{ return m_fd; }
 
 		protected:
 			CSocket();
@@ -25,7 +31,8 @@ namespace NET
 			CSocket(const CSocket&) = delete;
 
 		protected:
-			int 	m_fd;
+			INT 			m_fd;
+			BOOLEAN			m_bIsOpenning;
 	};
 }
 
