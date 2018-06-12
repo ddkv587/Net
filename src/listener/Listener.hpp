@@ -9,15 +9,15 @@ namespace NET
 			CListener();
 			virtual ~CListener();
 
-			virtual void 	            addFileListener(IFileListener*);
-			virtual void 	            delFileListener(IFileListener*);
-
-			void 			            printListener();
+			virtual void 	                    addListener(IFileListener*);
+			virtual void 	                    delListener(IFileListener*);
+			void 			                    printListener();
         
-            CSocketServer*              getSocketServer() const                 { return m_pServer; }
+            const CSocketServer*                server() const                          { return m_pServer; }
 
 		protected:
-			virtual IFileListener*      balance(::std::list<IFileListener*>&);
+			virtual IClientListener*            balance();
+            ::std::list<IClientListener*>&      listener() const                        { return m_lstListener; }
 			
 			void mainLoop(void* arg);
 
@@ -25,8 +25,8 @@ namespace NET
 			void setNonBlock(int);
 
 		private:
-			CSocketServer* 				m_pServer;
-			::std::list<IFileListener*> m_lstListener;
+			CSocketServer* 				        m_pServer;
+			::std::list<IClientListener*>       m_lstListener;
 	};
 }
 #endif

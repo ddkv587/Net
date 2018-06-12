@@ -3,16 +3,18 @@
 
 namespace NET
 {
-	class CProcessor : public CThreadBase, public IFileListener
+	class CProcessor : public CThreadBase, public IClientListener
 	{
 		public:
 			CProcessor();
 			virtual ~CProcessor();
 			
-			virtual int 	addFileEvent(int fd, int mask);
-			virtual void 	delFileEvent(int fd, int mask);
+			virtual INT 	addCLient(int fd);
+			virtual void 	delClient(int fd);
 			
-			unsigned int 	size() const { return m_uiSize;	}
+			inline UINT 	size() const            { return m_uiSize;	}
+            BOOLEAN         isEnable()              { return TRUE; }
+            BOOLEAN         isFull()                { return m_uiSize < 1024; }
 
 			CProcessor(CProcessor&) = delete;
 			CProcessor(const CProcessor&) = delete;
@@ -21,8 +23,10 @@ namespace NET
 			void mainLoop(void* arg);
 
 		private:
-			unsigned int 	m_uiSize;
-			CMultiBase* 	m_pMultiplex;
+			unsigned int 	    m_uiSize;
+			CMultiBase* 	    m_pMultiplex;
+        
+            ::std::mutex        m_mutex;
 	};
 }
 #endif

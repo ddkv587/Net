@@ -24,18 +24,20 @@ namespace NET
 		}
 	}
 
-	int CProcessor::addFileEvent(int fd, int mask) 
+	INT CProcessor::addClient(int fd)
 	{
-		m_pMultiplex->addFileEvent(fd, mask);
-
+        ::std::lock_guard(m_mutex);
+		m_pMultiplex->addFileEvent(fd, NET_READABLE);
 		++m_uiSize;
-		return 0;
+        
+		return m_uiSize;
 	}
 
-	void CProcessor::delFileEvent(int fd, int mask)
+	void CProcessor::delClient(int fd)
 	{
+        ::std::lock_guard(m_mutex);
+        
 		m_pMultiplex->delFileEvent(fd, mask);
-
 		m_uiSize > 0 ? --m_uiSize : 0;
 	}
 
@@ -54,7 +56,6 @@ namespace NET
 				EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
 
 				for ( int index = 0; index < retval; ++index ) {
-					
 					FIRED_EVENT fired = eventLoop->fired[index];
 					if( fired.mask == NET_READABLE ) {
                                             /*

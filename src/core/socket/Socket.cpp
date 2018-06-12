@@ -6,7 +6,8 @@ namespace NET
 		: m_fd(-1)
 		, m_bIsOpenning(FALSE)
 	{
-		;	
+        LOG_IF( ERROR, -1 == ( m_fd = socket(AF_INET, SOCK_STREAM, 0) ) )
+            << CLog::format( "[%s, %d]  set socket to keep alive error: %s" ,__FILE__, __LINE__, strerror(errno) );
 	}
 	
 	CSocket::~CSocket()
@@ -14,6 +15,7 @@ namespace NET
 		destroy();
 	}
 
+<<<<<<< Updated upstream
 	void CSocket::init() noexcept
 	{
 		LOG_IF( ERROR, -1 == ( m_fd = socket(AF_INET, SOCK_STREAM, 0) ) )  
@@ -51,8 +53,8 @@ namespace NET
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPCNT, &val, sizeof(val)) )
 				<< CLog::format( "[%s, %d]  set socket to keep alive count error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 #else
-                val = interval;
-                LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPALIVE, &val, sizeof(val)) ) 
+        val = interval;
+        LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPALIVE, &val, sizeof(val)) ) 
 				<< CLog::format( "[%s, %d]  set socket to keep alive error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 
 #endif
@@ -62,7 +64,7 @@ namespace NET
 	{
 #ifndef OS_BSD
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, IPPROTO_TCP, TCP_USER_TIMEOUT, &timeout, sizeof(timeout)) )
-				<< CLog::format( "[%s, %d]  set socket timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );
+				<< CLog::format( "[%s, %d]  set socket timeout error: %s" ,__FILE__, __LINE__, strerror(errno) );	
 #endif
 	}
     
@@ -71,7 +73,7 @@ namespace NET
         INT val = on ? 1 : 0;
 
         LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val)) )
-        << CLog::format( "[%s, %d]  set socket reuse port error: %s" ,__FILE__, __LINE__, strerror(errno) );
+       			<< CLog::format( "[%s, %d]  set socket reuse port error: %s" ,__FILE__, __LINE__, strerror(errno) );
     }
 
 	void CSocket::setReuseAddress(BOOLEAN on) noexcept

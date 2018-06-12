@@ -17,7 +17,6 @@ namespace NET
 
 #include "core/NET_Core.hpp"
 
-#include "IFileListener.hpp"
 #include "Listener.hpp"
 
 #endif

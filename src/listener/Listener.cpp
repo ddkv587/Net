@@ -7,7 +7,7 @@ namespace NET
 	{
         m_pServer = new CSocketServer();
         
-		m_pServer->init();
+        CHECK(m_pServer != NULL);
 	}
 
 	CListener::~CListener()
@@ -15,13 +15,13 @@ namespace NET
 		;
 	}
 
-	void CListener::addFileListener(IFileListener* pListener)
+	void CListener::addListener(IFileListener* pListener)
 	{
 		assert(pListener != NULL);
 		m_lstListener.push_back(pListener);
 	}
 
-	void CListener::delFileListener(IFileListener* pListener)
+	void CListener::delListener(IFileListener* pListener)
 	{
 		m_lstListener.remove(pListener);
 	}
@@ -34,11 +34,13 @@ namespace NET
 		}
 	}
 	
-	IFileListener* CListener::balance(::std::list<IFileListener*>& lstListener)
+	IFileListener* CListener::balance()
 	{
-		CHECK_R(m_lstListener.size() != 0, NULL);	
-
-		IFileListener* pListener = lstListener.front();
+        // a sample round strategy for balance
+		CHECK_R(m_lstListener.size() != 0, NULL);
+        
+        //find the first listener with enable and not full
+		IClientListener* pListener = lstListener.front();
 		lstListener.pop_front();
 		lstListener.push_back(pListener);
 
@@ -60,7 +62,7 @@ namespace NET
 		{
 			if ( m_lstListener.empty() ) {
 				LOG(WARNING) << CLog::format(" process thread not ready, sleep 10ms!! \n");
-				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                ::std::this_thread::sleep_for(::std::chrono::milliseconds(10));
 				continue;
 			}
 
@@ -76,12 +78,12 @@ namespace NET
 
 			setNonBlock(client);
 			
-			IFileListener* pListener = balance(m_lstListener);
+			IClientListener* pListener = balance();
 
 			if ( NULL != pListener ) {
-				pListener->addFileEvent(client, NET_READABLE);
+				pListener->addClient(client);
 			}
-			printListener();
+			//printListener();
 		}
 	}
 
