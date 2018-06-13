@@ -42,8 +42,8 @@ namespace NET
 	void CTimer::addListener(ITimerListener* pListener) noexcept
 	{
 		::std::lock_guard<::std::mutex> guard(m_mutex);
-		for ( INT i=0; i < m_lstListener.size(); ++i ) {
-			if ( m_lstListener[i] == pListener ) return;
+		for ( UINT ui=0; ui < m_lstListener.size(); ++ui ) {
+			if ( m_lstListener[ui] == pListener ) return;
 		}
 		m_lstListener.push_back(pListener);
 	}
@@ -51,9 +51,9 @@ namespace NET
 	void CTimer::delListener(const ITimerListener* pListener) noexcept
 	{
 		::std::lock_guard<::std::mutex> guard(m_mutex);
-		for ( INT i=0; i < m_lstListener.size(); ++i ) {
-			if ( m_lstListener[i] == pListener ) {
-				m_lstListener.erase(m_lstListener.begin() + i);
+		for ( UINT ui=0; ui < m_lstListener.size(); ++ui ) {
+			if ( m_lstListener[ui] == pListener ) {
+				m_lstListener.erase(m_lstListener.begin() + ui);
 				return;
 			}
 		}

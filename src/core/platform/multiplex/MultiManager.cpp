@@ -17,19 +17,25 @@ namespace NET
 	
 	void CMultiManager::init(EMultiType type)
 	{
-		if ( nullptr != m_pBase ) delete m_pBase;
+		if ( nullptr != m_pBase ) 
+		{ 
+			m_pBase->destroy();
+		}
 
 		switch( type )
-		{
-		case EMT_EPOLL:
-			m_pBase = new CMultiEpoll();
-			break;
+		{	
+#ifdef OS_BSD
 		case EMT_KQUEUE:
 			m_pBase = new CMultiKqueue();
+			break;
+#else
+		case EMT_EPOLL:
+			m_pBase = new CMultiEpoll();
 			break;
 		case EMT_SELECT:
 			m_pBase = new CMultiSelect();
 			break;
+#endif
 		case EMT_NONE:
 			m_pBase = nullptr;
 			return;
@@ -46,77 +52,86 @@ namespace NET
 			m_pBase = nullptr;
 		}
 
-		if ( nullptr != m_eventLoop )
+		if ( nullptr != m_pEventLoop )
 		{
-			if ( !m_eventLoop->lstFileEvent.empty() ) m_eventLoop->lstFileEvent.clear();
-			if ( !m_eventLoop->lstTimeEvent.empty() ) m_eventLoop->lstTimeEvent.clear();
-			if ( !m_eventLoop->lstFired.empty() ) m_eventLoop->lstFired.clear();
+			if ( !m_pEventLoop->lstFileEvent.empty() ) m_pEventLoop->lstFileEvent.clear();
+			if ( !m_pEventLoop->lstTimeEvent.empty() ) m_pEventLoop->lstTimeEvent.clear();
+			if ( !m_pEventLoop->lstFired.empty() ) m_pEventLoop->lstFired.clear();
 				
-			delete m_eventLoop;
-			m_eventLoop = nullptr;	
+			delete m_pEventLoop;
+			m_pEventLoop = nullptr;	
 		}
 	}
 
 	INT CMultiManager::setSize(INT size)
 	{
-		CHECK_R(size <= SYSTEM_MAX_EVENTS, nullptr == m_eventLoop ? 0 : m_eventLoop->size);
+		CHECK_R(size <= SYSTEM_MAX_EVENTS, nullptr == m_pEventLoop ? 0 : m_pEventLoop->size);
 		
-		if ( nullptr == m_eventLoop ) {
-			m_eventLoop = new EVENT_LOOP;
-			CHECK_R( nullptr != m_eventLoop, 0 );
+		if ( nullptr == m_pEventLoop ) {
+			m_pEventLoop = new EVENT_LOOP;
+			CHECK_R( nullptr != m_pEventLoop, 0 );
 
-			m_eventLoop->maxfd = -1;
-			m_eventLoop->lstFileEvent = ::std::vector<tagFileEvent>(size);
-			m_eventLoop->lstTimeEvent = ::std::vector<tagTimeEvent>(size);
-			m_eventLoop->lstFired = ::std::vector<tagFiredEvent>(size);
+			m_pEventLoop->maxfd = -1;
+			m_pEventLoop->lstFileEvent = ::std::vector<tagFileEvent>(size);
+			m_pEventLoop->lstTimeEvent = ::std::vector<tagTimeEvent>(size);
+			m_pEventLoop->lstFired = ::std::vector<tagFiredEvent>(size);
 
-			if ( m_eventLoop->lstFileEvent.empty() || 
-					m_eventLoop->lstTimeEvent.empty() ||
-					m_eventLoop->lstFired.empty() ) {
-				if ( !m_eventLoop->lstFileEvent.empty() ) m_eventLoop->lstFileEvent.clear();
-				if ( !m_eventLoop->lstTimeEvent.empty() ) m_eventLoop->lstTimeEvent.clear();
-				if ( !m_eventLoop->lstFired.empty() ) m_eventLoop->lstFired.clear();
+			if ( m_pEventLoop->lstFileEvent.empty() || 
+					m_pEventLoop->lstTimeEvent.empty() ||
+					m_pEventLoop->lstFired.empty() ) {
+				if ( !m_pEventLoop->lstFileEvent.empty() ) m_pEventLoop->lstFileEvent.clear();
+				if ( !m_pEventLoop->lstTimeEvent.empty() ) m_pEventLoop->lstTimeEvent.clear();
+				if ( !m_pEventLoop->lstFired.empty() ) m_pEventLoop->lstFired.clear();
 				
-				delete m_eventLoop;
-				m_eventLoop = nullptr;	
+				delete m_pEventLoop;
+				m_pEventLoop = nullptr;	
 
 				return 0;
 			}
-			m_eventLoop->size = size;
+			m_pEventLoop->size = size;
 
 			//init new items
 			for ( INT index=0; index < size; ++index ) 
-				m_eventLoop->lstFileEvent[index].mask 	= NET_NONE;	
+				m_pEventLoop->lstFileEvent[index].mask 	= NET_NONE;	
 		} else {
-			INT oldSize = m_eventLoop->size;
+			INT oldSize = m_pEventLoop->size;
 			CHECK_R(size > oldSize, oldSize);			
 			
-			m_eventLoop->lstFileEvent.resize(size);
-			m_eventLoop->lstFired.resize(size);
-			m_eventLoop->size = size;
+			m_pEventLoop->lstFileEvent.resize(size);
+			m_pEventLoop->lstFired.resize(size);
+			m_pEventLoop->size = size;
 
 			for ( INT index=oldSize; index < size; ++index ) 
-				m_eventLoop->lstFileEvent[index].mask = NET_NONE;	
+				m_pEventLoop->lstFileEvent[index].mask = NET_NONE;	
 		}
 		if ( nullptr != m_pBase ) m_pBase->setSize(size);
 
 		return size;
 	}
 
+	void CMultiManager::enableEdgeTrigger(BOOLEAN on)
+	{
+		if ( nullptr != m_pBase && m_eType == EMT_EPOLL ) {
+			CMultiEpoll* poll = static_cast<CMultiEpoll*>(m_pBase);
+
+			poll->enableEdgeTrigger(on);
+		}
+	}
+
 	INT CMultiManager::addFileEvent(INT fd, INT mask)
 	{
-		if ( nullptr != m_pBase ) return m_pBase->addFileEvent(fd, mask);
+		if ( nullptr != m_pBase ) return m_pBase->addFileEvent(fd, mask, m_pEventLoop);
 		return 0;
 	}
 
 	void CMultiManager::delFileEvent(INT fd, INT mask)
 	{
-		if ( nullptr != m_pBase ) m_pBase->delFileEvent(fd, mask);
+		if ( nullptr != m_pBase ) m_pBase->delFileEvent(fd, mask, m_pEventLoop);
 	}
 
 	INT CMultiManager::eventLoop(void* timeout)
 	{
-		if ( nullptr != m_pBase ) return m_pBase->eventLoop(timeout);
+		if ( nullptr != m_pBase ) return m_pBase->eventLoop(timeout, m_pEventLoop);
 		return 0;
 	}
 

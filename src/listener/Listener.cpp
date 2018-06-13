@@ -15,34 +15,34 @@ namespace NET
 		;
 	}
 
-	void CListener::addListener(IFileListener* pListener)
+	void CListener::addListener(IClientListener* pListener)
 	{
 		assert(pListener != NULL);
 		m_lstListener.push_back(pListener);
 	}
 
-	void CListener::delListener(IFileListener* pListener)
+	void CListener::delListener(IClientListener* pListener)
 	{
 		m_lstListener.remove(pListener);
 	}
 	
 	void CListener::printListener()
 	{
-		::std::list<IFileListener*>::iterator itor = m_lstListener.begin();
+		::std::list<IClientListener*>::iterator itor = m_lstListener.begin();
 		for(; itor != m_lstListener.end(); ++itor ) {
 			LOG(INFO) << CLog::format( "processor %d size: %d\n", ::std::distance( m_lstListener.begin(), itor ), (*itor)->size() );
 		}
 	}
 	
-	IFileListener* CListener::balance()
+	IClientListener* CListener::balance()
 	{
         // a sample round strategy for balance
 		CHECK_R(m_lstListener.size() != 0, NULL);
         
         //find the first listener with enable and not full
-		IClientListener* pListener = lstListener.front();
-		lstListener.pop_front();
-		lstListener.push_back(pListener);
+		IClientListener* pListener = m_lstListener.front();
+		m_lstListener.pop_front();
+		m_lstListener.push_back(pListener);
 
 		return pListener;
 	}

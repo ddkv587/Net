@@ -4,40 +4,40 @@ namespace NET
 {
 	CProcessor::CProcessor()
 		: m_uiSize(0)
-		, m_pMultiplex(NULL)
+		, m_pMultiManager(nullptr)
 	{
-#ifdef OS_BSD
-		m_pMultiplex = new CMultiKqueue();
-#else
-		m_pMultiplex = new CMultiEpoll();
-		m_pMultiplex->enableEdgeTrigger();
-#endif
+		m_pMultiManager = new CMultiManager();
+		assert(NULL != m_pMultiManager);
 
-		assert(NULL != m_pMultiplex);	
-		LOG(INFO) << CLog::format( " %ld initialize, set size %d\n", getThreadID(), m_pMultiplex->setSize(1024) );
+		m_pMultiManager->init();
+
+		LOG(INFO) << CLog::format( " %ld initialize, set size %d\n", getThreadID(), m_pMultiManager->setSize(1024) );
 	}
 
 	CProcessor::~CProcessor()
 	{
-		if ( NULL != m_pMultiplex ) {
-			delete m_pMultiplex;
+		if ( NULL != m_pMultiManager ) {
+			m_pMultiManager->destroy();
+
+			delete m_pMultiManager;
 		}
 	}
 
-	INT CProcessor::addClient(int fd)
+	INT CProcessor::addClient(INT fd)
 	{
-        ::std::lock_guard(m_mutex);
-		m_pMultiplex->addFileEvent(fd, NET_READABLE);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
+
+		m_pMultiManager->addFileEvent(fd, NET_READABLE);
 		++m_uiSize;
         
 		return m_uiSize;
 	}
 
-	void CProcessor::delClient(int fd)
+	void CProcessor::delClient(INT fd)
 	{
-        ::std::lock_guard(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         
-		m_pMultiplex->delFileEvent(fd, mask);
+		m_pMultiManager->delFileEvent(fd, NET_READABLE);
 		m_uiSize > 0 ? --m_uiSize : 0;
 	}
 
@@ -50,15 +50,16 @@ namespace NET
 			timeout.tv_sec = POLL_TIMEOUT_SEC;
 			timeout.tv_usec = POLL_TIMEOUT_USEC;
 
-			int retval = m_pMultiplex->eventLoop(&timeout);
+			int retval = m_pMultiManager->eventLoop(&timeout);
 			if ( retval > 0 ) {
 				// reloop form multiplex
-				EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
+				//EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
 
 				for ( int index = 0; index < retval; ++index ) {
-					FIRED_EVENT fired = eventLoop->fired[index];
-					if( fired.mask == NET_READABLE ) {
-                                            /*
+					//FIRED_EVENT fired = eventLoop->fired[index];
+					//if( fired.mask == NET_READABLE ) {
+					{                      
+						/*
 						FILE_EVENT* file = &(eventLoop->event[fired.fd]);
                                               
 						while (TRUE) {

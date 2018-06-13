@@ -15,7 +15,6 @@ namespace NET
 		destroy();
 	}
 
-<<<<<<< Updated upstream
 	void CSocket::init() noexcept
 	{
 		LOG_IF( ERROR, -1 == ( m_fd = socket(AF_INET, SOCK_STREAM, 0) ) )  

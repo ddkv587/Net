@@ -4,6 +4,7 @@
 .im_*/
 .out/
 .recy/
+.vscode/
 
 #build out dir
 target/

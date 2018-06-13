@@ -9,8 +9,8 @@ namespace NET
 			CProcessor();
 			virtual ~CProcessor();
 			
-			virtual INT 	addCLient(int fd);
-			virtual void 	delClient(int fd);
+			virtual INT 	addClient(INT fd);
+			virtual void 	delClient(INT fd);
 			
 			inline UINT 	size() const            { return m_uiSize;	}
             BOOLEAN         isEnable()              { return TRUE; }
@@ -23,8 +23,8 @@ namespace NET
 			void mainLoop(void* arg);
 
 		private:
-			unsigned int 	    m_uiSize;
-			CMultiBase* 	    m_pMultiplex;
+			UINT 	   	 		m_uiSize;
+			CMultiManager* 	    m_pMultiManager;
         
             ::std::mutex        m_mutex;
 	};

@@ -12,21 +12,21 @@ namespace NET
 			{
 				STRING strCmd = "cp -rf " + srcFile + " " + desFile;
 
-				system(strCmd.data());
+				UNUSED( system(strCmd.data()) );
 			}
 	
 			static void REMOVE(STRING srcFile)
 			{
                 STRING strCmd = "rm -rf " + srcFile;
                 
-                system(strCmd.data());
+                UNUSED( system(strCmd.data() );
 			}
 
 			static void CREATE(STRING srcFile)
 			{
                 STRING strCmd = "touch " + srcFile;
                 
-                system(strCmd.data());
+                UNUSED( system(strCmd.data()) );
 			}
 	};
 }

@@ -24,7 +24,7 @@ namespace NET
 			void 					destroy();
 			INT						setSize(INT size);
 
-			inline EMultiType		getMultiType()				{ return m_type; }
+			inline EMultiType		getMultiType()							{ return m_eType; }
 			void					enableEdgeTrigger(BOOLEAN on = TRUE);
 
 			INT						addFileEvent(INT, INT);
@@ -36,7 +36,7 @@ namespace NET
 			const CTimer*			getNearestTimer();
 
 		private:
-			EMultiType				m_type;
+			EMultiType				m_eType;
 			
 			IMultiBase* 			m_pBase;
 			EVENT_LOOP*				m_pEventLoop;

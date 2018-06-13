@@ -45,7 +45,7 @@ namespace  NET
         return size;
     }
 
-    INT CMultiKqueue::addFileEvent(INT fd, INT mask)
+    INT CMultiKqueue::addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)
     {
         struct kevent ke;
         if ( mask & NET_READABLE ) {
@@ -60,7 +60,7 @@ namespace  NET
         return 0;
     }
 
-    void CMultiKqueue::delFileEvent(INT fd, INT mask)
+    void CMultiKqueue::delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)
     {
         struct kevent ke;
 
@@ -75,7 +75,7 @@ namespace  NET
         }
     }
 
-    INT CMultiKqueue::eventLoop(void* timeout)
+    INT CMultiKqueue::eventLoop(void* timeout, EVENT_LOOP* eventLoop)
     {
         INT retval = 0;
         
@@ -83,9 +83,9 @@ namespace  NET
             struct timespec ts;
             ts.tv_sec = static_cast<struct timeval*>(timeout)->tv_sec;
             ts.tv_nsec = static_cast<struct timeval*>(timeout)->tv_usec * 1000;
-            retval = kevent(m_kqfd, NULL, 0, m_events, m_eventLoop->size, &ts);
+            retval = kevent(m_kqfd, NULL, 0, m_events, eventLoop->size, &ts);
         } else {
-            retval = kevent(m_kqfd, NULL, 0, m_events, m_eventLoop->size, NULL);
+            retval = kevent(m_kqfd, NULL, 0, m_events, eventLoop->size, NULL);
         }
         
         for(INT i = 0; i < retval; ++i) {
@@ -95,8 +95,8 @@ namespace  NET
             if (e->filter == EVFILT_READ) mask |= NET_READABLE;
             if (e->filter == EVFILT_WRITE) mask |= NET_WRITABLE;
             
-            m_eventLoop->lstFired[i].fd = e->ident;
-            m_eventLoop->lstFired[i].fd = mask;
+            eventLoop->lstFired[i].fd 	= e->ident;
+            eventLoop->lstFired[i].mask = mask;
         }
         return retval;
     }

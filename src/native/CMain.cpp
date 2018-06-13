@@ -92,13 +92,13 @@ namespace NET
         
 		const ConfigParser::tagSocketInfo& info = ConfigParser::getInstance()->getSocketInfo();
         
-        m_pListener->getSocketServer()->setPort( info.uiPort );
-        m_pListener->getSocketServer()->setKeepAlive( info.bKeepAlive, info.uiAliveValue );
-        m_pListener->getSocketServer()->setTimeOut( info.uiTimeOut );
+        m_pListener->server()->setPort( info.uiPort );
+        m_pListener->server()->setKeepAlive( info.bKeepAlive, info.uiAliveValue );
+        m_pListener->server()->setTimeOut( info.uiTimeOut );
         if ( info.bReusePort )
-            m_pListener->getSocketServer()->setReusePort( true );
+            m_pListener->server()->setReusePort( true );
         else
-            m_pListener->getSocketServer()->setReuseAddress( true );
+            m_pListener->server()->setReuseAddress( true );
 
         return TRUE;
     }
@@ -114,7 +114,7 @@ namespace NET
             CProcessor* processor = new CProcessor();
             
             m_lstShortTurn.push_back(processor);
-            if ( NULL != m_pListener ) m_pListener->addFileListener(processor);
+            if ( NULL != m_pListener ) m_pListener->addListener(processor);
         }
         
         return TRUE;

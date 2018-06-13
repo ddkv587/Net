@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CMultiSelect : public CMultiBase
+	class CMultiSelect : public IMultiBase
 	{
 		public:
 			CMultiSelect();
@@ -12,10 +12,10 @@ namespace NET
 			void	init();
 			void	destroy();
 
-			INT		setSize(INT);
-			INT		addFileEvent(int, int);
-			void	delFileEvent(int, int);
-			INT		eventLoop(void *);
+			INT		setSize(INT) override;
+			INT		addFileEvent(INT, INT, EVENT_LOOP*) override;
+			void	delFileEvent(INT, INT, EVENT_LOOP*) override;
+			INT		eventLoop(void*, EVENT_LOOP*) override;
 	};
 }
 #endif

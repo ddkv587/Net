@@ -4,6 +4,7 @@ namespace NET
 {
 	CMultiEpoll::CMultiEpoll()
 		: m_epfd(-1)
+		, m_bIsEdgeTrigger(TRUE)
 		, m_events(nullptr)
 	{
 		m_eType = EMT_EPOLL;
@@ -41,14 +42,14 @@ namespace NET
 		return size;
 	}
 
-	INT CMultiEpoll::addFileEvent(INT fd, INT mask)
+	INT CMultiEpoll::addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)
 	{
 		struct epoll_event ee = {0};
 
-		INT op = m_eventLoop->lstFileEvent[fd].mask == NET_NONE ? EPOLL_CTL_ADD : EPOLL_CTL_MOD;
+		INT op = eventLoop->lstFileEvent[fd].mask == NET_NONE ? EPOLL_CTL_ADD : EPOLL_CTL_MOD;
 
 		ee.events = 0;
-		mask |= m_eventLoop->lstFileEvent[fd].mask;
+		mask |= eventLoop->lstFileEvent[fd].mask;
 		if ( mask & NET_READABLE ) { 
 			ee.events = EPOLLIN;
 			if (m_bIsEdgeTrigger) ee.events |= EPOLLET;
@@ -64,12 +65,12 @@ namespace NET
 		return epoll_ctl(m_epfd, op, fd, &ee);
 	}
 
-	void CMultiEpoll::delFileEvent(INT fd, INT mask)
+	void CMultiEpoll::delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)
 	{
 		struct epoll_event ee = {0};
 
 		ee.events = 0;
-		mask = m_eventLoop->lstFileEvent[fd].mask & (~mask);
+		mask = eventLoop->lstFileEvent[fd].mask & (~mask);
 		if ( mask & NET_READABLE ) ee.events |= EPOLLIN;
 		if ( mask & NET_WRITABLE ) ee.events |= EPOLLOUT;
 
@@ -83,17 +84,17 @@ namespace NET
 		}
 	}
 
-	INT CMultiEpoll::eventLoop(void* timeout)
+	INT CMultiEpoll::eventLoop(void* timeout, EVENT_LOOP* eventLoop)
 	{
 		INT retval = 0;
 
 		struct timeval* tvl = timeout ? (struct timeval*)timeout : NULL;
 
-		retval = epoll_wait( m_epfd, m_events, m_eventLoop->size,  \
+		retval = epoll_wait( m_epfd, m_events, eventLoop->size,  \
 					tvl ? ( tvl->tv_sec * 1000 + tvl->tv_usec / 1000 ) : -1 );
 		
 		CHECK_R( retval != -1, -1 );
-		LOG(INFO) << CLog::format("epoll: %d, size: %d! \n", retval, m_eventLoop->size);
+		LOG(INFO) << CLog::format("epoll: %d, size: %d! \n", retval, eventLoop->size);
 
 		for ( INT index = 0; index < retval; ++index ) {
 			INT mask = 0;
@@ -104,10 +105,15 @@ namespace NET
 			if ( e->events & EPOLLERR ) mask |= NET_WRITABLE;
 			if ( e->events & EPOLLHUP ) mask |= NET_WRITABLE;
 
-			m_eventLoop->lstFired[index].fd 	= e->data.fd;
-			m_eventLoop->lstFired[index].type 	= ET_FILE; 
-			m_eventLoop->lstFired[index].mask 	= mask;
+			eventLoop->lstFired[index].fd 		= e->data.fd;
+			eventLoop->lstFired[index].type 	= ET_FILE; 
+			eventLoop->lstFired[index].mask 	= mask;
 		}
 		return retval;
+	}
+
+	void CMultiEpoll::enableEdgeTrigger(BOOLEAN on)
+	{
+		m_bIsEdgeTrigger = on;
 	}
 }

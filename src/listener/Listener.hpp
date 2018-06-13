@@ -9,15 +9,15 @@ namespace NET
 			CListener();
 			virtual ~CListener();
 
-			virtual void 	                    addListener(IFileListener*);
-			virtual void 	                    delListener(IFileListener*);
-			void 			                    printListener();
+			virtual void 	                    		addListener(IClientListener*);
+			virtual void 	                    		delListener(IClientListener*);
+			void 			                    		printListener();
         
-            const CSocketServer*                server() const                          { return m_pServer; }
+            const CSocketServer*                		server() const                          { return m_pServer; }
 
 		protected:
-			virtual IClientListener*            balance();
-            ::std::list<IClientListener*>&      listener() const                        { return m_lstListener; }
+			virtual IClientListener*            		balance();
+            const ::std::list<IClientListener*>&      	listener() const                        { return m_lstListener; }
 			
 			void mainLoop(void* arg);
 
