@@ -13,6 +13,6 @@ $(CPP_APP_OBJECT): $(BUILD_MIDDLE_PATH)%.o: $(CPP_SRCDIR)%.cpp
 
 $(TARGET_MODULE): $(CPP_APP_OBJECT)
 	@echo link lib$(TARGET_MODULE).so ...
-	$(CXX) $(CPP_APP_OBJECT) $(CPP_FLAGS) -shared -fPIC $(LIBS_DIR) $(LIBS) -o $(TARGET_PATH)/lib$(TARGET_MODULE).so
+	@$(CXX) $(CPP_APP_OBJECT) $(CPP_FLAGS) -shared -fPIC $(LIBS_DIR) $(LIBS) -o $(TARGET_PATH)/lib$(TARGET_MODULE).so
 
 .PHONY: all clean debug release

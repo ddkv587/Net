@@ -16,33 +16,34 @@ enum EProcotol
 
 typedef struct tagSocketHeader
 {
-	int sync;
-	int size;
-	int protocol;
+	INT sync;
+	INT size;
+	INT protocol;
 } HEADER_MANAGER;
 
 typedef struct tagSocketPing
 {
-	int current;
-	int deadLimit;
+	INT current;
+	INT deadLimit;
 } PING_MANAGER;
 
 typedef struct tagSocketTime
 {
-	int second;
-	int millsecond;
-	int offet;
-	int type;
+	INT second;
+	INT millsecond;
+	INT offet;
+	INT type;
 } TIME_MANAGER;
 
 typedef struct tagSocketHeart
 {
-	int type;
-	int time;
+	INT type;
+	INT time;
 } HEART_MANAGER;
 
-const static int SIZE_HEADER_MANAGER = sizeof(HEADER_MANAGER);
-const static int SIZE_PING_MANAGER = sizeof(PING_MANAGER);
-const static int SIZE_TIME_MANAGER = sizeof(TIME_MANAGER);
-const static int SIZE_HEART_MANAGER = sizeof(HEART_MANAGER);
+const static INT SIZE_HEADER_MANAGER = constexpr sizeof(HEADER_MANAGER);
+char test[SIZE_HEADER_MANAGER];
+const static INT SIZE_PING_MANAGER = constexpr sizeof(PING_MANAGER);
+const static INT SIZE_TIME_MANAGER = constexpr sizeof(TIME_MANAGER);
+const static INT SIZE_HEART_MANAGER = constexpr sizeof(HEART_MANAGER);
 #endif

@@ -44,7 +44,7 @@ namespace NET
 #define handle_error_errno(en, msg) \
 	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
 
-#define UNUSED(X) (void)(X)
+#define UNUSED(X) do { (void)(X); } while(0)
 
 #define NET_NONE                            0x00
 #define NET_READABLE                        0x01

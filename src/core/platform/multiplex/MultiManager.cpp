@@ -37,6 +37,7 @@ namespace NET
 			break;
 #endif
 		case EMT_NONE:
+		default:
 			m_pBase = nullptr;
 			return;
 		}

@@ -6,9 +6,11 @@ namespace NET
 	class CMultiManager
 	{
 		public:
-			virtual class IMultiBase
+			class IMultiBase
 			{
 				public:
+					virtual ~IMultiBase() {}
+
 					virtual	void			init() = 0;
 					virtual void			destroy() = 0;
 
@@ -16,7 +18,7 @@ namespace NET
 					virtual INT             addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
 					virtual void            delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
 					virtual	INT				eventLoop(void* timeout, EVENT_LOOP* eventLoop) = 0;
-			}
+			};
 
 			enum EMultiType
 			{
