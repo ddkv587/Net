@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CMultiEpoll : public IMultiBase
+	class CMultiEpoll : public CMultiManager::IMultiBase
 	{
 		public:
 			CMultiEpoll();

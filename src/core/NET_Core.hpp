@@ -99,7 +99,6 @@ using namespace rapidxml;
 
 //========== platform ==============
 #include "platform/multiplex/MultiStruct.hpp"
-#include "platform/multiplex/IMultiBase.hpp"
 #include "platform/multiplex/MultiManager.hpp"
 
 #ifdef OS_BSD

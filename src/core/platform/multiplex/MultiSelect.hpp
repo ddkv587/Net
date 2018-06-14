@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CMultiSelect : public IMultiBase
+	class CMultiSelect : public CMultiManager::IMultiBase
 	{
 		public:
 			CMultiSelect();

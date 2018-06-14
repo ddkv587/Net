@@ -3,7 +3,7 @@
 
 namespace NET
 {
-    class CMultiKqueue : public IMultiBase
+    class CMultiKqueue : public CMultiManager::IMultiBase
     {
         public:
             CMultiKqueue();
