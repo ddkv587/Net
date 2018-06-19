@@ -31,6 +31,29 @@ namespace NET
 				INT ret = system( strCmd.data() );
 				UNUSED(ret);
 			}
+
+			static void LIMIT_OPEN_FILE(UINT size)
+			{
+				STRING strCmd;
+
+				if ( size == 0 ) 
+					strCmd = "ulimit -n " + size;
+				else
+					strCmd = "ulimit -n unlimited";
+                
+				INT ret = system( strCmd.data() );
+				UNUSED(ret);
+			}
+
+			static void SYSCTL_MAX_FILE(UINT size)
+			{
+				STRING strCmd;
+
+				strCmd = "sysctl -w fs.file-max=" + size;
+                
+				INT ret = system( strCmd.data() );
+				UNUSED(ret);
+			}
 	};
 }
 

@@ -53,13 +53,11 @@ namespace NET
 			int retval = m_pMultiManager->eventLoop(&timeout);
 			if ( retval > 0 ) {
 				// reloop form multiplex
-				//EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
+				EVENT_LOOP* eventLoop = m_pMultiplex->getEventLoop();
 
 				for ( int index = 0; index < retval; ++index ) {
-					//FIRED_EVENT fired = eventLoop->fired[index];
-					//if( fired.mask == NET_READABLE ) {
-					{                      
-						/*
+					FIRED_EVENT fired = eventLoop->lstFired[index];
+					if( fired.mask == NET_READABLE ) {                      
 						FILE_EVENT* file = &(eventLoop->event[fired.fd]);
                                               
 						while (TRUE) {
@@ -137,7 +135,6 @@ err_recv:
 							file->clean();
 							delFileEvent(file->fd, NET_READABLE);
 						}
-                                              */
 					}              
 				} //for
 			} //if retval > 0

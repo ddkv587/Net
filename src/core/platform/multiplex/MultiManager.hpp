@@ -38,13 +38,16 @@ namespace NET
 			void 					destroy();
 			INT						setSize(INT size);
 
-			inline EMultiType		getMultiType()							{ return m_eType; }
-			void					enableEdgeTrigger(BOOLEAN on = TRUE);
+			inline EMultiType		getMultiType()					{ return m_eType; }
+			const EVENT_LOOP*		getEventLoop()					{ return m_pEventLoop; }
 
 			INT						addFileEvent(INT, INT);
 			void					delFileEvent(INT, INT);
 			INT						eventLoop(void*);
 			void					addTimer(const CTimer*);
+
+			//for epoll
+			void					enableEdgeTrigger(BOOLEAN on = TRUE);
 
 		private:
 			const CTimer*			getNearestTimer();

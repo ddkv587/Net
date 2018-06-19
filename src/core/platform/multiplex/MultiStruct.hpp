@@ -25,7 +25,7 @@ namespace NET
 	} FILE_EVENT;
 
 	typedef struct tagFiredEvent {
-		int 			fd;
+		int 			index;
 		int 			mask;
 		EVENT_TYPE		type;
 	} FIRED_EVENT;

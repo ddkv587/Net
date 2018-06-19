@@ -122,7 +122,7 @@ namespace NET
 	INT CMultiManager::addFileEvent(INT fd, INT mask)
 	{
 		if ( nullptr != m_pBase ) return m_pBase->addFileEvent(fd, mask, m_pEventLoop);
-		return 0;
+		return -1;
 	}
 
 	void CMultiManager::delFileEvent(INT fd, INT mask)
