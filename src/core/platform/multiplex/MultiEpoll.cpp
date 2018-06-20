@@ -53,12 +53,12 @@ namespace NET
 		if ( mask & NET_READABLE ) { 
 			ee.events = EPOLLIN;
 			if (m_bIsEdgeTrigger) ee.events |= EPOLLET;
-			LOG(INFO) << CLog::format("%s epoll read\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
+			//LOG(INFO) << CLog::format("%s epoll read\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
 		}
 
 		if ( mask & NET_WRITABLE ) { 
 			ee.events = EPOLLOUT; 
-			LOG(INFO) << CLog::format("%s epoll write\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
+			//LOG(INFO) << CLog::format("%s epoll write\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
 		}
 		ee.data.fd = fd;
 
@@ -105,7 +105,7 @@ namespace NET
 			if ( e->events & EPOLLERR ) mask |= NET_WRITABLE;
 			if ( e->events & EPOLLHUP ) mask |= NET_WRITABLE;
 
-			eventLoop->lstFired[index].index 		= e->data.fd - uiBaseLine;
+			eventLoop->lstFired[index].index 	= e->data.fd;
 			eventLoop->lstFired[index].type 	= ET_FILE; 
 			eventLoop->lstFired[index].mask 	= mask;
 		}

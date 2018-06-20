@@ -2,17 +2,26 @@
 #define __CONFIGPARSERHPP__
 
 namespace NET {
-
-    class ConfigParser final {
+    class ConfigParser final 
+    {
     public:
+        enum ESYSTEM_ROLE
+        {
+            SR_NONE = 0,
+            SR_MASTER,
+            SR_SLAVE,
+            SR_MAX
+        };
 
         struct tagSystemInfo {
-            UINT uiPriority;
-            UINT uiThreadCount;
-            UINT uiShortTurnLimit;
+            UINT            uiPriority;
+            UINT            uiThreadCount;
+            UINT            uiShortTurnLimit;
 
-            UINT uiMaxFileSize;
-            UINT uiLimitOpenSize;
+            UINT            uiMaxFileSize;
+            UINT            uiLimitOpenSize;
+
+            ESYSTEM_ROLE    eRole;
         };
 
         struct tagSocketInfo {

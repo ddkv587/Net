@@ -1,5 +1,5 @@
-#ifndef __TYPEDEFHPP__
-#define __TYPEDEFHPP__
+#ifndef __MULTISTRUCTHPP__
+#define __MULTISTRUCTHPP__
 
 #include <vector>
 #include <functional>
@@ -13,9 +13,13 @@ namespace NET
 		ET_TIME,
 		ET_MAX,
 	};
+	struct tagFileEvent;
+	struct tagFiredEvent;
+	struct tagTimeEvent;
+	struct tagEventLoop;
 
-	typedef ::std::function<INT(INT fd, void* dataBuff, INT mask)> fileProc;
-	typedef ::std::function<INT(INT id, INT repeat)> timeProc;
+	typedef ::std::function<INT(struct tagEventLoop* loop, INT fd, void* dataBuff, INT mask)> fileProc;
+	typedef ::std::function<INT(struct tagEventLoop* loop, INT id, INT repeat)> timeProc;
 
 	typedef struct tagFileEvent {
 		int fd;

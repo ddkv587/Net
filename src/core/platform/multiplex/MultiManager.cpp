@@ -120,15 +120,35 @@ namespace NET
 		}
 	}
 
-	INT CMultiManager::addFileEvent(INT fd, INT mask)
+	INT CMultiManager::addFileEvent(INT fd, INT mask, fileProc *proc, void* clientData)
 	{
-		if ( nullptr != m_pBase ) return m_pBase->addFileEvent(fd, mask, m_pEventLoop);
-		return -1;
+		if ( nullptr != m_pBase ) 
+			CHECK_R( 0 == m_pBase->addFileEvent(fd, mask, m_pEventLoop)), -1 );
+
+		FILE_EVENT* event = m_pEventLoop[fd];
+		CHECK_R(nullptr != event, -1);
+		event->mask |= mask;
+		if ( mask & NET_READABLE ) event->readProc = proc;
+		if ( mask & NET_WRITEABLE ) event->writeProc = proc;
+		event->clientData = clientData;
+		if (fd > m_pEventLoop->maxfd)
+			m_pEventLoop->maxfd = fd;
+
+		return 0;
 	}
 
 	void CMultiManager::delFileEvent(INT fd, INT mask)
 	{
-		if ( nullptr != m_pBase ) m_pBase->delFileEvent(fd, mask, m_pEventLoop);
+		if ( nullptr != m_pBase ) 
+			m_pBase->delFileEvent(fd, mask, m_pEventLoop);
+
+		FILE_EVENT* event = m_pEventLoop->lstFileEvent;
+		fe->mask = fe->mask & (~mask);
+		if (fd == eventLoop->maxfd && fe->mask == AE_NONE) {
+			for (INT j = eventLoop->maxfd-1; j >= 0; j--)
+				if ( eventLoop->events[j].mask != AE_NONE ) break;
+			eventLoop->maxfd = j;
+		}
 	}
 
 	INT CMultiManager::eventLoop(void* timeout)

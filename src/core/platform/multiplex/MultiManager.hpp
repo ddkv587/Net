@@ -41,7 +41,7 @@ namespace NET
 			inline EMultiType		getMultiType()					{ return m_eType; }
 			const EVENT_LOOP*		getEventLoop()					{ return m_pEventLoop; }
 
-			INT						addFileEvent(INT, INT);
+			INT						addFileEvent(INT, INT, fileProc *proc, void* clientData);
 			void					delFileEvent(INT, INT);
 			INT						eventLoop(void*);
 			void					addTimer(const CTimer*);
@@ -53,7 +53,7 @@ namespace NET
 
 		private:
 			const CTimer*			getNearestTimer();
-
+			
 		private:
 			EMultiType				m_eType;
 			UINT 					m_uiBaseLine;
