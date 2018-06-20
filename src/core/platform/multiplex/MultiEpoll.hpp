@@ -15,7 +15,7 @@ namespace NET
 
 			INT 	addFileEvent(INT, INT, EVENT_LOOP*) override;
 			void	delFileEvent(INT, INT, EVENT_LOOP*) override;
-			INT 	eventLoop(void*, EVENT_LOOP*) override; 			// struct timeval
+			INT 	eventLoop(void*, EVENT_LOOP*, UINT) override; 			// struct timeval
 
 			void	enableEdgeTrigger(BOOLEAN);
 

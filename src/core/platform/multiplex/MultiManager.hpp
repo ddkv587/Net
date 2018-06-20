@@ -17,7 +17,7 @@ namespace NET
 					virtual INT             setSize(INT size) = 0;
 					virtual INT             addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
 					virtual void            delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
-					virtual	INT				eventLoop(void* timeout, EVENT_LOOP* eventLoop) = 0;
+					virtual	INT				eventLoop(void* timeout, EVENT_LOOP* eventLoop, UINT uiBaseLine) = 0;
 			};
 
 			enum EMultiType
@@ -46,6 +46,8 @@ namespace NET
 			INT						eventLoop(void*);
 			void					addTimer(const CTimer*);
 
+			void					setBaseLine(UINT uiBaseLine)	{ m_uiBaseLine = uiBaseLine; }
+
 			//for epoll
 			void					enableEdgeTrigger(BOOLEAN on = TRUE);
 
@@ -54,6 +56,7 @@ namespace NET
 
 		private:
 			EMultiType				m_eType;
+			UINT 					m_uiBaseLine;
 			
 			IMultiBase* 			m_pBase;
 			EVENT_LOOP*				m_pEventLoop;

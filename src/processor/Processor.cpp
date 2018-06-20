@@ -10,8 +10,8 @@ namespace NET
 		assert(NULL != m_pMultiManager);
 
 		m_pMultiManager->init();
-
-		LOG(INFO) << CLog::format( " %ld initialize, set size %d\n", getThreadID(), m_pMultiManager->setSize(1024) );
+		LOG(INFO) << CLog::format( " %ld initialized  \n");
+		//, set size %d\n", getThreadID(), m_pMultiManager->setSize(1024) );
 	}
 
 	CProcessor::~CProcessor()

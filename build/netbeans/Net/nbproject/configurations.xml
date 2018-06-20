@@ -19,6 +19,7 @@
         <df name="platform">
           <df name="multiplex">
             <in>MultiBase.cpp</in>
+            <in>MultiEpoll.cpp</in>
             <in>MultiKqueue.cpp</in>
           </df>
         </df>
@@ -126,6 +127,13 @@
         </ccTool>
       </item>
       <item path="../../../src/core/platform/multiplex/MultiBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="../../../src/core/platform/multiplex/MultiEpoll.cpp"
             ex="false"
             tool="1"
             flavor2="8">

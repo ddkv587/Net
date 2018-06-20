@@ -35,6 +35,8 @@
           <df name="multiplex">
             <in>MultiBase.cpp</in>
             <in>MultiBase.hpp</in>
+            <in>MultiEpoll.cpp</in>
+            <in>MultiEpoll.hpp</in>
             <in>MultiKqueue.cpp</in>
             <in>MultiKqueue.hpp</in>
             <in>MultiSelect.hpp</in>

@@ -75,7 +75,7 @@ namespace  NET
         }
     }
 
-    INT CMultiKqueue::eventLoop(void* timeout, EVENT_LOOP* eventLoop)
+    INT CMultiKqueue::eventLoop(void* timeout, EVENT_LOOP* eventLoop, UINT uiBaseLine)
     {
         INT retval = 0;
         
@@ -95,8 +95,8 @@ namespace  NET
             if (e->filter == EVFILT_READ) mask |= NET_READABLE;
             if (e->filter == EVFILT_WRITE) mask |= NET_WRITABLE;
             
-            eventLoop->lstFired[i].fd 	= e->ident;
-            eventLoop->lstFired[i].mask = mask;
+            eventLoop->lstFired[i].index 	= e->ident - uiBaseLine;
+            eventLoop->lstFired[i].mask     = mask;
         }
         return retval;
     }

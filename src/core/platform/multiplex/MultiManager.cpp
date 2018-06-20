@@ -4,6 +4,7 @@ namespace NET
 {
 	CMultiManager::CMultiManager()
 		: m_eType(EMT_NONE)
+		, m_uiBaseLine(0)
 		, m_pBase(nullptr)
 		, m_pEventLoop(nullptr)
 	{
@@ -132,7 +133,7 @@ namespace NET
 
 	INT CMultiManager::eventLoop(void* timeout)
 	{
-		if ( nullptr != m_pBase ) return m_pBase->eventLoop(timeout, m_pEventLoop);
+		if ( nullptr != m_pBase ) return m_pBase->eventLoop(timeout, m_pEventLoop, m_uiBaseLine);
 		return 0;
 	}
 

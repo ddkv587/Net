@@ -10,6 +10,9 @@ namespace NET {
             UINT uiPriority;
             UINT uiThreadCount;
             UINT uiShortTurnLimit;
+
+            UINT uiMaxFileSize;
+            UINT uiLimitOpenSize;
         };
 
         struct tagSocketInfo {

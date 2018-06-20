@@ -43,7 +43,9 @@ namespace NET {
     void ConfigParser::preset() {
         m_tagSysInfo.uiPriority = 0; //nice value
         m_tagSysInfo.uiThreadCount = 10; //default max thread count
-        m_tagSysInfo.uiShortTurnLimit = 100; 
+        m_tagSysInfo.uiShortTurnLimit = 100;
+        //m_tagSysInfo.uiMaxFileSize = 65535;
+        m_tagSocketInfo.uiLimitOpenSize = 10000;
 
         m_tagSocketInfo.uiPort = 8000;
 

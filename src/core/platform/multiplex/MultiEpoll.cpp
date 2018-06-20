@@ -84,7 +84,7 @@ namespace NET
 		}
 	}
 
-	INT CMultiEpoll::eventLoop(void* timeout, EVENT_LOOP* eventLoop)
+	INT CMultiEpoll::eventLoop(void* timeout, EVENT_LOOP* eventLoop, UINT uiBaseLine)
 	{
 		INT retval = 0;
 
@@ -105,7 +105,7 @@ namespace NET
 			if ( e->events & EPOLLERR ) mask |= NET_WRITABLE;
 			if ( e->events & EPOLLHUP ) mask |= NET_WRITABLE;
 
-			eventLoop->lstFired[index].fd 		= e->data.fd;
+			eventLoop->lstFired[index].index 		= e->data.fd - uiBaseLine;
 			eventLoop->lstFired[index].type 	= ET_FILE; 
 			eventLoop->lstFired[index].mask 	= mask;
 		}
