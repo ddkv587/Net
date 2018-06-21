@@ -11,17 +11,18 @@ namespace NET
 			
 			void	init() override;
 			void	destroy() override;
-			INT 	setSize(INT size) override;
+			UINT 	setSize(UINT size) override;
 
 			INT 	addFileEvent(INT, INT, EVENT_LOOP*) override;
 			void	delFileEvent(INT, INT, EVENT_LOOP*) override;
-			INT 	eventLoop(void*, EVENT_LOOP*, UINT) override; 			// struct timeval
+			INT 	eventLoop(void*, EVENT_LOOP*) override; 			// struct timeval
 
 			void	enableEdgeTrigger(BOOLEAN);
 
 		private:
 			INT                     m_epfd;
 			BOOLEAN					m_bIsEdgeTrigger;
+			UINT					m_uiSize;
 			struct epoll_event*     m_events;
 	};
 }

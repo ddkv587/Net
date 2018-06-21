@@ -3,10 +3,11 @@
 namespace NET
 {
 	CMultiManager::CMultiManager()
+		: m_uiSize(0)
 		: m_eType(EMT_NONE)
 		, m_uiBaseLine(0)
 		, m_pBase(nullptr)
-		, m_pEventLoop(nullptr)
+		, s_pEventLoop(nullptr)
 	{
 		;
 	}
@@ -54,61 +55,90 @@ namespace NET
 			m_pBase = nullptr;
 		}
 
-		if ( nullptr != m_pEventLoop )
+		if ( nullptr != s_pEventLoop )
 		{
-			if ( !m_pEventLoop->lstFileEvent.empty() ) m_pEventLoop->lstFileEvent.clear();
-			if ( !m_pEventLoop->lstTimeEvent.empty() ) m_pEventLoop->lstTimeEvent.clear();
-			if ( !m_pEventLoop->lstFired.empty() ) m_pEventLoop->lstFired.clear();
+			if ( !s_pEventLoop->lstFileEvent.empty() ) s_pEventLoop->lstFileEvent.clear();
+			if ( !s_pEventLoop->lstTimeEvent.empty() ) s_pEventLoop->lstTimeEvent.clear();
+			if ( !s_pEventLoop->lstFired.empty() ) s_pEventLoop->lstFired.clear();
 				
-			delete m_pEventLoop;
-			m_pEventLoop = nullptr;	
+			delete s_pEventLoop;
+			s_pEventLoop = nullptr;	
 		}
 	}
 
-	INT CMultiManager::setSize(INT size)
+	UINT CMultiManager::setSize(UINT size)
 	{
-		CHECK_R(size <= SYSTEM_MAX_EVENTS, nullptr == m_pEventLoop ? 0 : m_pEventLoop->size);
-		
-		if ( nullptr == m_pEventLoop ) {
-			m_pEventLoop = new EVENT_LOOP;
-			CHECK_R( nullptr != m_pEventLoop, 0 );
+		if ( nullptr != m_pBase && size != m_uiSize ) 
+			m_uiSize = m_pBase->setSize(size);
 
-			m_pEventLoop->maxfd = -1;
-			m_pEventLoop->lstFileEvent = ::std::vector<tagFileEvent>(size);
-			m_pEventLoop->lstTimeEvent = ::std::vector<tagTimeEvent>(size);
-			m_pEventLoop->lstFired = ::std::vector<tagFiredEvent>(size);
+		return m_uiSize;
+	}
 
-			if ( m_pEventLoop->lstFileEvent.empty() || 
-					m_pEventLoop->lstTimeEvent.empty() ||
-					m_pEventLoop->lstFired.empty() ) {
-				if ( !m_pEventLoop->lstFileEvent.empty() ) m_pEventLoop->lstFileEvent.clear();
-				if ( !m_pEventLoop->lstTimeEvent.empty() ) m_pEventLoop->lstTimeEvent.clear();
-				if ( !m_pEventLoop->lstFired.empty() ) m_pEventLoop->lstFired.clear();
-				
-				delete m_pEventLoop;
-				m_pEventLoop = nullptr;	
+	INT CMultiManager::addFileEvent(INT fd, INT mask, fileProc *proc, DATA* clientData)
+	{
+		if ( nullptr != m_pBase ) 
+			CHECK_R( 0 == m_pBase->addFileEvent(fd, mask, s_pEventLoop)), -1 );
 
-				return 0;
-			}
-			m_pEventLoop->size = size;
+		FILE_EVENT* event = s_pEventLoop[fd];
+		CHECK_R(nullptr != event, -1);
+		event->mask |= mask;
+		if ( mask & NET_READABLE ) event->readProc = proc;
+		if ( mask & NET_WRITEABLE ) event->writeProc = proc;
+		event->clientData = clientData;
+
+		return 0;
+	}
+
+	void CMultiManager::delFileEvent(INT fd, INT mask)
+	{
+		if ( nullptr != m_pBase ) 
+			m_pBase->delFileEvent(fd, mask, s_pEventLoop);
+
+		FILE_EVENT* event = s_pEventLoop->lstFileEvent;
+		fe->mask = fe->mask & (~mask);
+	}
+
+	INT CMultiManager::eventLoop(void* timeout)
+	{
+		if ( nullptr != m_pBase ) 
+			return m_pBase->eventLoop(timeout, s_pEventLoop);
+		return 0;
+	}
+
+	void CMultiManager::addTimer(const CTimer*)
+	{
+	
+	}
+
+	UINT CMultiManager::setEventLoopSize(UINT size)
+	{
+		::std::lock_guard<::std::mutex> lock(m_mutex);
+
+		if ( nullptr == s_pEventLoop ) {
+			s_pEventLoop = new EVENT_LOOP;
+			CHECK_R( nullptr != s_pEventLoop, 0 );
+
+			s_pEventLoop->lstFileEvent 	= ::std::vector<tagFileEvent>(size);
+			s_pEventLoop->lstFired 		= ::std::vector<tagFiredEvent>(size + MAX_TIME_EVENT_SIZE);
+
+			s_pEventLoop->lstTimeEvent 	= ::std::vector<tagTimeEvent>(MAX_TIME_EVENT_SIZE);
+			s_pEventLoop->size = size;
 
 			//init new items
 			for ( INT index=0; index < size; ++index ) 
-				m_pEventLoop->lstFileEvent[index].mask 	= NET_NONE;	
+				s_pEventLoop->lstFileEvent[index].mask 	= NET_NONE;	
+
 		} else {
-			INT oldSize = m_pEventLoop->size;
-			CHECK_R(size > oldSize, oldSize);			
+			INT oldSize = s_pEventLoop->size;
+			CHECK_R( size > oldSize, oldSize );			
 			
-			m_pEventLoop->lstFileEvent.resize(size);
-			m_pEventLoop->lstFired.resize(size);
-			m_pEventLoop->size = size;
+			s_pEventLoop->lstFileEvent.resize(size);
+			s_pEventLoop->lstFired.resize(size);
+			s_pEventLoop->size = size;
 
 			for ( INT index=oldSize; index < size; ++index ) 
-				m_pEventLoop->lstFileEvent[index].mask = NET_NONE;	
+				s_pEventLoop->lstFileEvent[index].mask = NET_NONE;
 		}
-		if ( nullptr != m_pBase ) m_pBase->setSize(size);
-
-		return size;
 	}
 
 	void CMultiManager::enableEdgeTrigger(BOOLEAN on)
@@ -118,48 +148,6 @@ namespace NET
 
 			poll->enableEdgeTrigger(on);
 		}
-	}
-
-	INT CMultiManager::addFileEvent(INT fd, INT mask, fileProc *proc, void* clientData)
-	{
-		if ( nullptr != m_pBase ) 
-			CHECK_R( 0 == m_pBase->addFileEvent(fd, mask, m_pEventLoop)), -1 );
-
-		FILE_EVENT* event = m_pEventLoop[fd];
-		CHECK_R(nullptr != event, -1);
-		event->mask |= mask;
-		if ( mask & NET_READABLE ) event->readProc = proc;
-		if ( mask & NET_WRITEABLE ) event->writeProc = proc;
-		event->clientData = clientData;
-		if (fd > m_pEventLoop->maxfd)
-			m_pEventLoop->maxfd = fd;
-
-		return 0;
-	}
-
-	void CMultiManager::delFileEvent(INT fd, INT mask)
-	{
-		if ( nullptr != m_pBase ) 
-			m_pBase->delFileEvent(fd, mask, m_pEventLoop);
-
-		FILE_EVENT* event = m_pEventLoop->lstFileEvent;
-		fe->mask = fe->mask & (~mask);
-		if (fd == eventLoop->maxfd && fe->mask == AE_NONE) {
-			for (INT j = eventLoop->maxfd-1; j >= 0; j--)
-				if ( eventLoop->events[j].mask != AE_NONE ) break;
-			eventLoop->maxfd = j;
-		}
-	}
-
-	INT CMultiManager::eventLoop(void* timeout)
-	{
-		if ( nullptr != m_pBase ) return m_pBase->eventLoop(timeout, m_pEventLoop, m_uiBaseLine);
-		return 0;
-	}
-
-	void CMultiManager::addTimer(const CTimer*)
-	{
-	
 	}
 
 	const CTimer* CMultiManager::getNearestTimer()

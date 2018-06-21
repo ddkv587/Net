@@ -9,7 +9,8 @@ namespace NET {
 
     ConfigParser* ConfigParser::m_pInstance = NULL;
 
-    ConfigParser* ConfigParser::getInstance() {
+    ConfigParser* ConfigParser::getInstance() 
+    {
         if (NULL == m_pInstance) {
             m_pInstance = new ConfigParser();
         }
@@ -17,17 +18,23 @@ namespace NET {
     }
 
     ConfigParser::ConfigParser()
-    : m_xmlHelper(NULL) {
+        : m_xmlHelper(nullptr) 
+    {
         preset();
 
         m_xmlHelper = new XMLHelper();
     }
 
-    ConfigParser::~ConfigParser() {
-        ;
+    ConfigParser::~ConfigParser() 
+    {
+        if ( nullptr != m_xmlHelper ) {
+            delete m_xmlHelper;
+            m_xmlHelper = nullptr;
+        }
     }
 
-    BOOLEAN ConfigParser::initialize() {
+    BOOLEAN ConfigParser::initialize() 
+    {
         LOG(INFO) << "begin to initialize ConfigParser...";
         
         if (!load()) {
@@ -40,12 +47,12 @@ namespace NET {
         return TRUE;
     }
 
-    void ConfigParser::preset() {
+    void ConfigParser::preset() 
+    {
         m_tagSysInfo.uiPriority = 0; //nice value
         m_tagSysInfo.uiThreadCount = 10; //default max thread count
         m_tagSysInfo.uiShortTurnLimit = 100;
-        //m_tagSysInfo.uiMaxFileSize = 65535;
-        m_tagSocketInfo.uiLimitOpenSize = 10000;
+        m_tagSysInfo.uiMaxFileSize = 20000;
 
         m_tagSocketInfo.uiPort = 8000;
 
@@ -57,7 +64,8 @@ namespace NET {
         m_tagSocketInfo.bReuseAddress = TRUE;
     }
 
-    BOOLEAN ConfigParser::load() {
+    BOOLEAN ConfigParser::load() 
+    {
         if ( !m_xmlHelper->parseFrom(CONFIG_PATH) )
             CHECK_R( m_xmlHelper->parseFrom(CONFIG_PATH_BAK), FALSE );
 
@@ -72,7 +80,8 @@ namespace NET {
         return TRUE;
     }
 
-    BOOLEAN ConfigParser::save() {
+    BOOLEAN ConfigParser::save() 
+    {
         if (NULL == m_xmlHelper->getRootElement())
             m_xmlHelper->create();
 
@@ -84,7 +93,8 @@ namespace NET {
         return TRUE;
     }
 
-    void ConfigParser::loadSystemInfo(const XMLElement* system) {
+    void ConfigParser::loadSystemInfo(const XMLElement* system) 
+    {
         CHECK(NULL != system);
         
         XMLElement* priority = system->getElementByName("priority");
@@ -92,6 +102,9 @@ namespace NET {
         
         XMLElement* threadCount = system->getElementByName("threadCount");
         if (NULL != threadCount) m_tagSysInfo.uiThreadCount = ::std::stoi(threadCount->getValue());
+
+        XMLElement* shortMaxFileSize = system->getElementByName("maxFileSize");
+        if (NULL != shortMaxFileSize) m_tagSysInfo.uiMaxFileSize = ::std::stoi(shortMaxFileSize->getValue());
         
         XMLElement* shortTurnLimit = system->getElementByName("shortTurnLimit");
         if (NULL != shortTurnLimit) m_tagSysInfo.uiShortTurnLimit = ::std::stoi(shortTurnLimit->getValue());
@@ -100,7 +113,8 @@ namespace NET {
         m_tagSysInfo.uiThreadCount = MIN(hardware != 0 ? hardware : 6, m_tagSysInfo.uiThreadCount);
     }
 
-    void ConfigParser::loadSocketInfo(const XMLElement* socket) {
+    void ConfigParser::loadSocketInfo(const XMLElement* socket) 
+    {
         CHECK(NULL != socket);
 
         XMLElement* port = socket->getElementByName("port");
@@ -120,7 +134,8 @@ namespace NET {
         }
     }
 
-    void ConfigParser::saveSystemInfo(const XMLElement* root) {
+    void ConfigParser::saveSystemInfo(const XMLElement* root) 
+    {
         CHECK(NULL != root);
 
         XMLElement* system = root->addElement(TAG_SYSTEM_INFO);
@@ -133,13 +148,18 @@ namespace NET {
         XMLElement* threadCount = system->addElement("threadCount");
         assert(threadCount != NULL);
         threadCount->setValue(::std::to_string(m_tagSysInfo.uiThreadCount));
+
+        XMLElement* threadCount = system->addElement("maxFileSize");
+        assert(threadCount != NULL);
+        threadCount->setValue(::std::to_string(m_tagSysInfo.uiMaxFileSize));
         
         XMLElement* shortTurnLimit = system->addElement("shortTurnLimit");
         assert(shortTurnLimit != NULL);
         shortTurnLimit->setValue(::std::to_string(m_tagSysInfo.uiShortTurnLimit));
     }
 
-    void ConfigParser::saveSocketInfo(const XMLElement* root) {
+    void ConfigParser::saveSocketInfo(const XMLElement* root) 
+    {
         CHECK(NULL != root);
 
         XMLElement* socket = root->addElement(TAG_SOCKET_INFO);

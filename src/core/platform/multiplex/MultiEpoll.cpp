@@ -5,6 +5,7 @@ namespace NET
 	CMultiEpoll::CMultiEpoll()
 		: m_epfd(-1)
 		, m_bIsEdgeTrigger(TRUE)
+		, m_uiSize(0)
 		, m_events(nullptr)
 	{
 		m_eType = EMT_EPOLL;
@@ -27,17 +28,17 @@ namespace NET
 	{
         close(m_epfd);
         
-        if ( NULL != m_events ) {
+        if ( NULL != m_events )
             delete m_events;
-        }
 	}
 	
-	INT CMultiEpoll::setSize(INT size)
+	UINT CMultiEpoll::setSize(UINT size)
 	{
-		if ( NULL != m_events ) {
-			delete m_events;	
-		}
+		CHECK_R( size > m_uiSize, m_uiSize );
+		if ( NULL != m_events ) 
+			delete m_events;
 		m_events = new struct epoll_event[size];
+		m_uiSize = size;
 
 		return size;
 	}
@@ -51,13 +52,13 @@ namespace NET
 		ee.events = 0;
 		mask |= eventLoop->lstFileEvent[fd].mask;
 		if ( mask & NET_READABLE ) { 
-			ee.events = EPOLLIN;
+			ee.events |= EPOLLIN;
 			if (m_bIsEdgeTrigger) ee.events |= EPOLLET;
 			//LOG(INFO) << CLog::format("%s epoll read\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
 		}
 
 		if ( mask & NET_WRITABLE ) { 
-			ee.events = EPOLLOUT; 
+			ee.events |= EPOLLOUT; 
 			//LOG(INFO) << CLog::format("%s epoll write\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
 		}
 		ee.data.fd = fd;
@@ -84,7 +85,7 @@ namespace NET
 		}
 	}
 
-	INT CMultiEpoll::eventLoop(void* timeout, EVENT_LOOP* eventLoop, UINT uiBaseLine)
+	INT CMultiEpoll::eventLoop(void* timeout, EVENT_LOOP* eventLoop)
 	{
 		INT retval = 0;
 

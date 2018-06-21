@@ -23,7 +23,8 @@ namespace NET
 		private:
 			CMain(CMain&) = delete;
 			CMain(const CMain&) = delete;
-        
+
+			BOOLEAN         innerInitSystem();
             BOOLEAN         innerInitListener();
             BOOLEAN         innerInitProcessor();
             BOOLEAN         innerInitUpdate();
@@ -37,8 +38,7 @@ namespace NET
 
             CUpdate*                   		 	m_pUpdate;
             CListener*                  		m_pListener;
-            ::std::list<CProcessor*>    		m_lstShortTurn;
-            ::std::list<CProcessor*>    		m_lstLongTurn;
+            ::std::list<CWorker*>    			m_lstWorker;
 			BOOLEAN			            		m_bInitialized;
 	};
 }

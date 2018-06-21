@@ -14,10 +14,10 @@ namespace NET
 					virtual	void			init() = 0;
 					virtual void			destroy() = 0;
 
-					virtual INT             setSize(INT size) = 0;
+					virtual UINT            setSize(UINT size) = 0;
 					virtual INT             addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
 					virtual void            delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
-					virtual	INT				eventLoop(void* timeout, EVENT_LOOP* eventLoop, UINT uiBaseLine) = 0;
+					virtual	INT				eventLoop(void* timeout, EVENT_LOOP* eventLoop) = 0;
 			};
 
 			enum EMultiType
@@ -34,32 +34,34 @@ namespace NET
 			CMultiManager();
 			virtual ~CMultiManager();
 
-			void					init(EMultiType type = EMT_EPOLL);
-			void 					destroy();
-			INT						setSize(INT size);
+			void							init(EMultiType type = EMT_EPOLL);
+			void 							destroy();
+			UINT							setSize(UINT size);
 
-			inline EMultiType		getMultiType()					{ return m_eType; }
-			const EVENT_LOOP*		getEventLoop()					{ return m_pEventLoop; }
-
-			INT						addFileEvent(INT, INT, fileProc *proc, void* clientData);
-			void					delFileEvent(INT, INT);
-			INT						eventLoop(void*);
-			void					addTimer(const CTimer*);
-
-			void					setBaseLine(UINT uiBaseLine)	{ m_uiBaseLine = uiBaseLine; }
+			inline EMultiType				getMultiType()						{ return m_eType; }
+			
+			INT								addFileEvent(INT, INT, fileProc *proc, DATA* clientData);
+			void							delFileEvent(INT, INT);
+			INT								eventLoop(void*);
+			void							addTimer(const CTimer*);
+		
+			static const EVENT_LOOP*		getEventLoop()						{ return s_pEventLoop; }
+			static UINT						setEventLoopSize(UINT size);
 
 			//for epoll
-			void					enableEdgeTrigger(BOOLEAN on = TRUE);
+			void							enableEdgeTrigger(BOOLEAN on = TRUE);
 
 		private:
-			const CTimer*			getNearestTimer();
+			const CTimer*					getNearestTimer();		
 			
 		private:
-			EMultiType				m_eType;
-			UINT 					m_uiBaseLine;
-			
-			IMultiBase* 			m_pBase;
-			EVENT_LOOP*				m_pEventLoop;
+			UINT							m_uiSize;
+			EMultiType						m_eType;		
+			IMultiBase* 					m_pBase;
+
+			//static file map, ( sizeof(FILE_EVENT) + sizeof(FIRED_EVENT) ) * MAX_FILE_SIZE + ...
+			static ::std::mutex				m_mutex;
+			static EVENT_LOOP*				s_pEventLoop;		
 	};
 }
 #endif

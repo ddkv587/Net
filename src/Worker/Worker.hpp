@@ -3,24 +3,31 @@
 
 namespace NET
 {
-	class CProcessor : public CThreadBase, public IClientListener
+	class CWorker : public CThreadBase, public IClientListener
 	{
 		public:
-			CProcessor();
-			virtual ~CProcessor();
+			class CProcessor
+			{
+				public:
+					static INT read(EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask);
+					static INT write(EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask);
+			};
+		public:
+			CWorker();
+			virtual ~CWorker();
 			
 			virtual INT 	addClient(INT fd);
 			virtual void 	delClient(INT fd);
 			
 			inline UINT 	size() const            { return m_uiSize;	}
             BOOLEAN         isEnable()              { return TRUE; }
-            BOOLEAN         isFull()                { return m_uiSize < 1024; }
-
-			CProcessor(CProcessor&) = delete;
-			CProcessor(const CProcessor&) = delete;
+            
+			CWorker(CWorker&) = delete;
+			CWorker(const CWorker&) = delete;
 
 		protected:
-			void mainLoop(void* arg);
+			void mainLoop(void*) override;
+			void process(void*&);
 
 		private:
 			UINT 	   	 		m_uiSize;

@@ -30,22 +30,29 @@ namespace NET
 		LOG(INFO) << "initialize start...";
 
         CHECK_R( ConfigParser::getInstance()->initialize(), FALSE);
-        if ( !innerInitListener() ) goto err_listener;
-        if ( !innerInitProcessor() ) goto err_processor;
-        if ( !innerInitUpdate() ) goto err_update;
+        CHECK_R( innerInitSystem(), FALSE );
+
+        if ( !innerInitListener() ) {
+            LOG(WARNING) << CLog::format(" initialize listener error! \n");
+            return FALSE;
+        }
+        if ( !innerInitProcessor() ) {
+            LOG(WARNING) << CLog::format(" initialize processor error! \n");
+            goto err_processor;
+        }
+        if ( !innerInitUpdate() ) {
+            LOG(WARNING) << CLog::format(" initialize update error! \n");     
+            goto err_update;
+        }
         
 		m_bInitialized = TRUE;
 		return TRUE;
 
     err_update:
-		LOG(WARNING) << CLog::format(" initialize update error! \n");
-        innerDestroyProcessor();
-    err_processor:
-		LOG(WARNING) << CLog::format(" initialize processor error! \n");
+		innerDestroyProcessor();
+    err_processor:	
         innerDestroyListener();
-    err_listener:
-		LOG(WARNING) << CLog::format(" initialize listener error! \n");
-        
+
         return FALSE;
 	}
 
@@ -59,35 +66,45 @@ namespace NET
 
 	void CMain::start(void* arg)
 	{
-		UINT uiIndex = 0;
 		LOG(INFO) << "start demo....";
 
-		while ( !m_bInitialized && uiIndex < 10 ) {
+        // initialize for 10 times
+		for ( UINT uiIndex = 0; !m_bInitialized && uiIndex < 10; ++uiIndex ) {
 			m_bInitialized = initialize();
-			++uiIndex;
 		}
 		LOG_IF(FATAL, uiIndex == 10) << "initialize failed! stop...";
         
         //run procrssor thread
-        ::std::list<CProcessor*>::iterator itor = m_lstShortTurn.begin();
-        for(; itor != m_lstShortTurn.end(); ++itor ) {
+        ::std::list<CWorker*>::iterator itor = m_lstWorker.begin();
+        for(; itor != m_lstWorker.end(); ++itor ) {
             (*itor)->run();
         }
+
+        //run listener thread
         m_pListener->run();
 
 		LOG(INFO) << "initialize end, start main loop....";
 		while (true) {
-            ;       //main loop just sleep now;
+            //main loop just sleep now;
 			::std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		}
 
 		unInitialize();
 	}
+
+    BOOLEAN CMain::innerInitSystem()
+    {
+        LOG(INFO) << "begin to initialize system";
+        CMD::SYSCTL_MAX_FILE(65535);
+        CMD::LIMIT_OPEN_FILE(m_tagSysInfo.uiMaxFileSize);
+
+        CMultiManager::setEventLoopSize(m_tagSysInfo.uiMaxFileSize);
+        return TRUE;
+    }
     
     BOOLEAN CMain::innerInitListener()
     {
 		LOG(INFO) << "begin to initialize listener";
-
         m_pListener = new CListener();
         
 		const ConfigParser::tagSocketInfo& info = ConfigParser::getInstance()->getSocketInfo();
@@ -96,9 +113,9 @@ namespace NET
         m_pListener->server()->setKeepAlive( info.bKeepAlive, info.uiAliveValue );
         m_pListener->server()->setTimeOut( info.uiTimeOut );
         if ( info.bReusePort )
-            m_pListener->server()->setReusePort( true );
+            m_pListener->server()->setReusePort( TRUE );
         else
-            m_pListener->server()->setReuseAddress( true );
+            m_pListener->server()->setReuseAddress( TRUE );
 
         return TRUE;
     }
@@ -111,10 +128,10 @@ namespace NET
 		const ConfigParser::tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
         
         for ( INT i=0; i < info.uiThreadCount - 1; ++i ) {
-            CProcessor* processor = new CProcessor();
+            CWorker* worker = new CWorker();
             
-            m_lstShortTurn.push_back(processor);
-            if ( NULL != m_pListener ) m_pListener->addListener(processor);
+            m_lstWorker.push_back(worker);
+            if ( NULL != m_pListener ) m_pListener->addListener(worker);
         }
         
         return TRUE;
@@ -139,19 +156,12 @@ namespace NET
     
     void CMain::innerDestroyProcessor()
     {
-        ::std::list<CProcessor*>::iterator itor = m_lstShortTurn.begin();
-        for(; itor != m_lstShortTurn.end(); ++itor ) {
+        ::std::list<CWorker*>::iterator itor = m_lstWorker.begin();
+        for(; itor != m_lstWorker.end(); ++itor ) {
             (*itor)->stop();
             delete (*itor);
         }
-        m_lstShortTurn.clear();
-
-		itor = m_lstLongTurn.begin();
-        for(; itor != m_lstLongTurn.end(); ++itor ) {
-            (*itor)->stop();
-            delete (*itor);
-        }
-        m_lstLongTurn.clear();
+        m_lstWorker.clear();
     }
     
     void CMain::innerDestroyUpdate()

@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CProcessor;
+	class CWorker;
 }
 
 #include <sys/types.h>

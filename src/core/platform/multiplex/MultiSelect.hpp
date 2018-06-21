@@ -12,10 +12,10 @@ namespace NET
 			void	init();
 			void	destroy();
 
-			INT		setSize(INT) override;
+			UINT	setSize(UINT) override;
 			INT		addFileEvent(INT, INT, EVENT_LOOP*) override;
 			void	delFileEvent(INT, INT, EVENT_LOOP*) override;
-			INT		eventLoop(void*, EVENT_LOOP*, UINT) override;
+			INT		eventLoop(void*, EVENT_LOOP*) override;
 	};
 }
 #endif

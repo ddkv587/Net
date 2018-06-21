@@ -11,11 +11,11 @@ namespace NET
         
 			void 			init();
 			void			destroy();
-            INT             setSize(INT);
+            UINT            setSize(UINT);
         
             INT             addFileEvent(INT, INT, EVENT_LOOP*);
             void            delFileEvent(INT, INT, EVENT_LOOP*);
-            INT             eventLoop(void*, EVENT_LOOP*, UINT);   // struct timeval
+            INT             eventLoop(void*, EVENT_LOOP*);   // struct timeval
         
         private:
             INT             m_kqfd;

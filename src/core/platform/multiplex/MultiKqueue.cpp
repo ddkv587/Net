@@ -35,7 +35,7 @@ namespace  NET
 		}
 	}
 
-    INT CMultiKqueue::setSize(INT size)
+    UINT CMultiKqueue::setSize(UINT size)
     {
         if ( NULL != m_events ) {
             delete m_events;
@@ -75,7 +75,7 @@ namespace  NET
         }
     }
 
-    INT CMultiKqueue::eventLoop(void* timeout, EVENT_LOOP* eventLoop, UINT uiBaseLine)
+    INT CMultiKqueue::eventLoop(void* timeout, EVENT_LOOP* eventLoop)
     {
         INT retval = 0;
         
@@ -95,7 +95,8 @@ namespace  NET
             if (e->filter == EVFILT_READ) mask |= NET_READABLE;
             if (e->filter == EVFILT_WRITE) mask |= NET_WRITABLE;
             
-            eventLoop->lstFired[i].index 	= e->ident - uiBaseLine;
+            eventLoop->lstFired[i].index 	= e->ident;
+            eventLoop->lstFired[i].type 	= ET_FILE;
             eventLoop->lstFired[i].mask     = mask;
         }
         return retval;

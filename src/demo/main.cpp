@@ -31,11 +31,11 @@ int main(int argc, const char *argv[])
 
 	CListener* listen = listener_create();
 
-	NET::CProcessor process1;
-	NET::CProcessor process2;
-	NET::CProcessor process3;
-	NET::CProcessor process4;
-	NET::CProcessor process5;
+	NET::CWorker process1;
+	NET::CWorker process2;
+	NET::CWorker process3;
+	NET::CWorker process4;
+	NET::CWorker process5;
 
 	listen->addFileListener(&process1);
 	listen->addFileListener(&process2);
