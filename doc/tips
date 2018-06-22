@@ -1,0 +1,8 @@
+multi-process or multi-thread
+	multi-process：
+		each processor has their private resource: file descriptor, entire stack.
+		each processor handle series of events by epoll(select, kqueue). Listen socket and client socket are all in the loop(use classic epoll structure).ulimit the file descriptor to a comfortable value. Max services maybe ( N * (size - 1) ).
+				
+	multi-thread:
+		file descriptor, memory and the stack is shared. So must ulimit a enough file size before. If memory is the limit points, maybe do memory pool by self.Thread self-stack size determine how many threads can be create,default value is 8M.
+		
