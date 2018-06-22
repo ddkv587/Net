@@ -17,7 +17,7 @@ namespace NET
 					virtual UINT            setSize(UINT size) = 0;
 					virtual INT             addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
 					virtual void            delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop) = 0;
-					virtual	INT				eventLoop(void* timeout, EVENT_LOOP* eventLoop) = 0;
+					virtual	INT				eventLoop(void* timeout, ::std::vector<FIRED_EVENT>& lstFired) = 0;
 			};
 
 			enum EMultiType
@@ -40,13 +40,15 @@ namespace NET
 
 			inline EMultiType				getMultiType()						{ return m_eType; }
 			
-			INT								addFileEvent(INT, INT, fileProc *proc, DATA* clientData);
+			INT								addFileEvent(INT, INT, fileProc, DATA*);
 			void							delFileEvent(INT, INT);
 			INT								eventLoop(void*);
 			void							addTimer(const CTimer*);
 		
-			static const EVENT_LOOP*		getEventLoop()						{ return s_pEventLoop; }
 			static UINT						setEventLoopSize(UINT size);
+			
+			static const EVENT_LOOP*				getEventLoop()						{ return s_pEventLoop; }
+			const ::std::vector<FIRED_EVENT>&		getFiredList()						{ return m_lstFired; }
 
 			//for epoll
 			void							enableEdgeTrigger(BOOLEAN on = TRUE);
@@ -58,6 +60,7 @@ namespace NET
 			UINT							m_uiSize;
 			EMultiType						m_eType;		
 			IMultiBase* 					m_pBase;
+			::std::vector<FIRED_EVENT>		m_lstFired;
 
 			//static file map, ( sizeof(FILE_EVENT) + sizeof(FIRED_EVENT) ) * MAX_FILE_SIZE + ...
 			static ::std::mutex				m_mutex;

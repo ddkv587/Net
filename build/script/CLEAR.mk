@@ -1,7 +1,7 @@
 RM					:= rm -rf
 MKDIR				:= mkdir -p
 COPY				:= cp -rf
-SYSTEM				:= OS_BSD
+SYSTEM				:= 
 
 CXX					:= g++
 CPP_FLAGS			:= -Wall -std=c++11 -Os -fpermissive -g3

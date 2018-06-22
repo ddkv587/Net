@@ -10,15 +10,15 @@ namespace NET
 	
 		typedef struct tagSocketHeader
 		{
-			int sync;
-			int size;
-			int protocol;
+			INT 		sync;
+			INT 		protocol;
+			UINT 		uiSize;
 		} HEADER_MANAGER;
 
 		typedef struct tagObject
 		{
-			int size;
-			char* data;
+			int 		size;
+			char* 		data;
 
 			tagObject(int s) 
 			{
@@ -38,7 +38,7 @@ namespace NET
 		const static int SIZE_HEADER_MANAGER = sizeof(HEADER_MANAGER);
 
 		public:
-			virtual int analyse(int, char*) = 0;
+			virtual int analyse(CHAR*, UINT) = 0;
 			virtual int package(int, const OBJECT*, char*&) = 0;
 
 			virtual int callSpecialFunc(int, int, const char*, OBJECT*&) = 0;

@@ -37,7 +37,7 @@ namespace NET
 				STRING strCmd;
 
 				if ( size == 0 ) 
-					strCmd = "ulimit -n " + size;
+					strCmd = "ulimit -n " + ::std::to_string(size);
 				else
 					strCmd = "ulimit -n unlimited";
                 
@@ -47,9 +47,7 @@ namespace NET
 
 			static void SYSCTL_MAX_FILE(UINT size)
 			{
-				STRING strCmd;
-
-				strCmd = "sysctl -w fs.file-max=" + size;
+				STRING strCmd = "sysctl -w fs.file-max=" + ::std::to_string(size);
                 
 				INT ret = system( strCmd.data() );
 				UNUSED(ret);

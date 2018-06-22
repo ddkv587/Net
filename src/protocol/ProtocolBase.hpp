@@ -45,8 +45,8 @@ namespace NET
 			CProtocolBase();
 			virtual ~CProtocolBase();
 
-			virtual int analyse(int, char*);
-			virtual int package(int, const OBJECT*, char*&);
+			virtual INT analyse(CHAR*, UINT) override;
+			virtual int package(int, const OBJECT*, char*&) override;
 
 			virtual int callSpecialFunc(int, int, const char*, OBJECT*&);
 

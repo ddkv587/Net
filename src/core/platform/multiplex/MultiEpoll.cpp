@@ -8,7 +8,6 @@ namespace NET
 		, m_uiSize(0)
 		, m_events(nullptr)
 	{
-		m_eType = EMT_EPOLL;
 	}
 
 	CMultiEpoll::~CMultiEpoll()
@@ -38,7 +37,6 @@ namespace NET
 		if ( NULL != m_events ) 
 			delete m_events;
 		m_events = new struct epoll_event[size];
-		m_uiSize = size;
 
 		return size;
 	}
@@ -47,19 +45,20 @@ namespace NET
 	{
 		struct epoll_event ee = {0};
 
-		INT op = eventLoop->lstFileEvent[fd].mask == NET_NONE ? EPOLL_CTL_ADD : EPOLL_CTL_MOD;
+		INT op 		= eventLoop->lstFileEvent[fd].mask == NET_NONE ? EPOLL_CTL_ADD : EPOLL_CTL_MOD;
+		m_uiSize 	+= ( op == EPOLL_CTL_ADD ? 1 : 0 );
 
 		ee.events = 0;
 		mask |= eventLoop->lstFileEvent[fd].mask;
 		if ( mask & NET_READABLE ) { 
 			ee.events |= EPOLLIN;
 			if (m_bIsEdgeTrigger) ee.events |= EPOLLET;
-			//LOG(INFO) << CLog::format("%s epoll read\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
+			LOG(INFO) << CLog::format("%s epoll read\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
 		}
 
-		if ( mask & NET_WRITABLE ) { 
+		if ( mask & NET_WRITEABLE ) { 
 			ee.events |= EPOLLOUT; 
-			//LOG(INFO) << CLog::format("%s epoll write\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
+			LOG(INFO) << CLog::format("%s epoll write\n", op == EPOLL_CTL_ADD ? "add" : "mod"); 
 		}
 		ee.data.fd = fd;
 
@@ -73,7 +72,7 @@ namespace NET
 		ee.events = 0;
 		mask = eventLoop->lstFileEvent[fd].mask & (~mask);
 		if ( mask & NET_READABLE ) ee.events |= EPOLLIN;
-		if ( mask & NET_WRITABLE ) ee.events |= EPOLLOUT;
+		if ( mask & NET_WRITEABLE ) ee.events |= EPOLLOUT;
 
 		ee.data.fd = fd;
 		if ( mask != NET_NONE ) {
@@ -82,33 +81,36 @@ namespace NET
 		} else {
 			epoll_ctl(m_epfd, EPOLL_CTL_DEL, fd, &ee);
 			LOG(INFO) << CLog::format("epoll del file %d\n", fd);
+			--m_uiSize;
 		}
 	}
 
-	INT CMultiEpoll::eventLoop(void* timeout, EVENT_LOOP* eventLoop)
+	INT CMultiEpoll::eventLoop(void* timeout, ::std::vector<FIRED_EVENT>& lstFired)
 	{
 		INT retval = 0;
 
 		struct timeval* tvl = timeout ? (struct timeval*)timeout : NULL;
-
-		retval = epoll_wait( m_epfd, m_events, eventLoop->size,  \
+		retval = epoll_wait( m_epfd, m_events, m_uiSize,  \
 					tvl ? ( tvl->tv_sec * 1000 + tvl->tv_usec / 1000 ) : -1 );
 		
 		CHECK_R( retval != -1, -1 );
-		LOG(INFO) << CLog::format("epoll: %d, size: %d! \n", retval, eventLoop->size);
+		LOG(INFO) << CLog::format("epoll: %d, size: %d! \n", retval, m_uiSize);
 
+		if ( lstFired.size() < retval )
+			lstFired.resize(retval);
+			
 		for ( INT index = 0; index < retval; ++index ) {
 			INT mask = 0;
 			struct epoll_event* e = m_events + index;
 
 			if ( e->events & EPOLLIN )  mask |= NET_READABLE;
-			if ( e->events & EPOLLOUT ) mask |= NET_WRITABLE;
-			if ( e->events & EPOLLERR ) mask |= NET_WRITABLE;
-			if ( e->events & EPOLLHUP ) mask |= NET_WRITABLE;
+			if ( e->events & EPOLLOUT ) mask |= NET_WRITEABLE;
+			if ( e->events & EPOLLERR ) mask |= NET_WRITEABLE;
+			if ( e->events & EPOLLHUP ) mask |= NET_WRITEABLE;
 
-			eventLoop->lstFired[index].index 	= e->data.fd;
-			eventLoop->lstFired[index].type 	= ET_FILE; 
-			eventLoop->lstFired[index].mask 	= mask;
+			lstFired[index].index 	= e->data.fd;
+			lstFired[index].type 	= ET_FILE; 
+			lstFired[index].mask 	= mask;
 		}
 		return retval;
 	}

@@ -15,6 +15,6 @@ namespace NET
 #include "listener/NET_Listener.hpp"
 #include "protocol/NET_Protocol.hpp"
 
-#include "Processor.hpp"
+#include "Worker.hpp"
 
 #endif

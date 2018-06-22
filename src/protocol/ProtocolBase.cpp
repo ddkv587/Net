@@ -12,7 +12,7 @@ namespace NET
 		;
 	}
 
-	int CProtocolBase::analyse(int size, char* buff)
+	INT CProtocolBase::analyse(CHAR* buff, UINT uiSize)
 	{
 		CHECK_R( NULL != buff, -1 );
 		HEADER_MANAGER* pHeader = (HEADER_MANAGER*)buff;
@@ -20,10 +20,10 @@ namespace NET
 		CHECK_R( pHeader->sync == SYNC_FLAG, -1 );
 		CHECK_R( checkProtocol(pHeader->protocol), -1 );
 
-		return pHeader->size - size;
+		return pHeader->uiSize + SIZE_HEADER_MANAGER - uiSize;
 	}
 
-	int CProtocolBase::package(int type,const OBJECT* src, char* &des)
+	INT CProtocolBase::package(INT type, const OBJECT* src, CHAR* &des)
 	{
 		switch(type) {
 		case EP_ECHO:
@@ -96,12 +96,12 @@ namespace NET
 		des = new char(src->size + SIZE_HEADER_MANAGER);
 		HEADER_MANAGER* pHeader = (HEADER_MANAGER*)des;
 		pHeader->sync = SYNC_FLAG;
-		pHeader->size = src->size + SIZE_HEADER_MANAGER;
+		pHeader->uiSize = src->size + SIZE_HEADER_MANAGER;
 		pHeader->protocol = EP_ECHO;
 
 		memcpy(des + SIZE_HEADER_MANAGER, src, src->size);
 
-		return pHeader->size;
+		return pHeader->uiSize;
 	}
 
 	int CProtocolBase::innerPackagePING(const OBJECT* src, char* &des)
@@ -116,15 +116,15 @@ namespace NET
 		des = new char[src->size + SIZE_HEADER_MANAGER];
 		HEADER_MANAGER* pHeader = (HEADER_MANAGER*)des;
 		pHeader->sync = SYNC_FLAG;
-		pHeader->size = src->size;
+		pHeader->uiSize = src->size;
 		pHeader->protocol = EP_PING;
 
 		memcpy(des + SIZE_HEADER_MANAGER, src->data, src->size);
 
 		LOG(INFO) 
-				<< CLog::format( "[%s, %d] ready send: %d" ,__FILE__, __LINE__, pHeader->size);									
+				<< CLog::format( "[%s, %d] ready send: %d" ,__FILE__, __LINE__, pHeader->uiSize);									
 
-		return pHeader->size + SIZE_HEADER_MANAGER;
+		return pHeader->uiSize + SIZE_HEADER_MANAGER;
 	}
 
 	void CProtocolBase::innerPackageTIME()

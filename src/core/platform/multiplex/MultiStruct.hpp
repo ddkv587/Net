@@ -20,8 +20,8 @@ namespace NET
 	struct tagTimeEvent;
 	struct tagEventLoop;
 
-	typedef ::std::function<INT(struct tagEventLoop* loop, INT fd, struct tagData*& dataBuff, INT mask)> fileProc;
-	typedef ::std::function<INT(struct tagEventLoop* loop, INT id, INT repeat)> timeProc;
+	typedef ::std::function<INT(const struct tagEventLoop* loop, INT fd, struct tagData*& dataBuff, INT mask)> fileProc;
+	typedef ::std::function<INT(const struct tagEventLoop* loop, INT id, INT repeat)> timeProc;
 
 	typedef struct tagData
 	{
@@ -32,8 +32,8 @@ namespace NET
 	typedef struct tagFileEvent {
 		INT 			mask;
 		DATA*			clientData;
-		fileProc* 		readProc;
-		fileProc* 		writeProc;		
+		fileProc 		readProc;
+		fileProc 		writeProc;		
 	} FILE_EVENT;
 
 	typedef struct tagFiredEvent {
@@ -51,10 +51,9 @@ namespace NET
 	} TIME_EVENT;
 
 	typedef struct tagEventLoop {
-		INT     		size;
+		UINT     					uiSize;
 		::std::vector<TIME_EVENT>   lstTimeEvent;
 		::std::vector<FILE_EVENT>   lstFileEvent;
-		::std::vector<FIRED_EVENT>  lstFired;
 	} EVENT_LOOP;
 }
 #endif

@@ -149,9 +149,9 @@ namespace NET {
         assert(threadCount != NULL);
         threadCount->setValue(::std::to_string(m_tagSysInfo.uiThreadCount));
 
-        XMLElement* threadCount = system->addElement("maxFileSize");
-        assert(threadCount != NULL);
-        threadCount->setValue(::std::to_string(m_tagSysInfo.uiMaxFileSize));
+        XMLElement* maxFileSize = system->addElement("maxFileSize");
+        assert(maxFileSize != NULL);
+        maxFileSize->setValue(::std::to_string(m_tagSysInfo.uiMaxFileSize));
         
         XMLElement* shortTurnLimit = system->addElement("shortTurnLimit");
         assert(shortTurnLimit != NULL);

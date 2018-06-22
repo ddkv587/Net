@@ -1,57 +1,80 @@
-#include "NET_Processor.hpp"
+#include "NET_Worker.hpp"
 
 namespace NET
 {
-	INT CWorker::CProcessor::read(EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask)
+	INT CWorker::CProcessor::read(const EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask)
 	{
-		if ( dataBuff == NULL ) {
-			dataBuff = (DATA*)new CHAR[IProtocol::SIZE_HEADER_MANAGER + 4];
-			dataBuff->size = 0;		
-		}
+		INT rcvSize = 0;
+		//while ( ET )
+		{
+			if ( dataBuff == nullptr ) {
+				dataBuff 			= new DATA;
+				dataBuff->buffer 	= new char[IProtocol::SIZE_HEADER_MANAGER];
+				dataBuff->uiSize 	= 0;		
+			}
 
-		if ( dataBuff->size < IProtocol::SIZE_HEADER_MANAGER ) {
-			int ret = recv(fd, dataBuff->buffer + dataBuff->size, IProtocol::SIZE_HEADER_MANAGER - dataBuff->size, 0);		
+			if ( dataBuff->uiSize < IProtocol::SIZE_HEADER_MANAGER ) {
+				rcvSize = recv(fd, (CHAR*)dataBuff->buffer + dataBuff->uiSize, IProtocol::SIZE_HEADER_MANAGER - dataBuff->uiSize, 0);		
 
-			if ( ret == -1 || ret == 0 ) return -1;
-			dataBuff->size += ret;
-		}
+				if ( rcvSize == -1 || rcvSize == 0 ) goto err_recv;
+				dataBuff->uiSize += rcvSize;
+			}
 
-		if ( file->dataSize >= IProtocol::SIZE_HEADER_MANAGER ) {
-			IProtocol* protocol = new CProtocolBase();
-			int ret = protocol->analyse(file->dataSize - IProtocol::SIZE_HEADER_MANAGER, (char*)file->data);
+			if ( dataBuff->uiSize >= IProtocol::SIZE_HEADER_MANAGER ) {
+				IProtocol* protocol = new CProtocolBase();
+				INT ret = protocol->analyse((CHAR*)dataBuff->buffer, dataBuff->uiSize );
 
-			if ( ret == -1 ) {
-				//not support
-				file->clean();
-			} else {
-				if ( ret != 0 ) {
-					//not enough, need recv <ret> bytes
-					if ( file->dataSize == IProtocol::SIZE_HEADER_MANAGER ) {
-						IProtocol::HEADER_MANAGER* pHeader = (IProtocol::HEADER_MANAGER*)file->data;
-						file->data = new char[pHeader->size + IProtocol::SIZE_HEADER_MANAGER];
-						memcpy(file->data, pHeader, IProtocol::SIZE_HEADER_MANAGER);
-						file->dataSize = IProtocol::SIZE_HEADER_MANAGER;		//next step is recv, increase or close
-						delete []pHeader;
+				if ( ret == -1 ) {
+					//not support, dismiss 
+					delete (CHAR*)dataBuff->buffer;				
+					delete dataBuff;
+					dataBuff = nullptr;
+				} else {
+					if ( ret != 0 ) {
+						//not enough, need recv <ret> bytes
+						if ( dataBuff->uiSize == IProtocol::SIZE_HEADER_MANAGER ) {
+							IProtocol::HEADER_MANAGER* pHeader = (IProtocol::HEADER_MANAGER*)dataBuff->buffer;
+							dataBuff->buffer = new CHAR[pHeader->uiSize + IProtocol::SIZE_HEADER_MANAGER];		//remalloc new size: header + data
+							memcpy(dataBuff->buffer, pHeader, IProtocol::SIZE_HEADER_MANAGER);			
+							delete []pHeader;	//delete header new before
+						}
+						//next step is recv, dataBuff->uiSize must be changed
+						rcvSize = recv(fd, (CHAR*)dataBuff->buffer + dataBuff->uiSize, ret, 0);		
+						if ( rcvSize == -1 || rcvSize == 0 ) goto err_recv;
+						dataBuff->uiSize += rcvSize;
+
+						//if ( rcvSize != ret ) continue;
 					}
-
-					int size = recv(file->fd, file->data + file->dataSize, ret, 0);		
-					if ( size == -1 || size == 0 ) goto err_recv;
-					file->dataSize += size;
-
-					if ( size != ret ) continue;
 				}
 			}
+		} // ET 
+		return 0;
+err_recv:
+		if ( nullptr != dataBuff ) {
+			if ( nullptr != dataBuff->buffer ) 
+				delete (CHAR*)dataBuff->buffer;
+
+			delete dataBuff;
+			dataBuff = nullptr;
 		}
+		if ( 0 == rcvSize ) {
+			// socket close other side
+			return -1;
+		}
+		return errno;
 	}
 
-	INT CWorker::CProcessor::write(EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask)
+	INT CWorker::CProcessor::write(const EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask)
 	{
+		LOG(INFO) << "call write proc \n";
 
+		return 0;
 	}
 
 	CWorker::CWorker()
 		: m_uiSize(0)
 		, m_pMultiManager(nullptr)
+		, m_mutex()
 	{
 		m_pMultiManager = new CMultiManager();
 		assert(NULL != m_pMultiManager);
@@ -72,8 +95,10 @@ namespace NET
 
 	INT CWorker::addClient(INT fd)
 	{  
-		m_pMultiManager->addFileEvent(fd, NET_READABLE, CProcessor::read, s_pEventLoop[fd].clientData);
-		m_pMultiManager->addFileEvent(fd, NET_WRITEABLE, CProcessor::write, s_pEventLoop[fd].clientData);
+		const EVENT_LOOP* eventLoop = CMultiManager::getEventLoop();
+
+		m_pMultiManager->addFileEvent(fd, NET_READABLE, CWorker::CProcessor::read, eventLoop->lstFileEvent[fd].clientData);
+		m_pMultiManager->addFileEvent(fd, NET_WRITEABLE, CWorker::CProcessor::write, eventLoop->lstFileEvent[fd].clientData);
 
 		::std::lock_guard<::std::mutex> lock(m_mutex);
 		++m_uiSize;
@@ -87,6 +112,11 @@ namespace NET
 
 		::std::lock_guard<::std::mutex> lock(m_mutex);
 		m_uiSize > 0 ? --m_uiSize : 0;
+	}
+
+	void CWorker::setMaxSize(UINT uiSize)
+	{
+		if ( nullptr != m_pMultiManager ) m_pMultiManager->setSize(uiSize);
 	}
 
 	void CWorker::mainLoop(void* arg) 
@@ -104,12 +134,12 @@ namespace NET
 				const EVENT_LOOP* eventLoop = CMultiManager::getEventLoop();
 
 				for ( int index = 0; index < retval; ++index ) {
-					FIRED_EVENT fired = eventLoop->lstFired[index];
+					FIRED_EVENT fired = m_pMultiManager->getFiredList()[index];
 
 					if ( fired.type == ET_FILE ) {
 						FILE_EVENT* file = &(eventLoop->lstFileEvent[fired.index]);
 						if( fired.mask & NET_READABLE ) {
-							INT ret = file->readProc(eventLoop, fired.index, file->clientData, NET_READABLE) );
+							INT ret = file->readProc( eventLoop, fired.index, file->clientData, INT(NET_READABLE) );
 							if ( 0 == ret ) {
 								// read complete
 								
@@ -118,14 +148,16 @@ namespace NET
 								
 							} else {
 								// error, clean file and close
-								goto err_clear_file;
+								goto err_read_proc;
 							}
 						}
 						if( fired.mask & NET_WRITEABLE ) {
 							file->writeProc(eventLoop, fired.index, file->clientData, NET_READABLE);
+
+
 						}
 						continue;
-err_clear_file:
+err_read_proc:
 						if ( nullptr != file->clientData ) {
 							delete file->clientData;
 							file->clientData = nullptr;
@@ -133,6 +165,8 @@ err_clear_file:
 						file->readProc 	= nullptr;
 						file->writeProc = nullptr;
 						file->mask		= NET_NONE;
+
+						delClient(fired.index);
 					} // ET_FILE
 				} // for
 			} // retval > 0

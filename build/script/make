@@ -34,9 +34,10 @@ else
 	do_make core
 	do_make listener
 	do_make protocol
-	do_make processor
+	do_make worker
 	do_make update
 	do_make native
 
 	do_make demo
+	do_make	client
 fi

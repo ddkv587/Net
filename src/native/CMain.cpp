@@ -72,7 +72,7 @@ namespace NET
 		for ( UINT uiIndex = 0; !m_bInitialized && uiIndex < 10; ++uiIndex ) {
 			m_bInitialized = initialize();
 		}
-		LOG_IF(FATAL, uiIndex == 10) << "initialize failed! stop...";
+		LOG_IF( FATAL, m_bInitialized == FALSE ) << "initialize failed! stop...";
         
         //run procrssor thread
         ::std::list<CWorker*>::iterator itor = m_lstWorker.begin();
@@ -94,11 +94,13 @@ namespace NET
 
     BOOLEAN CMain::innerInitSystem()
     {
-        LOG(INFO) << "begin to initialize system";
+        LOG(INFO) << "begin to initialize system";  
+        const ConfigParser::tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
+        
         CMD::SYSCTL_MAX_FILE(65535);
-        CMD::LIMIT_OPEN_FILE(m_tagSysInfo.uiMaxFileSize);
+        CMD::LIMIT_OPEN_FILE(info.uiMaxFileSize);
+        CMultiManager::setEventLoopSize(info.uiMaxFileSize);
 
-        CMultiManager::setEventLoopSize(m_tagSysInfo.uiMaxFileSize);
         return TRUE;
     }
     
@@ -127,9 +129,11 @@ namespace NET
 		// init two type processor: short turn or long turn
 		const ConfigParser::tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
         
-        for ( INT i=0; i < info.uiThreadCount - 1; ++i ) {
+        for ( INT i=0; i < info.uiThreadCount - 1; ++i ) {      // one is listener
+            LOG(INFO) << CLog::format("create new worker: %d", i); 
             CWorker* worker = new CWorker();
-            
+            worker->setMaxSize(info.uiMaxFileSize / (info.uiThreadCount - 1) );
+
             m_lstWorker.push_back(worker);
             if ( NULL != m_pListener ) m_pListener->addListener(worker);
         }

@@ -19,7 +19,7 @@ namespace NET
 			virtual IClientListener*            		balance();
             const ::std::list<IClientListener*>&      	listener() const                        { return m_lstListener; }
 			
-			void mainLoop(void* arg);
+			void mainLoop(void* arg) override;
 
 		private:
 			void setNonBlock(int);

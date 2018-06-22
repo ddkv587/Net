@@ -1,7 +1,7 @@
 #include <dlfcn.h>
 #include "NET_Core.hpp"
 #include "NET_Listener.hpp"
-#include "NET_Processor.hpp"
+#include "NET_Worker.hpp"
 #include "NET_Native.hpp"
 
 int main(int argc, const char *argv[])

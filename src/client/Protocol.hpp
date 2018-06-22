@@ -3,6 +3,9 @@
 
 #define SYNC_FLAG 0x03302112
 
+typedef		int32_t			INT;
+typedef		uint32_t		UINT;
+
 enum EProcotol
 {
 	EP_INVALID = 0,
@@ -16,34 +19,33 @@ enum EProcotol
 
 typedef struct tagSocketHeader
 {
-	INT sync;
-	INT size;
-	INT protocol;
+	INT 		sync;
+	INT 		protocol;
+	UINT 		uiSize;
 } HEADER_MANAGER;
 
 typedef struct tagSocketPing
 {
-	INT current;
-	INT deadLimit;
+	int current;
+	int deadLimit;
 } PING_MANAGER;
 
 typedef struct tagSocketTime
 {
-	INT second;
-	INT millsecond;
-	INT offet;
-	INT type;
+	int second;
+	int millsecond;
+	int offet;
+	int type;
 } TIME_MANAGER;
 
 typedef struct tagSocketHeart
 {
-	INT type;
-	INT time;
+	int type;
+	int time;
 } HEART_MANAGER;
 
-const static INT SIZE_HEADER_MANAGER = constexpr sizeof(HEADER_MANAGER);
-char test[SIZE_HEADER_MANAGER];
-const static INT SIZE_PING_MANAGER = constexpr sizeof(PING_MANAGER);
-const static INT SIZE_TIME_MANAGER = constexpr sizeof(TIME_MANAGER);
-const static INT SIZE_HEART_MANAGER = constexpr sizeof(HEART_MANAGER);
+const static int SIZE_HEADER_MANAGER = sizeof(HEADER_MANAGER);
+const static int SIZE_PING_MANAGER = sizeof(PING_MANAGER);
+const static int SIZE_TIME_MANAGER = sizeof(TIME_MANAGER);
+const static int SIZE_HEART_MANAGER = sizeof(HEART_MANAGER);
 #endif

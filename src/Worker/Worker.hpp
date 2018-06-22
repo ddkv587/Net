@@ -9,8 +9,8 @@ namespace NET
 			class CProcessor
 			{
 				public:
-					static INT read(EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask);
-					static INT write(EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask);
+					static INT read(const EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask);
+					static INT write(const EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask);
 			};
 		public:
 			CWorker();
@@ -19,15 +19,19 @@ namespace NET
 			virtual INT 	addClient(INT fd);
 			virtual void 	delClient(INT fd);
 			
+			BOOLEAN         isEnable()              { return TRUE; }
+			BOOLEAN     	isFull() 				{ return FALSE; }
+
 			inline UINT 	size() const            { return m_uiSize;	}
-            BOOLEAN         isEnable()              { return TRUE; }
-            
+
+			void			setMaxSize(UINT uiSize);
+                      
 			CWorker(CWorker&) = delete;
 			CWorker(const CWorker&) = delete;
 
 		protected:
-			void mainLoop(void*) override;
-			void process(void*&);
+			void 			mainLoop(void*) override;
+			void 			process(void*&);
 
 		private:
 			UINT 	   	 		m_uiSize;

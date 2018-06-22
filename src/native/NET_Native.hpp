@@ -11,7 +11,7 @@ namespace NET
 #include "core/NET_Core.hpp"
 #include "listener/NET_Listener.hpp"
 #include "protocol/NET_Protocol.hpp"
-#include "processor/NET_Processor.hpp"
+#include "worker/NET_Worker.hpp"
 #include "update/NET_Update.hpp"
 
 #include "CMain.hpp"
