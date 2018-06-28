@@ -9,7 +9,7 @@ namespace NET
         	typedef ::std::function<INT(const struct tagEventLoop* loop, INT fd, struct tagData*& dataBuff, INT mask)> fileProc;
 	        typedef ::std::function<INT(const struct tagEventLoop* loop, INT id, INT repeat)> timeProc;
 
-        private: 
+        private:         
     };
 } //NET
 #endif
