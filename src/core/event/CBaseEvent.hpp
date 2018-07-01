@@ -6,10 +6,18 @@ namespace NET
     class CBaseEvent
     {
         public: 
-        	typedef ::std::function<INT(const struct tagEventLoop* loop, INT fd, struct tagData*& dataBuff, INT mask)> fileProc;
-	        typedef ::std::function<INT(const struct tagEventLoop* loop, INT id, INT repeat)> timeProc;
+            CBaseEvent();
+            virtual ~CBaseEvent();
 
-        private:         
+            UINT        priority()                      { return m_uiPriority; }
+            void        setPriority(UINT uiPriority)    { m_uiPriority = uiPriority; }
+
+            UINT        fd()                            { return m_fd; }
+            void        setFd(UINT fd)                  { m_fd = fd; }
+           
+        protected:   
+            UINT        m_fd;
+            UINT        m_uiPriority;     
     };
 } //NET
 #endif

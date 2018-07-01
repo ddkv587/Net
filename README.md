@@ -1,19 +1,24 @@
 # Net
 
-A sample demo integrate the knowledge of the server I have learned.
+A sample demo for server and client.
 
-main loop:
-	
-	one listener: accept and add client to multiplex  
-	
-	n processor:  do multiplex loop(epoll, select and kqueue) and process.  
-	
-	update(TODO): monitor library and config change and update system.
+								event
+			file_event   							time_event
+		listener  receiver								TODO
 
-protocol:
-  
-	echo, ping, time, heart...
-  
-realtime update and config: TODO
-  
-database: TODO
+		
+							  protocol
+		recv -> data -> analyse -> operator -> package -> send/end
+
+
+
+				mainloop(epoll or kqueue for each worker)
+
+		worker1				   worker2     ....    workerN	(Round-Robin)
+	  priority <= 1000        priority > 1000     priority > 1000
+		listener     		   receiver   		    receiver       
+		receiver
+		 timer
+        
+
+

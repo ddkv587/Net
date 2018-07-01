@@ -8,6 +8,7 @@ namespace NET
 		, m_uiSize(0)
 		, m_events(nullptr)
 	{
+		;
 	}
 
 	CMultiEpoll::~CMultiEpoll()

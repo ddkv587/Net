@@ -3,11 +3,14 @@
 
 namespace NET
 {
-	class CListener : public CThreadBase 
+	class CListener : public CFileEvent 
 	{
 		public:
 			CListener();
 			virtual ~CListener();
+
+			virtual BOOLEAN         					readProc();
+            virtual BOOLEAN        				 		writeProc();
 
 			virtual void 	                    		addListener(IClientListener*);
 			virtual void 	                    		delListener(IClientListener*);

@@ -5,21 +5,38 @@ namespace NET
 {
     class CFileEvent : public CBaseEvent
     {
-        public: 
-            virtual void            readProc() = 0;
-            virtual void            writeProc() = 0;
+        public:
+            #define EVENT_BLOCK_SIZE    1024
 
-            BOOLEAN                 isEmpty()               { return m_bufferSize == 0; }
+            enum ETriggerType {
+                TT_LEVEL = 0,
+                TT_EDGE,
+            }
+            
+        public: 
+            CFileEvent(UINT uiPriority = 1000);
+            virtual ~CFileEvent();
+
+            virtual BOOLEAN         readProc();
+            virtual BOOLEAN         writeProc();
+
+            void                    clear();
             void                    release();
-             void                   clear();
             UINT                    resize(UINT uiSize);
-            void*&                  buffer()                { return m_dataBuffer; }
+
+            BOOLEAN                 isEmpty()                   { return m_uiSize == 0; }
+            UINT                    size()                      { return m_uiSize; }
+            UINT                    point()                     { return m_uiPoint; }
+            void*&                  buffer()                    { return m_dataBuffer; }
+
+            void                    setNonBlock();
   
         private: 
-            UINT                    m_fd;
-
-            UINT                    m_bufferSize;
+            UINT                    m_uiSize;   
+            UINT                    m_uiPoint;
             void*                   m_dataBuffer;
+
+            ETriggerType            m_eTriggerType;
     };
 } //NET
 #endif
