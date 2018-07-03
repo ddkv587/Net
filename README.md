@@ -2,9 +2,9 @@
 
 A sample demo for server and client.
 
-								event
-			file_event   							time_event
-		listener  receiver								TODO
+								      event
+			file_event				time_event				system_event
+		listener  receiver			   TODO				reload   restart   
 
 		
 							  protocol

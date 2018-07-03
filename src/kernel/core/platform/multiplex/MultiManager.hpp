@@ -44,12 +44,12 @@ namespace NET
 			void							delFileEvent(INT, INT);
 			INT								eventLoop(void*);
 			void							addTimer(const CTimer*);
-		
-			static UINT						setEventLoopSize(UINT size);
-			
-			static const EVENT_LOOP*				getEventLoop()						{ return s_pEventLoop; }
-			const ::std::vector<FIRED_EVENT>&		getFiredList()						{ return m_lstFired; }
+			const ::std::vector<FIRED_EVENT>&		getFiredList()				{ return m_lstFired; }
 
+		
+			static UINT						setEventLoopSize(UINT size);	
+			static const EVENT_LOOP*		getEventLoop()						{ return s_pEventLoop; }
+		
 			//for epoll
 			void							enableEdgeTrigger(BOOLEAN on = TRUE);
 

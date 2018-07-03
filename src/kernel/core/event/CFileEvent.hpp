@@ -14,7 +14,7 @@ namespace NET
             }
             
         public: 
-            CFileEvent(UINT uiPriority = 1000);
+            CFileEvent();
             virtual ~CFileEvent();
 
             virtual BOOLEAN         readProc();
