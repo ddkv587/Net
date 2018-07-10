@@ -13,9 +13,7 @@ namespace NET
 	}
 	
 	CMain::CMain()
-		: m_pUpdate(NULL)
-		, m_pListener(NULL)
-		, m_bInitialized(FALSE)
+		: m_bInitialized(FALSE)
 	{
 		;
 	}

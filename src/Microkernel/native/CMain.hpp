@@ -14,7 +14,7 @@ namespace NET
 			void 			unInitialize();
             void            reload();
 
-			void 			start(void* arg = NULL);
+			void 			start(void* arg = nullptr);
 
 		protected:
 			CMain();
@@ -36,10 +36,7 @@ namespace NET
 		private:
 			static CMain* 	            		s_pInstance;
 
-            CUpdate*                   		 	m_pUpdate;
-            CListener*                  		m_pListener;
-            ::std::list<CWorker*>    			m_lstWorker;
-			BOOLEAN			            		m_bInitialized;
+            BOOLEAN			            		m_bInitialized;
 	};
 }
 #endif

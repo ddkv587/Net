@@ -6,8 +6,19 @@ namespace NET
 	class CThreadBase
 	{
 	public:
+		enum EPolicy
+		{
+			SCHED_OTHER = 0,
+			SCHED_BATCH,
+			SCHED_IDLE,
+			SCHED_FIFO,
+			SCHED_RR
+		};
+
+	public:
 		CThreadBase()
 			: m_bStop(FALSE)
+			, m_iPriority(0)
 		{
 			;
 		}
@@ -19,7 +30,7 @@ namespace NET
 			}
 		}
 
-		void run(void* arg = NULL)
+		void run(void* arg = nullptr)
 		{
 			m_thread = ::std::thread(&CThreadBase::mainLoop, this, std::move(arg));
 		}
@@ -34,6 +45,11 @@ namespace NET
 		 	return m_thread.get_id();
 		}
 
+		// ============= priority ===================
+		static ::std::tuple<INT, INT>		range(EPolicy policy);				
+		BOOLEAN 							setPriority(INT iPriority, EPolicy policy);			
+		UINT 								priority();															
+
 		CThreadBase(CThreadBase&) = delete;
 		CThreadBase(const CThreadBase&) = delete;
 		CThreadBase& operator=(const CThreadBase&) = delete;
@@ -43,12 +59,16 @@ namespace NET
 		{
 			UNUSED(arg);
 			while ( !m_bStop ) {
-				;
+				::std::this_thread::sleep_for(::std::chrono::milliseconds(1000));
 			}
 		}
 
+	private:
+		INT									getPolicy(EPolicy policy);
+
 	protected:
 		BOOLEAN 		m_bStop;
+		UINT 			m_iPriority;
 
 	private:
 		::std::thread 	m_thread;
