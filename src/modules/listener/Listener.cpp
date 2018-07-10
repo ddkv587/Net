@@ -19,32 +19,34 @@ namespace NET
 
 	BOOLEAN CListener::readProc()
 	{
-		;
-	}
-
-    BOOLEAN CListener::writeProc()
-	{
 		INT client;
         struct sockaddr_in client_addr;
         INT addLen = sizeof(struct sockaddr_in);
 
 		if ( -1 == ( client = accept(m_fd, (struct sockaddr*)&client_addr, (socklen_t*)&addLen) ) ) {
-				LOG(ERROR) << CLog::format( "[%s, %d]  accept error: %s" ,__FILE__, __LINE__, strerror(errno) );	
-				continue;
-			}
+			LOG(ERROR) << CLog::format( "[%s, %d]  accept error: %s" ,__FILE__, __LINE__, strerror(errno) );	
+			continue;
+		}
 
-			LOG(INFO) << CLog::format("get socket from: %s, port: %d, clinet: %d\n", 
+		LOG(INFO) << CLog::format("get socket from: %s, port: %d, clinet: %d\n", 
 					inet_ntoa(client_addr.sin_addr),
 					ntohs(client_addr.sin_port),
 					client);
 
-			setNonBlock(client);
+		
+
+		//setNonBlock(client);
 			
-			IClientListener* pListener = balance();
+		IClientListener* pListener = balance();
 
 			if ( nullptr != pListener ) {
 				pListener->addClient(client);
 			}
+	}
+
+    BOOLEAN CListener::writeProc()
+	{
+		;
 	}
 
 	void CListener::addListener(IClientListener* pListener)
