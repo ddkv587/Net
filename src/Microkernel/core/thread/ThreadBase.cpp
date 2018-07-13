@@ -4,23 +4,39 @@ namespace NET
 {
     static ::std::tuple<INT, INT> CThreadBase::range(EPolicy policy)
     {
-        return ::std::make_tuple( sched_get_priority_max(getPolicy(policy)), sched_get_priority_min(getPolicy(policy)));
+        return ::std::make_tuple( sched_get_priority_max(transformPolicy(policy)), sched_get_priority_min(transformPolicy(policy)));
     }
 
 	BOOLEAN CThreadBase::setPriority(INT iPriority, EPolicy policy)
     {
-        if ( m_iPriority == iPriority ) return TRUE;
+        if ( m_ePolicy == policy && m_iPriority == iPriority ) return TRUE;
 
-        CHECK_R( 0 == pthread_attr_init (&attr), FALSE);
-        return ( 0 == pthread_attr_setschedpolicy() );
+        pthread_attr_t attr;
+        struct sched_param sched;
+
+        CHECK_R ( 0 == pthread_attr_init (&attr), FALSE );
+        CHECK_R ( 0 == pthread_attr_setschedpolicy(&attr, transformPolicy(policy)), FALSE );
+        sched.__sched_priority = iPriority;
+
+        CHECK_R ( 0 == pthread_attr_setschedparam(&attr, &sched), FALSE );
+
+        m_ePolicy   = policy;
+        m_iPriority = iPriority;
+
+        return TRUE;
+    }	
+    
+    EPolicy CThreadBase::policy()
+    {
+        return m_ePolicy;
     }	
 
-	UINT CThreadBase::priority()
+	INT CThreadBase::priority()
     {
-
+        return m_iPriority;
     }
 
-    INT CThreadBase::getPolicy(EPolicy policy)
+    INT CThreadBase::transformPolicy(EPolicy policy)
     {
         switch(policy)
         {

@@ -47,8 +47,9 @@ namespace NET
 
 		// ============= priority ===================
 		static ::std::tuple<INT, INT>		range(EPolicy policy);				
-		BOOLEAN 							setPriority(INT iPriority, EPolicy policy);			
-		UINT 								priority();															
+		BOOLEAN 							setPriority(INT iPriority, EPolicy policy);	
+		EPolicy 							policy();				
+		INT 								priority();															
 
 		CThreadBase(CThreadBase&) = delete;
 		CThreadBase(const CThreadBase&) = delete;
@@ -64,10 +65,11 @@ namespace NET
 		}
 
 	private:
-		INT									getPolicy(EPolicy policy);
+		INT									transformPolicy(EPolicy policy);
 
 	protected:
 		BOOLEAN 		m_bStop;
+		EPolicy			m_ePolicy;
 		UINT 			m_iPriority;
 
 	private:
