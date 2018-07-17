@@ -49,7 +49,10 @@ namespace NET
 		static ::std::tuple<INT, INT>		range(EPolicy policy);				
 		BOOLEAN 							setPriority(INT iPriority, EPolicy policy);	
 		EPolicy 							policy();				
-		INT 								priority();															
+		INT 								priority();		
+
+		// ============= affinity ===================
+		BOOLEAN								setAffinity(const UINT[]& cpus);												
 
 		CThreadBase(CThreadBase&) = delete;
 		CThreadBase(const CThreadBase&) = delete;

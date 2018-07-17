@@ -36,6 +36,16 @@ namespace NET
         return m_iPriority;
     }
 
+    BOOLEAN CThreadBase::setAffinity(const UINT[]& cpus)
+    {
+        cpu_set_t mask;
+        CPU_ZERO(&mask);
+        for ( UINT ui = 0; ui < sizeof(cpus) / sizeof(UINT); ++ui ) {
+            CPU_SET(cpus[ui], &mask);
+        }
+        return 0 == sched_setaffinity(0, sizeof(mask), &mask);
+    }
+
     INT CThreadBase::transformPolicy(EPolicy policy)
     {
         switch(policy)
