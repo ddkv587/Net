@@ -12,18 +12,26 @@ namespace NET
 
 			BOOLEAN				initialize();
 			void 				unInitialize();
-            void            	reload();
 
-			void 				start(void* arg = nullptr);
+//================= life circle ==========================
+			void            	start();
+			void				stop();
+            void				pause();
+			void				resume();
+			void				restart();
 
+//================= module =======================
+			BOOLEAN				addModule();
+			void				delModule();
+			void				reloadModule();
+		
 		protected:
 			CMain();
 			~CMain();
-
-		private:
 			CMain(CMain&) = delete;
 			CMain(const CMain&) = delete;
 
+		private:		
 			BOOLEAN         	innerInitSystem();
             BOOLEAN         	innerInitListener();
             BOOLEAN         	innerInitProcessor();
