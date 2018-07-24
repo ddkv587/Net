@@ -7,7 +7,6 @@ namespace NET
     {
         public: 
             static CModuleManager*		getInstance();
-
             void                        registerModule(CBaseModule*);          
 
         protected:

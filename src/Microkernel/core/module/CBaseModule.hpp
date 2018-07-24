@@ -17,7 +17,7 @@ namespace NET
 			virtual void			restart()       = 0;
 */
             CBaseModule() : m_bIsInitialize(FALSE) {}
-            virtual ~CBaseModule(){}
+            virtual ~CBaseModule() {}
 
             BOOLEAN                 isInitialize()          { return m_bIsInitialize; }
             BOOLEAN                 isExclusive()           { return m_bIsExclusive; }
@@ -29,16 +29,19 @@ namespace NET
         private:
             BOOLEAN                 m_bIsInitialize;
 
+//====================== module info =============================         
+            STRING                  m_strName;
+
 //====================== priority =============================
             BOOLEAN                 m_bIsExclusive;
             UINT                    m_uiPriority;
 
 //====================== out ============================
-            BOOLEAN                 m_bHasDataPost;
+            UINT                    m_uiDataLimit;
+            std::queue<void*>       m_dataQueue;
 
 //====================== in ============================
-            BOOLEAN                 m_bHasDataAttach;
-
+            CBaseModule*            m_pAttachModule;
     };
 } //NET
 #endif
