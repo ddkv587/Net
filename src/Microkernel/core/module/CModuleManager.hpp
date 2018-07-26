@@ -7,16 +7,26 @@ namespace NET
     {
         public: 
             static CModuleManager*		getInstance();
-            void                        registerModule(CBaseModule*);          
+            
+            void                        registerModule(CBaseModule*); 
+            void                        removeModule(STRING);   
+            void                        removeModule(CBaseModule*); 
+
+            BOOLEAN                     isExist(STRING); 
+            BOOLEAN                     isExist(CBaseModule*);
+            CBaseModule*                getModule(STRING);           
 
         protected:
             CModuleManager();
-            virtual ~CModuleManager();    
+            ~CModuleManager();    
             CModuleManager(CModuleManager&) = delete;
-			CModuleManager(const CModuleManager&) = delete; 
+			CModuleManager(const CModuleManager&) = delete;
            
         protected:   
-            static CModuleManager* 	            s_pInstance;
+            static CModuleManager* 	         s_pInstance;
+
+            SMUTEX                           m_mutex;
+            SMAP<STRING, CBaseModule*>       m_mapModules;
     };
 } //NET
 #endif

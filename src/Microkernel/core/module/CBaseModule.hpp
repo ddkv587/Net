@@ -22,6 +22,9 @@ namespace NET
             BOOLEAN                 isInitialize()          { return m_bIsInitialize; }
             BOOLEAN                 isExclusive()           { return m_bIsExclusive; }
 
+
+            STRINg                  name()                  { return m_strName; }
+
         protected:
             CBaseModule(CBaseModule&) = delete;
 			CBaseModule(const CBaseModule&) = delete;
@@ -29,16 +32,15 @@ namespace NET
         private:
             BOOLEAN                 m_bIsInitialize;
 
-//====================== module info =============================         
-            STRING                  m_strName;
+//====================== module info =============================
+            STRING                  m_strName; 
 
-//====================== priority =============================
+            UINT                    m_uiPriority;             
             BOOLEAN                 m_bIsExclusive;
-            UINT                    m_uiPriority;
-
+           
 //====================== out ============================
             UINT                    m_uiDataLimit;
-            std::queue<void*>       m_dataQueue;
+            SQUEUE<void*>           m_dataQueue;
 
 //====================== in ============================
             CBaseModule*            m_pAttachModule;

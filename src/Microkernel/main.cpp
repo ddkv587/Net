@@ -5,6 +5,7 @@ int main(int argc, char const *argv[])
 {
     NET::CLog::initLog(argv[0]);
 
-	NET::CMain::getInstance()->start();  
+	NET::CMain::getInstance()->start(); 
+
     return 0;
 }

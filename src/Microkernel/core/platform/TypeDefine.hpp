@@ -25,6 +25,11 @@ namespace NET
 	typedef 	void*			POINT;
 	typedef 	::std::string	STRING;
 
+	typedef 	::std::queue	SQUEUE;
+	typedef 	::std::stack	SSTACK;
+	typedef 	::std::map		SMAP;
+	typedef 	::std::mutex	SMUTEX;
+
 #define TRUE			true 
 #define FALSE			false
 

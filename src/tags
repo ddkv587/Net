@@ -1,0 +1,867 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BOOLEAN	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	bool			BOOLEAN;$/;"	t	namespace:NET
+BYTE	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	UINT8			BYTE;$/;"	t	namespace:NET
+CBaseEvent	Microkernel/core/event/CBaseEvent.hpp	/^    class CBaseEvent$/;"	c	namespace:NET
+CBaseModule	Microkernel/core/module/CBaseModule.hpp	/^            CBaseModule() : m_bIsInitialize(FALSE) {}$/;"	f	class:NET::CBaseModule
+CBaseModule	Microkernel/core/module/CBaseModule.hpp	/^    class CBaseModule$/;"	c	namespace:NET
+CFileEvent	Microkernel/core/event/CFileEvent.cpp	/^    CFileEvent::CFileEvent(UINT uiPriority)$/;"	f	class:NET::CFileEvent
+CFileEvent	Microkernel/core/event/CFileEvent.hpp	/^    class CFileEvent : public CBaseEvent$/;"	c	namespace:NET
+CHAR	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	char 			CHAR;$/;"	t	namespace:NET
+CHECK_R	Microkernel/core/platform/TypeDefine.hpp	37;"	d
+CListener	modules/listener/Listener.cpp	/^	CListener::CListener()$/;"	f	class:NET::CListener
+CListener	modules/listener/Listener.hpp	/^	class CListener : public CFileEvent $/;"	c	namespace:NET
+CLoadHelper	Microkernel/core/loadHelper/CLoadHelper.hpp	/^class CLoadHelper$/;"	c
+CLog	Microkernel/core/log/Log.hpp	/^	class CLog $/;"	c	namespace:NET
+CMain	Microkernel/native/CMain.cpp	/^	CMain::CMain()$/;"	f	class:NET::CMain
+CMultiEpoll	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	CMultiEpoll::CMultiEpoll()$/;"	f	class:NET::CMultiEpoll
+CMultiEpoll	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^	class CMultiEpoll : public CMultiManager::IMultiBase$/;"	c	namespace:NET
+CMultiKqueue	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^    CMultiKqueue::CMultiKqueue()$/;"	f	class:NET::CMultiKqueue
+CMultiKqueue	Microkernel/core/platform/multiplex/MultiKqueue.hpp	/^    class CMultiKqueue : public CMultiManager::IMultiBase$/;"	c	namespace:NET
+CMultiManager	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	CMultiManager::CMultiManager()$/;"	f	class:NET::CMultiManager
+CMultiManager	Microkernel/core/platform/multiplex/MultiManager.hpp	/^	class CMultiManager$/;"	c	namespace:NET
+CMultiSelect	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^	CMultiSelect::CMultiSelect()$/;"	f	class:NET::CMultiSelect
+CMultiSelect	Microkernel/core/platform/multiplex/MultiSelect.hpp	/^	class CMultiSelect : public CMultiManager::IMultiBase$/;"	c	namespace:NET
+CONFIG_PATH	Microkernel/core/config/ConfigParser.cpp	4;"	d	file:
+CONFIG_PATH_BAK	Microkernel/core/config/ConfigParser.cpp	5;"	d	file:
+CONNECT_CLIENT	client/client.cpp	12;"	d	file:
+COPY	Microkernel/core/platform/Command.hpp	/^			static void COPY(STRING srcFile, STRING desFile) $/;"	f	class:NET::final
+CProcessor	modules/worker/Worker.hpp	/^			class CProcessor$/;"	c	class:NET::CWorker
+CProtocolBase	Microkernel/core/protocol/ProtocolBase.cpp	/^	CProtocolBase::CProtocolBase()$/;"	f	class:NET::CProtocolBase
+CProtocolBase	Microkernel/core/protocol/ProtocolBase.hpp	/^	class CProtocolBase : public IProtocol $/;"	c	namespace:NET
+CREATE	Microkernel/core/platform/Command.hpp	/^			static void CREATE(STRING srcFile)$/;"	f	class:NET::final
+CSocket	Microkernel/core/socket/Socket.cpp	/^	CSocket::CSocket()$/;"	f	class:NET::CSocket
+CSocket	Microkernel/core/socket/Socket.hpp	/^	class CSocket$/;"	c	namespace:NET
+CSocketServer	Microkernel/core/socket/SocketServer.cpp	/^	CSocketServer::CSocketServer(STRING ip, UINT port)$/;"	f	class:NET::CSocketServer
+CSocketServer	Microkernel/core/socket/SocketServer.hpp	/^	class CSocketServer : public CSocket$/;"	c	namespace:NET
+CThreadBase	Microkernel/core/thread/ThreadBase.hpp	/^		CThreadBase()$/;"	f	class:NET::CThreadBase
+CThreadBase	Microkernel/core/thread/ThreadBase.hpp	/^	class CThreadBase$/;"	c	namespace:NET
+CTimeEvent	Microkernel/core/event/CTimeEvent.hpp	/^    class CTimeEvent : public CBaseEvent$/;"	c	namespace:NET
+CUpdate	modules/update/Update.cpp	/^	CUpdate::CUpdate()$/;"	f	class:NET::CUpdate
+CUpdate	modules/update/Update.hpp	/^	class CUpdate : public CThreadBase$/;"	c	namespace:NET
+CWorker	modules/worker/Worker.cpp	/^	CWorker::CWorker()$/;"	f	class:NET::CWorker
+CWorker	modules/worker/Worker.hpp	/^	class CWorker : public CThreadBase, public IClientListener$/;"	c	namespace:NET
+ConfigParser	Microkernel/core/config/ConfigParser.cpp	/^    ConfigParser::ConfigParser()$/;"	f	class:NET::ConfigParser
+DATA	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	} DATA;$/;"	t	namespace:NET	typeref:struct:NET::tagData
+DEF_DEFAULT_VALUE	Microkernel/core/format/XMLElement.cpp	4;"	d	file:
+DOUBLE	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	double			DOUBLE;$/;"	t	namespace:NET
+EMT_EPOLL	Microkernel/core/platform/multiplex/MultiManager.hpp	/^				EMT_EPOLL,$/;"	e	enum:NET::CMultiManager::EMultiType
+EMT_KQUEUE	Microkernel/core/platform/multiplex/MultiManager.hpp	/^				EMT_KQUEUE,$/;"	e	enum:NET::CMultiManager::EMultiType
+EMT_NONE	Microkernel/core/platform/multiplex/MultiManager.hpp	/^				EMT_NONE = -1,$/;"	e	enum:NET::CMultiManager::EMultiType
+EMT_SELECT	Microkernel/core/platform/multiplex/MultiManager.hpp	/^				EMT_SELECT,$/;"	e	enum:NET::CMultiManager::EMultiType
+EMultiType	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			enum EMultiType$/;"	g	class:NET::CMultiManager
+ENCODING_UTF16	Microkernel/core/format/XMLHelper.hpp	/^            ENCODING_UTF16,$/;"	e	enum:NET::XMLHelper::XMLEncoding
+ENCODING_UTF8	Microkernel/core/format/XMLHelper.hpp	/^            ENCODING_UTF8,$/;"	e	enum:NET::XMLHelper::XMLEncoding
+EP_DISMISS	Microkernel/core/protocol/ProtocolBase.hpp	/^				EP_DISMISS,$/;"	e	enum:NET::CProtocolBase::EProcotol
+EP_DISMISS	client/Protocol.hpp	/^	EP_DISMISS,$/;"	e	enum:EProcotol
+EP_ECHO	Microkernel/core/protocol/ProtocolBase.hpp	/^				EP_ECHO,$/;"	e	enum:NET::CProtocolBase::EProcotol
+EP_ECHO	client/Protocol.hpp	/^	EP_ECHO,$/;"	e	enum:EProcotol
+EP_HEART	Microkernel/core/protocol/ProtocolBase.hpp	/^				EP_HEART,$/;"	e	enum:NET::CProtocolBase::EProcotol
+EP_HEART	client/Protocol.hpp	/^	EP_HEART,$/;"	e	enum:EProcotol
+EP_INVALID	Microkernel/core/protocol/ProtocolBase.hpp	/^				EP_INVALID = 0,$/;"	e	enum:NET::CProtocolBase::EProcotol
+EP_INVALID	client/Protocol.hpp	/^	EP_INVALID = 0,$/;"	e	enum:EProcotol
+EP_MAX	Microkernel/core/protocol/ProtocolBase.hpp	/^				EP_MAX$/;"	e	enum:NET::CProtocolBase::EProcotol
+EP_MAX	client/Protocol.hpp	/^	EP_MAX$/;"	e	enum:EProcotol
+EP_PING	Microkernel/core/protocol/ProtocolBase.hpp	/^				EP_PING,$/;"	e	enum:NET::CProtocolBase::EProcotol
+EP_PING	client/Protocol.hpp	/^	EP_PING,$/;"	e	enum:EProcotol
+EP_TIME	Microkernel/core/protocol/ProtocolBase.hpp	/^				EP_TIME,$/;"	e	enum:NET::CProtocolBase::EProcotol
+EP_TIME	client/Protocol.hpp	/^	EP_TIME,$/;"	e	enum:EProcotol
+EPolicy	Microkernel/core/thread/ThreadBase.hpp	/^		enum EPolicy$/;"	g	class:NET::CThreadBase
+EProcotol	Microkernel/core/protocol/ProtocolBase.hpp	/^			enum EProcotol$/;"	g	class:NET::CProtocolBase
+EProcotol	client/Protocol.hpp	/^enum EProcotol$/;"	g
+ESYSTEM_ROLE	Microkernel/core/config/ConfigParser.hpp	/^        enum ESYSTEM_ROLE$/;"	g	class:NET::final
+ET_FILE	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		ET_FILE,$/;"	e	enum:NET::EVENT_TYPE
+ET_MAX	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		ET_MAX,$/;"	e	enum:NET::EVENT_TYPE
+ET_NONE	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		ET_NONE = 0,$/;"	e	enum:NET::EVENT_TYPE
+ET_TIME	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		ET_TIME,$/;"	e	enum:NET::EVENT_TYPE
+ETriggerType	Microkernel/core/event/CFileEvent.hpp	/^            enum ETriggerType {$/;"	g	class:NET::CFileEvent
+EVENT_BLOCK_SIZE	Microkernel/core/event/CFileEvent.hpp	9;"	d
+EVENT_LOOP	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	} EVENT_LOOP;$/;"	t	namespace:NET	typeref:struct:NET::tagEventLoop
+EVENT_TYPE	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	enum EVENT_TYPE$/;"	g	namespace:NET
+FALSE	Microkernel/core/platform/TypeDefine.hpp	29;"	d
+FILE_EVENT	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	} FILE_EVENT;$/;"	t	namespace:NET	typeref:struct:NET::tagFileEvent
+FIRED_EVENT	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	} FIRED_EVENT;$/;"	t	namespace:NET	typeref:struct:NET::tagFiredEvent
+FLOAT	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	float			FLOAT;$/;"	t	namespace:NET
+HEADER_MANAGER	Microkernel/core/protocol/IProtocol.hpp	/^		} HEADER_MANAGER;$/;"	t	class:NET::IProtocol	typeref:struct:NET::IProtocol::tagSocketHeader
+HEADER_MANAGER	client/Protocol.hpp	/^} HEADER_MANAGER;$/;"	t	typeref:struct:tagSocketHeader
+HEART_MANAGER	Microkernel/core/protocol/ProtocolBase.hpp	/^			} HEART_MANAGER;$/;"	t	class:NET::CProtocolBase	typeref:struct:NET::CProtocolBase::tagSocketHeart
+HEART_MANAGER	client/Protocol.hpp	/^} HEART_MANAGER;$/;"	t	typeref:struct:tagSocketHeart
+IClientListener	Microkernel/core/socket/IClientListener.hpp	/^	class IClientListener$/;"	c	namespace:NET
+IMultiBase	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			class IMultiBase$/;"	c	class:NET::CMultiManager
+INT	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		int32_t			INT;$/;"	t	namespace:NET
+INT	client/Protocol.hpp	/^typedef		int32_t			INT;$/;"	t
+INT16	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		int16_t			INT16;$/;"	t	namespace:NET
+INT64	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		int64_t			INT64;$/;"	t	namespace:NET
+INT8	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		int8_t			INT8;$/;"	t	namespace:NET
+IProtocol	Microkernel/core/protocol/IProtocol.hpp	/^	class IProtocol$/;"	c	namespace:NET
+ITimerListener	Microkernel/core/timer/ITimerListener.hpp	/^    class ITimerListener$/;"	c	namespace:NET
+LIMIT_OPEN_FILE	Microkernel/core/platform/Command.hpp	/^			static void LIMIT_OPEN_FILE(UINT size)$/;"	f	class:NET::final
+LLONG	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	INT64			LLONG;$/;"	t	namespace:NET
+LL_ERROR	Microkernel/core/log/Log.hpp	/^				LL_ERROR,$/;"	e	enum:NET::CLog::LOG_LEVEL
+LL_FATAL	Microkernel/core/log/Log.hpp	/^				LL_FATAL,$/;"	e	enum:NET::CLog::LOG_LEVEL
+LL_INFO	Microkernel/core/log/Log.hpp	/^				LL_INFO,$/;"	e	enum:NET::CLog::LOG_LEVEL
+LL_WARNING	Microkernel/core/log/Log.hpp	/^				LL_WARNING,$/;"	e	enum:NET::CLog::LOG_LEVEL
+LOG_LEVEL	Microkernel/core/log/Log.hpp	/^			enum LOG_LEVEL$/;"	g	class:NET::CLog
+LONG	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	INT64			LONG;$/;"	t	namespace:NET
+MAX	Microkernel/core/platform/TypeDefine.hpp	35;"	d
+MAX_TIME_EVENT_SIZE	Microkernel/core/platform/TypeDefine.hpp	60;"	d
+MIN	Microkernel/core/platform/TypeDefine.hpp	34;"	d
+NET	Microkernel/core/NET_Core.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/config/ConfigParser.cpp	/^namespace NET {$/;"	n	file:
+NET	Microkernel/core/config/ConfigParser.hpp	/^namespace NET {$/;"	n
+NET	Microkernel/core/event/CBaseEvent.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/event/CFileEvent.cpp	/^namespace NET$/;"	n	file:
+NET	Microkernel/core/event/CFileEvent.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/event/CTimeEvent.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/format/XMLElement.cpp	/^namespace NET {$/;"	n	file:
+NET	Microkernel/core/format/XMLElement.hpp	/^namespace NET {$/;"	n
+NET	Microkernel/core/format/XMLHelper.cpp	/^namespace NET {$/;"	n	file:
+NET	Microkernel/core/format/XMLHelper.hpp	/^namespace NET {$/;"	n
+NET	Microkernel/core/log/Log.cpp	/^namespace NET$/;"	n	file:
+NET	Microkernel/core/log/Log.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/module/CBaseModule.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/module/CModuleManager.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/platform/Command.hpp	/^namespace NET $/;"	n
+NET	Microkernel/core/platform/TypeDefine.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^namespace NET$/;"	n	file:
+NET	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^namespace  NET$/;"	n	file:
+NET	Microkernel/core/platform/multiplex/MultiKqueue.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/platform/multiplex/MultiManager.cpp	/^namespace NET$/;"	n	file:
+NET	Microkernel/core/platform/multiplex/MultiManager.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^namespace  NET$/;"	n	file:
+NET	Microkernel/core/platform/multiplex/MultiSelect.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/protocol/IProtocol.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/protocol/ProtocolBase.cpp	/^namespace NET $/;"	n	file:
+NET	Microkernel/core/protocol/ProtocolBase.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/socket/IClientListener.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/socket/Socket.cpp	/^namespace NET$/;"	n	file:
+NET	Microkernel/core/socket/Socket.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/socket/SocketServer.cpp	/^namespace NET$/;"	n	file:
+NET	Microkernel/core/socket/SocketServer.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/thread/CThreadManager.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/thread/ThreadBase.cpp	/^namespace NET$/;"	n	file:
+NET	Microkernel/core/thread/ThreadBase.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/timer/ITimerListener.hpp	/^namespace NET$/;"	n
+NET	Microkernel/core/timer/Timer.cpp	/^namespace NET $/;"	n	file:
+NET	Microkernel/core/timer/Timer.hpp	/^namespace NET $/;"	n
+NET	Microkernel/native/CMain.cpp	/^namespace NET $/;"	n	file:
+NET	Microkernel/native/CMain.hpp	/^namespace NET$/;"	n
+NET	Microkernel/native/NET_Native.hpp	/^namespace NET$/;"	n
+NET	modules/listener/Listener.cpp	/^namespace NET$/;"	n	file:
+NET	modules/listener/Listener.hpp	/^namespace NET$/;"	n
+NET	modules/listener/NET_Listener.hpp	/^namespace NET$/;"	n
+NET	modules/update/NET_Update.hpp	/^namespace NET$/;"	n
+NET	modules/update/Update.cpp	/^namespace NET $/;"	n	file:
+NET	modules/update/Update.hpp	/^namespace NET$/;"	n
+NET	modules/worker/NET_Worker.hpp	/^namespace NET$/;"	n
+NET	modules/worker/Worker.cpp	/^namespace NET$/;"	n	file:
+NET	modules/worker/Worker.hpp	/^namespace NET$/;"	n
+NET_NONE	Microkernel/core/platform/TypeDefine.hpp	49;"	d
+NET_READABLE	Microkernel/core/platform/TypeDefine.hpp	50;"	d
+NET_WRITEABLE	Microkernel/core/platform/TypeDefine.hpp	51;"	d
+OBJECT	Microkernel/core/protocol/IProtocol.hpp	/^		} OBJECT;$/;"	t	class:NET::IProtocol	typeref:struct:NET::IProtocol::tagObject
+PING_MANAGER	Microkernel/core/protocol/ProtocolBase.hpp	/^			} PING_MANAGER;$/;"	t	class:NET::CProtocolBase	typeref:struct:NET::CProtocolBase::tagSocketPing
+PING_MANAGER	client/Protocol.hpp	/^} PING_MANAGER;$/;"	t	typeref:struct:tagSocketPing
+POINT	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	void*			POINT;$/;"	t	namespace:NET
+POLL_TIMEOUT_SEC	Microkernel/core/platform/TypeDefine.hpp	57;"	d
+POLL_TIMEOUT_USEC	Microkernel/core/platform/TypeDefine.hpp	58;"	d
+RAPIDXML_ALIGNMENT	Microkernel/core/format/rapidxml/rapidxml.hpp	131;"	d
+RAPIDXML_DYNAMIC_POOL_SIZE	Microkernel/core/format/rapidxml/rapidxml.hpp	123;"	d
+RAPIDXML_HPP_INCLUDED	Microkernel/core/format/rapidxml/rapidxml.hpp	2;"	d
+RAPIDXML_ITERATORS_HPP_INCLUDED	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	2;"	d
+RAPIDXML_PARSE_ERROR	Microkernel/core/format/rapidxml/rapidxml.hpp	2589;"	d
+RAPIDXML_PARSE_ERROR	Microkernel/core/format/rapidxml/rapidxml.hpp	28;"	d
+RAPIDXML_PRINT_HPP_INCLUDED	Microkernel/core/format/rapidxml/rapidxml_print.hpp	2;"	d
+RAPIDXML_STATIC_POOL_SIZE	Microkernel/core/format/rapidxml/rapidxml.hpp	116;"	d
+RAPIDXML_UTILS_HPP_INCLUDED	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	2;"	d
+REMOVE	Microkernel/core/platform/Command.hpp	/^			static void REMOVE(STRING srcFile)$/;"	f	class:NET::final
+SCHED_BATCH	Microkernel/core/thread/ThreadBase.hpp	/^			SCHED_BATCH,$/;"	e	enum:NET::CThreadBase::EPolicy
+SCHED_FIFO	Microkernel/core/thread/ThreadBase.hpp	/^			SCHED_FIFO,$/;"	e	enum:NET::CThreadBase::EPolicy
+SCHED_IDLE	Microkernel/core/thread/ThreadBase.hpp	/^			SCHED_IDLE,$/;"	e	enum:NET::CThreadBase::EPolicy
+SCHED_OTHER	Microkernel/core/thread/ThreadBase.hpp	/^			SCHED_OTHER = 0,$/;"	e	enum:NET::CThreadBase::EPolicy
+SCHED_RR	Microkernel/core/thread/ThreadBase.hpp	/^			SCHED_RR$/;"	e	enum:NET::CThreadBase::EPolicy
+SIZE_HEADER_MANAGER	Microkernel/core/protocol/IProtocol.hpp	/^		const static int SIZE_HEADER_MANAGER = sizeof(HEADER_MANAGER);$/;"	m	class:NET::IProtocol
+SIZE_HEADER_MANAGER	client/Protocol.hpp	/^const static int SIZE_HEADER_MANAGER = sizeof(HEADER_MANAGER);$/;"	v
+SIZE_HEART_MANAGER	Microkernel/core/protocol/ProtocolBase.hpp	/^			const static int SIZE_HEART_MANAGER = sizeof(HEART_MANAGER);$/;"	m	class:NET::CProtocolBase
+SIZE_HEART_MANAGER	client/Protocol.hpp	/^const static int SIZE_HEART_MANAGER = sizeof(HEART_MANAGER);$/;"	v
+SIZE_PING_MANAGER	Microkernel/core/protocol/ProtocolBase.hpp	/^			const static int SIZE_PING_MANAGER = sizeof(PING_MANAGER);$/;"	m	class:NET::CProtocolBase
+SIZE_PING_MANAGER	client/Protocol.hpp	/^const static int SIZE_PING_MANAGER = sizeof(PING_MANAGER);$/;"	v
+SIZE_TIME_MANAGER	Microkernel/core/protocol/ProtocolBase.hpp	/^			const static int SIZE_TIME_MANAGER = sizeof(TIME_MANAGER);$/;"	m	class:NET::CProtocolBase
+SIZE_TIME_MANAGER	client/Protocol.hpp	/^const static int SIZE_TIME_MANAGER = sizeof(TIME_MANAGER);$/;"	v
+SR_MASTER	Microkernel/core/config/ConfigParser.hpp	/^            SR_MASTER,$/;"	e	enum:NET::final::ESYSTEM_ROLE
+SR_MAX	Microkernel/core/config/ConfigParser.hpp	/^            SR_MAX$/;"	e	enum:NET::final::ESYSTEM_ROLE
+SR_NONE	Microkernel/core/config/ConfigParser.hpp	/^            SR_NONE = 0,$/;"	e	enum:NET::final::ESYSTEM_ROLE
+SR_SLAVE	Microkernel/core/config/ConfigParser.hpp	/^            SR_SLAVE,$/;"	e	enum:NET::final::ESYSTEM_ROLE
+STRING	Microkernel/core/platform/TypeDefine.hpp	/^	typedef 	::std::string	STRING;$/;"	t	namespace:NET
+STRING_NULL	Microkernel/core/platform/TypeDefine.hpp	32;"	d
+SYNC_FLAG	Microkernel/core/protocol/IProtocol.hpp	9;"	d
+SYNC_FLAG	client/Protocol.hpp	4;"	d
+SYSCTL_MAX_FILE	Microkernel/core/platform/Command.hpp	/^			static void SYSCTL_MAX_FILE(UINT size)$/;"	f	class:NET::final
+SYSTEM_MAX_EVENTS	Microkernel/core/platform/TypeDefine.hpp	54;"	d
+SYSTEM_SOCKET_PORT	Microkernel/core/platform/TypeDefine.hpp	55;"	d
+SYSTEM_VERSION	Microkernel/core/platform/TypeDefine.hpp	53;"	d
+TAG_SOCKET_INFO	Microkernel/core/config/ConfigParser.cpp	8;"	d	file:
+TAG_SYSTEM_INFO	Microkernel/core/config/ConfigParser.cpp	7;"	d	file:
+TIME_EVENT	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	} TIME_EVENT;$/;"	t	namespace:NET	typeref:struct:NET::tagTimeEvent
+TIME_MANAGER	Microkernel/core/protocol/ProtocolBase.hpp	/^			} TIME_MANAGER;$/;"	t	class:NET::CProtocolBase	typeref:struct:NET::CProtocolBase::tagSocketTime
+TIME_MANAGER	client/Protocol.hpp	/^} TIME_MANAGER;$/;"	t	typeref:struct:tagSocketTime
+TRUE	Microkernel/core/platform/TypeDefine.hpp	28;"	d
+TT_EDGE	Microkernel/core/event/CFileEvent.hpp	/^                TT_EDGE,$/;"	e	enum:NET::CFileEvent::ETriggerType
+TT_LEVEL	Microkernel/core/event/CFileEvent.hpp	/^                TT_LEVEL = 0,$/;"	e	enum:NET::CFileEvent::ETriggerType
+UINT	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		uint32_t		UINT;$/;"	t	namespace:NET
+UINT	client/Protocol.hpp	/^typedef		uint32_t		UINT;$/;"	t
+UINT16	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		uint16_t		UINT16;$/;"	t	namespace:NET
+UINT64	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		uint64_t		UINT64;$/;"	t	namespace:NET
+UINT8	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		uint8_t			UINT8;$/;"	t	namespace:NET
+ULLONG	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		UINT64			ULLONG;$/;"	t	namespace:NET
+ULONG	Microkernel/core/platform/TypeDefine.hpp	/^	typedef		UINT64			ULONG;$/;"	t	namespace:NET
+UNUSED	Microkernel/core/platform/TypeDefine.hpp	47;"	d
+VERSION_1_0	Microkernel/core/format/XMLHelper.hpp	/^            VERSION_1_0,$/;"	e	enum:NET::XMLHelper::XMLVersion
+VERSION_2_0	Microkernel/core/format/XMLHelper.hpp	/^            VERSION_2_0$/;"	e	enum:NET::XMLHelper::XMLVersion
+XMLElement	Microkernel/core/format/XMLElement.cpp	/^    XMLElement::XMLElement(xml_node<>* root)$/;"	f	class:NET::XMLElement
+XMLElement	Microkernel/core/format/XMLElement.hpp	/^    class XMLElement {$/;"	c	namespace:NET
+XMLEncoding	Microkernel/core/format/XMLHelper.hpp	/^        enum XMLEncoding {$/;"	g	class:NET::XMLHelper
+XMLHelper	Microkernel/core/format/XMLHelper.cpp	/^    XMLHelper::XMLHelper(XMLVersion version, XMLEncoding encoding)$/;"	f	class:NET::XMLHelper
+XMLHelper	Microkernel/core/format/XMLHelper.hpp	/^    class XMLHelper {$/;"	c	namespace:NET
+XMLVersion	Microkernel/core/format/XMLHelper.hpp	/^        enum XMLVersion {$/;"	g	class:NET::XMLHelper
+__CBASEEVENTHPP__	Microkernel/core/event/CBaseEvent.hpp	2;"	d
+__CBASEMODULEHPP__	Microkernel/core/module/CBaseModule.hpp	2;"	d
+__CCModuleManagerHPP__	Microkernel/core/module/CModuleManager.hpp	2;"	d
+__CFILEEVENTHPP__	Microkernel/core/event/CFileEvent.hpp	2;"	d
+__CLOADHELPERHPP__	Microkernel/core/loadHelper/CLoadHelper.hpp	2;"	d
+__CMAINHPP__	Microkernel/native/CMain.hpp	2;"	d
+__COMMANDHPP__	Microkernel/core/platform/Command.hpp	2;"	d
+__CONFIGPARSERHPP__	Microkernel/core/config/ConfigParser.hpp	2;"	d
+__CThreadManagerHPP__	Microkernel/core/thread/CThreadManager.hpp	2;"	d
+__CTimeEVENTHPP__	Microkernel/core/event/CTimeEvent.hpp	2;"	d
+__IFILELISTENERHPP__	Microkernel/core/socket/IClientListener.hpp	2;"	d
+__IPROTOCOLHPP__	Microkernel/core/protocol/IProtocol.hpp	2;"	d
+__ITIMERLISTENERHPP__	Microkernel/core/timer/ITimerListener.hpp	2;"	d
+__LISTENERHPP__	modules/listener/Listener.hpp	2;"	d
+__LOGHPP__	Microkernel/core/log/Log.hpp	2;"	d
+__MULTIEPOLLHPP__	Microkernel/core/platform/multiplex/MultiEpoll.hpp	2;"	d
+__MULTIKQUEUEHPP__	Microkernel/core/platform/multiplex/MultiKqueue.hpp	2;"	d
+__MULTIMANAGERHPP__	Microkernel/core/platform/multiplex/MultiManager.hpp	2;"	d
+__MULTISELECTHPP__	Microkernel/core/platform/multiplex/MultiSelect.hpp	2;"	d
+__MULTISTRUCTHPP__	Microkernel/core/platform/multiplex/MultiStruct.hpp	2;"	d
+__NETLISTENERHPP__	modules/listener/NET_Listener.hpp	2;"	d
+__NETNATIVEHPP__	Microkernel/native/NET_Native.hpp	2;"	d
+__NETPROCESSORHPP__	modules/worker/NET_Worker.hpp	2;"	d
+__NETUPDATEHPP__	modules/update/NET_Update.hpp	2;"	d
+__NET_COREHPP__	Microkernel/core/NET_Core.hpp	2;"	d
+__PROCESSORHPP__	modules/worker/Worker.hpp	2;"	d
+__PROTOCOLBASEHPP__	Microkernel/core/protocol/ProtocolBase.hpp	2;"	d
+__PROTOCOLHPP__	client/Protocol.hpp	2;"	d
+__SOCKETHPP__	Microkernel/core/socket/Socket.hpp	2;"	d
+__SOCKETSERVERHPP__	Microkernel/core/socket/SocketServer.hpp	2;"	d
+__THREADBASEHPP__	Microkernel/core/thread/ThreadBase.hpp	2;"	d
+__TIMERHPP__	Microkernel/core/timer/Timer.hpp	2;"	d
+__TYPEDEFINEHPP__	Microkernel/core/platform/TypeDefine.hpp	2;"	d
+__UPDATEHPP__	modules/update/Update.hpp	2;"	d
+__XMLELEMENTHPP__	Microkernel/core/format/XMLElement.hpp	2;"	d
+__XMLHELPERHPP__	Microkernel/core/format/XMLHelper.hpp	2;"	d
+addClient	modules/worker/Worker.cpp	/^	INT CWorker::addClient(INT fd)$/;"	f	class:NET::CWorker
+addElement	Microkernel/core/format/XMLElement.cpp	/^    XMLElement* XMLElement::addElement(const STRING& strName) const {$/;"	f	class:NET::XMLElement
+addFileEvent	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	INT CMultiEpoll::addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)$/;"	f	class:NET::CMultiEpoll
+addFileEvent	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^    INT CMultiKqueue::addFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)$/;"	f	class:NET::CMultiKqueue
+addFileEvent	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	INT CMultiManager::addFileEvent(INT fd, INT mask, fileProc proc, DATA* clientData)$/;"	f	class:NET::CMultiManager
+addFileEvent	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^	INT CMultiSelect::addFileEvent(INT, INT, EVENT_LOOP*)$/;"	f	class:NET::CMultiSelect
+addListener	modules/listener/Listener.cpp	/^	void CListener::addListener(IClientListener* pListener)$/;"	f	class:NET::CListener
+addTimer	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	void CMultiManager::addTimer(const CTimer*)$/;"	f	class:NET::CMultiManager
+align	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        char *align(char *ptr)$/;"	f	class:rapidxml::memory_pool
+alloc_func	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        typedef void *(alloc_func)(std::size_t);       \/\/ Type of user-defined function used to allocate memory$/;"	t	class:rapidxml::memory_pool
+allocate_aligned	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void *allocate_aligned(std::size_t size)$/;"	f	class:rapidxml::memory_pool
+allocate_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *allocate_attribute(const Ch *name = 0, const Ch *value = 0, $/;"	f	class:rapidxml::memory_pool
+allocate_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *allocate_node(node_type type, $/;"	f	class:rapidxml::memory_pool
+allocate_raw	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        char *allocate_raw(std::size_t size)$/;"	f	class:rapidxml::memory_pool
+allocate_string	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        Ch *allocate_string(const Ch *source = 0, std::size_t size = 0)$/;"	f	class:rapidxml::memory_pool
+analyse	Microkernel/core/protocol/ProtocolBase.cpp	/^	INT CProtocolBase::analyse(CHAR* buff, UINT uiSize)$/;"	f	class:NET::CProtocolBase
+append_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void append_attribute(xml_attribute<Ch> *attribute)$/;"	f	class:rapidxml::xml_node
+append_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void append_node(xml_node<Ch> *child)$/;"	f	class:rapidxml::xml_node
+attribute_iterator	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator()$/;"	f	class:rapidxml::attribute_iterator
+attribute_iterator	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator(xml_node<Ch> *node)$/;"	f	class:rapidxml::attribute_iterator
+attribute_iterator	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^    class attribute_iterator$/;"	c	namespace:rapidxml
+attribute_name_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct attribute_name_pred$/;"	s	class:rapidxml::xml_document
+attribute_value_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct attribute_value_pred$/;"	s	class:rapidxml::xml_document
+attribute_value_pure_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct attribute_value_pure_pred$/;"	s	class:rapidxml::xml_document
+bKeepAlive	Microkernel/core/config/ConfigParser.hpp	/^            BOOLEAN bKeepAlive;$/;"	m	struct:NET::final::tagSocketInfo
+bReuseAddress	Microkernel/core/config/ConfigParser.hpp	/^            BOOLEAN bReuseAddress;$/;"	m	struct:NET::final::tagSocketInfo
+bReusePort	Microkernel/core/config/ConfigParser.hpp	/^            BOOLEAN bReusePort;$/;"	m	struct:NET::final::tagSocketInfo
+balance	modules/listener/Listener.cpp	/^	IClientListener* CListener::balance()$/;"	f	class:NET::CListener
+bindAndListen	Microkernel/core/socket/SocketServer.cpp	/^	BOOLEAN CSocketServer::bindAndListen()$/;"	f	class:NET::CSocketServer
+buffer	Microkernel/core/event/CFileEvent.hpp	/^            void*&                  buffer()                    { return m_dataBuffer; }$/;"	f	class:NET::CFileEvent
+buffer	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		void*			buffer;$/;"	m	struct:NET::tagData
+callSpecialFunc	Microkernel/core/protocol/ProtocolBase.cpp	/^	int CProtocolBase::callSpecialFunc(int type, int size,const char* src, OBJECT* &target)$/;"	f	class:NET::CProtocolBase
+checkDirection	Microkernel/core/log/Log.cpp	/^	bool CLog::checkDirection(const char* strPath)$/;"	f	class:NET::CLog
+checkProtocol	Microkernel/core/protocol/ProtocolBase.cpp	/^	bool CProtocolBase::checkProtocol(int protocol)$/;"	f	class:NET::CProtocolBase
+checkSize	Microkernel/core/protocol/ProtocolBase.cpp	/^	int CProtocolBase::checkSize(int protocol, int size)$/;"	f	class:NET::CProtocolBase
+checkString	Microkernel/core/format/XMLElement.cpp	/^    BOOLEAN XMLElement::checkString(const STRING& str) {$/;"	f	class:NET::XMLElement
+clear	Microkernel/core/event/CFileEvent.cpp	/^    void CFileEvent::clear()$/;"	f	class:NET::CFileEvent
+clear	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void clear()$/;"	f	class:rapidxml::memory_pool
+clear	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void clear()$/;"	f	class:rapidxml::xml_document
+clearAttributes	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::clearAttributes() {$/;"	f	class:NET::XMLElement
+clearElements	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::clearElements() {$/;"	f	class:NET::XMLElement
+clientData	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		DATA*			clientData;$/;"	m	struct:NET::tagFileEvent
+clone_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *clone_node(const xml_node<Ch> *source, xml_node<Ch> *result = 0)$/;"	f	class:rapidxml::memory_pool
+compare	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        inline bool compare(const Ch *p1, std::size_t size1, const Ch *p2, std::size_t size2, bool case_sensitive)$/;"	f	namespace:rapidxml::internal
+copy_and_expand_chars	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt copy_and_expand_chars(const Ch *begin, const Ch *end, Ch noexpand, OutIt out)$/;"	f	namespace:rapidxml::internal
+copy_chars	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt copy_chars(const Ch *begin, const Ch *end, OutIt out)$/;"	f	namespace:rapidxml::internal
+count_attributes	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^    inline std::size_t count_attributes(xml_node<Ch> *node)$/;"	f	namespace:rapidxml
+count_children	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^    inline std::size_t count_children(xml_node<Ch> *node)$/;"	f	namespace:rapidxml
+create	Microkernel/core/format/XMLHelper.cpp	/^    void XMLHelper::create() {$/;"	f	class:NET::XMLHelper
+current	Microkernel/core/protocol/ProtocolBase.hpp	/^				int current;$/;"	m	struct:NET::CProtocolBase::tagSocketPing
+current	client/Protocol.hpp	/^	int current;$/;"	m	struct:tagSocketPing
+data	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^        Ch *data()$/;"	f	class:rapidxml::file
+data	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^        const Ch *data() const$/;"	f	class:rapidxml::file
+data	Microkernel/core/protocol/IProtocol.hpp	/^			char* 		data;$/;"	m	struct:NET::IProtocol::tagObject
+deadLimit	Microkernel/core/protocol/ProtocolBase.hpp	/^				int deadLimit;$/;"	m	struct:NET::CProtocolBase::tagSocketPing
+deadLimit	client/Protocol.hpp	/^	int deadLimit;$/;"	m	struct:tagSocketPing
+delClient	modules/worker/Worker.cpp	/^	void CWorker::delClient(INT fd)$/;"	f	class:NET::CWorker
+delFileEvent	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	void CMultiEpoll::delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)$/;"	f	class:NET::CMultiEpoll
+delFileEvent	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^    void CMultiKqueue::delFileEvent(INT fd, INT mask, EVENT_LOOP* eventLoop)$/;"	f	class:NET::CMultiKqueue
+delFileEvent	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	void CMultiManager::delFileEvent(INT fd, INT mask)$/;"	f	class:NET::CMultiManager
+delFileEvent	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^	void CMultiSelect::delFileEvent(INT, INT, EVENT_LOOP*)$/;"	f	class:NET::CMultiSelect
+delListener	modules/listener/Listener.cpp	/^	void CListener::delListener(IClientListener* pListener)$/;"	f	class:NET::CListener
+deleteAttribute	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::deleteAttribute(const STRING& strName) {$/;"	f	class:NET::XMLElement
+deleteElement	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::deleteElement(const STRING& strName) {$/;"	f	class:NET::XMLElement
+deleteRootElement	Microkernel/core/format/XMLHelper.cpp	/^    void XMLHelper::deleteRootElement() {$/;"	f	class:NET::XMLHelper
+destroy	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	void CMultiEpoll::destroy()$/;"	f	class:NET::CMultiEpoll
+destroy	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^	void CMultiKqueue::destroy()$/;"	f	class:NET::CMultiKqueue
+destroy	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	void CMultiManager::destroy()$/;"	f	class:NET::CMultiManager
+destroy	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^    void CMultiSelect::destroy()$/;"	f	class:NET::CMultiSelect
+difference_type	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef std::ptrdiff_t difference_type;$/;"	t	class:rapidxml::attribute_iterator
+difference_type	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef std::ptrdiff_t difference_type;$/;"	t	class:rapidxml::node_iterator
+document	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_document<Ch> *document() const$/;"	f	class:rapidxml::xml_attribute
+document	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_document<Ch> *document() const$/;"	f	class:rapidxml::xml_node
+eRole	Microkernel/core/config/ConfigParser.hpp	/^            ESYSTEM_ROLE    eRole;$/;"	m	struct:NET::final::tagSystemInfo
+enableColor	Microkernel/core/log/Log.cpp	/^	void CLog::enableColor(bool bEnable)$/;"	f	class:NET::CLog
+enableEdgeTrigger	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	void CMultiEpoll::enableEdgeTrigger(BOOLEAN on)$/;"	f	class:NET::CMultiEpoll
+enableEdgeTrigger	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	void CMultiManager::enableEdgeTrigger(BOOLEAN on)$/;"	f	class:NET::CMultiManager
+enableToStderr	Microkernel/core/log/Log.cpp	/^	void CLog::enableToStderr(bool bEnable)$/;"	f	class:NET::CLog
+eventLoop	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	INT CMultiEpoll::eventLoop(void* timeout, ::std::vector<FIRED_EVENT>& lstFired)$/;"	f	class:NET::CMultiEpoll
+eventLoop	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^    INT CMultiKqueue::eventLoop(void* timeout, EVENT_LOOP* eventLoop)$/;"	f	class:NET::CMultiKqueue
+eventLoop	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	INT CMultiManager::eventLoop(void* timeout)$/;"	f	class:NET::CMultiManager
+eventLoop	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^    INT CMultiSelect::eventLoop(void*, ::std::vector<FIRED_EVENT>&)$/;"	f	class:NET::CMultiSelect
+fd	Microkernel/core/event/CBaseEvent.hpp	/^            UINT        fd()                            { return m_fd; }$/;"	f	class:NET::CBaseEvent
+file	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^        file(const char *filename)$/;"	f	class:rapidxml::file
+file	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^        file(std::basic_istream<Ch> &stream)$/;"	f	class:rapidxml::file
+file	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^    class file$/;"	c	namespace:rapidxml
+fileProc	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	typedef ::std::function<INT(const struct tagEventLoop* loop, INT fd, struct tagData*& dataBuff, INT mask)> fileProc;$/;"	t	namespace:NET
+fill_chars	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt fill_chars(OutIt out, int n, Ch ch)$/;"	f	namespace:rapidxml::internal
+final	Microkernel/core/config/ConfigParser.hpp	/^    class ConfigParser final $/;"	c	namespace:NET
+final	Microkernel/core/module/CModuleManager.hpp	/^    class CModuleManager final$/;"	c	namespace:NET
+final	Microkernel/core/platform/Command.hpp	/^	class CMD final$/;"	c	namespace:NET
+final	Microkernel/core/thread/CThreadManager.hpp	/^    class CThreadManager final$/;"	c	namespace:NET
+final	Microkernel/core/timer/Timer.hpp	/^	class CTimer final $/;"	c	namespace:NET
+final	Microkernel/native/CMain.hpp	/^	class CMain final$/;"	c	namespace:NET
+find_char	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline bool find_char(const Ch *begin, const Ch *end)$/;"	f	namespace:rapidxml::internal
+first_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *first_attribute(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
+first_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *first_node(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
+format	Microkernel/core/log/Log.cpp	/^	std::string CLog::format(const char* fmt, ...) $/;"	f	class:NET::CLog
+free_func	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        typedef void (free_func)(void *);              \/\/ Type of user-defined function used to free memory$/;"	t	class:rapidxml::memory_pool
+getAttribute	Microkernel/core/format/XMLElement.cpp	/^    xml_attribute<>* XMLElement::getAttribute(const STRING& strName, BOOLEAN bAdd) {$/;"	f	class:NET::XMLElement
+getAttributeBOOLEAN	Microkernel/core/format/XMLElement.cpp	/^    BOOLEAN XMLElement::getAttributeBOOLEAN(const STRING& strName) {$/;"	f	class:NET::XMLElement
+getAttributeByIndex	Microkernel/core/format/XMLElement.cpp	/^    STRING XMLElement::getAttributeByIndex(UINT uiIndex) {$/;"	f	class:NET::XMLElement
+getAttributeCount	Microkernel/core/format/XMLElement.cpp	/^    UINT XMLElement::getAttributeCount() {$/;"	f	class:NET::XMLElement
+getAttributeFLOAT	Microkernel/core/format/XMLElement.cpp	/^    FLOAT XMLElement::getAttributeFLOAT(const STRING& strName) {$/;"	f	class:NET::XMLElement
+getAttributeINT	Microkernel/core/format/XMLElement.cpp	/^    INT XMLElement::getAttributeINT(const STRING& strName) {$/;"	f	class:NET::XMLElement
+getAttributeLLONG	Microkernel/core/format/XMLElement.cpp	/^    LLONG XMLElement::getAttributeLLONG(const STRING& strName) {$/;"	f	class:NET::XMLElement
+getAttributeString	Microkernel/core/format/XMLElement.cpp	/^    STRING XMLElement::getAttributeString(const STRING& strName) {$/;"	f	class:NET::XMLElement
+getAttributeUINT	Microkernel/core/format/XMLElement.cpp	/^    UINT XMLElement::getAttributeUINT(const STRING& strName) {$/;"	f	class:NET::XMLElement
+getElementByIndex	Microkernel/core/format/XMLElement.cpp	/^    XMLElement* XMLElement::getElementByIndex(UINT uiIndex) {$/;"	f	class:NET::XMLElement
+getElementByName	Microkernel/core/format/XMLElement.cpp	/^    XMLElement* XMLElement::getElementByName(const STRING& strName) const {$/;"	f	class:NET::XMLElement
+getElementsCount	Microkernel/core/format/XMLElement.cpp	/^    UINT XMLElement::getElementsCount() {$/;"	f	class:NET::XMLElement
+getEventLoop	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			static const EVENT_LOOP*		getEventLoop()						{ return s_pEventLoop; }$/;"	f	class:NET::CMultiManager
+getFiredList	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			const ::std::vector<FIRED_EVENT>&		getFiredList()				{ return m_lstFired; }$/;"	f	class:NET::CMultiManager
+getInstance	Microkernel/core/config/ConfigParser.cpp	/^    ConfigParser* ConfigParser::getInstance() $/;"	f	class:NET::ConfigParser
+getInstance	Microkernel/native/CMain.cpp	/^	CMain* CMain::getInstance()$/;"	f	class:NET::CMain
+getMultiType	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			inline EMultiType				getMultiType()						{ return m_eType; }$/;"	f	class:NET::CMultiManager
+getName	Microkernel/core/format/XMLElement.hpp	/^        STRING getName() {$/;"	f	class:NET::XMLElement
+getNearestTimer	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	const CTimer* CMultiManager::getNearestTimer()$/;"	f	class:NET::CMultiManager
+getRootElement	Microkernel/core/format/XMLHelper.hpp	/^        XMLElement* getRootElement() {$/;"	f	class:NET::XMLHelper
+getSocketFD	Microkernel/core/socket/Socket.hpp	/^			inline INT 		getSocketFD()				{ return m_fd; }$/;"	f	class:NET::CSocket
+getSocketInfo	Microkernel/core/config/ConfigParser.hpp	/^        inline const tagSocketInfo& getSocketInfo() const {$/;"	f	class:NET::final
+getSystemInfo	Microkernel/core/config/ConfigParser.hpp	/^        inline const tagSystemInfo& getSystemInfo() const {$/;"	f	class:NET::final
+getThreadID	Microkernel/core/thread/ThreadBase.hpp	/^		::std::thread::id getThreadID()$/;"	f	class:NET::CThreadBase
+getValue	Microkernel/core/format/XMLElement.hpp	/^        STRING getValue() {$/;"	f	class:NET::XMLElement
+getXMLNode	Microkernel/core/format/XMLElement.hpp	/^        xml_node<>* getXMLNode() const {$/;"	f	class:NET::XMLElement
+handle	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		timeProc*		handle;$/;"	m	struct:NET::tagTimeEvent
+handle_error	Microkernel/core/platform/TypeDefine.hpp	41;"	d
+handle_error_errno	Microkernel/core/platform/TypeDefine.hpp	44;"	d
+hasAttribute	Microkernel/core/format/XMLElement.cpp	/^    BOOLEAN XMLElement::hasAttribute(const STRING& strName) {$/;"	f	class:NET::XMLElement
+hasAttributes	Microkernel/core/format/XMLElement.cpp	/^    BOOLEAN XMLElement::hasAttributes() {$/;"	f	class:NET::XMLElement
+hasElement	Microkernel/core/format/XMLElement.cpp	/^    BOOLEAN XMLElement::hasElement(const STRING& strName) {$/;"	f	class:NET::XMLElement
+hasElements	Microkernel/core/format/XMLElement.cpp	/^    BOOLEAN XMLElement::hasElements() {$/;"	f	class:NET::XMLElement
+hasRootElement	Microkernel/core/format/XMLHelper.hpp	/^        BOOLEAN hasRootElement() {$/;"	f	class:NET::XMLHelper
+header	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct header$/;"	s	class:rapidxml::memory_pool
+iRepeat	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		INT  			iRepeat;$/;"	m	struct:NET::tagTimeEvent
+id	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		INT				id;$/;"	m	struct:NET::tagTimeEvent
+index	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		INT 			index;$/;"	m	struct:NET::tagFiredEvent
+init	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void init()$/;"	f	class:rapidxml::memory_pool
+init	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	void CMultiEpoll::init()$/;"	f	class:NET::CMultiEpoll
+init	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^	void CMultiKqueue::init()$/;"	f	class:NET::CMultiKqueue
+init	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	void CMultiManager::init(EMultiType type)$/;"	f	class:NET::CMultiManager
+init	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^	void CMultiSelect::init()$/;"	f	class:NET::CMultiSelect
+initLog	Microkernel/core/log/Log.cpp	/^	void CLog::initLog(const char* name)$/;"	f	class:NET::CLog
+initialize	Microkernel/core/config/ConfigParser.cpp	/^    BOOLEAN ConfigParser::initialize() $/;"	f	class:NET::ConfigParser
+initialize	Microkernel/native/CMain.cpp	/^	BOOLEAN CMain::initialize()$/;"	f	class:NET::CMain
+innerDestroyListener	Microkernel/native/CMain.cpp	/^    void CMain::innerDestroyListener()$/;"	f	class:NET::CMain
+innerDestroyProcessor	Microkernel/native/CMain.cpp	/^    void CMain::innerDestroyProcessor()$/;"	f	class:NET::CMain
+innerDestroyUpdate	Microkernel/native/CMain.cpp	/^    void CMain::innerDestroyUpdate()$/;"	f	class:NET::CMain
+innerInitListener	Microkernel/native/CMain.cpp	/^    BOOLEAN CMain::innerInitListener()$/;"	f	class:NET::CMain
+innerInitProcessor	Microkernel/native/CMain.cpp	/^    BOOLEAN CMain::innerInitProcessor()$/;"	f	class:NET::CMain
+innerInitSystem	Microkernel/native/CMain.cpp	/^    BOOLEAN CMain::innerInitSystem()$/;"	f	class:NET::CMain
+innerInitUpdate	Microkernel/native/CMain.cpp	/^    BOOLEAN CMain::innerInitUpdate()$/;"	f	class:NET::CMain
+innerPackageECHO	Microkernel/core/protocol/ProtocolBase.cpp	/^	int CProtocolBase::innerPackageECHO(const OBJECT* src, char* &des)$/;"	f	class:NET::CProtocolBase
+innerPackageHEART	Microkernel/core/protocol/ProtocolBase.cpp	/^	void CProtocolBase::innerPackageHEART()$/;"	f	class:NET::CProtocolBase
+innerPackagePING	Microkernel/core/protocol/ProtocolBase.cpp	/^	int CProtocolBase::innerPackagePING(const OBJECT* src, char* &des)$/;"	f	class:NET::CProtocolBase
+innerPackageTIME	Microkernel/core/protocol/ProtocolBase.cpp	/^	void CProtocolBase::innerPackageTIME()$/;"	f	class:NET::CProtocolBase
+insert_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void insert_attribute(xml_attribute<Ch> *where, xml_attribute<Ch> *attribute)$/;"	f	class:rapidxml::xml_node
+insert_coded_character	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        static void insert_coded_character(Ch *&text, unsigned long code)$/;"	f	class:rapidxml::xml_document
+insert_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void insert_node(xml_node<Ch> *where, xml_node<Ch> *child)$/;"	f	class:rapidxml::xml_node
+internal	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    namespace internal$/;"	n	namespace:rapidxml
+internal	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^    namespace internal$/;"	n	namespace:rapidxml
+ip	Microkernel/core/socket/SocketServer.hpp	/^			const STRING& 	ip() const 			    	        { return m_strIP; };$/;"	f	class:NET::CSocketServer
+isEmpty	Microkernel/core/event/CFileEvent.hpp	/^            BOOLEAN                 isEmpty()                   { return m_uiSize == 0; }$/;"	f	class:NET::CFileEvent
+isEnable	modules/worker/Worker.hpp	/^			BOOLEAN         isEnable()              { return TRUE; }$/;"	f	class:NET::CWorker
+isExclusive	Microkernel/core/module/CBaseModule.hpp	/^            BOOLEAN                 isExclusive()           { return m_bIsExclusive; }$/;"	f	class:NET::CBaseModule
+isFull	modules/worker/Worker.hpp	/^			BOOLEAN     	isFull() 				{ return FALSE; }$/;"	f	class:NET::CWorker
+isInitialize	Microkernel/core/module/CBaseModule.hpp	/^            BOOLEAN                 isInitialize()          { return m_bIsInitialize; }$/;"	f	class:NET::CBaseModule
+iterator_category	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef std::bidirectional_iterator_tag iterator_category;$/;"	t	class:rapidxml::attribute_iterator
+iterator_category	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef std::bidirectional_iterator_tag iterator_category;$/;"	t	class:rapidxml::node_iterator
+last_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *last_attribute(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
+last_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *last_node(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
+listener	modules/listener/Listener.hpp	/^            const ::std::list<IClientListener*>&      	listener() const                        { return m_lstListener; }$/;"	f	class:NET::CListener
+load	Microkernel/core/config/ConfigParser.cpp	/^    BOOLEAN ConfigParser::load() $/;"	f	class:NET::ConfigParser
+loadSocketInfo	Microkernel/core/config/ConfigParser.cpp	/^    void ConfigParser::loadSocketInfo(const XMLElement* socket) $/;"	f	class:NET::ConfigParser
+loadSystemInfo	Microkernel/core/config/ConfigParser.cpp	/^    void ConfigParser::loadSystemInfo(const XMLElement* system) $/;"	f	class:NET::ConfigParser
+lookup_attribute_data_1	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_attribute_data_1[256];        \/\/ Attribute data table with single quote$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_attribute_data_1	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_attribute_data_1[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_attribute_data_1_pure	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_attribute_data_1_pure[256];   \/\/ Attribute data table with single quote$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_attribute_data_1_pure	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_attribute_data_1_pure[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_attribute_data_2	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_attribute_data_2[256];        \/\/ Attribute data table with double quotes$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_attribute_data_2	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_attribute_data_2[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_attribute_data_2_pure	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_attribute_data_2_pure[256];   \/\/ Attribute data table with double quotes$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_attribute_data_2_pure	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_attribute_data_2_pure[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_attribute_name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_attribute_name[256];          \/\/ Attribute name table$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_attribute_name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_attribute_name[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_digits	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_digits[256];                  \/\/ Digits$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_digits	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_digits[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_node_name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_node_name[256];               \/\/ Node name table$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_node_name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_node_name[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_tables	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct lookup_tables$/;"	s	namespace:rapidxml::internal
+lookup_text	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_text[256];                    \/\/ Text table$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_text	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_text[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_text_pure_no_ws	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_text_pure_no_ws[256];         \/\/ Text table$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_text_pure_no_ws	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_text_pure_no_ws[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_text_pure_with_ws	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_text_pure_with_ws[256];       \/\/ Text table$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_text_pure_with_ws	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_text_pure_with_ws[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_upcase	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_upcase[256];                  \/\/ To uppercase conversion table for ASCII characters$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_upcase	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_upcase[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lookup_whitespace	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static const unsigned char lookup_whitespace[256];              \/\/ Whitespace table$/;"	m	struct:rapidxml::internal::lookup_tables
+lookup_whitespace	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        const unsigned char lookup_tables<Dummy>::lookup_whitespace[256] = $/;"	m	class:rapidxml::internal::lookup_tables
+lstFileEvent	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		::std::vector<FILE_EVENT>   lstFileEvent;$/;"	m	struct:NET::tagEventLoop
+lstTimeEvent	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		::std::vector<TIME_EVENT>   lstTimeEvent;$/;"	m	struct:NET::tagEventLoop
+m_alloc_func	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        alloc_func *m_alloc_func;                           \/\/ Allocator function, or 0 if default is to be used$/;"	m	class:rapidxml::memory_pool
+m_attribute	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        xml_attribute<Ch> *m_attribute;$/;"	m	class:rapidxml::attribute_iterator
+m_bInitialized	Microkernel/native/CMain.hpp	/^            BOOLEAN			            		m_bInitialized;$/;"	m	class:NET::final
+m_bIsEdgeTrigger	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			BOOLEAN					m_bIsEdgeTrigger;$/;"	m	class:NET::CMultiEpoll
+m_bIsExclusive	Microkernel/core/module/CBaseModule.hpp	/^            BOOLEAN                 m_bIsExclusive;$/;"	m	class:NET::CBaseModule
+m_bIsInitialize	Microkernel/core/module/CBaseModule.hpp	/^            BOOLEAN                 m_bIsInitialize;$/;"	m	class:NET::CBaseModule
+m_bIsOpenning	Microkernel/core/socket/Socket.hpp	/^			BOOLEAN			m_bIsOpenning;$/;"	m	class:NET::CSocket
+m_bIsRunning	Microkernel/core/timer/Timer.cpp	/^		, m_bIsRunning(FALSE)$/;"	f	namespace:NET
+m_bIsRunning	Microkernel/core/timer/Timer.hpp	/^			BOOLEAN		m_bIsRunning;$/;"	m	class:NET::final
+m_bStop	Microkernel/core/thread/ThreadBase.hpp	/^		BOOLEAN 		m_bStop;$/;"	m	class:NET::CThreadBase
+m_begin	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        char *m_begin;                                      \/\/ Start of raw memory making up current pool$/;"	m	class:rapidxml::memory_pool
+m_data	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^        std::vector<Ch> m_data;   \/\/ File data$/;"	m	class:rapidxml::file
+m_dataBuffer	Microkernel/core/event/CFileEvent.hpp	/^            void*                   m_dataBuffer;$/;"	m	class:NET::CFileEvent
+m_dataQueue	Microkernel/core/module/CBaseModule.hpp	/^            std::queue<void*>       m_dataQueue;$/;"	m	class:NET::CBaseModule
+m_eEncoding	Microkernel/core/format/XMLHelper.hpp	/^        XMLEncoding m_eEncoding;$/;"	m	class:NET::XMLHelper
+m_ePolicy	Microkernel/core/thread/ThreadBase.hpp	/^		EPolicy			m_ePolicy;$/;"	m	class:NET::CThreadBase
+m_eTriggerType	Microkernel/core/event/CFileEvent.hpp	/^            ETriggerType            m_eTriggerType;$/;"	m	class:NET::CFileEvent
+m_eType	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			EMultiType						m_eType;		$/;"	m	class:NET::CMultiManager
+m_eVersion	Microkernel/core/format/XMLHelper.hpp	/^        XMLVersion m_eVersion;$/;"	m	class:NET::XMLHelper
+m_end	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        char *m_end;                                        \/\/ One past last available byte in current pool$/;"	m	class:rapidxml::memory_pool
+m_epfd	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			INT                     m_epfd;$/;"	m	class:NET::CMultiEpoll
+m_events	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			struct epoll_event*     m_events;$/;"	m	class:NET::CMultiEpoll	typeref:struct:NET::CMultiEpoll::epoll_event
+m_events	Microkernel/core/platform/multiplex/MultiKqueue.hpp	/^            struct kevent*  m_events;$/;"	m	class:NET::CMultiKqueue	typeref:struct:NET::CMultiKqueue::kevent
+m_fd	Microkernel/core/event/CBaseEvent.hpp	/^            UINT        m_fd;$/;"	m	class:NET::CBaseEvent
+m_fd	Microkernel/core/socket/Socket.hpp	/^			INT 			m_fd;$/;"	m	class:NET::CSocket
+m_first_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_first_attribute;   \/\/ Pointer to first attribute of node, or 0 if none; always valid$/;"	m	class:rapidxml::xml_node
+m_first_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_first_node;             \/\/ Pointer to first child node, or 0 if none; always valid$/;"	m	class:rapidxml::xml_node
+m_free_func	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        free_func *m_free_func;                             \/\/ Free function, or 0 if default is to be used$/;"	m	class:rapidxml::memory_pool
+m_iPriority	Microkernel/core/thread/ThreadBase.hpp	/^		UINT 			m_iPriority;$/;"	m	class:NET::CThreadBase
+m_iRepeat	Microkernel/core/timer/Timer.hpp	/^			INT			m_iRepeat;		\/\/ -1 means repeat loop$/;"	m	class:NET::final
+m_kqfd	Microkernel/core/platform/multiplex/MultiKqueue.hpp	/^            INT             m_kqfd;$/;"	m	class:NET::CMultiKqueue
+m_last_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_last_attribute;    \/\/ Pointer to last attribute of node, or 0 if none; this value is only valid if m_first_attribute is non-zero$/;"	m	class:rapidxml::xml_node
+m_last_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_last_node;              \/\/ Pointer to last child node, or 0 if none; this value is only valid if m_first_node is non-zero$/;"	m	class:rapidxml::xml_node
+m_lstFired	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			::std::vector<FIRED_EVENT>		m_lstFired;$/;"	m	class:NET::CMultiManager
+m_lstListener	Microkernel/core/timer/Timer.hpp	/^			::std::vector<ITimerListener*> 	m_lstListener;$/;"	m	class:NET::final
+m_lstListener	modules/listener/Listener.hpp	/^			::std::list<IClientListener*>       m_lstListener;$/;"	m	class:NET::CListener
+m_mutex	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	::std::mutex 	CMultiManager::m_mutex;	$/;"	m	class:NET::CMultiManager	file:
+m_mutex	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			static ::std::mutex				m_mutex;$/;"	m	class:NET::CMultiManager
+m_mutex	Microkernel/core/timer/Timer.hpp	/^			::std::mutex					m_mutex;			$/;"	m	class:NET::final
+m_mutex	modules/worker/Worker.hpp	/^            ::std::mutex        m_mutex;$/;"	m	class:NET::CWorker
+m_name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        Ch *m_name;                         \/\/ Name of node, or 0 if no name$/;"	m	class:rapidxml::xml_base
+m_name_size	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        std::size_t m_name_size;            \/\/ Length of node name, or undefined of no name$/;"	m	class:rapidxml::xml_base
+m_next_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_next_attribute;        \/\/ Pointer to next sibling of attribute, or 0 if none; only valid if parent is non-zero$/;"	m	class:rapidxml::xml_attribute
+m_next_sibling	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_next_sibling;           \/\/ Pointer to next sibling of node, or 0 if none; this value is only valid if m_parent is non-zero$/;"	m	class:rapidxml::xml_node
+m_node	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        xml_node<Ch> *m_node;$/;"	m	class:rapidxml::node_iterator
+m_pAttachModule	Microkernel/core/module/CBaseModule.hpp	/^            CBaseModule*            m_pAttachModule;$/;"	m	class:NET::CBaseModule
+m_pBase	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			IMultiBase* 					m_pBase;$/;"	m	class:NET::CMultiManager
+m_pInstance	Microkernel/core/config/ConfigParser.cpp	/^    ConfigParser* ConfigParser::m_pInstance = NULL;$/;"	m	class:NET::ConfigParser	file:
+m_pInstance	Microkernel/core/config/ConfigParser.hpp	/^        static ConfigParser* 	m_pInstance;$/;"	m	class:NET::final
+m_pMultiManager	modules/worker/Worker.hpp	/^			CMultiManager* 	    m_pMultiManager;$/;"	m	class:NET::CWorker
+m_pRootElement	Microkernel/core/format/XMLHelper.hpp	/^        XMLElement* m_pRootElement;$/;"	m	class:NET::XMLHelper
+m_pServer	modules/listener/Listener.hpp	/^			CSocketServer* 				        m_pServer;$/;"	m	class:NET::CListener
+m_pXMLDocument	Microkernel/core/format/XMLElement.hpp	/^        xml_document<>* m_pXMLDocument;$/;"	m	class:NET::XMLElement
+m_pXMLNode	Microkernel/core/format/XMLElement.hpp	/^        xml_node<>* m_pXMLNode;$/;"	m	class:NET::XMLElement
+m_pXmlDoc	Microkernel/core/format/XMLHelper.hpp	/^        xml_document<>* m_pXmlDoc;$/;"	m	class:NET::XMLHelper
+m_parent	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_parent;             \/\/ Pointer to parent node, or 0 if none$/;"	m	class:rapidxml::xml_base
+m_prev_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *m_prev_attribute;        \/\/ Pointer to previous sibling of attribute, or 0 if none; only valid if parent is non-zero$/;"	m	class:rapidxml::xml_attribute
+m_prev_sibling	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *m_prev_sibling;           \/\/ Pointer to previous sibling of node, or 0 if none; this value is only valid if m_parent is non-zero$/;"	m	class:rapidxml::xml_node
+m_ptr	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        char *m_ptr;                                        \/\/ First free byte in current pool$/;"	m	class:rapidxml::memory_pool
+m_static_memory	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        char m_static_memory[RAPIDXML_STATIC_POOL_SIZE];    \/\/ Static raw memory$/;"	m	class:rapidxml::memory_pool
+m_strIP	Microkernel/core/socket/SocketServer.hpp	/^			STRING 	    m_strIP;$/;"	m	class:NET::CSocketServer
+m_strName	Microkernel/core/format/XMLElement.hpp	/^        STRING m_strName;$/;"	m	class:NET::XMLElement
+m_strName	Microkernel/core/module/CBaseModule.hpp	/^            STRING                  m_strName;$/;"	m	class:NET::CBaseModule
+m_strValue	Microkernel/core/format/XMLElement.hpp	/^        STRING m_strValue;$/;"	m	class:NET::XMLElement
+m_tagSocketInfo	Microkernel/core/config/ConfigParser.hpp	/^        tagSocketInfo 			m_tagSocketInfo;$/;"	m	class:NET::final
+m_tagSysInfo	Microkernel/core/config/ConfigParser.hpp	/^        tagSystemInfo 			m_tagSysInfo;$/;"	m	class:NET::final
+m_thread	Microkernel/core/thread/ThreadBase.hpp	/^		::std::thread 	m_thread;$/;"	m	class:NET::CThreadBase
+m_type	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_type m_type;                       \/\/ Type of node; always valid$/;"	m	class:rapidxml::xml_node
+m_uiDataLimit	Microkernel/core/module/CBaseModule.hpp	/^            UINT                    m_uiDataLimit;$/;"	m	class:NET::CBaseModule
+m_uiInterval	Microkernel/core/timer/Timer.hpp	/^			UINT		m_uiInterval;$/;"	m	class:NET::final
+m_uiPoint	Microkernel/core/event/CFileEvent.hpp	/^            UINT                    m_uiPoint;$/;"	m	class:NET::CFileEvent
+m_uiPort	Microkernel/core/socket/SocketServer.hpp	/^			UINT 	    m_uiPort;$/;"	m	class:NET::CSocketServer
+m_uiPriority	Microkernel/core/event/CBaseEvent.hpp	/^            UINT        m_uiPriority;     $/;"	m	class:NET::CBaseEvent
+m_uiPriority	Microkernel/core/module/CBaseModule.hpp	/^            UINT                    m_uiPriority;$/;"	m	class:NET::CBaseModule
+m_uiSize	Microkernel/core/event/CFileEvent.hpp	/^            UINT                    m_uiSize;   $/;"	m	class:NET::CFileEvent
+m_uiSize	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			UINT					m_uiSize;$/;"	m	class:NET::CMultiEpoll
+m_uiSize	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			UINT							m_uiSize;$/;"	m	class:NET::CMultiManager
+m_uiSize	modules/worker/Worker.hpp	/^			UINT 	   	 		m_uiSize;$/;"	m	class:NET::CWorker
+m_value	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        Ch *m_value;                        \/\/ Value of node, or 0 if no value$/;"	m	class:rapidxml::xml_base
+m_value_size	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        std::size_t m_value_size;           \/\/ Length of node value, or undefined if no value$/;"	m	class:rapidxml::xml_base
+m_xmlHelper	Microkernel/core/config/ConfigParser.hpp	/^        XMLHelper* 				m_xmlHelper;$/;"	m	class:NET::final
+main	Microkernel/main.cpp	/^int main(int argc, char const *argv[])$/;"	f
+main	client/client.cpp	/^int main(int argc, const char *argv[])$/;"	f
+main	demo/main.cpp	/^int main(int argc, const char *argv[])$/;"	f
+mainLoop	Microkernel/core/thread/ThreadBase.hpp	/^		virtual void mainLoop(void* arg)$/;"	f	class:NET::CThreadBase
+mainLoop	modules/listener/Listener.cpp	/^	void CListener::mainLoop(void* arg)$/;"	f	class:NET::CListener
+mainLoop	modules/update/Update.cpp	/^	void CUpdate::mainLoop(void* arg)$/;"	f	class:NET::CUpdate
+mainLoop	modules/worker/Worker.cpp	/^	void CWorker::mainLoop(void* arg) $/;"	f	class:NET::CWorker
+mask	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		INT 			mask;$/;"	m	struct:NET::tagFileEvent
+mask	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		INT 			mask;$/;"	m	struct:NET::tagFiredEvent
+measure	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        inline std::size_t measure(const Ch *p)$/;"	f	namespace:rapidxml::internal
+memory_pool	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        memory_pool()$/;"	f	class:rapidxml::memory_pool
+memory_pool	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    class memory_pool$/;"	c	namespace:rapidxml
+millsecond	Microkernel/core/protocol/ProtocolBase.hpp	/^				int millsecond;$/;"	m	struct:NET::CProtocolBase::tagSocketTime
+millsecond	client/Protocol.hpp	/^	int millsecond;$/;"	m	struct:tagSocketTime
+name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        Ch *name() const$/;"	f	class:rapidxml::xml_base
+name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void name(const Ch *name)$/;"	f	class:rapidxml::xml_base
+name	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void name(const Ch *name, std::size_t size)$/;"	f	class:rapidxml::xml_base
+name_size	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        std::size_t name_size() const$/;"	f	class:rapidxml::xml_base
+next_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *next_attribute(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_attribute
+next_sibling	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *next_sibling(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
+node_cdata	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_cdata,         \/\/!< A CDATA node. Name is empty. Value contains data text.$/;"	e	enum:rapidxml::node_type
+node_comment	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_comment,       \/\/!< A comment node. Name is empty. Value contains comment text.$/;"	e	enum:rapidxml::node_type
+node_data	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_data,          \/\/!< A data node. Name is empty. Value contains data text.$/;"	e	enum:rapidxml::node_type
+node_declaration	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_declaration,   \/\/!< A declaration node. Name and value are empty. Declaration parameters (version, encoding and standalone) are in node attributes.$/;"	e	enum:rapidxml::node_type
+node_doctype	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_doctype,       \/\/!< A DOCTYPE node. Name is empty. Value contains DOCTYPE text.$/;"	e	enum:rapidxml::node_type
+node_document	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_document,      \/\/!< A document node. Name and value are empty.$/;"	e	enum:rapidxml::node_type
+node_element	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_element,       \/\/!< An element node. Name contains element name. Value contains text of first data node.$/;"	e	enum:rapidxml::node_type
+node_iterator	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        node_iterator()$/;"	f	class:rapidxml::node_iterator
+node_iterator	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        node_iterator(xml_node<Ch> *node)$/;"	f	class:rapidxml::node_iterator
+node_iterator	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^    class node_iterator$/;"	c	namespace:rapidxml
+node_name_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct node_name_pred$/;"	s	class:rapidxml::xml_document
+node_pi	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_pi             \/\/!< A PI node. Name contains target. Value contains instructions.$/;"	e	enum:rapidxml::node_type
+node_type	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    enum node_type$/;"	g	namespace:rapidxml
+noexcept	Microkernel/core/format/XMLElement.hpp	/^        xml_node<>* getElement(const STRING& strName, BOOLEAN bAdd = FALSE) const noexcept;$/;"	m	class:NET::XMLElement
+noexcept	Microkernel/core/socket/Socket.hpp	/^			virtual void 	destroy() noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			virtual void 	init() noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void			setLinger(BOOLEAN, INT) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void			setNonBlock(BOOLEAN) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void			setSendBuffSize(INT64) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void 			setKeepAlive(BOOLEAN, INT) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void 			setNoDelay(BOOLEAN) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void 			setRecvBuffSize(INT64) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void 			setReuseAddress(BOOLEAN) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^			void 			setTimeOut(INT) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/Socket.hpp	/^            void    		setReusePort(BOOLEAN) noexcept;$/;"	m	class:NET::CSocket
+noexcept	Microkernel/core/socket/SocketServer.hpp	/^			virtual void	init() noexcept;$/;"	m	class:NET::CSocketServer
+noexcept	Microkernel/core/socket/SocketServer.hpp	/^			virtual void 	destroy() noexcept;$/;"	m	class:NET::CSocketServer
+noexcept	Microkernel/core/timer/Timer.hpp	/^			CTimer(UINT, INT) noexcept;$/;"	m	class:NET::final
+noexcept	Microkernel/core/timer/Timer.hpp	/^			explicit CTimer() noexcept;$/;"	m	class:NET::final
+noexcept	Microkernel/core/timer/Timer.hpp	/^			void			delListener(const ITimerListener*) noexcept;$/;"	m	class:NET::final
+noexcept	Microkernel/core/timer/Timer.hpp	/^			void 			addListener(ITimerListener*) noexcept;$/;"	m	class:NET::final
+noexcept	Microkernel/core/timer/Timer.hpp	/^			void 			reset() noexcept;$/;"	m	class:NET::final
+noexcept	Microkernel/core/timer/Timer.hpp	/^			void 			start() noexcept;$/;"	m	class:NET::final
+noexcept	Microkernel/core/timer/Timer.hpp	/^			void 			stop() noexcept;$/;"	m	class:NET::final
+noexcept	Microkernel/core/timer/Timer.hpp	/^			~CTimer() noexcept;$/;"	m	class:NET::final
+nullstr	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        static Ch *nullstr()$/;"	f	class:rapidxml::xml_base
+offet	Microkernel/core/protocol/ProtocolBase.hpp	/^				int offet;$/;"	m	struct:NET::CProtocolBase::tagSocketTime
+offet	client/Protocol.hpp	/^	int offet;$/;"	m	struct:tagSocketTime
+operator !=	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        bool operator !=(const attribute_iterator<Ch> &rhs)$/;"	f	class:rapidxml::attribute_iterator
+operator !=	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        bool operator !=(const node_iterator<Ch> &rhs)$/;"	f	class:rapidxml::node_iterator
+operator *	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        reference operator *() const$/;"	f	class:rapidxml::attribute_iterator
+operator *	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        reference operator *() const$/;"	f	class:rapidxml::node_iterator
+operator ++	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator operator++(int)$/;"	f	class:rapidxml::attribute_iterator
+operator ++	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator& operator++()$/;"	f	class:rapidxml::attribute_iterator
+operator ++	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        node_iterator operator++(int)$/;"	f	class:rapidxml::node_iterator
+operator ++	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        node_iterator& operator++()$/;"	f	class:rapidxml::node_iterator
+operator --	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator operator--(int)$/;"	f	class:rapidxml::attribute_iterator
+operator --	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        attribute_iterator& operator--()$/;"	f	class:rapidxml::attribute_iterator
+operator --	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        node_iterator operator--(int)$/;"	f	class:rapidxml::node_iterator
+operator --	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        node_iterator& operator--()$/;"	f	class:rapidxml::node_iterator
+operator ->	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        pointer operator->() const$/;"	f	class:rapidxml::attribute_iterator
+operator ->	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        pointer operator->() const$/;"	f	class:rapidxml::node_iterator
+operator <<	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^    inline std::basic_ostream<Ch> &operator <<(std::basic_ostream<Ch> &out, const xml_node<Ch> &node)$/;"	f	namespace:rapidxml
+operator ==	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        bool operator ==(const attribute_iterator<Ch> &rhs)$/;"	f	class:rapidxml::attribute_iterator
+operator ==	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        bool operator ==(const node_iterator<Ch> &rhs)$/;"	f	class:rapidxml::node_iterator
+override	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			INT 	addFileEvent(INT, INT, EVENT_LOOP*) override;$/;"	m	class:NET::CMultiEpoll
+override	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			INT 	eventLoop(void*, ::std::vector<FIRED_EVENT>&) override; 			\/\/ struct timeval$/;"	m	class:NET::CMultiEpoll
+override	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			UINT 	setSize(UINT size) override;$/;"	m	class:NET::CMultiEpoll
+override	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			void	delFileEvent(INT, INT, EVENT_LOOP*) override;$/;"	m	class:NET::CMultiEpoll
+override	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			void	destroy() override;$/;"	m	class:NET::CMultiEpoll
+override	Microkernel/core/platform/multiplex/MultiEpoll.hpp	/^			void	init() override;$/;"	m	class:NET::CMultiEpoll
+override	Microkernel/core/platform/multiplex/MultiSelect.hpp	/^			INT		addFileEvent(INT, INT, EVENT_LOOP*) override;$/;"	m	class:NET::CMultiSelect
+override	Microkernel/core/platform/multiplex/MultiSelect.hpp	/^			INT		eventLoop(void*, ::std::vector<FIRED_EVENT>&) override;$/;"	m	class:NET::CMultiSelect
+override	Microkernel/core/platform/multiplex/MultiSelect.hpp	/^			UINT	setSize(UINT) override;$/;"	m	class:NET::CMultiSelect
+override	Microkernel/core/platform/multiplex/MultiSelect.hpp	/^			void	delFileEvent(INT, INT, EVENT_LOOP*) override;$/;"	m	class:NET::CMultiSelect
+override	Microkernel/core/protocol/ProtocolBase.hpp	/^			virtual INT analyse(CHAR*, UINT) override;$/;"	m	class:NET::CProtocolBase
+override	Microkernel/core/protocol/ProtocolBase.hpp	/^			virtual int package(int, const OBJECT*, char*&) override;$/;"	m	class:NET::CProtocolBase
+override	modules/listener/Listener.hpp	/^			void mainLoop(void* arg) override;$/;"	m	class:NET::CListener
+override	modules/worker/Worker.hpp	/^			void 			mainLoop(void*) override;$/;"	m	class:NET::CWorker
+package	Microkernel/core/protocol/ProtocolBase.cpp	/^	INT CProtocolBase::package(INT type, const OBJECT* src, CHAR* &des)$/;"	f	class:NET::CProtocolBase
+parent	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parent() const$/;"	f	class:rapidxml::xml_base
+parse	Microkernel/core/format/XMLHelper.cpp	/^    BOOLEAN XMLHelper::parse(CHAR* strContent) {$/;"	f	class:NET::XMLHelper
+parse	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void parse(Ch *text)$/;"	f	class:rapidxml::xml_document
+parseFrom	Microkernel/core/format/XMLHelper.cpp	/^    BOOLEAN XMLHelper::parseFrom(const CHAR* strPath) {$/;"	f	class:NET::XMLHelper
+parse_and_append_data	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        Ch parse_and_append_data(xml_node<Ch> *node, Ch *&text, Ch *contents_start)$/;"	f	class:rapidxml::xml_document
+parse_bom	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void parse_bom(Ch *&text)$/;"	f	class:rapidxml::xml_document
+parse_cdata	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_cdata(Ch *&text)$/;"	f	class:rapidxml::xml_document
+parse_comment	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_comment(Ch *&text)$/;"	f	class:rapidxml::xml_document
+parse_comment_nodes	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_comment_nodes = 0x40;$/;"	m	namespace:rapidxml
+parse_declaration_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_declaration_node = 0x20;$/;"	m	namespace:rapidxml
+parse_default	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_default = 0;$/;"	m	namespace:rapidxml
+parse_doctype	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_doctype(Ch *&text)$/;"	f	class:rapidxml::xml_document
+parse_doctype_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_doctype_node = 0x80;$/;"	m	namespace:rapidxml
+parse_element	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_element(Ch *&text)$/;"	f	class:rapidxml::xml_document
+parse_fastest	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_fastest = parse_non_destructive | parse_no_data_nodes;$/;"	m	namespace:rapidxml
+parse_full	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes | parse_validate_closing_tags;$/;"	m	namespace:rapidxml
+parse_no_data_nodes	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_no_data_nodes = 0x1;            $/;"	m	namespace:rapidxml
+parse_no_element_values	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_no_element_values = 0x2;$/;"	m	namespace:rapidxml
+parse_no_entity_translation	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_no_entity_translation = 0x8;$/;"	m	namespace:rapidxml
+parse_no_string_terminators	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_no_string_terminators = 0x4;$/;"	m	namespace:rapidxml
+parse_no_utf8	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_no_utf8 = 0x10;$/;"	m	namespace:rapidxml
+parse_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_node(Ch *&text)$/;"	f	class:rapidxml::xml_document
+parse_node_attributes	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void parse_node_attributes(Ch *&text, xml_node<Ch> *node)$/;"	f	class:rapidxml::xml_document
+parse_node_contents	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void parse_node_contents(Ch *&text, xml_node<Ch> *node)$/;"	f	class:rapidxml::xml_document
+parse_non_destructive	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_non_destructive = parse_no_string_terminators | parse_no_entity_translation;$/;"	m	namespace:rapidxml
+parse_normalize_whitespace	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_normalize_whitespace = 0x800;$/;"	m	namespace:rapidxml
+parse_pi	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_pi(Ch *&text)$/;"	f	class:rapidxml::xml_document
+parse_pi_nodes	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_pi_nodes = 0x100;$/;"	m	namespace:rapidxml
+parse_trim_whitespace	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_trim_whitespace = 0x400;$/;"	m	namespace:rapidxml
+parse_validate_closing_tags	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    const int parse_validate_closing_tags = 0x200;$/;"	m	namespace:rapidxml
+parse_xml_declaration	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *parse_xml_declaration(Ch *&text)$/;"	f	class:rapidxml::xml_document
+point	Microkernel/core/event/CFileEvent.hpp	/^            UINT                    point()                     { return m_uiPoint; }$/;"	f	class:NET::CFileEvent
+pointer	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_attribute<Ch> *pointer;$/;"	t	class:rapidxml::attribute_iterator
+pointer	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_node<Ch> *pointer;$/;"	t	class:rapidxml::node_iterator
+policy	Microkernel/core/thread/ThreadBase.cpp	/^    EPolicy CThreadBase::policy()$/;"	f	class:NET::CThreadBase
+port	Microkernel/core/socket/SocketServer.hpp	/^			UINT  			port() const						{ return m_uiPort; }$/;"	f	class:NET::CSocketServer
+prepend_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void prepend_attribute(xml_attribute<Ch> *attribute)$/;"	f	class:rapidxml::xml_node
+prepend_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void prepend_node(xml_node<Ch> *child)$/;"	f	class:rapidxml::xml_node
+preset	Microkernel/core/config/ConfigParser.cpp	/^    void ConfigParser::preset() $/;"	f	class:NET::ConfigParser
+previous_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute<Ch> *previous_attribute(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_attribute
+previous_begin	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            char *previous_begin;$/;"	m	struct:rapidxml::memory_pool::header
+previous_sibling	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node<Ch> *previous_sibling(const Ch *name = 0, std::size_t name_size = 0, bool case_sensitive = true) const$/;"	f	class:rapidxml::xml_node
+print	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^    inline OutIt print(OutIt out, const xml_node<Ch> &node, int flags = 0)$/;"	f	namespace:rapidxml
+print	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^    inline std::basic_ostream<Ch> &print(std::basic_ostream<Ch> &out, const xml_node<Ch> &node, int flags = 0)$/;"	f	namespace:rapidxml
+printListener	modules/listener/Listener.cpp	/^	void CListener::printListener()$/;"	f	class:NET::CListener
+print_attributes	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_attributes(OutIt out, const xml_node<Ch> *node, int flags)$/;"	f	namespace:rapidxml::internal
+print_cdata_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_cdata_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_children	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_children(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_comment_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_comment_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_data_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_data_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_declaration_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_declaration_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_doctype_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_doctype_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_element_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_element_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_no_indenting	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^    const int print_no_indenting = 0x1;   \/\/!< Printer flag instructing the printer to suppress indenting of XML. See print() function.$/;"	m	namespace:rapidxml
+print_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+print_pi_node	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^        inline OutIt print_pi_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)$/;"	f	namespace:rapidxml::internal
+priority	Microkernel/core/event/CBaseEvent.hpp	/^            UINT        priority()                      { return m_uiPriority; }$/;"	f	class:NET::CBaseEvent
+priority	Microkernel/core/thread/ThreadBase.cpp	/^	INT CThreadBase::priority()$/;"	f	class:NET::CThreadBase
+process	modules/worker/Worker.cpp	/^	void CWorker::process( void*& dataBuffer )$/;"	f	class:NET::CWorker
+protocol	Microkernel/core/protocol/IProtocol.hpp	/^			INT 		protocol;$/;"	m	struct:NET::IProtocol::tagSocketHeader
+protocol	client/Protocol.hpp	/^	INT 		protocol;$/;"	m	struct:tagSocketHeader
+range	Microkernel/core/thread/ThreadBase.cpp	/^    static ::std::tuple<INT, INT> CThreadBase::range(EPolicy policy)$/;"	f	class:NET::CThreadBase
+rapidxml	Microkernel/core/format/rapidxml/rapidxml.hpp	/^namespace rapidxml$/;"	n
+rapidxml	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^namespace rapidxml$/;"	n
+rapidxml	Microkernel/core/format/rapidxml/rapidxml_print.hpp	/^namespace rapidxml$/;"	n
+rapidxml	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^namespace rapidxml$/;"	n
+read	modules/worker/Worker.cpp	/^	INT CWorker::CProcessor::read(const EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask)$/;"	f	class:NET::CWorker::CProcessor
+readProc	Microkernel/core/event/CFileEvent.cpp	/^    BOOLEAN CFileEvent::readProc()$/;"	f	class:NET::CFileEvent
+readProc	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		fileProc 		readProc;$/;"	m	struct:NET::tagFileEvent
+readProc	modules/listener/Listener.cpp	/^	BOOLEAN CListener::readProc()$/;"	f	class:NET::CListener
+reference	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_attribute<Ch> &reference;$/;"	t	class:rapidxml::attribute_iterator
+reference	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_node<Ch> &reference;$/;"	t	class:rapidxml::node_iterator
+release	Microkernel/core/event/CFileEvent.cpp	/^    void CFileEvent::release()$/;"	f	class:NET::CFileEvent
+remove_all_attributes	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_all_attributes()$/;"	f	class:rapidxml::xml_node
+remove_all_nodes	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_all_nodes()$/;"	f	class:rapidxml::xml_node
+remove_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_attribute(xml_attribute<Ch> *where)$/;"	f	class:rapidxml::xml_node
+remove_first_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_first_attribute()$/;"	f	class:rapidxml::xml_node
+remove_first_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_first_node()$/;"	f	class:rapidxml::xml_node
+remove_last_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_last_attribute()$/;"	f	class:rapidxml::xml_node
+remove_last_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_last_node()$/;"	f	class:rapidxml::xml_node
+remove_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void remove_node(xml_node<Ch> *where)$/;"	f	class:rapidxml::xml_node
+resize	Microkernel/core/event/CFileEvent.cpp	/^    UINT CFileEvent::resize(UINT uiSize)$/;"	f	class:NET::CFileEvent
+run	Microkernel/core/thread/ThreadBase.hpp	/^		void run(void* arg = nullptr)$/;"	f	class:NET::CThreadBase
+s_pEventLoop	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	EVENT_LOOP* 	CMultiManager::s_pEventLoop = nullptr;		$/;"	m	class:NET::CMultiManager	file:
+s_pEventLoop	Microkernel/core/platform/multiplex/MultiManager.hpp	/^			static EVENT_LOOP*				s_pEventLoop;		$/;"	m	class:NET::CMultiManager
+s_pInstance	Microkernel/core/module/CModuleManager.hpp	/^            static CModuleManager* 	            s_pInstance;$/;"	m	class:NET::final
+s_pInstance	Microkernel/core/thread/CThreadManager.hpp	/^            static CThreadManager* 	            s_pInstance;$/;"	m	class:NET::final
+s_pInstance	Microkernel/native/CMain.cpp	/^	CMain* CMain::s_pInstance = NULL;$/;"	m	class:NET::CMain	file:
+s_pInstance	Microkernel/native/CMain.hpp	/^			static CMain* 	            		s_pInstance;$/;"	m	class:NET::final
+save	Microkernel/core/config/ConfigParser.cpp	/^    BOOLEAN ConfigParser::save() $/;"	f	class:NET::ConfigParser
+saveSocketInfo	Microkernel/core/config/ConfigParser.cpp	/^    void ConfigParser::saveSocketInfo(const XMLElement* root) $/;"	f	class:NET::ConfigParser
+saveSystemInfo	Microkernel/core/config/ConfigParser.cpp	/^    void ConfigParser::saveSystemInfo(const XMLElement* root) $/;"	f	class:NET::ConfigParser
+saveTo	Microkernel/core/format/XMLHelper.cpp	/^    BOOLEAN XMLHelper::saveTo(const CHAR* strPath) {$/;"	f	class:NET::XMLHelper
+second	Microkernel/core/protocol/ProtocolBase.hpp	/^				int second;$/;"	m	struct:NET::CProtocolBase::tagSocketTime
+second	client/Protocol.hpp	/^	int second;$/;"	m	struct:tagSocketTime
+server	modules/listener/Listener.hpp	/^            const CSocketServer*                		server() const                          { return m_pServer; }$/;"	f	class:NET::CListener
+setAffinity	Microkernel/core/thread/ThreadBase.cpp	/^    BOOLEAN CThreadBase::setAffinity(const UINT[]& cpus)$/;"	f	class:NET::CThreadBase
+setAttribute	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setAttribute(const STRING& strName, BOOLEAN bValue) {$/;"	f	class:NET::XMLElement
+setAttribute	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setAttribute(const STRING& strName, FLOAT fValue) {$/;"	f	class:NET::XMLElement
+setAttribute	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setAttribute(const STRING& strName, INT iValue) {$/;"	f	class:NET::XMLElement
+setAttribute	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setAttribute(const STRING& strName, LLONG lValue) {$/;"	f	class:NET::XMLElement
+setAttribute	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setAttribute(const STRING& strName, UINT uiValue) {$/;"	f	class:NET::XMLElement
+setAttribute	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setAttribute(const STRING& strName, const STRING& strValue) {$/;"	f	class:NET::XMLElement
+setDirection	Microkernel/core/log/Log.cpp	/^	void CLog::setDirection(LOG_LEVEL level, const char* strPath)$/;"	f	class:NET::CLog
+setDirection	Microkernel/core/log/Log.cpp	/^	void CLog::setDirection(const char* strPath)$/;"	f	class:NET::CLog
+setEventLoopSize	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	UINT CMultiManager::setEventLoopSize(UINT size)$/;"	f	class:NET::CMultiManager
+setFd	Microkernel/core/event/CBaseEvent.hpp	/^            void        setFd(UINT fd)                  { m_fd = fd; }$/;"	f	class:NET::CBaseEvent
+setFilter	Microkernel/core/log/Log.cpp	/^	void CLog::setFilter(LOG_LEVEL level)$/;"	f	class:NET::CLog
+setIP	Microkernel/core/socket/SocketServer.hpp	/^            void 			setIP(const STRING& ip)		        { m_strIP = ip; }$/;"	f	class:NET::CSocketServer
+setMaxSize	modules/worker/Worker.cpp	/^	void CWorker::setMaxSize(UINT uiSize)$/;"	f	class:NET::CWorker
+setName	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setName(const STRING& strName) {$/;"	f	class:NET::XMLElement
+setNonBlock	Microkernel/core/event/CFileEvent.cpp	/^    void CFileEvent::setNonBlock()$/;"	f	class:NET::CFileEvent
+setPort	Microkernel/core/socket/SocketServer.hpp	/^			void 			setPort(UINT iPort) 				{ m_uiPort = iPort; }$/;"	f	class:NET::CSocketServer
+setPriority	Microkernel/core/event/CBaseEvent.hpp	/^            void        setPriority(UINT uiPriority)    { m_uiPriority = uiPriority; }$/;"	f	class:NET::CBaseEvent
+setPriority	Microkernel/core/thread/ThreadBase.cpp	/^	BOOLEAN CThreadBase::setPriority(INT iPriority, EPolicy policy)$/;"	f	class:NET::CThreadBase
+setSize	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	UINT CMultiEpoll::setSize(UINT size)$/;"	f	class:NET::CMultiEpoll
+setSize	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^    UINT CMultiKqueue::setSize(UINT size)$/;"	f	class:NET::CMultiKqueue
+setSize	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	UINT CMultiManager::setSize(UINT size)$/;"	f	class:NET::CMultiManager
+setSize	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^	UINT CMultiSelect::setSize(UINT uiSize)$/;"	f	class:NET::CMultiSelect
+setValue	Microkernel/core/format/XMLElement.cpp	/^    void XMLElement::setValue(const STRING& strValue) {$/;"	f	class:NET::XMLElement
+setXMLNode	Microkernel/core/format/XMLElement.hpp	/^        void setXMLNode(xml_node<>* pNode) {$/;"	f	class:NET::XMLElement
+set_allocator	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void set_allocator(alloc_func *af, free_func *ff)$/;"	f	class:rapidxml::memory_pool
+size	Microkernel/core/event/CFileEvent.hpp	/^            UINT                    size()                      { return m_uiSize; }$/;"	f	class:NET::CFileEvent
+size	Microkernel/core/format/rapidxml/rapidxml_utils.hpp	/^        std::size_t size() const$/;"	f	class:rapidxml::file
+size	Microkernel/core/protocol/IProtocol.hpp	/^			int 		size;$/;"	m	struct:NET::IProtocol::tagObject
+size	modules/worker/Worker.hpp	/^			inline UINT 	size() const            { return m_uiSize;	}$/;"	f	class:NET::CWorker
+skip	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        static void skip(Ch *&text)$/;"	f	class:rapidxml::xml_document
+skip_and_expand_character_refs	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        static Ch *skip_and_expand_character_refs(Ch *&text)$/;"	f	class:rapidxml::xml_document
+start	Microkernel/native/CMain.cpp	/^	void CMain::start(void* arg)$/;"	f	class:NET::CMain
+stop	Microkernel/core/thread/ThreadBase.hpp	/^		void stop()$/;"	f	class:NET::CThreadBase
+sync	Microkernel/core/protocol/IProtocol.hpp	/^			INT 		sync;$/;"	m	struct:NET::IProtocol::tagSocketHeader
+sync	client/Protocol.hpp	/^	INT 		sync;$/;"	m	struct:tagSocketHeader
+tagData	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagData$/;"	s	namespace:NET
+tagEventLoop	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagEventLoop {$/;"	s	namespace:NET
+tagFileEvent	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagFileEvent {$/;"	s	namespace:NET
+tagFiredEvent	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagFiredEvent {$/;"	s	namespace:NET
+tagObject	Microkernel/core/protocol/IProtocol.hpp	/^			tagObject(int s) $/;"	f	struct:NET::IProtocol::tagObject
+tagObject	Microkernel/core/protocol/IProtocol.hpp	/^		typedef struct tagObject$/;"	s	class:NET::IProtocol
+tagSocketHeader	Microkernel/core/protocol/IProtocol.hpp	/^		typedef struct tagSocketHeader$/;"	s	class:NET::IProtocol
+tagSocketHeader	client/Protocol.hpp	/^typedef struct tagSocketHeader$/;"	s
+tagSocketHeart	Microkernel/core/protocol/ProtocolBase.hpp	/^			typedef struct tagSocketHeart$/;"	s	class:NET::CProtocolBase
+tagSocketHeart	client/Protocol.hpp	/^typedef struct tagSocketHeart$/;"	s
+tagSocketInfo	Microkernel/core/config/ConfigParser.hpp	/^        struct tagSocketInfo {$/;"	s	class:NET::final
+tagSocketPing	Microkernel/core/protocol/ProtocolBase.hpp	/^			typedef struct tagSocketPing$/;"	s	class:NET::CProtocolBase
+tagSocketPing	client/Protocol.hpp	/^typedef struct tagSocketPing$/;"	s
+tagSocketTime	Microkernel/core/protocol/ProtocolBase.hpp	/^			typedef struct tagSocketTime$/;"	s	class:NET::CProtocolBase
+tagSocketTime	client/Protocol.hpp	/^typedef struct tagSocketTime$/;"	s
+tagSystemInfo	Microkernel/core/config/ConfigParser.hpp	/^        struct tagSystemInfo {$/;"	s	class:NET::final
+tagTimeEvent	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	typedef struct tagTimeEvent {$/;"	s	namespace:NET
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::attribute_name_pred
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::attribute_value_pred
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::attribute_value_pure_pred
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::node_name_pred
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::text_pred
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::text_pure_no_ws_pred
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::text_pure_with_ws_pred
+test	Microkernel/core/format/rapidxml/rapidxml.hpp	/^            static unsigned char test(Ch ch)$/;"	f	struct:rapidxml::xml_document::whitespace_pred
+text_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct text_pred$/;"	s	class:rapidxml::xml_document
+text_pure_no_ws_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct text_pure_no_ws_pred$/;"	s	class:rapidxml::xml_document
+text_pure_with_ws_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct text_pure_with_ws_pred$/;"	s	class:rapidxml::xml_document
+time	Microkernel/core/protocol/ProtocolBase.hpp	/^				int time;$/;"	m	struct:NET::CProtocolBase::tagSocketHeart
+time	client/Protocol.hpp	/^	int time;$/;"	m	struct:tagSocketHeart
+timeProc	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^	typedef ::std::function<INT(const struct tagEventLoop* loop, INT id, INT repeat)> timeProc;$/;"	t	namespace:NET
+transformPolicy	Microkernel/core/thread/ThreadBase.cpp	/^    INT CThreadBase::transformPolicy(EPolicy policy)$/;"	f	class:NET::CThreadBase
+type	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        node_type type() const$/;"	f	class:rapidxml::xml_node
+type	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void type(node_type type)$/;"	f	class:rapidxml::xml_node
+type	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		EVENT_TYPE		type;$/;"	m	struct:NET::tagFiredEvent
+type	Microkernel/core/protocol/ProtocolBase.hpp	/^				int type;$/;"	m	struct:NET::CProtocolBase::tagSocketHeart
+type	Microkernel/core/protocol/ProtocolBase.hpp	/^				int type;$/;"	m	struct:NET::CProtocolBase::tagSocketTime
+type	client/Protocol.hpp	/^	int type;$/;"	m	struct:tagSocketHeart
+type	client/Protocol.hpp	/^	int type;$/;"	m	struct:tagSocketTime
+uiAliveValue	Microkernel/core/config/ConfigParser.hpp	/^            UINT uiAliveValue;$/;"	m	struct:NET::final::tagSocketInfo
+uiInterval	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		UINT 			uiInterval;$/;"	m	struct:NET::tagTimeEvent
+uiLimitOpenSize	Microkernel/core/config/ConfigParser.hpp	/^            UINT            uiLimitOpenSize;$/;"	m	struct:NET::final::tagSystemInfo
+uiMaxFileSize	Microkernel/core/config/ConfigParser.hpp	/^            UINT            uiMaxFileSize;$/;"	m	struct:NET::final::tagSystemInfo
+uiPort	Microkernel/core/config/ConfigParser.hpp	/^            UINT uiPort;$/;"	m	struct:NET::final::tagSocketInfo
+uiPriority	Microkernel/core/config/ConfigParser.hpp	/^            UINT            uiPriority;$/;"	m	struct:NET::final::tagSystemInfo
+uiShortTurnLimit	Microkernel/core/config/ConfigParser.hpp	/^            UINT            uiShortTurnLimit;$/;"	m	struct:NET::final::tagSystemInfo
+uiSize	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		UINT 			uiSize;$/;"	m	struct:NET::tagData
+uiSize	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		UINT     					uiSize;$/;"	m	struct:NET::tagEventLoop
+uiSize	Microkernel/core/protocol/IProtocol.hpp	/^			UINT 		uiSize;$/;"	m	struct:NET::IProtocol::tagSocketHeader
+uiSize	client/Protocol.hpp	/^	UINT 		uiSize;$/;"	m	struct:tagSocketHeader
+uiThreadCount	Microkernel/core/config/ConfigParser.hpp	/^            UINT            uiThreadCount;$/;"	m	struct:NET::final::tagSystemInfo
+uiTimeOut	Microkernel/core/config/ConfigParser.hpp	/^            UINT uiTimeOut;$/;"	m	struct:NET::final::tagSocketInfo
+uiValue	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		UINT 			uiValue;$/;"	m	struct:NET::tagTimeEvent
+unInitialize	Microkernel/native/CMain.cpp	/^	void CMain::unInitialize()$/;"	f	class:NET::CMain
+value	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        Ch *value() const$/;"	f	class:rapidxml::xml_base
+value	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void value(const Ch *value)$/;"	f	class:rapidxml::xml_base
+value	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        void value(const Ch *value, std::size_t size)$/;"	f	class:rapidxml::xml_base
+value_size	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        std::size_t value_size() const$/;"	f	class:rapidxml::xml_base
+value_type	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_attribute<Ch> value_type;$/;"	t	class:rapidxml::attribute_iterator
+value_type	Microkernel/core/format/rapidxml/rapidxml_iterators.hpp	/^        typedef typename xml_node<Ch> value_type;$/;"	t	class:rapidxml::node_iterator
+whitespace_pred	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        struct whitespace_pred$/;"	s	class:rapidxml::xml_document
+write	modules/worker/Worker.cpp	/^	INT CWorker::CProcessor::write(const EVENT_LOOP* loop, INT fd, DATA*& dataBuff, INT mask)$/;"	f	class:NET::CWorker::CProcessor
+writeProc	Microkernel/core/event/CFileEvent.cpp	/^    BOOLEAN CFileEvent::writeProc()$/;"	f	class:NET::CFileEvent
+writeProc	Microkernel/core/platform/multiplex/MultiStruct.hpp	/^		fileProc 		writeProc;		$/;"	m	struct:NET::tagFileEvent
+writeProc	modules/listener/Listener.cpp	/^    BOOLEAN CListener::writeProc()$/;"	f	class:NET::CListener
+xml_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_attribute()$/;"	f	class:rapidxml::xml_attribute
+xml_attribute	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    class xml_attribute: public xml_base<Ch>$/;"	c	namespace:rapidxml
+xml_base	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_base()$/;"	f	class:rapidxml::xml_base
+xml_base	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    class xml_base$/;"	c	namespace:rapidxml
+xml_document	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_document()$/;"	f	class:rapidxml::xml_document
+xml_document	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    class xml_document: public xml_node<Ch>, public memory_pool<Ch>$/;"	c	namespace:rapidxml
+xml_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        xml_node(node_type type)$/;"	f	class:rapidxml::xml_node
+xml_node	Microkernel/core/format/rapidxml/rapidxml.hpp	/^    class xml_node: public xml_base<Ch>$/;"	c	namespace:rapidxml
+~CBaseModule	Microkernel/core/module/CBaseModule.hpp	/^            virtual ~CBaseModule() {}$/;"	f	class:NET::CBaseModule
+~CFileEvent	Microkernel/core/event/CFileEvent.cpp	/^    virtual CFileEvent::~CFileEvent()$/;"	f	class:NET::CFileEvent
+~CListener	modules/listener/Listener.cpp	/^	CListener::~CListener()$/;"	f	class:NET::CListener
+~CLog	Microkernel/core/log/Log.hpp	/^			~CLog() {};$/;"	f	class:NET::CLog
+~CMain	Microkernel/native/CMain.cpp	/^	CMain::~CMain()$/;"	f	class:NET::CMain
+~CMultiEpoll	Microkernel/core/platform/multiplex/MultiEpoll.cpp	/^	CMultiEpoll::~CMultiEpoll()$/;"	f	class:NET::CMultiEpoll
+~CMultiKqueue	Microkernel/core/platform/multiplex/MultiKqueue.cpp	/^    CMultiKqueue::~CMultiKqueue()$/;"	f	class:NET::CMultiKqueue
+~CMultiManager	Microkernel/core/platform/multiplex/MultiManager.cpp	/^	CMultiManager::~CMultiManager()$/;"	f	class:NET::CMultiManager
+~CMultiSelect	Microkernel/core/platform/multiplex/MultiSelect.cpp	/^	CMultiSelect::~CMultiSelect()$/;"	f	class:NET::CMultiSelect
+~CProtocolBase	Microkernel/core/protocol/ProtocolBase.cpp	/^	CProtocolBase::~CProtocolBase()$/;"	f	class:NET::CProtocolBase
+~CSocket	Microkernel/core/socket/Socket.cpp	/^	CSocket::~CSocket()$/;"	f	class:NET::CSocket
+~CSocketServer	Microkernel/core/socket/SocketServer.cpp	/^	CSocketServer::~CSocketServer()$/;"	f	class:NET::CSocketServer
+~CThreadBase	Microkernel/core/thread/ThreadBase.hpp	/^		virtual ~CThreadBase() $/;"	f	class:NET::CThreadBase
+~CUpdate	modules/update/Update.cpp	/^	CUpdate::~CUpdate()$/;"	f	class:NET::CUpdate
+~CWorker	modules/worker/Worker.cpp	/^	CWorker::~CWorker()$/;"	f	class:NET::CWorker
+~ConfigParser	Microkernel/core/config/ConfigParser.cpp	/^    ConfigParser::~ConfigParser() $/;"	f	class:NET::ConfigParser
+~IMultiBase	Microkernel/core/platform/multiplex/MultiManager.hpp	/^					virtual ~IMultiBase() {}$/;"	f	class:NET::CMultiManager::IMultiBase
+~XMLElement	Microkernel/core/format/XMLElement.cpp	/^    XMLElement::~XMLElement() {$/;"	f	class:NET::XMLElement
+~XMLHelper	Microkernel/core/format/XMLHelper.cpp	/^    XMLHelper::~XMLHelper() {$/;"	f	class:NET::XMLHelper
+~memory_pool	Microkernel/core/format/rapidxml/rapidxml.hpp	/^        ~memory_pool()$/;"	f	class:rapidxml::memory_pool
+~tagObject	Microkernel/core/protocol/IProtocol.hpp	/^			~tagObject() $/;"	f	struct:NET::IProtocol::tagObject

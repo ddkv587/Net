@@ -63,7 +63,7 @@ namespace NET
 			::std::vector<FIRED_EVENT>		m_lstFired;
 
 			//static file map, ( sizeof(FILE_EVENT) + sizeof(FIRED_EVENT) ) * MAX_FILE_SIZE + ...
-			static ::std::mutex				m_mutex;
+			static SMUTEX					m_mutex;
 			static EVENT_LOOP*				s_pEventLoop;		
 	};
 }
