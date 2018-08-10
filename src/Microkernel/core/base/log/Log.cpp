@@ -49,24 +49,24 @@ namespace NET
 
 	std::string CLog::format(const char* fmt, ...) 
 	{
-			int size = 512;
-			char* buff = new char[size];
-			
-			va_list v1;
-			va_start(v1, fmt);
-			int nsize = vsnprintf(buff, size, fmt, v1);
-			if ( size <= nsize ) {
-				delete[] buff;
-				buff = new char[nsize + 1];
-			
-				nsize = vsnprintf(buff, size, fmt, v1);
-			}
-			std::string ret(buff);
-			
-			va_end(v1);
+		int size = 512;
+		char* buff = new char[size];
+		
+		va_list v1;
+		va_start(v1, fmt);
+		int nsize = vsnprintf(buff, size, fmt, v1);
+		if ( size <= nsize ) {
 			delete[] buff;
-			
-			return ret;
+			buff = new char[nsize + 1];
+		
+			nsize = vsnprintf(buff, size, fmt, v1);
+		}
+		std::string ret(buff);
+		
+		va_end(v1);
+		delete[] buff;
+		
+		return ret;
 	}
 
 	bool CLog::checkDirection(const char* strPath)

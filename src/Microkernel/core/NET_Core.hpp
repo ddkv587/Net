@@ -41,7 +41,7 @@ namespace NET
 #endif
 }
 
-//============ common ==============
+//============ base start ==============
 #include <vector>
 #include <fstream>
 #include <mutex>
@@ -49,10 +49,10 @@ namespace NET
 #include <assert.h>
 #endif
 
-#include "platform/TypeDefine.hpp"
-#include "platform/Command.hpp"
+#include "base/TypeDefine.hpp"
+#include "base/Command.hpp"
 
-//============ log ==============
+// log
 #include <glog/logging.h>
 using namespace google;
 
@@ -62,26 +62,15 @@ using namespace google;
 #include "log/Log.hpp"
 extern int errno;
 
-//=========== format =========
-#include "format/rapidxml/rapidxml.hpp"
-#include "format/rapidxml/rapidxml_utils.hpp"
-#include "format/rapidxml/rapidxml_print.hpp"
+// format
+#include "base/format/rapidxml/rapidxml.hpp"
+#include "base/format/rapidxml/rapidxml_utils.hpp"
+#include "base/format/rapidxml/rapidxml_print.hpp"
 using namespace rapidxml;
-#include "format/XMLElement.hpp"
-#include "format/XMLHelper.hpp"
+#include "base/format/XMLElement.hpp"
+#include "base/format/XMLHelper.hpp"
 
-//====== config =====
-#include "config/ConfigParser.hpp"
-
-//=========== load helper =========
-#include <dlfcn.h>
-#include "loadHelper/CLoadHelper.hpp"
-
-//=========== thread ===============
-#include <thread>
-#include "thread/ThreadBase.hpp"
-
-//=========== socket ================
+// socket
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -91,25 +80,54 @@ using namespace rapidxml;
 #include <fcntl.h>
 
 #include "socket/Socket.hpp"
+
+// thread
+#include <thread>
+#include "thread/ThreadBase.hpp"
+//============ base end ==============
+
+//============ config ==============
+#include "config/ConfigParser.hpp"
+
 #include "socket/SocketServer.hpp"
 #include "socket/IClientListener.hpp"
 
 #include "timer/ITimerListener.hpp"
 #include "timer/Timer.hpp"
 
-//========== platform ==============
-#include "platform/multiplex/MultiStruct.hpp"
-#include "platform/multiplex/MultiManager.hpp"
+//============ event ==============
+#include "event/CBaseEvent.hpp"
+#include "event/CFileEvent.hpp"
+#include "event/CTimeEvent.hpp"
+
+//============ module ==============
+#include "module/CBaseModule.hpp"
+#include "module/CModuleManager.hpp"
+
+//============ multiplex ==============
+#include "multiplex/MultiStruct.hpp"
+#include "multiplex/MultiManager.hpp"
 
 #ifdef OS_BSD
 #include <sys/types.h>
 #include <sys/event.h>
-#include "platform/multiplex/MultiKqueue.hpp"
+#include "multiplex/MultiKqueue.hpp"
 #else
 #include <sys/epoll.h>
-#include "platform/multiplex/MultiEpoll.hpp"
-#include "platform/multiplex/MultiSelect.hpp"
-
+#include "multiplex/MultiEpoll.hpp"
+#include "multiplex/MultiSelect.hpp"
 #endif
+
+//============ protocol ==============
+#include "protocol/IProtocol.hpp"
+#include "protocol/ProtocolBase.hpp"
+
+//============ server ==============
+#include "server/IClientListener.hpp"
+#include "server/SocketServer.hpp"
+
+//============ timer ==============
+#include "timer/ITimerListener.hpp"
+#include "timer/Timer.hpp"
 
 #endif
