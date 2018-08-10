@@ -22,7 +22,6 @@ namespace NET
 	typedef		UINT64			ULONG;
 	typedef 	INT64			LLONG;
 	typedef		UINT64			ULLONG;
-	typedef 	void*			POINT;
 	typedef 	::std::string	STRING;
 
 	typedef 	::std::queue	SQUEUE;
