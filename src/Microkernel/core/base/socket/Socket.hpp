@@ -22,14 +22,14 @@ namespace NET
 			void 								setRecvBuffSize(INT64) noexcept;			
 
 			friend inline const CSocket&		operator>>(const CSocket&, const CHAR* const buffer);		//send
-			friend inline const CSocket&		operator<<(const CSocket&, CHAR* const buffer);		//recive
+			friend inline const CSocket&		operator<<(const CSocket&, CHAR* const buffer);				//recive
 
 		protected:
 			CSocket();
 			virtual ~CSocket();
 
-			virtual UINT			read();
-			virtual UINT			write();	
+			virtual UINT						read();
+			virtual UINT						write();	
 
 			CSocket(CSocket&) = delete;
 			CSocket(const CSocket&) = delete;
