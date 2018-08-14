@@ -6,6 +6,20 @@ namespace NET
 	class CSocket
 	{
 		public:
+			class SocketException : public std::exception
+			{
+				public:
+					SocketException(INT errno) : m_errno(errno) {}
+					const char* what() const noexcept
+					{
+						return strerror(m_errno);
+					}
+
+				private:
+					INT m_errno;
+			}
+
+		public:
 			virtual void 						init() noexcept;
 			virtual void 						destroy() noexcept;
 			
@@ -21,8 +35,8 @@ namespace NET
 			void								setSendBuffSize(INT64) noexcept;
 			void 								setRecvBuffSize(INT64) noexcept;			
 
-			friend inline const CSocket&		operator>>(const CSocket&, const CHAR* const buffer);		//send
-			friend inline const CSocket&		operator<<(const CSocket&, CHAR* const buffer);				//recive
+			friend inline const CSocket&		operator>>(const CSocket&, const CBuffer* const pBuffer);		//send
+			friend inline const CSocket&		operator<<(const CSocket&, CBuffer* const pBuffer);				//recive
 
 		protected:
 			CSocket();

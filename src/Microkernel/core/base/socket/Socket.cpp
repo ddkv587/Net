@@ -121,4 +121,36 @@ namespace NET
 		LOG_IF( ERROR, -1 == setsockopt(m_fd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size)) )
 				<< CLog::format( "[%s, %d]  set socket SO_RCVBUF error: %s" ,__FILE__, __LINE__, strerror(errno) );
 	}
+
+	CSocket& operator>>(const CSocket& socket, const CBuffer* const pBuffer)	
+	{
+		//send
+		UINT uiSize = 0;
+		CHAR buffer[1024];
+		while ( TRUE )
+		{
+			INT ret = recv(socket.m_fd, buffer, 1024);
+			if ( ret == -1 ) {
+				switch(errno) 
+				{
+				case EAGAIN:
+				case EWOULDBLOCK:
+					return socket;
+				default:
+					throw SocketException(errno);
+					return socket;
+				}
+			}
+			pBuffer->writeChar();
+			uiSize += ret;	
+		}
+
+		return socket;
+	}
+
+	CSocket& operator<<(const CSocket& socket, CBuffer* const pBuffer)
+	{
+		//recive
+		;
+	}
 }
