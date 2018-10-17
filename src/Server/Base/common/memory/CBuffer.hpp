@@ -39,7 +39,7 @@ namespace NET
 			CHAR*			raw()								{ return m_pRaw; }
 
 			void			addRef()							{ ++m_uiRef; }
-			void 			subRef()		
+			void 			subRef() 
 			{
 				--m_uiRef; 
 				if ( 0 == m_uiRef ) delete this;

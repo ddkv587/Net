@@ -6,8 +6,7 @@ namespace NET
 	class CLog 
 	{
 		public:
-			enum LOG_LEVEL
-			{
+			enum LOG_LEVEL {
 				LL_INFO,
 				LL_WARNING,
 				LL_ERROR,

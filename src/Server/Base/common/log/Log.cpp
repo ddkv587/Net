@@ -10,10 +10,10 @@ namespace NET
 	void CLog::initLog(const char* name)
 	{
 		google::InitGoogleLogging(name);
-		FLAGS_log_dir = "/tmp/log";
-		FLAGS_alsologtostderr = true;
-		FLAGS_colorlogtostderr = true;
-		FLAGS_minloglevel = LL_INFO;
+		FLAGS_log_dir 			= "/tmp/log";
+		FLAGS_alsologtostderr 	= true;
+		FLAGS_colorlogtostderr 	= true;
+		FLAGS_minloglevel 		= LL_INFO;
 
 		checkDirection("/tmp/log");
 	}

@@ -3,6 +3,10 @@
 
 namespace NET
 {
+#define NET_NONE                            0x00
+#define NET_READABLE                        0x01
+#define NET_WRITEABLE                       0x02
+
 	class CSocket
 	{
 		public:

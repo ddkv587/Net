@@ -40,7 +40,6 @@ namespace NET
 
 #define CHECK_R(X, R) \
 	do { if (!(X)) return (R); } while(0)
-}
 
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_FAILURE); } while(0)
@@ -50,17 +49,9 @@ namespace NET
 
 #define UNUSED(X) do { (void)(X); } while(0)
 
-#define NET_NONE                            0x00
-#define NET_READABLE                        0x01
-#define NET_WRITEABLE                       0x02
+#define SYSTEM_VERSION                      "0.1"
+#define RELEASE_TIME						"2018-09-13"
 
-#define SYSTEM_VERSION                      0.1
-#define SYSTEM_MAX_EVENTS                   1024
-#define SYSTEM_SOCKET_PORT                  8000
-
-#define POLL_TIMEOUT_SEC                    5
-#define POLL_TIMEOUT_USEC                   0
-
-#define MAX_TIME_EVENT_SIZE					0xFF
+}
 
 #endif

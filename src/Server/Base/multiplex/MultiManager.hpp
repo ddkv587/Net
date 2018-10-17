@@ -3,6 +3,14 @@
 
 namespace NET
 {
+#define SYSTEM_MAX_EVENTS                   1024
+#define SYSTEM_SOCKET_PORT                  8000
+
+#define POLL_TIMEOUT_SEC                    5
+#define POLL_TIMEOUT_USEC                   0
+
+#define MAX_TIME_EVENT_SIZE					0xFF
+
 	class CMultiManager
 	{
 		public:
