@@ -32,25 +32,47 @@ namespace NET
 #define TRUE			true 
 #define FALSE			false
 
-//#define NULL			nullptr
 #define STRING_NULL		""
 
 #define MIN(x, y) 	( (x) < (y) ? (x) : (y) )
 #define MAX(x, y) 	( (x) > (y) ? (x) : (y) )
 
-#define CHECK_R(X, R) \
-	do { if (!(X)) return (R); } while(0)
+#define UNUSED(X) 							do { (void)(X); } while(0)
 
-#define handle_error(msg) \
-	do { perror(msg); exit(EXIT_FAILURE); } while(0)
-
-#define handle_error_errno(en, msg) \
-	do { errno = en, perror(msg); exit(EXIT_FAILURE); } while(0)
-
-#define UNUSED(X) do { (void)(X); } while(0)
-
-#define SYSTEM_VERSION                      "0.1"
+#define SYSTEM_VERSION                      "0.2"
 #define RELEASE_TIME						"2018-09-13"
+
+#ifdef __DEBUG__
+#include <assert.h>
+#define assert_m( x, m )        do { UNUSED( m ); assert( x ); } while(0)
+#define assert_r( x, r )        do { UNUSED( r ); assert( x ); } while(0)
+#define assert_mr( x, m, r )    do { UNUSED( m ); UNUSED( r ); assert( x ); } while(0)
+#else
+#define assert( x ) \
+            do {\
+                if ( !( x ) ) \
+                    return; \
+            } while(0)       
+#define assert_m( x, m ) \
+            do {\
+                if ( !( x ) ) {\
+                    perror( m ); \
+                    return; \
+                } \
+            } while(0)
+#define assert_r( x, r ) \
+            do {\
+                if ( !( x ) ) \
+                    return ( r ); \
+            } while(0)          
+#define assert_mr( x, m, r ) \
+            do {\
+                if ( !( x ) ) {\
+                    perror( m ); \
+                    return ( r ); \
+                } \
+            } while(0)
+#endif  // __ASSERT__
 
 }
 

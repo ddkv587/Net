@@ -71,7 +71,7 @@ namespace NET
             ::memcpy( blockData + sizeof( Chunk ) + block->m_userdataSize, s_endBound, s_boundsCheckSize );
         }
 
-        if(m_trashOnAlloc)
+        if ( m_trashOnAlloc )
             ::memset( blockData + sizeof( Chunk ), s_trashOnAllocSignature, block->m_userdataSize );
         
         return ( blockData + sizeof( Chunk ) );
@@ -84,8 +84,8 @@ namespace NET
         ASSERT( block->m_free == false, "This block is already free" );
         if ( block->m_free ) return;
 
-        UINT64 fullBlockSize = block->m_userdataSize + sizeof( Chunk ) + ( m_boundsCheck == 1 ? s_boundsCheckSize * 2 : 0 );
-        m_freePoolSize += block->m_userdataSize;
+        UINT64 fullBlockSize    = block->m_userdataSize + sizeof( Chunk ) + ( m_boundsCheck == 1 ? s_boundsCheckSize * 2 : 0 );
+        m_freePoolSize          += block->m_userdataSize;
 
         Chunk* headBlock    = block;
         Chunk* prev         = block->m_prev;
@@ -94,9 +94,9 @@ namespace NET
         // merge
         if ( block->m_prev && block->m_prev->m_free )
         {
-            headBlock = block->m_prev;
-            prev = block->m_prev->m_prev;
-            next = block->m_next;
+            headBlock   = block->m_prev;
+            prev        = block->m_prev->m_prev;
+            next        = block->m_next;
 
             fullBlockSize += m_boundsCheck == 1 ? 
                                 block->m_prev->m_userdataSize + sizeof(Chunk) + s_boundsCheckSize * 2 : 
@@ -106,10 +106,10 @@ namespace NET
             {
                 block->m_next->m_prev = headBlock;
 
-                if( block->m_next->m_free )
+                if ( block->m_next->m_free )
                 {
                     next = block->m_next->m_next;
-                    if(block->m_next->m_next)
+                    if ( block->m_next->m_next )
                         block->m_next->m_next->m_prev = headBlock;
 
                     fullBlockSize +=m_boundsCheck == 1 ? 
