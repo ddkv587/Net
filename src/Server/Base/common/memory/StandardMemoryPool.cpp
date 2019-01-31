@@ -111,8 +111,25 @@ namespace NET
         block->m_free           = TRUE;
     }
 
-    bool StandardMemoryPool::integrityCheck() const;
-    void StandardMemoryPool::dumpToFile(const STRING& fileName, const UINT64 itemsPerLine) const;
+    BOOLEAN StandardMemoryPool::integrityCheck() const
+    {
+        if ( m_boundsCheck == 1 ) {
+            Chunk* temp = (Chunk*)( m_poolMemory + s_boundsCheckSize );
+
+            while ( temp != NULL ) {
+                if ( ::memcmp( ((BYTE*)temp ) - s_boundsCheckSize, s_startBound, s_boundsCheckSize) != 0 ) return FALSE; 
+                if ( ::memcmp( ((BYTE*)temp ) + sizeof(Chunk) + temp->m_userdataSize, s_endBound, s_boundsCheckSize) != 0 ) return FALSE; 
+
+                temp = temp->m_next;
+            }
+        }
+        return TRUE;
+    }
+
+    void StandardMemoryPool::dumpToFile(const STRING& fileName, const UINT64 itemsPerLine) const
+    {
+        ;
+    }
 
     inline void* StandardMemoryPool::merge( void* ptrDst, void* ptrSrc )
     {

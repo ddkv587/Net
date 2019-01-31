@@ -16,6 +16,9 @@ namespace NET
 
     private:
         inline void*            merge( void* ptrDst, void* ptrSrc );
+    
+    private: 
+        BYTE*		            m_poolMemory;
     };
 }
 #endif
