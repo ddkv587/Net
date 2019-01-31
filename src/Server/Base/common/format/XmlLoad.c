@@ -34,13 +34,13 @@ BOOLEAN loadXML( const CHAR *strPath, struct tagXMLDocument *pDoc )
     // parse
     if ( !parse(pParseBuffer, pDoc) ) goto err_buffer;
 
-    free(pBuff);
+    free( pBuff );
     close(fd);
     return TRUE;
  
 err_buffer:
-    free(pBuff);
-    close(fd);
+    free( pBuff );
+    close( fd );
     return FALSE;
 }
 

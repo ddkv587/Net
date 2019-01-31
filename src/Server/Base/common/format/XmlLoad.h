@@ -14,36 +14,36 @@ enum EDataType
 struct tagXMLDocument
 {
     UINT    uiChildSize;
-    struct tagXMLNode *pChild;
+    struct tagXMLNode*  pChild;
 };
 
 struct tagXMLNode
 {
-    CHAR            strName[128];
-    CHAR            strValue[64];  
+    CHAR                    strName[128];
+    CHAR                    strValue[64];  
     
-    UINT            uiChildSize;
-    UINT            uiAttributeSize;
-    struct tagXMLAttribute  *pAttribute;
-    struct tagXMLNode       *pChild;
-    struct tagXMLNode       *pNext;
+    UINT                    uiChildSize;
+    UINT                    uiAttributeSize;
+    struct tagXMLAttribute* pAttribute;
+    struct tagXMLNode*      pChild;
+    struct tagXMLNode*      pNext;
 
-    struct tagXMLNode       *pParent;
-    struct tagXMLDocument   *pRoot;
+    struct tagXMLNode*      pParent;
+    struct tagXMLDocument*  pRoot;
 };
 
 struct tagXMLAttribute
 {
-    CHAR            strName[128];
-    CHAR            strValue[64];  
-    struct tagXMLNode       *pParent;
-    struct tagXMLAttribute  *pNext;  
+    CHAR                    strName[128];
+    CHAR                    strValue[64];  
+    struct tagXMLNode*      pParent;
+    struct tagXMLAttribute* pNext;  
 };
 
-extern BOOLEAN                  loadXML( const CHAR* strPath, struct tagXMLDocument *pDoc );
-extern void                     showXML( struct tagXMLDocument *pDoc);
-extern void                     releaseXML( struct tagXMLDocument *pDoc);
-extern struct tagXMLNode*       getNode( const CHAR* strName, struct tagXMLDocument *pDoc );
+extern BOOLEAN                  loadXML( const CHAR* strPath, struct tagXMLDocument* pDoc );
+extern void                     showXML( struct tagXMLDocument* pDoc );
+extern void                     releaseXML( struct tagXMLDocument* pDoc);
+extern struct tagXMLNode*       getNode( const CHAR* strName, struct tagXMLDocument* pDoc );
 extern struct tagXMLNode*       getChildNode( const CHAR* strName, struct tagXMLNode *pNode );
 extern struct tagXMLAttribute*  getAttribute( const CHAR *strName, struct tagXMLNode *pNode );
 #endif

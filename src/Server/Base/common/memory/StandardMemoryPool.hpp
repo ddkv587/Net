@@ -13,6 +13,9 @@ namespace NET
         inline virtual void     free( void* ptrc );
         inline virtual bool     integrityCheck() const;
         inline virtual void     dumpToFile(const STRING& fileName, const UINT64 itemsPerLine) const;
+
+    private:
+        inline void*            merge( void* ptrDst, void* ptrSrc );
     };
 }
 #endif
