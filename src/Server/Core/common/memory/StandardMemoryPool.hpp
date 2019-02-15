@@ -3,7 +3,7 @@
 
 namespace NET
 {
-    class StandardMemoryPool : public MemoryPool
+    class StandardMemoryPool final : public MemoryPool
     {
     public:
         StandardMemoryPool( UINT64 size, BOOLEAN boundCheck );

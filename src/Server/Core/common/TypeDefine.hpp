@@ -29,18 +29,29 @@ namespace NET
 	typedef 	::std::map		SMAP;
 	typedef 	::std::mutex	SMUTEX;
 
-#define TRUE			true 
-#define FALSE			false
+#ifndef TRUE
+#define TRUE					true
+#endif
 
-#define STRING_NULL		""
+#ifndef FALSE
+#define FALSE					false
+#endif
 
-#define MIN(x, y) 	( (x) < (y) ? (x) : (y) )
-#define MAX(x, y) 	( (x) > (y) ? (x) : (y) )
+#ifndef STRING_NULL
+#define STRING_NULL				""
+#endif
 
-#define UNUSED(X) 							do { (void)(X); } while(0)
+#ifndef NULL
+#define NULL 					0
+#endif
 
-#define SYSTEM_VERSION                      "0.2"
-#define RELEASE_TIME						"2018-09-13"
+#define MIN(x, y) 				( (x) < (y) ? (x) : (y) )
+#define MAX(x, y) 				( (x) > (y) ? (x) : (y) )
+
+#define UNUSED(X) 				(void)(X)
+
+#define SYSTEM_VERSION			"0.2"
+#define RELEASE_TIME			"2018-09-13"
 
 #ifdef __DEBUG__
 #include <assert.h>
@@ -73,7 +84,6 @@ namespace NET
                 } \
             } while(0)
 #endif  // __ASSERT__
-
 }
 
 #endif
