@@ -11,6 +11,7 @@ debug: $(TARGET_MODULE)_debug
 
 $(CPP_APP_OBJECT): $(BUILD_MIDDLE_PATH)%.o: $(CPP_SRCDIR)%.cpp
 	@echo $(notdir $<)
+	@echo $(dir $@)
 	@$(MKDIR) $(dir $@)
 	@$(CXX) -c $(CPP_INCLUDE) $(CPP_FLAGS) -fPIC -o $@ $<
 
