@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "============= start build NET =============="
-cd build
+cd build/linux
+sourcr config
 make release
 
 echo "============= build NET done =============="
