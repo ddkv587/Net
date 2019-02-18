@@ -15,7 +15,6 @@ namespace NET
         inline virtual void     dumpToFile(const STRING& fileName, const UINT64 itemsPerLine) const;
 
     private:
-        inline void*            merge( void* ptrDst, void* ptrSrc );
     
     private: 
         BYTE*		            m_poolMemory;

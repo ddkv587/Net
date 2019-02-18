@@ -128,15 +128,70 @@ namespace NET
 
     void StandardMemoryPool::dumpToFile(const STRING& fileName, const UINT64 itemsPerLine) const
     {
-        ;
-    }
+        FILE* fp = NULL;
+        fopen_s( &fp, fileName.c_str(), "w+" );
+        if ( !fp ) return;
 
-    inline void* StandardMemoryPool::merge( void* ptrDst, void* ptrSrc )
-    {
-        // TODO
-        assert_r( NULL != ptrDst && NULL != ptrSrc, NULL );
-        Chunk* blockSrc = (Chunk*)( (BYTE*)ptrSrc - sizeof(Chunk) );
-        Chunk* blockDst = (Chunk*)( (BYTE*)ptrDst - sizeof(Chunk) );
-        return ptrDst;
+        fprintf(fp, "Memory pool ----------------------------------\n");
+        fprintf(fp, "Type: Standard Memory\n");
+        fprintf(fp, "Total Size: %d\n", m_totalPoolSize);
+        fprintf(fp, "Free Size: %d\n", m_freePoolSize);
+
+        // Now search for a block big enough
+        Chunk* block = (Chunk*)( m_boundsCheck == 1 ? m_poolMemory + s_boundsCheckSize : m_poolMemory);
+
+        while(block) {
+            if(block->m_free)
+                fprintf(f, "Free:\t0x%08x [Bytes:%d]\n", block, block->m_userdataSize);
+            else
+                fprintf(f, "Used:\t0x%08x [Bytes:%d]\n", block, block->m_userdataSize);
+            block = block->m_next;
+        }
+
+        fprintf( fp, "\n\nMemory Dump:\n" );
+        BYTE* ptr = m_poolMemory;
+        BYTE* charPtr = m_poolMemory;
+
+        fprintf( fp, "Start: 0x%08x\n", ptr );
+
+        // Write the hex memory data
+        DWORD bytesPerLine = itemsPerLine * 4;
+
+        fprintf( fp, "\n0x%08x: ", ptr );
+        fprintf( fp, "%02x", *(ptr) );
+        ++ptr;
+
+        BYTE i = 0;
+        for ( i = 1; ((DWORD)(ptr - m_poolMemory) < m_totalPoolSize); ++i, ++ptr ) {
+            if(i == bytesPerLine) {
+                // Write all the chars for this line now
+                fprintf( fp, "  ", charPtr );
+                for(DWORD charI = 0; charI<bytesPerLine; ++charI, ++charPtr)
+                    fprintf( fp, "%c", *charPtr );
+                charPtr = ptr;
+
+                // Write the new line memory data
+                fprintf( fp, "\n0x%08x: ", ptr );
+                fprintf( fp, "%02x", *(ptr) );
+                i = 0;
+            }
+            else
+                fprintf( fp, ":%02x", *(ptr) );
+        }
+
+        // Fill any gaps in the tab
+        if( (DWORD)(ptr - m_poolMemory) >= m_totalPoolSize) {
+            DWORD lastLineBytes = i;
+            for( i; i < bytesPerLine; i++)
+                fprintf( fp," --" );
+
+            // Write all the chars for this line now
+            fprintf( fp, "  ", charPtr );
+            for(DWORD charI = 0; charI < lastLineBytes; ++charI, ++charPtr)
+                fprintf( fp, "%c", *charPtr );
+            charPtr = ptr;
+        }
+
+        fclose( fp );
     }
 }

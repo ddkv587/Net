@@ -49,8 +49,8 @@ namespace NET
 #include <assert.h>
 #endif
 
-#include "base/TypeDefine.hpp"
-#include "base/Command.hpp"
+#include "Common/TypeDefine.hpp"
+#include "Common/Command.hpp"
 
 // log
 #include <glog/logging.h>
@@ -63,12 +63,7 @@ using namespace google;
 extern int errno;
 
 // format
-#include "base/format/rapidxml/rapidxml.hpp"
-#include "base/format/rapidxml/rapidxml_utils.hpp"
-#include "base/format/rapidxml/rapidxml_print.hpp"
-using namespace rapidxml;
-#include "base/format/XMLElement.hpp"
-#include "base/format/XMLHelper.hpp"
+#include "Common/format/rapidxml/rapidxml.hpp"
 
 // socket
 #include <sys/types.h>
