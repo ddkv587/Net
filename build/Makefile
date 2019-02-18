@@ -7,4 +7,4 @@ release: Server
 Server: Core
 
 Core:
-	make -f Core/Makefile release
+	make -f linux/Server/Core/Makefile release
