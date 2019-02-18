@@ -1,6 +1,7 @@
 CUR_DIR=`pwd`
 
 export ROOT_PATH=${CUR_DIR}/../..
+export IM_PATH=${ROOT_PATH}/IM_linux
 export TARGET_PATH=${ROOT_PATH}/.out
 export BUILD_IM_PATH=${ROOT_PATH}/.im_build
 export SOURCE_ROOT=${ROOT_PATH}/src
