@@ -16,4 +16,19 @@ extern "C"
     {
         return MemoryTrace::CMemoryManager::getInstance()->TraceCalloc( n, len );
     }
+
+    void* realloc(void *ptr, size_t size)
+    {
+        return MemoryTrace::CMemoryManager::getInstance()->TraceRealloc( ptr, size );
+    }
+
+    void* memalign(size_t blocksize, size_t bytes) 
+    {
+        return MemoryTrace::CMemoryManager::getInstance()->TraceMemalign( blocksize, bytes );
+    }
+
+    void* valloc(size_t size) 
+    {
+        return MemoryTrace::CMemoryManager::getInstance()->TraceValloc( size );
+    }
 }
