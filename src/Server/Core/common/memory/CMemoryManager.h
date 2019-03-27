@@ -69,7 +69,7 @@ namespace MemoryTrace
 
     private: 
         void                    appendUnit(tagUnitNode*);
-        void                    deleteUnit(tagUnitNode*);
+        bool                    deleteUnit(tagUnitNode*);
         
         void*                   _impMalloc( size_t size, bool bRecursive = true );
         void*                   _impCalloc( size_t nmemb, size_t size, bool bRecursive = true );
@@ -88,8 +88,6 @@ namespace MemoryTrace
         FUNC_MEMALIGN               m_pRealMemalign;
         FUNC_VALLOC                 m_pRealValloc;
         FUNC_FREE                   m_pRealFree;
-
-        tagUnitManager              m_unitManager;
     };
 }
 #endif

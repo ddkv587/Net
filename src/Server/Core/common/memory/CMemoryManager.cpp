@@ -18,7 +18,22 @@ namespace MemoryTrace
 	#define MAKE_UNIT_NODE_MAGIC(ptr_unit_hdr)			        ( UNIT_NODE_MAGIC ^ (size_t)ptr_unit_hdr )
 
     static int s_no_hook = 0;
-    static CMemoryManager s_Instance;
+    static CMemoryManager                   s_Instance;
+    static CMemoryManager::tagUnitManager   s_unitManager 
+    { 
+        .totalSize          = 0,
+        .availSize          = 0,
+        .unitCount          = 0,
+        .headUnit           = {
+            .sign   = 0,
+            .offset = 0,
+            .size   = 0,
+            .pData  = NULL,
+            .pPrev  = NULL,
+            .pNext  = NULL,
+        },
+        .pCurrent           = &(s_unitManager.headUnit),
+    };
 
     pthread_mutex_t s_mutexInit     = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_t s_mutexMemory   = PTHREAD_MUTEX_INITIALIZER;
@@ -31,7 +46,7 @@ namespace MemoryTrace
 
     void CMemoryManager::delInstance()
     {
-
+        ;
     }
 
     bool CMemoryManager::TraceInit()
@@ -62,7 +77,8 @@ namespace MemoryTrace
     
     void* CMemoryManager::TraceMalloc( size_t size )
     {
-        assert( NULL != m_pRealMalloc ); 
+        assert( NULL != m_pRealMalloc );
+
         void* p = _impMalloc( size, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
         return p;
@@ -90,7 +106,7 @@ namespace MemoryTrace
     {
         assert( NULL != m_pRealMemalign );
  
-        void* p = _impMemalign(  blocksize, bytes, __sync_fetch_and_add( &s_no_hook, 1 ) );
+        void* p = _impMemalign( blocksize, bytes, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
         return p;
     }
@@ -114,14 +130,16 @@ namespace MemoryTrace
 
     void CMemoryManager::check( bool autoDelete )
     {
-        tagUnitNode* pNode = m_unitManager.headUnit.pNext;
+        tagUnitNode* pNode = s_unitManager.headUnit.pNext;
 
+        tagUnitNode* pCur;
         while ( NULL != pNode ) 
         {
             fprintf( stderr, "unfree addr: %p, size: %ld\n", pNode, pNode->size - DEF_SIZE_UNIT_NODE );
-            pNode = pNode->pNext;
+            pCur    = pNode;
+            pNode   = pNode->pNext;
 
-            if ( autoDelete ) _impFree( pNode->pPrev );
+            if ( autoDelete ) _impFree( pCur );
         }
     }
 
@@ -134,24 +152,11 @@ namespace MemoryTrace
         , m_pRealValloc(NULL)
         , m_pRealFree(NULL)
     {
-        //fprintf( stderr, "CMemoryManager(construct)\n" );
-
-        m_unitManager.totalSize     = 0;
-        m_unitManager.availSize     = 0;
-        m_unitManager.unitCount     = 0;
-        m_unitManager.pCurrent      = &( m_unitManager.headUnit );
-
-        m_unitManager.headUnit.sign     = 0;
-        m_unitManager.headUnit.offset   = 0;
-        m_unitManager.headUnit.pData    = NULL;
-        m_unitManager.headUnit.pPrev    = NULL;
-        m_unitManager.headUnit.pNext    = NULL;
+        ;
     }
 
     CMemoryManager::~CMemoryManager()
     {
-        //fprintf( stderr, "CMemoryManager(destruct)\n" );
-
         check(false);
     }
 
@@ -161,41 +166,42 @@ namespace MemoryTrace
         
         if ( NULL == pNode ) { pthread_mutex_unlock( &s_mutexMemory ); return; }
         
-        pNode->pPrev = m_unitManager.pCurrent;
+        pNode->pPrev = s_unitManager.pCurrent;
         pNode->pNext = NULL;
 
-        if ( NULL != m_unitManager.pCurrent ) 
-            m_unitManager.pCurrent->pNext = pNode;
-        m_unitManager.pCurrent = pNode;
+        assert( NULL != s_unitManager.pCurrent );
+        s_unitManager.pCurrent->pNext = pNode;
+        s_unitManager.pCurrent = pNode;
 
-        m_unitManager.totalSize += pNode->size;
-        m_unitManager.availSize += pNode->size - DEF_SIZE_UNIT_NODE;
-        m_unitManager.unitCount += 1;
+        s_unitManager.totalSize += pNode->size;
+        s_unitManager.availSize += pNode->size - DEF_SIZE_UNIT_NODE;
+        s_unitManager.unitCount += 1;
 
         pthread_mutex_unlock( &s_mutexMemory );
     }
 
-    void CMemoryManager::deleteUnit( tagUnitNode* pNode )
+    bool CMemoryManager::deleteUnit( tagUnitNode* pNode )
     {
         pthread_mutex_lock( &s_mutexMemory );
         
-        if ( NULL == pNode ) { pthread_mutex_unlock( &s_mutexMemory ); return; }
+        if ( NULL == pNode ) { pthread_mutex_unlock( &s_mutexMemory ); return true; }
 
-        tagUnitNode* pCheckNode = PTR_OFFSET_NODE_HEADER( &m_unitManager, pNode->offset );
+        tagUnitNode* pCheckNode = PTR_OFFSET_NODE_HEADER( &s_unitManager, pNode->offset );
 
-        assert( MAKE_UNIT_NODE_MAGIC(pNode) == pNode->sign );
-        assert( *pCheckNode == *pNode );
+        // hook all type of memory request, this must be true
+        assert( MAKE_UNIT_NODE_MAGIC( pNode ) == pNode->sign && (*pCheckNode == *pNode ) );
+        assert( NULL != s_unitManager.pCurrent );
+        if ( s_unitManager.pCurrent == pCheckNode )
+            s_unitManager.pCurrent = pCheckNode->pPrev;
 
-        if ( m_unitManager.pCurrent == pCheckNode ) 
-            m_unitManager.pCurrent = pCheckNode->pPrev;
-
-        if ( NULL == pCheckNode->pPrev ) { fprintf(stderr, "===size: %ld\n", pCheckNode->size); }
-        else pCheckNode->pPrev->pNext = pCheckNode->pNext;
+        assert ( NULL != pCheckNode->pPrev );
+        pCheckNode->pPrev->pNext = pCheckNode->pNext;
 
         if ( NULL != pCheckNode->pNext )
             pCheckNode->pNext->pPrev = pCheckNode->pPrev;
 
         pthread_mutex_unlock( &s_mutexMemory );
+        return true;
     }
 
     void* CMemoryManager::_impMalloc( size_t size, bool bRecursive )
@@ -204,16 +210,17 @@ namespace MemoryTrace
 
         if ( NULL == pNode ) return NULL;
         pNode->sign     = MAKE_UNIT_NODE_MAGIC( pNode );
-        pNode->offset   = (size_t)pNode - (size_t)(&m_unitManager);
+        pNode->offset   = (size_t)pNode - (size_t)(&s_unitManager);
         pNode->size     = size + DEF_SIZE_UNIT_NODE;
         pNode->pData    = PTR_UNIT_NODE_DATA( pNode );
         pNode->pPrev    = NULL;
         pNode->pNext    = NULL;
         appendUnit( pNode );
 
-        //if ( !bRecursive )
-        //    fprintf(stderr, "===malloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
-
+#ifdef _DEBUG
+        if ( !bRecursive )
+            fprintf(stderr, "===malloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
+#endif
         return PTR_UNIT_NODE_DATA( pNode );
     }
 
@@ -224,29 +231,38 @@ namespace MemoryTrace
 
         if ( NULL == pNode ) return NULL;
         pNode->sign     = MAKE_UNIT_NODE_MAGIC( pNode );
-        pNode->offset   = (size_t)pNode - (size_t)(&m_unitManager);
+        pNode->offset   = (size_t)pNode - (size_t)(&s_unitManager);
         pNode->size     = nmemb * size;
         pNode->pData    = PTR_UNIT_NODE_DATA( pNode );
         pNode->pPrev    = NULL;
         pNode->pNext    = NULL;
         appendUnit( pNode );
 
+#ifdef _DEBUG
+        if ( !bRecursive )
+            fprintf(stderr, "===calloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
+#endif
         return PTR_UNIT_NODE_DATA( pNode );
     }
 
     void* CMemoryManager::_impRealloc( void *ptr, size_t size, bool bRecursive )
     {
-        tagUnitNode* pNode = (tagUnitNode*)m_pRealRealloc( ptr, size + DEF_SIZE_UNIT_NODE );
+        //if ( NULL != ptr ) _impFree( ptr, true );
+        tagUnitNode* pNode = (tagUnitNode*)m_pRealRealloc( NULL, size + DEF_SIZE_UNIT_NODE );
         
         if ( NULL == pNode ) return NULL;
         pNode->sign     = MAKE_UNIT_NODE_MAGIC( pNode );
-        pNode->offset   = (size_t)pNode - (size_t)(&m_unitManager);
+        pNode->offset   = (size_t)pNode - (size_t)(&s_unitManager);
         pNode->size     = size + DEF_SIZE_UNIT_NODE;
         pNode->pData    = PTR_UNIT_NODE_DATA( pNode );
         pNode->pPrev    = NULL;
         pNode->pNext    = NULL;
         appendUnit( pNode );
 
+#ifdef _DEBUG
+        if ( !bRecursive )
+            fprintf(stderr, "===realloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
+#endif
         return PTR_UNIT_NODE_DATA( pNode );
     }
 
@@ -256,13 +272,17 @@ namespace MemoryTrace
 
         if ( NULL == pNode ) return NULL;
         pNode->sign     = MAKE_UNIT_NODE_MAGIC( pNode );
-        pNode->offset   = (size_t)pNode - (size_t)(&m_unitManager);
+        pNode->offset   = (size_t)pNode - (size_t)(&s_unitManager);
         pNode->size     = size + DEF_SIZE_UNIT_NODE;
         pNode->pData    = PTR_UNIT_NODE_DATA( pNode );
         pNode->pPrev    = NULL;
         pNode->pNext    = NULL;
         appendUnit( pNode );
 
+#ifdef _DEBUG
+        if ( !bRecursive )
+            fprintf(stderr, "===memalign: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
+#endif
         return PTR_UNIT_NODE_DATA( pNode );
     }
 
@@ -272,13 +292,17 @@ namespace MemoryTrace
 
         if ( NULL == pNode ) return NULL;
         pNode->sign     = MAKE_UNIT_NODE_MAGIC( pNode );
-        pNode->offset   = (size_t)pNode - (size_t)(&m_unitManager);
+        pNode->offset   = (size_t)pNode - (size_t)(&s_unitManager);
         pNode->size     = size + DEF_SIZE_UNIT_NODE;
         pNode->pData    = PTR_UNIT_NODE_DATA( pNode );
         pNode->pPrev    = NULL;
         pNode->pNext    = NULL;
         appendUnit( pNode );
 
+#ifdef _DEBUG
+        if ( !bRecursive )
+            fprintf(stderr, "===valloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
+#endif
         return PTR_UNIT_NODE_DATA( pNode );
     }
 
@@ -286,10 +310,11 @@ namespace MemoryTrace
     {
         if ( NULL == ptr ) return;
         tagUnitNode* pNode = PTR_UNIT_NODE_HEADER( ptr );
-        
-        //if ( !bRecursive )
-        //    fprintf(stderr, "===free: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
 
+#ifdef _DEBUG       
+        if ( !bRecursive )
+            fprintf(stderr, "===free: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
+#endif        
         deleteUnit( pNode );
         m_pRealFree( pNode );
     }
