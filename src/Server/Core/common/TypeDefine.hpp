@@ -53,6 +53,29 @@ namespace NET
 #define SYSTEM_VERSION			"0.2"
 #define RELEASE_TIME			"2018-09-13"
 
+enum {
+    LOG_FATAL,
+    LOG_ERROR,
+    LOG_WARN,
+    LOG_INFO,
+    LOG_TRACE,
+} curent_log_level = LOG_ERROR;
+
+#define STR_TMP(x) #x
+#define STR(x) STR_TMP(x)
+#define LOG(level, format, ...) do {                                  \
+  if (level <= curent_log_level) {                                    \
+    fprintf(stderr, __FILE__ ":" STR(__LINE__) ": "                   \
+    format "\n", ##__VA_ARGS__);                                      \
+  }                                                                   \
+} while(0)
+
+#define DIE(format, ...) do {                                         \
+  fprintf(stderr, __FILE__ ":" STR(__LINE__) ":"                      \
+  format "\n", ##__VA_ARGS__);                                        \
+  exit(0);                                                            \
+} while(0)
+
 #ifdef __DEBUG__
 #include <assert.h>
 #define assert_m( x, m )        do { UNUSED( m ); assert( x ); } while(0)
