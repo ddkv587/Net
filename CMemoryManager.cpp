@@ -2,7 +2,6 @@
 #include <dlfcn.h>
 #include <cstdio>
 #include <mutex>
-#include <functional>
 #include <math.h>
 #include "CMemoryManager.h"
 
@@ -35,7 +34,7 @@ namespace MemoryTrace
             .pCurrent           = &( s_unitManager.headUnit ),
         };
 
-        static std::mutex s_mutexMemory;
+        static pthread_mutex_t s_mutexMemory = PTHREAD_MUTEX_INITIALIZER;
 
         void makeUnit(tagUnitNode* const pNode, size_t size)
         {
@@ -51,9 +50,9 @@ namespace MemoryTrace
 
         void appendUnit( tagUnitNode* pNode )
         {
-            std::lock_guard<std::mutex> lock( s_mutexMemory );
+            pthread_mutex_lock( &s_mutexMemory );
             
-            if ( NULL == pNode ) return;
+            if ( NULL == pNode ) { pthread_mutex_unlock( &s_mutexMemory ); return; }
             
             pNode->pPrev = s_unitManager.pCurrent;
             pNode->pNext = NULL;
@@ -65,13 +64,16 @@ namespace MemoryTrace
             s_unitManager.totalSize += pNode->size;
             s_unitManager.availSize += pNode->size - DEF_SIZE_UNIT_NODE;
             s_unitManager.unitCount += 1;
+
+            pthread_mutex_unlock( &s_mutexMemory );
+            
         }
 
-        bool deleteUnit( tagUnitNode* pNode )
+        void deleteUnit( tagUnitNode* pNode )
         {
-            std::lock_guard<std::mutex> lock( s_mutexMemory );
+            pthread_mutex_lock( &s_mutexMemory );
             
-            if ( NULL == pNode )    return true;
+            if ( NULL == pNode ) { pthread_mutex_unlock( &s_mutexMemory ); return; }
 
             tagUnitNode* pCheckNode = PTR_OFFSET_NODE_HEADER( &s_unitManager, pNode->offset );
 
@@ -87,7 +89,7 @@ namespace MemoryTrace
             if ( NULL != pCheckNode->pNext )
                 pCheckNode->pNext->pPrev = pCheckNode->pPrev;
 
-            return true;
+            pthread_mutex_unlock( &s_mutexMemory );
         }
 
         void check( bool autoDelete )
@@ -136,25 +138,31 @@ namespace MemoryTrace
             ;
         }    
     } // namespace mockMemory
-   
-    static bool             m_bInitialized      = false;
-    static bool             m_bInitializing     = false;
-    static FUNC_MALLOC      m_pRealMalloc       = mockMemory::_mockMalloc;
-    static FUNC_CALLOC      m_pRealCalloc       = mockMemory::_mockCalloc;
-    static FUNC_REALLOC     m_pRealRealloc      = NULL;
-    static FUNC_MEMALIGN    m_pRealMemalign     = NULL;
-    static FUNC_VALLOC      m_pRealValloc       = NULL;
-    static FUNC_FREE        m_pRealFree         = mockMemory::_mockFree;
 
-    static std::mutex       s_mutexInit;
+    enum TraceStatus
+    {   
+        TS_UNINITIALIZE = 0,
+        TS_INITIALIZING,
+        TS_INITIALIZED,
+        TS_FAILED,
+    };
+   
+    static TraceStatus      s_status            = TS_UNINITIALIZE;
+    static FUNC_MALLOC      s_pRealMalloc       = mockMemory::_mockMalloc;
+    static FUNC_CALLOC      s_pRealCalloc       = mockMemory::_mockCalloc;
+    static FUNC_REALLOC     s_pRealRealloc      = NULL;
+    static FUNC_MEMALIGN    s_pRealMemalign     = NULL;
+    static FUNC_VALLOC      s_pRealValloc       = NULL;
+    static FUNC_FREE        s_pRealFree         = mockMemory::_mockFree;
+
+    static pthread_mutex_t  s_mutexInit = PTHREAD_MUTEX_INITIALIZER;
 
     void TraceInitialize()
     {
-        fprintf( stderr, "TraceInit\n" );
-        std::lock_guard<std::mutex> lock( s_mutexInit );
-        if ( m_bInitialized ) return;
+        pthread_mutex_lock( &s_mutexInit );
+        if ( s_status == TS_INITIALIZED ) { pthread_mutex_unlock( &s_mutexInit ); return; }
 
-        m_bInitializing = true;
+        s_status = TS_INITIALIZING;
         
         FUNC_MALLOC     tmpMalloc       = (FUNC_MALLOC)dlsym(RTLD_NEXT, "malloc");
         FUNC_CALLOC     tmpCalloc       = (FUNC_CALLOC)dlsym(RTLD_NEXT, "calloc");
@@ -166,15 +174,16 @@ namespace MemoryTrace
         assert( !( NULL == tmpMalloc || NULL == tmpCalloc || NULL == tmpRealloc || 
               NULL == tmpMemalign || NULL == tmpValloc || NULL == tmpFree ) );
 
-        m_pRealMalloc       = tmpMalloc;
-        m_pRealCalloc       = tmpCalloc;
-        m_pRealRealloc      = tmpRealloc;
-        m_pRealMemalign     = tmpMemalign;
-        m_pRealValloc       = tmpValloc;
-        m_pRealFree         = tmpFree;
+        s_pRealMalloc       = tmpMalloc;
+        s_pRealCalloc       = tmpCalloc;
+        s_pRealRealloc      = tmpRealloc;
+        s_pRealMemalign     = tmpMemalign;
+        s_pRealValloc       = tmpValloc;
+        s_pRealFree         = tmpFree;
 
-        m_bInitialized  = true;
-        m_bInitializing = false;   
+        s_status = TS_INITIALIZED;
+
+        pthread_mutex_unlock( &s_mutexInit );
     }
 
     void TraceUninitialize()
@@ -185,9 +194,9 @@ namespace MemoryTrace
     static int s_no_hook    = 0;
     void* TraceMalloc( size_t size )
     {
-        if ( m_bInitializing ) return mockMemory::_mockMalloc(size);
+        if ( s_status == TS_INITIALIZING ) return mockMemory::_mockMalloc( size );
         
-        if ( !m_bInitialized )  TraceInitialize();
+        if ( s_status != TS_INITIALIZED )  TraceInitialize();
 
         void* p = _impMalloc( size, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
@@ -196,9 +205,9 @@ namespace MemoryTrace
 
     void* TraceCalloc( size_t nmemb, size_t size )
     { 
-        if ( m_bInitializing ) return mockMemory::_mockCalloc(nmemb, size);
+        if ( s_status == TS_INITIALIZING ) return mockMemory::_mockCalloc( nmemb, size );
         
-        if ( !m_bInitialized )  TraceInitialize();
+        if ( s_status != TS_INITIALIZED )  TraceInitialize();
 
         void* p = _impCalloc( nmemb, size, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
@@ -207,7 +216,7 @@ namespace MemoryTrace
 
     void* TraceRealloc( void *ptr, size_t size )
     {
-        if ( !m_bInitialized )  TraceInitialize();
+        if ( s_status != TS_INITIALIZED )  TraceInitialize();
 
         void* p = _impRealloc( ptr, size, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
@@ -216,7 +225,7 @@ namespace MemoryTrace
 
     void* TraceMemalign( size_t blocksize, size_t bytes )
     {
-        if ( !m_bInitialized )  TraceInitialize();
+        if ( s_status != TS_INITIALIZED )  TraceInitialize();
 
         void* p = _impMemalign( blocksize, bytes, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
@@ -225,18 +234,18 @@ namespace MemoryTrace
     
     void* TraceValloc( size_t size )
     {
-        if ( !m_bInitialized )  TraceInitialize();
+        if ( s_status != TS_INITIALIZED )  TraceInitialize();
 
         void* p = _impValloc( size, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
         return p;
     }
 
-    void TraceFree( void *ptr )
+    void TraceFree( void* ptr )
     {
-        if ( m_bInitializing ) return mockMemory::_mockFree(ptr);
-        
-        if ( !m_bInitialized )  TraceInitialize();
+        if ( s_status == TS_INITIALIZING ) return mockMemory::_mockFree( ptr );
+          
+        if ( s_status != TS_INITIALIZED )  TraceInitialize();
 
         _impFree( ptr, __sync_fetch_and_add( &s_no_hook, 1 ) );
         __sync_fetch_and_sub( &s_no_hook, 1 );
@@ -244,7 +253,7 @@ namespace MemoryTrace
 
     void* _impMalloc( size_t size, bool bRecursive )
     {
-        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)m_pRealMalloc( size + DEF_SIZE_UNIT_NODE );
+        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)s_pRealMalloc( size + DEF_SIZE_UNIT_NODE );
 
         if ( NULL == pNode ) return NULL;
 
@@ -261,7 +270,7 @@ namespace MemoryTrace
     void* _impCalloc( size_t nmemb, size_t size, bool bRecursive )
     {
         nmemb = ceil( (double)( size * nmemb + DEF_SIZE_UNIT_NODE ) / (double)size );
-        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)m_pRealCalloc( nmemb, size );
+        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)s_pRealCalloc( nmemb, size );
 
         if ( NULL == pNode ) return NULL;
         
@@ -278,7 +287,7 @@ namespace MemoryTrace
     void* _impRealloc( void *ptr, size_t size, bool bRecursive )
     {
         //if ( NULL != ptr ) _impFree( ptr, true );
-        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)m_pRealRealloc( NULL, size + DEF_SIZE_UNIT_NODE );
+        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)s_pRealRealloc( NULL, size + DEF_SIZE_UNIT_NODE );
         
         if ( NULL == pNode ) return NULL;
      
@@ -294,7 +303,7 @@ namespace MemoryTrace
 
     void* _impMemalign( size_t blocksize, size_t size, bool bRecursive )
     {
-        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)m_pRealMemalign( blocksize, size + DEF_SIZE_UNIT_NODE );
+        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)s_pRealMemalign( blocksize, size + DEF_SIZE_UNIT_NODE );
 
         if ( NULL == pNode ) return NULL;
         
@@ -310,7 +319,7 @@ namespace MemoryTrace
 
     void* _impValloc( size_t size, bool bRecursive )
     {
-        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)m_pRealValloc( size + DEF_SIZE_UNIT_NODE );
+        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)s_pRealValloc( size + DEF_SIZE_UNIT_NODE );
 
         if ( NULL == pNode ) return NULL;
         
@@ -334,6 +343,6 @@ namespace MemoryTrace
             fprintf(stderr, "===free: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
 #endif        
         MemoryManager::deleteUnit( pNode );
-        m_pRealFree( pNode );
+        s_pRealFree( pNode );
     }
 }

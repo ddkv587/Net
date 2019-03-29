@@ -37,7 +37,7 @@ namespace MemoryTrace
 
         void                makeUnit(tagUnitNode* const, size_t);
         void                appendUnit(tagUnitNode*);
-        bool                deleteUnit(tagUnitNode*);
+        void                deleteUnit(tagUnitNode*);
         void                check( bool autoDelete = true );
     }; // namespace MemoryManager
    
