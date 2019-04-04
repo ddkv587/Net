@@ -1,6 +1,6 @@
 #include "CMemoryManager.h"
-
 #include <assert.h>
+#include <unistd.h>
 
 extern "C"
 {
@@ -32,5 +32,12 @@ extern "C"
     void* valloc(size_t size) 
     {
         return MemoryTrace::TraceValloc( size );
+    }
+
+    void exit(int status)
+    {
+        MemoryTrace::TraceUninitialize();
+
+        _exit( status );
     }
 }

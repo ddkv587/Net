@@ -3,6 +3,9 @@
 #include <cstdio>
 #include <mutex>
 #include <math.h>
+#include <string.h>
+#include <execinfo.h>
+#include <unistd.h>
 #include "CMemoryManager.h"
 
 namespace MemoryTrace
@@ -18,23 +21,45 @@ namespace MemoryTrace
 
     namespace MemoryManager
     {
-        static tagUnitManager s_unitManager = \
-        { 
-            .totalSize          = 0,
-            .availSize          = 0,
-            .unitCount          = 0,
-            .headUnit           = {
-                .sign   = 0,
-                .offset = 0,
-                .size   = 0,
-                .pData  = NULL,
-                .pPrev  = NULL,
-                .pNext  = NULL,
-            },
-            .pCurrent           = &( s_unitManager.headUnit ),
-        };
+        static tagUnitManager s_unitManager;
 
         static pthread_mutex_t s_mutexMemory = PTHREAD_MUTEX_INITIALIZER;
+
+        void initialize()
+        {
+            s_unitManager.totalSize          = 0;
+            s_unitManager.availSize          = 0;
+            s_unitManager.unitCount          = 0;
+            s_unitManager.pCurrent           = &( s_unitManager.headUnit );
+
+            s_unitManager.headUnit           = {
+                .sign       = 0,
+                .offset     = 0,
+                .size       = 0,
+                .pData      = NULL,
+                .pPrev      = NULL,
+                .pNext      = NULL,
+                .traceSize  = 0,
+                .backtrace  = { NULL },                
+            };
+
+#ifdef OS_QNX
+            assert( 0 == bt_init_accessor( &s_unitManager.acc ) );
+            assert( 0 == bt_load_memmap( &s_unitManager.acc, &s_unitManager.memmap ) );
+            assert( 0 == bt_sprn_memmap( &s_unitManager.acc, s_unitManager.out, sizeof( s_unitManager.out ) ) );
+            s_unitManager.headUnit.traceSize = bt_get_backtrace( &s_unitManager.acc, s_unitManager.headUnit.backtrace, BT_BUF_SIZE );
+#else         
+            s_unitManager.headUnit.traceSize = backtrace( s_unitManager.headUnit.backtrace, BT_BUF_SIZE );
+#endif
+        }
+
+        void uninitialize()
+        {
+#ifdef OS_QNX
+            bt_unload_memmap( &s_unitManager.memmap );
+            bt_release_accessor( &s_unitManager.acc );
+#endif
+        }
 
         void makeUnit(tagUnitNode* const pNode, size_t size)
         {
@@ -46,6 +71,8 @@ namespace MemoryTrace
             pNode->pData    = PTR_UNIT_NODE_DATA( pNode );
             pNode->pPrev    = NULL;
             pNode->pNext    = NULL;
+
+            storeBacktrace( pNode ); 
         }
 
         void appendUnit( tagUnitNode* pNode )
@@ -54,8 +81,8 @@ namespace MemoryTrace
             
             if ( NULL == pNode ) { pthread_mutex_unlock( &s_mutexMemory ); return; }
             
-            pNode->pPrev = s_unitManager.pCurrent;
-            pNode->pNext = NULL;
+            pNode->pPrev    = s_unitManager.pCurrent;
+            pNode->pNext    = NULL;
 
             assert( NULL != s_unitManager.pCurrent );
             s_unitManager.pCurrent->pNext = pNode;
@@ -65,8 +92,7 @@ namespace MemoryTrace
             s_unitManager.availSize += pNode->size - DEF_SIZE_UNIT_NODE;
             s_unitManager.unitCount += 1;
 
-            pthread_mutex_unlock( &s_mutexMemory );
-            
+            pthread_mutex_unlock( &s_mutexMemory );        
         }
 
         void deleteUnit( tagUnitNode* pNode )
@@ -95,16 +121,44 @@ namespace MemoryTrace
         void check( bool autoDelete )
         {
             tagUnitNode* pNode = s_unitManager.headUnit.pNext;
-
             tagUnitNode* pCur;
+
             while ( NULL != pNode ) 
             {
-                fprintf( stderr, "unfree addr: %p, size: %ld\n", pNode, pNode->size - DEF_SIZE_UNIT_NODE );
                 pCur    = pNode;
                 pNode   = pNode->pNext;
 
+
+                fprintf( stderr, "++++++++++++++ unfree addr: %p, size: %ld ++++++++++++++\n", \
+                             pNode, \
+                             pNode->size - DEF_SIZE_UNIT_NODE );
+                fprintf( stderr, "backtrace:\n" );
+                showBacktrace( pNode );              
+                fprintf( stderr, "++++++++++++++ end ++++++++++++++\n" );
+
                 if ( autoDelete ) TraceFree( pCur );
             }
+        }
+
+        void storeBacktrace( tagUnitNode* const pNode )
+        {
+            if ( NULL == pNode ) return;
+#ifdef OS_QNX
+            pNode->traceSize = bt_get_backtrace( &(pNode->pManager->acc), pNode->backtrace, BT_BUF_SIZE );
+            fprintf( stderr );
+#else
+            pNode->traceSize = backtrace( pNode->backtrace, BT_BUF_SIZE );
+#endif
+        }
+   
+        void showBacktrace( tagUnitNode* const pNode )
+        {
+            if ( NULL == pNode ) return;
+#ifdef OS_QNX
+            bt_sprnf_addrs( &s_unitManager.memmap, pNode->backtrace, pNode->traceSize, "%a\n", s_unitManager.out, sizeof(s_unitManager.out), 0 );
+#else
+            backtrace_symbols_fd( pNode->backtrace, pNode->traceSize, STDERR_FILENO );
+#endif
         }
     } // namespace MemoryManager
 
@@ -119,7 +173,6 @@ namespace MemoryTrace
             void* ptr = (void*)(s_mockBuffer + s_mockMallocPos);
             s_mockMallocPos += size;
 
-            fprintf( stderr, "mock malloc: %p, size: %ld\n", ptr, size );
             return ptr;
         }
 
@@ -129,7 +182,6 @@ namespace MemoryTrace
             for ( size_t i=0; i < nmemb * size; ++i )
                 *((char*)(ptr) + i ) = '\0';
 
-            fprintf( stderr, "mock calloc: %p, size: %ld\n", ptr, nmemb * size );
             return ptr; 
         }
 
@@ -148,39 +200,35 @@ namespace MemoryTrace
     };
    
     static TraceStatus      s_status            = TS_UNINITIALIZE;
-    static FUNC_MALLOC      s_pRealMalloc       = mockMemory::_mockMalloc;
-    static FUNC_CALLOC      s_pRealCalloc       = mockMemory::_mockCalloc;
+    static FUNC_MALLOC      s_pRealMalloc       = NULL;
+    static FUNC_CALLOC      s_pRealCalloc       = NULL;
     static FUNC_REALLOC     s_pRealRealloc      = NULL;
     static FUNC_MEMALIGN    s_pRealMemalign     = NULL;
     static FUNC_VALLOC      s_pRealValloc       = NULL;
-    static FUNC_FREE        s_pRealFree         = mockMemory::_mockFree;
+    static FUNC_FREE        s_pRealFree         = NULL;
 
     static pthread_mutex_t  s_mutexInit = PTHREAD_MUTEX_INITIALIZER;
 
     void TraceInitialize()
     {
+        fprintf(stderr, "call TraceInitialize\n");      
+        
         pthread_mutex_lock( &s_mutexInit );
         if ( s_status == TS_INITIALIZED ) { pthread_mutex_unlock( &s_mutexInit ); return; }
 
         s_status = TS_INITIALIZING;
-        
-        FUNC_MALLOC     tmpMalloc       = (FUNC_MALLOC)dlsym(RTLD_NEXT, "malloc");
-        FUNC_CALLOC     tmpCalloc       = (FUNC_CALLOC)dlsym(RTLD_NEXT, "calloc");
-        FUNC_REALLOC    tmpRealloc      = (FUNC_REALLOC)dlsym(RTLD_NEXT, "realloc");
-        FUNC_MEMALIGN   tmpMemalign     = (FUNC_MEMALIGN)dlsym(RTLD_NEXT, "memalign");
-        FUNC_VALLOC     tmpValloc       = (FUNC_VALLOC)dlsym(RTLD_NEXT, "valloc");
-        FUNC_FREE       tmpFree         = (FUNC_FREE)dlsym(RTLD_NEXT, "free");
+       
+        s_pRealMalloc       = (FUNC_MALLOC)dlsym(RTLD_NEXT, "malloc");
+        s_pRealCalloc       = (FUNC_CALLOC)dlsym(RTLD_NEXT, "calloc");
+        s_pRealRealloc      = (FUNC_REALLOC)dlsym(RTLD_NEXT, "realloc");
+        s_pRealMemalign     = (FUNC_MEMALIGN)dlsym(RTLD_NEXT, "memalign");
+        s_pRealValloc       = (FUNC_VALLOC)dlsym(RTLD_NEXT, "valloc");
+        s_pRealFree         = (FUNC_FREE)dlsym(RTLD_NEXT, "free");
 
-        assert( !( NULL == tmpMalloc || NULL == tmpCalloc || NULL == tmpRealloc || 
-              NULL == tmpMemalign || NULL == tmpValloc || NULL == tmpFree ) );
+        assert( !( NULL == s_pRealMalloc || NULL == s_pRealCalloc || NULL == s_pRealRealloc || 
+              NULL == s_pRealMemalign || NULL == s_pRealValloc || NULL == s_pRealFree ) );
 
-        s_pRealMalloc       = tmpMalloc;
-        s_pRealCalloc       = tmpCalloc;
-        s_pRealRealloc      = tmpRealloc;
-        s_pRealMemalign     = tmpMemalign;
-        s_pRealValloc       = tmpValloc;
-        s_pRealFree         = tmpFree;
-
+        MemoryManager::initialize();
         s_status = TS_INITIALIZED;
 
         pthread_mutex_unlock( &s_mutexInit );
@@ -191,9 +239,9 @@ namespace MemoryTrace
         MemoryManager::check(false);
     }
 
-    static int s_no_hook    = 0;
+    static int s_no_hook = 0;
     void* TraceMalloc( size_t size )
-    {
+    {  
         if ( s_status == TS_INITIALIZING ) return mockMemory::_mockMalloc( size );
         
         if ( s_status != TS_INITIALIZED )  TraceInitialize();
@@ -262,7 +310,7 @@ namespace MemoryTrace
 
 #ifdef _DEBUG
         if ( !bRecursive )
-            fprintf(stderr, "===malloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE);
+            fprintf( stderr, "===malloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE );
 #endif
         return PTR_UNIT_NODE_DATA( pNode );
     }
@@ -271,7 +319,6 @@ namespace MemoryTrace
     {
         nmemb = ceil( (double)( size * nmemb + DEF_SIZE_UNIT_NODE ) / (double)size );
         MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)s_pRealCalloc( nmemb, size );
-
         if ( NULL == pNode ) return NULL;
         
         MemoryManager::makeUnit( pNode, nmemb * size );
@@ -286,13 +333,16 @@ namespace MemoryTrace
 
     void* _impRealloc( void *ptr, size_t size, bool bRecursive )
     {
-        //if ( NULL != ptr ) _impFree( ptr, true );
-        MemoryManager::tagUnitNode* pNode = (MemoryManager::tagUnitNode*)s_pRealRealloc( NULL, size + DEF_SIZE_UNIT_NODE );
-        
+        MemoryManager::tagUnitNode* pNode = PTR_UNIT_NODE_HEADER( _impMalloc( size + DEF_SIZE_UNIT_NODE, true ) );
         if ( NULL == pNode ) return NULL;
-     
-        MemoryManager::makeUnit( pNode, size + DEF_SIZE_UNIT_NODE );
-        MemoryManager::appendUnit( pNode );
+
+        if ( NULL != ptr ) {
+            MemoryManager::tagUnitNode* pNodeLast = PTR_UNIT_NODE_HEADER(ptr);
+            size_t copySize = size <= ( pNodeLast->size - DEF_SIZE_UNIT_NODE ) ? size : pNodeLast->size - DEF_SIZE_UNIT_NODE;
+            memcpy( pNode->pData, pNodeLast->pData, copySize );
+
+            _impFree( ptr, true );
+        }
 
 #ifdef _DEBUG
         if ( !bRecursive )
