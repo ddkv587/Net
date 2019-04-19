@@ -25,12 +25,6 @@ namespace MemoryTrace
 #else
             void*           backtrace[ BT_BUF_SIZE ];
 #endif
-            bool operator==(const tagUnitNode& pDst)
-            {
-                return ( ( pDst.sign == sign ) && ( pDst.offset == offset ) && 
-                         ( pDst.size == size ) && ( pDst.pData == pData ) &&
-                         ( pDst.pPrev == pPrev ) && ( pDst.pNext == pNext ) );
-            }
         };
 
         struct tagUnitManager

@@ -10,7 +10,7 @@
 
 namespace MemoryTrace
 {
-    #define DEF_SIZE_UNIT_NODE  sizeof( MemoryManager::tagUnitNode )
+    #define DEF_SIZE_UNIT_NODE                                  sizeof( MemoryManager::tagUnitNode )
     
     #define PTR_UNIT_NODE_HEADER(ptr_unit_data)			        ( MemoryManager::tagUnitNode* )( (char*)ptr_unit_data - DEF_SIZE_UNIT_NODE )
     #define PTR_UNIT_NODE_DATA(ptr_unit_hdr)			        ( void* )( (char*)ptr_unit_hdr + DEF_SIZE_UNIT_NODE )
@@ -27,12 +27,12 @@ namespace MemoryTrace
 
         void initialize()
         {
-            s_unitManager.totalSize          = 0;
-            s_unitManager.availSize          = 0;
-            s_unitManager.unitCount          = 0;
-            s_unitManager.pCurrent           = &( s_unitManager.headUnit );
+            s_unitManager.totalSize         = 0;
+            s_unitManager.availSize         = 0;
+            s_unitManager.unitCount         = 0;
+            s_unitManager.pCurrent          = &( s_unitManager.headUnit );
 
-            s_unitManager.headUnit           = {
+            s_unitManager.headUnit          = {
                 .sign       = 0,
                 .offset     = 0,
                 .size       = 0,
@@ -61,12 +61,12 @@ namespace MemoryTrace
 #endif
         }
 
-        void makeUnit(tagUnitNode* const pNode, size_t size)
+        void makeUnit( tagUnitNode* const pNode, size_t size )
         {
             if ( NULL == pNode ) return;
             
             pNode->sign     = MAKE_UNIT_NODE_MAGIC( pNode );
-            pNode->offset   = (size_t)pNode - (size_t)(&s_unitManager);
+            pNode->offset   = 0;
             pNode->size     = size;
             pNode->pData    = PTR_UNIT_NODE_DATA( pNode );
             pNode->pPrev    = NULL;
@@ -101,19 +101,25 @@ namespace MemoryTrace
             
             if ( NULL == pNode ) { pthread_mutex_unlock( &s_mutexMemory ); return; }
 
-            tagUnitNode* pCheckNode = PTR_OFFSET_NODE_HEADER( &s_unitManager, pNode->offset );
-
             // hook all type of memory request, this must be true
-            assert( MAKE_UNIT_NODE_MAGIC( pNode ) == pNode->sign && (*pCheckNode == *pNode ) );
+            
+            if ( !( MAKE_UNIT_NODE_MAGIC( pNode ) == pNode->sign ) ) {
+                fprintf( stderr, "delete unit %p:%p error: %lx, %lx\n", pNode, pNode->pData, MAKE_UNIT_NODE_MAGIC( pNode ), pNode->sign );
+                return ;
+            }
             assert( NULL != s_unitManager.pCurrent );
-            if ( s_unitManager.pCurrent == pCheckNode )
-                s_unitManager.pCurrent = pCheckNode->pPrev;
+            if ( s_unitManager.pCurrent == pNode )
+                s_unitManager.pCurrent = pNode->pPrev;
 
-            assert ( NULL != pCheckNode->pPrev );
-            pCheckNode->pPrev->pNext = pCheckNode->pNext;
+            assert ( NULL != pNode->pPrev );
+            pNode->pPrev->pNext = pNode->pNext;
 
-            if ( NULL != pCheckNode->pNext )
-                pCheckNode->pNext->pPrev = pCheckNode->pPrev;
+            if ( NULL != pNode->pNext )
+                pNode->pNext->pPrev = pNode->pPrev;
+
+            s_unitManager.unitCount -= 1;
+            s_unitManager.totalSize -= pNode->size;
+            s_unitManager.availSize -= pNode->size - DEF_SIZE_UNIT_NODE;
 
             pthread_mutex_unlock( &s_mutexMemory );
         }
@@ -123,17 +129,20 @@ namespace MemoryTrace
             tagUnitNode* pNode = s_unitManager.headUnit.pNext;
             tagUnitNode* pCur;
 
-            while ( NULL != pNode ) 
+            fprintf( stderr, "unfreed \n \tcount: %ld\n\tsize: %ld\n", \
+                            s_unitManager.unitCount,\
+                            s_unitManager.availSize );
+
+            while ( pNode ) 
             {
                 pCur    = pNode;
                 pNode   = pNode->pNext;
-
-
-                fprintf( stderr, "++++++++++++++ unfree addr: %p, size: %ld ++++++++++++++\n", \
-                             pNode, \
-                             pNode->size - DEF_SIZE_UNIT_NODE );
+              
+                fprintf( stderr, "++++++++++++++ unfreed addr: %p, size: %ld ++++++++++++++\n", \
+                             pCur, \
+                             pCur->size - DEF_SIZE_UNIT_NODE );
                 fprintf( stderr, "backtrace:\n" );
-                showBacktrace( pNode );              
+                showBacktrace( pCur );              
                 fprintf( stderr, "++++++++++++++ end ++++++++++++++\n" );
 
                 if ( autoDelete ) TraceFree( pCur );
@@ -310,7 +319,7 @@ namespace MemoryTrace
 
 #ifdef _DEBUG
         if ( !bRecursive )
-            fprintf( stderr, "===malloc: %p, size: %ld, real: %ld\n", pNode, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE );
+            fprintf( stderr, "===malloc: %p:%p, size: %ld, real: %ld\n", pNode, pNode->pData, pNode->size, pNode->size - DEF_SIZE_UNIT_NODE );
 #endif
         return PTR_UNIT_NODE_DATA( pNode );
     }
@@ -385,7 +394,7 @@ namespace MemoryTrace
 
     void _impFree( void* ptr, bool bRecursive )
     {
-        if ( NULL == ptr ) return;
+        assert ( NULL != ptr );
         MemoryManager::tagUnitNode* pNode = PTR_UNIT_NODE_HEADER( ptr );
 
 #ifdef _DEBUG       
