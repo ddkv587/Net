@@ -30,20 +30,9 @@ namespace NET
 			}
 		}
 
-		void run(void* arg = nullptr)
-		{
-			m_thread = ::std::thread(&CThreadBase::mainLoop, this, std::move(arg));
-		}
-
-		void stop()
-		{
-			m_bStop = TRUE;
-		}
-
-		::std::thread::id getThreadID()
-		{
-		 	return m_thread.get_id();
-		}
+		void								start(void* arg = nullptr) 	{ m_thread	= ::std::thread(&CThreadBase::mainLoop, this, std::move(arg)); }
+		void 								stop()						{ m_bStop	= TRUE; }
+		cosnt ::std::thread::id 			getThreadID()				{ return m_thread.get_id(); }
 
 		// ============= priority ===================
 		static ::std::tuple<INT, INT>		range(EPolicy policy);				
