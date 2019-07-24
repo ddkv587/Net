@@ -2,12 +2,22 @@
 
 namespace NET
 {
-    static ::std::tuple<INT, INT> CThreadBase::range(EPolicy policy)
+    CThread::CThread()
+        : m_bStop( FALSE )
+        , m_iPriority( 0 )
     {
-        return ::std::make_tuple( sched_get_priority_max(transformPolicy(policy)), sched_get_priority_min(transformPolicy(policy)));
+        ;
     }
 
-	BOOLEAN CThreadBase::setPriority(INT iPriority, EPolicy policy)
+    virtual CThread::~CThread() 
+    {
+        m_bStop = TRUE;
+        if ( m_thread.joinable() ) {
+            m_thread.join();
+        }
+    }
+
+	BOOLEAN CThread::setPriority(INT iPriority, EPolicy policy)
     {
         if ( m_ePolicy == policy && m_iPriority == iPriority ) return TRUE;
 
@@ -25,18 +35,8 @@ namespace NET
 
         return TRUE;
     }	
-    
-    EPolicy CThreadBase::policy()
-    {
-        return m_ePolicy;
-    }	
 
-	INT CThreadBase::priority()
-    {
-        return m_iPriority;
-    }
-
-    BOOLEAN CThreadBase::setAffinity(const UINT[]& cpus)
+    BOOLEAN CThread::setAffinity(const UINT[]& cpus)
     {
         cpu_set_t mask;
         CPU_ZERO(&mask);
@@ -46,7 +46,7 @@ namespace NET
         return 0 == sched_setaffinity(0, sizeof(mask), &mask);
     }
 
-    INT CThreadBase::transformPolicy(EPolicy policy)
+    INT CThread::transformPolicy(EPolicy policy)
     {
         switch(policy)
         {

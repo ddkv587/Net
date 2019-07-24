@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CWorker : public CThreadBase, public IClientListener
+	class CWorker : public CThread, public IClientListener
 	{
 		public:
 			class CProcessor

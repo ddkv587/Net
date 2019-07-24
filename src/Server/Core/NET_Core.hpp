@@ -20,7 +20,7 @@ namespace NET
 	class CLoadHelper;
 
     //====== thread ========
-    class CThreadBase;
+    class CThread;
 
 	//====== socket ===========
 	class CSocket;

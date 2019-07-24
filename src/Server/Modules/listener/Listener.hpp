@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CListener : public CFileEvent 
+	class CListener : public CThread 
 	{
 		public:
 			CListener();

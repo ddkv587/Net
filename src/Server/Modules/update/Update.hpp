@@ -3,7 +3,7 @@
 
 namespace NET
 {
-	class CUpdate : public CThreadBase
+	class CUpdate : public CThread
 	{
 		public:
 			CUpdate();

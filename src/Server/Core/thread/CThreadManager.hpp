@@ -11,6 +11,11 @@ namespace NET
             BOOLEAN                     initialize();
             void                        unInitialize();
 
+            static ::std::tuple<INT, INT> CThread::range(EPolicy policy)
+            {
+                return ::std::make_tuple( sched_get_priority_max(transformPolicy(policy)), sched_get_priority_min(transformPolicy(policy)));
+            }
+
         protected:
             CThreadManager();
             virtual ~CThreadManager();    
