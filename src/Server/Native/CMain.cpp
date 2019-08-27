@@ -2,30 +2,30 @@
 
 namespace NET 
 {
-	CMain* CMain::s_pInstance = NULL;
+    CMain* CMain::s_pInstance = NULL;
 
-	CMain* CMain::getInstance()
-	{
-		if ( NULL == s_pInstance ) {
-			s_pInstance = new CMain();
-		}
-		return s_pInstance;
-	}
-	
-	CMain::CMain()
-		: m_bInitialized(FALSE)
-	{
-		;
-	}
+    CMain* CMain::getInstance()
+    {
+        if ( NULL == s_pInstance ) {
+            s_pInstance = new CMain();
+        }
+        return s_pInstance;
+    }
+    
+    CMain::CMain()
+        : m_bInitialized(FALSE)
+    {
+        ;
+    }
 
-	CMain::~CMain()
-	{
-		;
-	}
+    CMain::~CMain()
+    {
+        ;
+    }
 
-	BOOLEAN CMain::initialize()
-	{
-		LOG(INFO) << "initialize start...";
+    BOOLEAN CMain::initialize()
+    {
+        LOG(INFO) << "initialize start...";
 
         CHECK_R( ConfigParser::getInstance()->initialize(), FALSE);
         CHECK_R( innerInitSystem(), FALSE );
@@ -43,34 +43,34 @@ namespace NET
             goto err_update;
         }
         
-		m_bInitialized = TRUE;
-		return TRUE;
+        m_bInitialized = TRUE;
+        return TRUE;
 
     err_update:
-		innerDestroyProcessor();
+        innerDestroyProcessor();
     err_processor:	
         innerDestroyListener();
 
         return FALSE;
-	}
+    }
 
-	void CMain::unInitialize()
-	{
+    void CMain::unInitialize()
+    {
         innerDestroyUpdate();
         innerDestroyProcessor();
         innerDestroyListener();
-		m_bInitialized = false;
-	}
+        m_bInitialized = false;
+    }
 
-	void CMain::start(void* arg)
-	{
-		LOG(INFO) << "start demo....";
+    void CMain::start(void* arg)
+    {
+        LOG(INFO) << "start demo....";
 
         // initialize for 10 times
-		for ( UINT uiIndex = 0; !m_bInitialized && uiIndex < 10; ++uiIndex ) {
-			m_bInitialized = initialize();
-		}
-		LOG_IF( FATAL, m_bInitialized == FALSE ) << "initialize failed! stop...";
+        for ( UINT uiIndex = 0; !m_bInitialized && uiIndex < 10; ++uiIndex ) {
+            m_bInitialized = initialize();
+        }
+        LOG_IF( FATAL, m_bInitialized == FALSE ) << "initialize failed! stop...";
         
         //run procrssor thread
         ::std::list<CWorker*>::iterator itor = m_lstWorker.begin();
@@ -81,14 +81,14 @@ namespace NET
         //run listener thread
         m_pListener->run();
 
-		LOG(INFO) << "initialize end, start main loop....";
-		while (true) {
+        LOG(INFO) << "initialize end, start main loop....";
+        while (true) {
             //main loop just sleep now;
-			::std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-		}
+            ::std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        }
 
-		unInitialize();
-	}
+        unInitialize();
+    }
 
     BOOLEAN CMain::innerInitSystem()
     {
@@ -104,10 +104,10 @@ namespace NET
     
     BOOLEAN CMain::innerInitListener()
     {
-		LOG(INFO) << "begin to initialize listener";
+        LOG(INFO) << "begin to initialize listener";
         m_pListener = new CListener();
         
-		const ConfigParser::tagSocketInfo& info = ConfigParser::getInstance()->getSocketInfo();
+        const ConfigParser::tagSocketInfo& info = ConfigParser::getInstance()->getSocketInfo();
         
         m_pListener->server()->setPort( info.uiPort );
         m_pListener->server()->setKeepAlive( info.bKeepAlive, info.uiAliveValue );
@@ -122,10 +122,10 @@ namespace NET
     
     BOOLEAN CMain::innerInitProcessor()
     {
-		LOG(INFO) << "begin to initialize processor";
+        LOG(INFO) << "begin to initialize processor";
 
-		// init two type processor: short turn or long turn
-		const ConfigParser::tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
+        // init two type processor: short turn or long turn
+        const ConfigParser::tagSystemInfo& info = ConfigParser::getInstance()->getSystemInfo();
         
         for ( INT i=0; i < info.uiThreadCount - 1; ++i ) {      // one is listener
             LOG(INFO) << CLog::format("create new worker: %d", i); 
@@ -141,7 +141,7 @@ namespace NET
     
     BOOLEAN CMain::innerInitUpdate()
     {
-		LOG(INFO) << "begin to initialize update";
+        LOG(INFO) << "begin to initialize update";
 
         return TRUE;
     }
