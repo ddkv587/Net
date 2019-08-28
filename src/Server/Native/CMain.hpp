@@ -43,7 +43,10 @@ namespace NET
         
         private:
             static CMain* 	            		s_pInstance;
-            ::std::List<>
+            
+            ::std::queue<CBaseMessage>          m_sysMessage;
+            ::std::queue<CBaseMessage>          m_userMessage;
+            ::std::queue<CBaseMessage>          m_timerMessage;
 
             BOOLEAN			            		m_bInitialized;
     };

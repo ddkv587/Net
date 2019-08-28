@@ -3,41 +3,40 @@
 
 namespace NET
 {
-	//====== common =======
-	class CMD;
+    //====== common =======
+    class CMD;
 
-	//====== log =======
-	class CLog;
+    //====== log =======
+    class CLog;
 
     //====== format ========
-    class XMLElement;
-    class XMLHelper;
+    //class XmlLoad;
 
-	//====== config =====
-	class ConfigParser;
+    //====== config =====
+    class ConfigParser;
     
-	//====== load helper =====
-	class CLoadHelper;
+    //====== load helper =====
+    class CLoadHelper;
 
     //====== thread ========
     class CThread;
 
-	//====== socket ===========
-	class CSocket;
-	class CSocketServer;
+    //====== socket ===========
+    class CSocket;
+    class CSocketServer;
         
     //====== timer ============
     class CTimer;
     class IClientListener;
 
-	//======= multiplex ============
-	class IMultiBase;
-	class CMultiManager;
+    //======= multiplex ============
+    class IMultiBase;
+    class CMultiManager;
 #ifdef OS_BSD
-	class CMultiKqueue;
+    class CMultiKqueue;
 #else
-	class CMultiEpoll;
-	class CMultiSelect;
+    class CMultiEpoll;
+    class CMultiSelect;
 #endif
 }
 
