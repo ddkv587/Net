@@ -1,5 +1,5 @@
-#ifndef __TYPEDEFINEHPP__
-#define __TYPEDEFINEHPP__
+#ifndef __TYPEDEFINE_HPP__
+#define __TYPEDEFINE_HPP__
 
 namespace NET
 {
@@ -22,6 +22,7 @@ namespace NET
 	typedef		UINT64			ULONG;
 	typedef 	INT64			LLONG;
 	typedef		UINT64			ULLONG;
+    typedef		size_t			KEY;
 	typedef 	::std::string	STRING;
 
 	typedef 	::std::queue	SQUEUE;
