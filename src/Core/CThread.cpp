@@ -36,7 +36,7 @@ namespace NET
         return TRUE;
     }	
 
-    BOOLEAN CThread::setAffinity(const UINT[]& cpus)
+    BOOLEAN CThread::setAffinity( const UINT[]& cpus )
     {
         cpu_set_t mask;
         CPU_ZERO(&mask);

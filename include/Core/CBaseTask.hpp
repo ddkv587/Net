@@ -1,7 +1,7 @@
 #ifndef __NET_CBASETASK_HPP__
 #define __NET_CBASETASK_HPP__
 
-namespace OpenHMI
+namespace NET
 {
 	class CBaseTask : public CObject
 	{

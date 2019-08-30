@@ -3,9 +3,9 @@
 
 namespace NET
 {
-    class CThread : public CObject
-    {
-    public:
+	class CThread : public CObject
+	{
+	public:// TODO: define const here
         enum EPolicy
         {
             SCHED_OTHER = 0,
@@ -15,7 +15,13 @@ namespace NET
             SCHED_RR
         };
 
-    public:
+	private:// TODO: define const here
+
+	public:// TODO: define embed class or struct or enum here
+
+	private:// TODO: define embed class or struct or enum here
+
+	public:// TODO: define your public method here
         CThread();
         virtual ~CThread();
 
@@ -39,7 +45,7 @@ namespace NET
         CThread(const CThread&) = delete;
         CThread& operator=(const CThread&) = delete;
 
-    protected:
+	protected:// TODO: define your protected method here
         virtual void mainLoop(void* arg)
         {
             UNUSED(arg);
@@ -48,17 +54,18 @@ namespace NET
             }
         }
 
-    private:
+	private:// TODO: define your private method here
         INT									transformPolicy( EPolicy policy );
-
-    protected:
+		
+	protected:// property
         BOOLEAN 				m_bStop;
         EPolicy					m_ePolicy;
         UINT 					m_iPriority;
 
-    private:
+	private:// property
         STRING			        m_strName;
         ::std::thread 			m_thread;
-    };
+	};
 }
-#endif
+
+#endif  // __NET_CTHREADHPP__

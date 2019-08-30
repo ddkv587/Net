@@ -1,24 +1,23 @@
-#ifndef __NET_CBASEMESSAGE_HPP__
-#define __NET_CBASEMESSAGE_HPP__
+#ifndef __NET_CBASEMODEL_HPP__
+#define __NET_CBASEMODEL_HPP__
 
-namespace OpenHMI
+namespace NET
 {
-	class CBaseMessage : public CObject
+	class CBaseModel : public CThread
 	{
 	public:// TODO: define const here
 
 	private:// TODO: define const here
 
 	public:// TODO: define embed class or struct or enum here
-        virtual void handleMessage( CObject* data ) = 0;
 
 	private:// TODO: define embed class or struct or enum here
 
 	public:// TODO: define your public method here
 
 	protected:// TODO: define your protected method here
-		CBaseMessage();
-		virtual ~CBaseMessage();
+		CBaseModel();
+		virtual ~CBaseModel();
 
 	private:// TODO: define your private method here
 		
@@ -29,4 +28,4 @@ namespace OpenHMI
 	};
 }
 
-#endif  // __NET_CBASEMESSAGE_HPP__
+#endif  // __NET_CBASEMODEL_HPP__

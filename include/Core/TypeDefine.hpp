@@ -27,6 +27,7 @@ namespace NET
 
 	typedef 	::std::queue	SQUEUE;
 	typedef 	::std::stack	SSTACK;
+    typedef 	::std::list	    SLIST;
 	typedef 	::std::map		SMAP;
 	typedef 	::std::mutex	SMUTEX;
 
