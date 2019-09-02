@@ -14,28 +14,35 @@ namespace NET
     private:// TODO: define embed class or struct or enum here
 
     public:// TODO: define your public method here
-        static CMain*               getInstance();
-        static void                 delInstance();
+        static CMain*                   getInstance();
+        static void                     delInstance();
 
-        void                        pushMessage();
+        void                            initialize();
+        void                            uninitialize();
+
+        void                            pushMessage( CBaseMessage* );
+        CBaseMessage*                   popMessage();
 
     protected:// TODO: define your protected method here
         CMain();
         ~CMain();
 
     private:// TODO: define your private method here
-        void                        mainLoop( void* arg );
+        void                            mainLoop( void* arg );
+
+        void                            operator delete( void* ) = delete;
+        void                            operator delete[]( void* ) = delete;
         
     protected:// property
 
     private:// property
-        static CMain*                   s_pInstance;
+        static CMain*                       s_pInstance;
 
-        BOOLEAN                         m_bInitialized;
+        BOOLEAN                             m_bInitialized;
 
-        SQUEUE<CBaseMessage>            m_sysMessage;
-        SQUEUE<CBaseMessage>            m_userMessage;
-        SQUEUE<CBaseMessage>            m_timerMessage;
+        SQUEUE<CBaseMessage>                m_sysMessage;
+        SQUEUE<CBaseMessage>                m_userMessage;
+        SQUEUE<CBaseMessage>                m_timerMessage;
     };
 }
 

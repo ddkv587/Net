@@ -17,7 +17,7 @@ namespace NET
     private:// TODO: define const here
 
     public:// TODO: define embed class or struct or enum here
-        virtual void            handleMessage( CObject* data ) = 0;
+        virtual void            handleMessage( ) = 0;
 
     private:// TODO: define embed class or struct or enum here
 
@@ -25,8 +25,8 @@ namespace NET
         EMessageType            type() const            { return m_eType; }
 
     protected:// TODO: define your protected method here
-        CBaseMessage() : m_eType( MT_UNKNOW )           {}
-        virtual ~CBaseMessage()                         {}
+        CBaseMessage() : m_eType( MT_UNKNOW )           { }
+        virtual ~CBaseMessage()                         { }
 
     private:// TODO: define your private method here
         
