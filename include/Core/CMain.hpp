@@ -23,6 +23,8 @@ namespace NET
         void                            pushMessage( CBaseMessage* );
         CBaseMessage*                   popMessage();
 
+        void                            registerModule( CBaseModule* pModule, STRING strName = STRING_NULL );
+
     protected:// TODO: define your protected method here
         CMain();
         ~CMain();
@@ -40,9 +42,11 @@ namespace NET
 
         BOOLEAN                             m_bInitialized;
 
-        SQUEUE<CBaseMessage>                m_sysMessage;
-        SQUEUE<CBaseMessage>                m_userMessage;
-        SQUEUE<CBaseMessage>                m_timerMessage;
+        SMAP< STRING, CBaseModule >         m_mapModules;
+
+        SQUEUE< CBaseMessage >              m_sysMessage;
+        SQUEUE< CBaseMessage >              m_userMessage;
+        SQUEUE< CBaseMessage >              m_timerMessage;
     };
 }
 
