@@ -3,29 +3,29 @@
 
 namespace NET
 {
-	class CXXX
-	{
-	public:// TODO: define const here
+    class CXXX
+    {
+    public:// TODO: define const here
 
-	private:// TODO: define const here
+    private:// TODO: define const here
 
-	public:// TODO: define embed class or struct or enum here
+    public:// TODO: define embed class or struct or enum here
 
-	private:// TODO: define embed class or struct or enum here
+    private:// TODO: define embed class or struct or enum here
 
-	public:// TODO: define your public method here
+    public:// TODO: define your public method here
 
-	protected:// TODO: define your protected method here
-		CXXX();
-		virtual ~CXXX();
+    protected:// TODO: define your protected method here
+        CXXX();
+        virtual ~CXXX();
 
-	private:// TODO: define your private method here
-		
-	protected:// property
+    private:// TODO: define your private method here
+        
+    protected:// property
 
-	private:// property
+    private:// property
 
-	};
+    };
 }
 
 #endif  // __NET_CXXX_HPP__
