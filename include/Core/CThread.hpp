@@ -25,7 +25,7 @@ namespace NET
         CThread();
         virtual ~CThread();
 
-        void						    start( void* arg = nullptr ) 					{ m_thread = ::std::thread(&CThread::mainLoop, this, std::move(arg)); }
+        void						    start( void* arg = NULL ) 					{ m_thread = ::std::thread(&CThread::mainLoop, this, std::move(arg)); }
         void 						    stop()								            { m_bStop = TRUE; }
         cosnt ::std::thread::id 		threadID()							            { return m_thread.get_id(); }
 

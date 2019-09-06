@@ -23,8 +23,9 @@ namespace NET
         void                            pushMessage( CBaseMessage* );
         CBaseMessage*                   popMessage();
 
+        // ================== module =======================
         void                            registerModule( CBaseModule* pModule, STRING strName = STRING_NULL );
-
+        
     protected:// TODO: define your protected method here
         CMain();
         ~CMain();

@@ -1,6 +1,8 @@
 #ifndef __NET_CLISTENER_HPP__
 #define __NET_CLISTENER_HPP__
 
+#include "NET_Core.hpp"
+
 namespace NET
 {
 	class CListener : public CBaseModule

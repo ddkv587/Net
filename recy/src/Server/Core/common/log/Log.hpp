@@ -3,34 +3,36 @@
 
 namespace NET
 {
-	class CLog 
-	{
-		public:
-			enum LOG_LEVEL {
-				LL_INFO,
-				LL_WARNING,
-				LL_ERROR,
-				LL_FATAL,
-			};
+    class CLog 
+    {
+    public:
 
-		public:
-			static void 		initLog(const char*);
-			static void 		setDirection(const char*);
-			static void 		setDirection(LOG_LEVEL, const char*);
-			static void 		setFilter(LOG_LEVEL);
+    public:
+        enum LOG_LEVEL {
+            LL_INFO,
+            LL_WARNING,
+            LL_ERROR,
+            LL_FATAL,
+        };
 
-			static void 		enableToStderr(bool);
-			static void 		enableColor(bool);
+    public:
+        static void 		initLog(const char*);
+        static void 		setDirection(const char*);
+        static void 		setDirection(LOG_LEVEL, const char*);
+        static void 		setFilter(LOG_LEVEL);
 
-			static std::string  format(const char* fmt, ...);
+        static void 		enableToStderr(bool);
+        static void 		enableColor(bool);
 
-		protected:
-			CLog() = delete;
-			CLog(CLog&) = delete;
-			~CLog() {};
+        static std::string  format(const char* fmt, ...);
 
-		private:
-			static bool			checkDirection(const char* strPath);
-	};
+    protected:
+        CLog() = delete;
+        CLog(CLog&) = delete;
+        ~CLog() {};
+
+    private:
+        static bool			checkDirection(const char* strPath);
+    };
 }
 #endif
