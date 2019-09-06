@@ -20,10 +20,10 @@ namespace NET
         virtual void	                init();
         virtual void 	                destroy();
 
-        void 			                setIP(const STRING& ip)		        { m_strIP = ip; }
+        void 			                ip( const STRING& ip )		        { m_strIP = ip; }
         const STRING& 	                ip() const 			    	        { return m_strIP; };
 
-        void 			                setPort(UINT iPort) 				{ m_uiPort = iPort; }
+        void 			                port( UINT iPort ) 				    { m_uiPort = iPort; }
         UINT  			                port() const						{ return m_uiPort; }
         
         BOOLEAN			                bindAndListen();

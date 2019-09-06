@@ -26,6 +26,12 @@ namespace NET
         void    							setReusePort( BOOLEAN );
         void 								setReuseAddress( BOOLEAN );
         void								setNonBlock( BOOLEAN );
+
+        /**
+        * set operator after close socket
+        * l_onoff:
+        *   on)     default, response immediately and transfer remain data
+        */  off)    
         void								setLinger( BOOLEAN, INT );
         void 								setNoDelay( BOOLEAN );
 
