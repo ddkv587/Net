@@ -17,10 +17,20 @@ namespace NET
     private:// TODO: define embed class or struct or enum here
 
     public:// TODO: define your public method here
-        virtual void 						init();
+        virtual void 						initialize();
         virtual void 						destroy();
         
+        /**
+        * set heart beat for socket
+        *   TCP_KEEPINTVL)      send interval during detection, default: 75s
+        *   TCP_KEEPCNT)        assertion required number of times, default: 9
+        *   TCP_KEEPDILE)       critical time distance of last data exchange default: 2h
+        */
         void 								setKeepAlive( BOOLEAN, INT );
+       
+        /**
+        * set critical time about ACK 
+        */
         void 								setTimeOut( INT );
 
         void    							setReusePort( BOOLEAN );
@@ -30,9 +40,15 @@ namespace NET
         /**
         * set operator after close socket
         * l_onoff:
-        *   on)     default, response immediately and transfer remain data
-        */  off)    
+        *   on)     wait l_linger time for transfer remain data, no TIME_WAIT if out of time( l_linger )
+        *   off)    default, response immediately and transfer remain data
+        */
         void								setLinger( BOOLEAN, INT );
+
+        /**
+        * nagle
+        * enable/disable wait time for send
+        */
         void 								setNoDelay( BOOLEAN );
 
         void								setSendBuffSize( INT64 );
