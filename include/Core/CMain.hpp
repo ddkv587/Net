@@ -19,6 +19,7 @@ namespace NET
 
         void                            initialize();
         void                            uninitialize();
+        BOOLEAN                         isInitialized()         { return m_bInitialized; }
 
         void                            pushMessage( CBaseMessage* );
         CBaseMessage*                   popMessage();

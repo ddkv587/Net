@@ -1,9 +1,9 @@
-#ifndef __NET_CPROCESSOR_HPP__
-#define __NET_CPROCESSOR_HPP__
+#ifndef __NET_CSOCKETUDP_HPP__
+#define __NET_CSOCKETUDP_HPP__
 
 namespace NET
 {
-    class CProcessor : public CBaseModule
+    class CSocketUDP : public CSocketBase
     {
     public:// TODO: define const here
 
@@ -16,8 +16,8 @@ namespace NET
     public:// TODO: define your public method here
 
     protected:// TODO: define your protected method here
-        CProcessor();
-        virtual ~CProcessor();
+        CSocketUDP();
+        virtual ~CSocketUDP();
 
     private:// TODO: define your private method here
         
@@ -28,4 +28,4 @@ namespace NET
     };
 }
 
-#endif  // __NET_CPROCESSOR_HPP__
+#endif  // __NET_CSOCKETUDP_HPP__

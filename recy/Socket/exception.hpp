@@ -3,10 +3,10 @@
 
 namespace Net
 {
-	struct socket_exception
-	{
-		
-	};
+    struct socket_exception
+    {
+        
+    };
 }
 
 #endif

@@ -14,7 +14,6 @@ namespace NET
     private:// TODO: define embed class or struct or enum here
 
     public:// TODO: define your public method here
-
         // ================ load ======================
         virtual BOOLEAN         load() = 0;
         virtual void            unload() = 0;

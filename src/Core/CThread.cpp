@@ -17,7 +17,7 @@ namespace NET
         }
     }
 
-	BOOLEAN CThread::setPriority(INT iPriority, EPolicy policy)
+    BOOLEAN CThread::priority(INT iPriority, EPolicy policy)
     {
         if ( m_ePolicy == policy && m_iPriority == iPriority ) return TRUE;
 
@@ -34,9 +34,9 @@ namespace NET
         m_iPriority = iPriority;
 
         return TRUE;
-    }	
+    }    
 
-    BOOLEAN CThread::setAffinity( const UINT[]& cpus )
+    BOOLEAN CThread::affinity( const UINT[]& cpus )
     {
         cpu_set_t mask;
         CPU_ZERO(&mask);
@@ -52,13 +52,13 @@ namespace NET
         {
             case SCHED_OTHER:
                 return ::SCHED_OTHER;
-			case SCHED_BATCH:
+            case SCHED_BATCH:
                 return ::SCHED_BATCH;
-			case SCHED_IDLE,
+            case SCHED_IDLE,
                 return ::SCHED_IDLE;
-			case SCHED_FIFO,
+            case SCHED_FIFO,
                 return ::SCHED_FIFO;
-			case SCHED_RR: 
+            case SCHED_RR: 
                 return ::SCHED_RR;
         }
     }

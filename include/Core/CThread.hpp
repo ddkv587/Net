@@ -25,21 +25,24 @@ namespace NET
         CThread();
         virtual ~CThread();
 
-        void						    start( void* arg = NULL ) 					{ m_thread = ::std::thread(&CThread::mainLoop, this, std::move(arg)); }
-        void 						    stop()								            { m_bStop = TRUE; }
-        cosnt ::std::thread::id 		threadID()							            { return m_thread.get_id(); }
+        void						    start( void* arg = NULL )                       { m_thread = ::std::thread(&CThread::mainLoop, this, std::move(arg)); }
+        void 						    stop()                                          { m_bStop = TRUE; }
+        cosnt ::std::thread::id 		threadID()                                      { return m_thread.get_id(); }
 
-        inline cosnt ::std::string 		name()								            { return m_strName; }
-        void 						    setName( const ::std::string& strName )			{ m_strName = strName; }
+        inline cosnt STRING& 		    threadName()								    { return m_strName; }
+        void 						    threadName( const STRING& strName )			    { m_strName = strName; }
+
+        void                            wait()                                          { m_waitCondition.wait_for( ::std::unique_lock<std::mutex>( m_waitMutex ),  ); }
+        void                            notify();
 
         // ============= priority ===================
         inline EPolicy 				    policy()							            { return m_ePolicy; }			
         inline INT 					    priority()							            { return m_iPriority; }
-        BOOLEAN 					    setPriority( INT iPriority, EPolicy policy );
+        BOOLEAN 					    priority( INT iPriority, EPolicy policy );
 
         // ============= affinity ===================
         //const UINT*					affinity();
-        BOOLEAN						    setAffinity( const UINT[]& cpus );
+        BOOLEAN						    affinity( const UINT[]& cpus );
 
         CThread(CThread&) = delete;
         CThread(const CThread&) = delete;
@@ -50,21 +53,24 @@ namespace NET
         {
             UNUSED(arg);
             while ( !m_bStop ) {
-                ::std::this_thread::sleep_for( ::std::chrono::milliseconds( 5000 ) );
+                wait();
             }
         }
 
     private:// TODO: define your private method here
         INT					            transformPolicy( EPolicy policy );
                 
-        protected:// property
-        BOOLEAN 				m_bStop;
-        EPolicy					m_ePolicy;
-        UINT 					m_iPriority;
+    protected:// property
+        BOOLEAN                     m_bStop;
+        EPolicy                     m_ePolicy;
+        UINT                        m_iPriority;
 
-        private:// property
-        STRING			        m_strName;
-        ::std::thread 			m_thread;
+    private:// property
+        STRING                      m_strName;
+        STHREAD                     m_thread;
+
+        SMUTEX                      m_waitMutex;
+        ::std::condition_variable   m_waitCondition;
     };
 }
 

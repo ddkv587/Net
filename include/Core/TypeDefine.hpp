@@ -3,54 +3,55 @@
 
 namespace NET
 {
-    typedef 	char 			CHAR;
-    typedef		int8_t			INT8;
-    typedef		uint8_t			UINT8;
-    typedef		int16_t			INT16;
-    typedef		uint16_t		UINT16;
-    typedef		int32_t			INT;
-    typedef		uint32_t		UINT;
-    typedef		int64_t			INT64;
-    typedef		uint64_t		UINT64;
+    typedef         char                CHAR;
+    typedef         int8_t              INT8;
+    typedef         uint8_t             UINT8;
+    typedef         int16_t             INT16;
+    typedef         uint16_t            UINT16;
+    typedef         int32_t             INT;
+    typedef         uint32_t            UINT;
+    typedef         int64_t             INT64;
+    typedef         uint64_t            UINT64;
 
-    typedef 	bool			BOOLEAN;
-    typedef 	float			FLOAT;
-    typedef 	double			DOUBLE;
+    typedef         bool                BOOLEAN;
+    typedef         float               FLOAT;
+    typedef         double              DOUBLE;
 
-    typedef 	UINT8			BYTE;
-    typedef 	INT64			LONG;
-    typedef		UINT64			ULONG;
-    typedef 	INT64			LLONG;
-    typedef		UINT64			ULLONG;
-    typedef		size_t			KEY;
-    typedef 	::std::string	STRING;
+    typedef         UINT8               BYTE;
+    typedef         INT64               LONG;
+    typedef         UINT64              ULONG;
+    typedef         INT64               LLONG;
+    typedef         UINT64              ULLONG;
+    typedef         size_t              KEY;
 
-    typedef 	::std::queue	SQUEUE;
-    typedef 	::std::stack	SSTACK;
-    typedef 	::std::list	    SLIST;
-    typedef 	::std::map		SMAP;
-    typedef 	::std::mutex	SMUTEX;
+    typedef         ::std::string       STRING;
+    typedef         ::std::queue        SQUEUE;
+    typedef         ::std::stack        SSTACK;
+    typedef         ::std::list         SLIST;
+    typedef         ::std::map          SMAP;
+    typedef         ::std::mutex        SMUTEX;
+    typedef         ::std::thread       STHREAD;
 
     #ifndef TRUE
-    #define TRUE					true
+    #define TRUE                    true
     #endif
 
     #ifndef FALSE
-    #define FALSE					false
+    #define FALSE                    false
     #endif
 
     #ifndef STRING_NULL
-    #define STRING_NULL				""
+    #define STRING_NULL                ""
     #endif
 
     #ifndef NULL
-    #define NULL 					nullptr
+    #define NULL                     nullptr
     #endif
 
-    #define UNUSED(X) 				(void)(X)
+    #define UNUSED(X)                 (void)(X)
 
-    #define SYSTEM_VERSION			"0.2"
-    #define RELEASE_TIME			"2019-09-13"
+    #define SYSTEM_VERSION            "0.2"
+    #define RELEASE_TIME            "2019-09-13"
 
     #ifdef __DEBUG__
         #include <assert.h>

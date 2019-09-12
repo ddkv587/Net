@@ -20,8 +20,8 @@ namespace NET
     class CBaseTask;
 
     // ====== socket =====
-    class CSocket;
-    class CSocketServer;
+    class CSocketBase;
+    class CSocketBaseServer;
 
     // ====== thread ========
     class CThread;
@@ -48,8 +48,8 @@ namespace NET
 #include "CBaseTask.hpp"
 
 // ====== socket =====
-#include "socket/CSocket.hpp"
-#include "socket/CSocketServer.hpp"
+#include "socket/CSocketBase.hpp"
+#include "socket/CSocketBaseServer.hpp"
 
 // ====== thread ========
 #include "CThread.hpp"

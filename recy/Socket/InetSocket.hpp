@@ -5,21 +5,21 @@
 
 namespace Net
 {
-	using std::string;
+    using std::string;
 
-	class CInetSocket : public CSocket
-	{
-		protect:
-			string 	m_strHost;
-			string 	m_strPort;
-			int 	m_iProtocol;	
+    class CInetSocket : public CSocket
+    {
+        protect:
+            string     m_strHost;
+            string     m_strPort;
+            int     m_iProtocol;    
 
-		public:
-			CInetSocket() : m_strHost(""), m_strPort(""), m_iProtocol(-1)
-			{}
-		
-			const string& getHost() { return m_strHost; }
-			const string& getPort()	{ return m_strPort; }
-	};
+        public:
+            CInetSocket() : m_strHost(""), m_strPort(""), m_iProtocol(-1)
+            {}
+        
+            const string& getHost() { return m_strHost; }
+            const string& getPort()    { return m_strPort; }
+    };
 }
 #endif

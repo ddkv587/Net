@@ -24,7 +24,9 @@ namespace NET
     CMain::CMain()
         : m_bInitialized( FALSE )
     {
-        
+        initialize();
+
+        threadName( "CMain" );
     }
 
     CMain::~CMain()
@@ -37,11 +39,17 @@ namespace NET
 
     void CMain::initialize()
     {
+        // TODO
+        // add initialize code
+
         m_bInitialized = TRUE;
     }
 
     void CMain::uninitialize()
     {
+        // TODO
+        // add uninitialize code
+
         m_bInitialized = FALSE;
     }
 
@@ -86,8 +94,6 @@ namespace NET
 
     void CMain::mainLoop( void* arg )
     {
-        static UINT s_waitTime = 0x7FF;     // 2s
-
         while ( !m_bStop )
         {
             CBaseMessage* pMsg = popMessage();
@@ -98,10 +104,6 @@ namespace NET
                 delete pMsg;
 
                 s_waitTime = ::std::max( s_waitTime >> 2, 0xFF );
-            } else {
-                ::std::this_thread::sleep_for( ::std::chrono::milliseconds( s_waitTime ) );
-
-                s_waitTime = ::std::min( s_waitTime << 1, 0x1FFF );
             }
         }
     }

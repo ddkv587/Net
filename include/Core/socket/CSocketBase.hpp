@@ -1,9 +1,9 @@
-#ifndef __NET_CSOCKET_HPP__
-#define __NET_CSOCKET_HPP__
+#ifndef __NET_CSOCKETBASE_HPP__
+#define __NET_CSOCKETBASE_HPP__
 
 namespace NET
 {
-    class CSocket : public CObject
+    class CSocketBase : public CObject
     {
     public:// TODO: define const here
         #define NET_NONE                            0x00
@@ -17,8 +17,8 @@ namespace NET
     private:// TODO: define embed class or struct or enum here
 
     public:// TODO: define your public method here
-        virtual void 						initialize();
-        virtual void 						destroy();
+        virtual void                         initialize();
+        virtual void                         destroy();
         
         /**
         * set heart beat for socket
@@ -26,16 +26,16 @@ namespace NET
         *   TCP_KEEPCNT)        assertion required number of times, default: 9
         *   TCP_KEEPDILE)       critical time distance of last data exchange default: 2h
         */
-        void 								setKeepAlive( BOOLEAN, INT );
+        void                                 setKeepAlive( BOOLEAN, INT );
        
         /**
         * set critical time about ACK 
         */
-        void 								setTimeOut( INT );
+        void                                 setTimeOut( INT );
 
-        void    							setReusePort( BOOLEAN );
-        void 								setReuseAddress( BOOLEAN );
-        void								setNonBlock( BOOLEAN );
+        void                                setReusePort( BOOLEAN );
+        void                                 setReuseAddress( BOOLEAN );
+        void                                setNonBlock( BOOLEAN );
 
         /**
         * set operator after close socket
@@ -43,26 +43,23 @@ namespace NET
         *   on)     wait l_linger time for transfer remain data, no TIME_WAIT if out of time( l_linger )
         *   off)    default, response immediately and transfer remain data
         */
-        void								setLinger( BOOLEAN, INT );
+        void                                setLinger( BOOLEAN, INT );
 
         /**
         * nagle
         * enable/disable wait time for send
         */
-        void 								setNoDelay( BOOLEAN );
+        void                                 setNoDelay( BOOLEAN );
 
-        void								setSendBuffSize( INT64 );
-        void 								setRecvBuffSize( INT64 );	
+        void                                setSendBuffSize( INT64 );
+        void                                 setRecvBuffSize( INT64 );    
 
     protected:// TODO: define your protected method here
-        CSocket();
-        virtual ~CSocket();
+        CSocketBase();
+        virtual ~CSocketBase();
 
-        virtual UINT						read();
-        virtual UINT						write();	
-
-        CSocket( CSocket& ) = delete;
-        CSocket( const CSocket& ) = delete;
+        CSocketBase( CSocketBase& ) = delete;
+        CSocketBase( const CSocketBase& ) = delete;
 
     private:// TODO: define your private method here
         
@@ -75,4 +72,4 @@ namespace NET
     };
 }
 
-#endif  // __NET_CSOCKET_HPP__
+#endif  // __NET_CSocketBase_HPP__
