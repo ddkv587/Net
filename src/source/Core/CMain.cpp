@@ -1,3 +1,5 @@
+#include "NET_Core.hpp"
+
 namespace NET
 {
     CMain::CMain* CMain::s_pInstance = NULL;
@@ -73,6 +75,7 @@ namespace NET
                 m_timerMessage->push( pMsg );
             break;
         }
+        notify();
     }
 
     CBaseMessage* CMain::popMessage()
@@ -102,8 +105,8 @@ namespace NET
                 pMsg->handleMessage();
 
                 delete pMsg;
-
-                s_waitTime = ::std::max( s_waitTime >> 2, 0xFF );
+            } else {
+                wait();
             }
         }
     }

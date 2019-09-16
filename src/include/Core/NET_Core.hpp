@@ -11,7 +11,7 @@ namespace NET
 
     // ====== object =====
     class CObject;
-    
+
     // ====== message =====
     class CBaseMessage;
     class CSystemMessage;
@@ -21,7 +21,11 @@ namespace NET
 
     // ====== socket =====
     class CSocketBase;
-    class CSocketBaseServer;
+    class CSocketTCP;
+    class CSocketTCPClient;
+    class CSocketTCPServer;
+    class CSocketUDP;
+    class CSocketIPC;
 
     // ====== thread ========
     class CThread;
@@ -29,7 +33,7 @@ namespace NET
     // ====== model ========
     class CBaseModel;
     class CModelGroup;
-        
+
     // ====== main ======
     class CMain;
 }
@@ -49,7 +53,11 @@ namespace NET
 
 // ====== socket =====
 #include "socket/CSocketBase.hpp"
-#include "socket/CSocketBaseServer.hpp"
+#include "socket/CSocketTCP.hpp"
+#include "socket/CSocketTCPClient.hpp"
+#include "socket/CSocketTCPServer.hpp"
+#include "socket/CSocketUDP.hpp"
+#include "socket/CSocketIPC.hpp"
 
 // ====== thread ========
 #include "CThread.hpp"
@@ -57,7 +65,7 @@ namespace NET
 // ====== model ========
 #include "CBaseModel.hpp"
 #include "CModelGroup.hpp"
-    
+
 // ====== main ======
 #include "CMain.hpp"
 

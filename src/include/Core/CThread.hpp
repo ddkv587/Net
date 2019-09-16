@@ -32,11 +32,11 @@ namespace NET
         inline cosnt STRING& 		    threadName()								    { return m_strName; }
         void 						    threadName( const STRING& strName )			    { m_strName = strName; }
 
-        void                            wait()                                          { m_waitCondition.wait_for( ::std::unique_lock<std::mutex>( m_waitMutex ),  ); }
-        void                            notify();
+        void                            wait()                                          { m_waitCondition.wait_for( ::std::unique_lock<std::mutex>( m_waitMutex ), std::chrono::milliseconds( 2000 ) ); }
+        void                            notify()                                        { m_waitCondition.notify_one(); }
 
         // ============= priority ===================
-        inline EPolicy 				    policy()							            { return m_ePolicy; }			
+        inline EPolicy 				    policy()							            { return m_ePolicy; }
         inline INT 					    priority()							            { return m_iPriority; }
         BOOLEAN 					    priority( INT iPriority, EPolicy policy );
 
@@ -59,7 +59,7 @@ namespace NET
 
     private:// TODO: define your private method here
         INT					            transformPolicy( EPolicy policy );
-                
+
     protected:// property
         BOOLEAN                     m_bStop;
         EPolicy                     m_ePolicy;
