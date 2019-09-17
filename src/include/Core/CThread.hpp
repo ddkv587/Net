@@ -32,9 +32,6 @@ namespace NET
         inline cosnt STRING& 		    threadName()								    { return m_strName; }
         void 						    threadName( const STRING& strName )			    { m_strName = strName; }
 
-        void                            wait()                                          { m_waitCondition.wait_for( ::std::unique_lock<std::mutex>( m_waitMutex ), std::chrono::milliseconds( 2000 ) ); }
-        void                            notify()                                        { m_waitCondition.notify_one(); }
-
         // ============= priority ===================
         inline EPolicy 				    policy()							            { return m_ePolicy; }
         inline INT 					    priority()							            { return m_iPriority; }
@@ -49,6 +46,9 @@ namespace NET
         CThread& operator=(const CThread&) = delete;
 
     protected:// TODO: define your protected method here
+        void                            wait()                                          { m_waitCondition.wait_for( ::std::unique_lock<std::mutex>( m_waitMutex ), std::chrono::milliseconds( 2000 ) ); }
+        void                            notify()                                        { m_waitCondition.notify_one(); }
+
         virtual void mainLoop(void* arg)
         {
             UNUSED(arg);

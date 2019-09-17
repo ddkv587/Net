@@ -44,6 +44,12 @@ namespace NET
         // TODO
         // add initialize code
 
+        // init modules
+        for ( auto it = m_mapModules.begin(); it != m_mapModules.end(); ++it )
+        {
+            
+        }
+
         m_bInitialized = TRUE;
     }
 

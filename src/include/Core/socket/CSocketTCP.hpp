@@ -15,13 +15,13 @@ namespace NET
 
     public:// TODO: define your public method here
         virtual void                    init();
-        virtual void                     destroy();
+        virtual void                    destroy();
 
-        void                             ip( const STRING& ip )                { m_strIP = ip; }
-        const STRING&                     ip() const                             { return m_strIP; };
+        void                            ip( const STRING& ip )                  { m_strIP = ip; }
+        const STRING&                   ip() const                              { return m_strIP; };
 
-        void                             port( UINT iPort )                     { m_uiPort = iPort; }
-        UINT                              port() const                        { return m_uiPort; }
+        void                            port( UINT iPort )                      { m_uiPort = iPort; }
+        UINT                            port() const                            { return m_uiPort; }
 
     protected:// TODO: define your protected method here
         CSocketTCP( STRING ip = STRING_NULL, UINT port = 8000 );
@@ -35,8 +35,8 @@ namespace NET
     protected:// property
 
     private:// property
-        STRING                     m_strIP;
-        UINT                     m_uiPort;
+        STRING                      m_strIP;
+        UINT                        m_uiPort;
     };
 }
 
