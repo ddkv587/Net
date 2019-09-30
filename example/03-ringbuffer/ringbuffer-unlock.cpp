@@ -20,7 +20,7 @@ class RingBuffer
 
         bool                put( const T& );
         bool                put( const T* const );
-        T&                  get();
+        T                   get();
         
         void                reset();
         void                resize( ::std::size_t size );
@@ -38,8 +38,8 @@ class RingBuffer
         virtual void        waitForEmpty();
 
     private:
-        ::std::size_t               m_front;
-        ::std::size_t               m_rear;
+        ::std::atomic_size_t        m_front;
+        ::std::atomic_size_t        m_rear;
         ::std::size_t               m_size;
         ::std::size_t               m_mask;
 
@@ -65,31 +65,28 @@ RingBuffer<T>::~RingBuffer()
 template<class T>
 bool RingBuffer<T>::put( const T& node )
 {
-    ::std::size_t pos = m_front;
+    ::std::size_t pos = m_front.load();
 
-    while ( !__sync_bool_compare_and_swap( m_statusBuffer[pos], NS_WRITEABLE, NS_PENDING ) )
-    {
-        pos = ( ++pos ) & ( ~m_mask );
-
+    while ( !__sync_bool_compare_and_swap( &( m_statusBuffer[ pos & ( ~m_mask ) ] ), NS_WRITEABLE, NS_PENDING ) ) {
         int count = 0;
-        while ( ( ( pos + 1 ) & ( ~m_mask ) ) == m_rear )
-        {
-            if ( count == 10 )  return false;
 
-            waitForFull();
-            ++count;
-        }
     }
 
-    m_circularBuffer[pos]   = node;
-    m_statusBuffer[pos]     = NS_READABLE;
+    m_circularBuffer[ pos & ( ~m_mask ) ]   = node;
+    m_statusBuffer[ pos & ( ~m_mask ) ]     = NS_READABLE;
 
     // m_front = m_front < pos ? pos + 1 : m_front
-    size_t cur;
+    ::std::size_t cur;
+
     do {
-        cur = m_front;
-        if ( cur >= ( pos + 1 ) )   break;
-    } while ( !__sync_bool_compare_and_swap( m_front, cur, pos + 1 ) );
+        cur = m_front.load();
+        if ( cur >= ( pos + 1 ) ) {
+            printf( " === thread %ld === modify out!!!!!!!!!!\n", ::std::this_thread::get_id() );
+            break;
+        }
+    } while ( !m_front.compare_exchange_weak( cur, pos + 1 ) );
+
+    printf( "put pos: %ld, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
     return true;
 }
@@ -101,16 +98,14 @@ bool RingBuffer<T>::put( const T* const )
 }
 
 template<class T>
-T& RingBuffer<T>::get()
+T RingBuffer<T>::get()
 {
     ::std::size_t pos = m_rear;
 
-    while ( !__sync_bool_compare_and_swap( m_statusBuffer[pos], NS_READABLE, NS_PENDING ) )
+    while ( !__sync_bool_compare_and_swap( &( m_statusBuffer[pos] ), NS_READABLE, NS_PENDING ) )
     {
-        pos = ( ++pos ) & ( ~m_mask );
-
         int count = 0;
-        while ( pos == m_front )
+        while ( pos == m_front.load() )
         {
             if ( count == 10 )  return T();
 
@@ -123,11 +118,18 @@ T& RingBuffer<T>::get()
     m_statusBuffer[pos]     = NS_WRITEABLE;
 
     // m_rear = m_rear < pos ? pos + 1 : m_rear
-    size_t cur;
+    ::std::size_t cur;
+
     do {
-        cur = m_rear;
-        if ( cur >= ( pos + 1 ) )   break;
-    } while ( !__sync_bool_compare_and_swap( m_rear, cur, pos + 1 ) );
+        cur = m_rear.load();
+        if ( cur >= ( pos + 1 ) )   
+        {
+            printf( " === thread %ld === modify out!!!!!!!!!!\n", ::std::this_thread::get_id() );
+            break;
+        }
+    } while ( !m_rear.compare_exchange_weak( cur, pos + 1 ) );
+
+    printf( "get pos: %ld, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
     return ret;
 }
@@ -153,19 +155,19 @@ void RingBuffer<T>::resize( ::std::size_t size )
 template<class T>
 bool RingBuffer<T>::empty()
 {
-    return ( m_rear == m_front );
+    return ( m_rear.load() == m_front.load() );
 }
 
 template<class T>
 bool RingBuffer<T>::full()
 {
-    return ( ( ( m_front + 1 ) & ( ~m_mask ) ) == m_rear );
+    return ( ( m_front.load() + 1 ) == m_rear.load() );
 }
 
 template<class T>
 ::std::size_t RingBuffer<T>::size()  const
 {
-    return ( m_front >= m_rear ? m_front - m_rear : m_mask + m_front - m_rear );
+    return ( m_front.load() - m_rear.load() );
 }
 
 template<class T>
@@ -191,6 +193,8 @@ void RingBuffer<T>::optimisticBuffer( ::std::size_t size )
     {
         m_statusBuffer[index] = NS_WRITEABLE;
     }
+
+    printf( "optimisticBuffer: %ld\n", m_mask );
 }
 
 template<class T>
@@ -204,3 +208,55 @@ void RingBuffer<T>::waitForEmpty()
 {
     ::std::this_thread::yield();
 }
+
+int main(int argc, char const *argv[])
+{
+    const static int count = 100;
+    static RingBuffer<int> buffer( 100 );
+
+    ::std::thread* arrThread[count];
+
+    for ( int index = 0; index < count; ++index ) {
+        arrThread[index] = new ::std::thread(
+            [] ( int start ) {
+                while ( 1 )
+                {
+                    if ( buffer.full() )
+                    {
+                        printf("full\n");
+                    }
+                    else
+                    {
+                        printf( "=== thread %ld === put: %d, size: %ld\n", ::std::this_thread::get_id(), buffer.size() );
+                        buffer.put( start++ );
+                    }
+                    std::this_thread::sleep_for(::std::chrono::milliseconds(500));
+                }
+            }, index * 10);
+    }
+
+    // ::std::thread t3(
+    //     [] {
+    //         int index = 0;
+    //         while ( 1 )
+    //         {
+    //             if (buffer.empty())
+    //             {
+    //                 printf("empty\n");
+    //             }
+    //             else
+    //             {
+    //                 printf("get: %d\n", buffer.get());
+    //             }
+    //             std::this_thread::sleep_for(::std::chrono::milliseconds(2000));
+    //         }
+    //     });
+    for ( int index = 0; index < count; ++index ) {
+        arrThread[index]->join();
+    }
+    // t2.join();
+    //t3.join();
+
+    return 0;
+}
+
