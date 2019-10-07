@@ -121,7 +121,6 @@ int main(int argc, char const *argv[])
 
     ::std::thread t2(
         [] {
-            int index = 0;
             while ( 1 )
             {
                 if (buffer.empty())
