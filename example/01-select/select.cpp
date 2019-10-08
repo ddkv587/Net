@@ -77,7 +77,7 @@ int main( int argc, char const *argv[] )
 
                 fdClientArray[ fdClientSize++ ] = fdClient;
             } else {
-                for ( unsigned int index = 0; index < fdClientSize; ++index ) {
+                for ( int index = 0; index < fdClientSize; ++index ) {
                     if ( FD_ISSET( fdClientArray[index], &rfds ) ) {
                         size_t rcvSize;
                         if ( !( rcvSize = read( fdClientArray[index], recvBuffer, 1024 ) ) ) {

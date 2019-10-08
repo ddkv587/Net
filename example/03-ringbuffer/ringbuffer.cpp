@@ -19,7 +19,7 @@ public:
     {
         ::std::lock_guard<::std::mutex> lock(m_mutex);
 
-        if ((m_front + 1) % m_capacity == m_rear)
+        if ( (m_front + 1) % m_capacity == m_rear )
         {
             // full
             return false;
@@ -56,12 +56,13 @@ public:
         ::std::lock_guard<::std::mutex> lock(m_mutex);
 
         m_front = 0;
-        m_rear = 0;
+        m_rear  = 0;
     }
 
     bool empty()
     {
         ::std::lock_guard<::std::mutex> lock(m_mutex);
+
         return (m_rear == m_front);
     }
 
@@ -90,10 +91,10 @@ private:
     RingBuffer *operator=(RingBuffer &) = delete;
 
 private:
-    ::std::size_t m_front;
-    ::std::size_t m_rear;
-    ::std::size_t m_capacity;
-    ::std::mutex m_mutex;
+    ::std::size_t   m_front;
+    ::std::size_t   m_rear;
+    ::std::size_t   m_capacity;
+    ::std::mutex    m_mutex;
 
     ::std::unique_ptr<T[]> m_circularBuffer;
 };

@@ -9,3 +9,12 @@ all:
 		cd -; \
 	done
 
+clean:
+	@for dir in $(shell find . -type d ! -name .); do \
+		cd $$dir; \
+		if [ -e Makefile ]; then make clean; fi; \
+		cd -; \
+	done
+
+.PHONY: clean
+
