@@ -10,10 +10,11 @@ class RingBuffer
     public:
         enum ENodeStatus
         {
-            NS_INVALID      = 0x00,
-            NS_READABLE     = 0x01,
-            NS_WRITEABLE    = 0x02,
-            NS_PENDING      = 0x04,
+            NS_INVALID          = 0x00,
+            NS_READABLE         = 0x01,
+            NS_READPENDING      = 0x02,
+            NS_WRITEABLE        = 0x04,
+            NS_WRITEPENDING     = 0x08,
         };
 
     public:
@@ -74,32 +75,27 @@ bool RingBuffer<T>::put( const T& node )
     // local the avaliable place
     ::std::size_t pos = 0;
     {
-        while ( true )
-        {
-            pos = m_front.load();
-
+        do {
             while ( full() ) {
                 if ( !waitForFull() ) return false;
             }
-
-            if ( m_statusBuffer[ locate(pos) ] == NS_WRITEABLE ) {
-                m_statusBuffer[ locate(pos) ] = NS_PENDING;
-                break;
-            } else if ( m_statusBuffer[ locate(pos) ] == NS_PENDING ) {
-                m_front++;
+            pos = m_front.load();
+            
+            if ( m_statusBuffer[ locate(pos) ] == NS_READPENDING ) {
+                continue;   // wait for read complete
+            } else {
+                // update m_front
+                ::std::size_t cur = 0;
+                do {
+                    cur = m_front.load();
+                    if ( cur >= ( pos + 1 ) ) {
+                        fprintf( stderr, "=== thread %zd === modify out!!!!!!!!!!\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ) );
+                        break;
+                    }
+                } while ( !m_front.compare_exchange_weak( cur, pos + 1 ) );
             }
-        }
+        } while ( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_WRITEABLE, NS_WRITEPENDING ) );
     }
-
-    // update m_front
-    ::std::size_t cur;
-    do {
-        cur = m_front.load();
-        if ( cur >= ( pos + 1 ) ) {
-            fprintf( stderr, "=== thread %zd === modify out!!!!!!!!!!\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ) );
-            break;
-        }
-    } while ( !m_front.compare_exchange_weak( cur, pos + 1 ) );
 
     fprintf( stderr, "put pos: %ld, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
@@ -122,42 +118,36 @@ T RingBuffer<T>::get()
     // local the avaliable place
     ::std::size_t pos = 0;
     {
-        while ( true )
-        {
+        do {
+            while ( empty() ) {
+                if ( !waitForEmpty() ) return false;
+            }
             pos = m_rear.load();
 
-            if ( empty() ) {
-                if ( !waitForEmpty() ) return T();
+            if ( m_statusBuffer[ locate(pos) ] == NS_WRITEPENDING ) {
+                continue;   // wait for write complete
+            } else {
+                // update m_rear
+                ::std::size_t cur = 0;
+                do {
+                    cur = m_rear.load();
+                    if ( cur >= ( pos + 1 ) ) {
+                        fprintf( stderr, "=== thread %zd === modify out!!!!!!!!!!\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ) );
+                        break;
+                    }
+                    if ( cur == m_front.load() ) {
+                        fprintf( stderr, "=== rear catch front !!!!!!!!!!\n" );
+                        break;
+                    }
+                } while ( !m_rear.compare_exchange_weak( cur, pos + 1 ) );
             }
-
-            if ( m_statusBuffer[ locate(pos) ] == NS_READABLE ) {
-                m_statusBuffer[ locate(pos) ] = NS_PENDING;
-                break;
-            } else if ( m_statusBuffer[ locate(pos) ] == NS_PENDING ) {
-                m_rear++;
-            }
-        }
+        } while ( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_READABLE, NS_READPENDING ) );
     }
-
-    // update m_rear
-    ::std::size_t cur;
-    do {
-        cur = m_rear.load();
-        if ( cur >= ( pos + 1 ) ) {
-            fprintf( stderr, "=== thread %zd === modify out!!!!!!!!!!\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ) );
-            break;
-        }
-        if ( cur == m_front.load() ) {
-            fprintf( stderr, "=== rear catch front !!!!!!!!!!\n" );
-            break;
-        }
-    } while ( !m_rear.compare_exchange_weak( cur, pos + 1 ) );
-
     fprintf( stderr, "get pos: %zd, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
     // update value
-    auto ret = m_circularBuffer[ pos ];
-    m_statusBuffer[pos]     = NS_WRITEABLE;
+    auto ret = m_circularBuffer[ locate(pos) ];
+    m_statusBuffer[ locate(pos) ]     = NS_WRITEABLE;
 
     return ret;
 }
@@ -228,8 +218,8 @@ void RingBuffer<T>::optimisticBuffer( ::std::size_t size )
 template<class T>
 bool RingBuffer<T>::waitForFull()
 {
-    //::std::this_thread::yield();
-    std::this_thread::sleep_for(::std::chrono::milliseconds(500));
+    ::std::this_thread::yield();
+    //std::this_thread::sleep_for(::std::chrono::milliseconds(500));
 
     return true;
 }
@@ -237,8 +227,8 @@ bool RingBuffer<T>::waitForFull()
 template<class T>
 bool RingBuffer<T>::waitForEmpty()
 {
-    //::std::this_thread::yield();
-    std::this_thread::sleep_for(::std::chrono::milliseconds(500));
+    ::std::this_thread::yield();
+    //std::this_thread::sleep_for(::std::chrono::milliseconds(500));
 
     return true;
 }
@@ -254,7 +244,7 @@ int main(int argc, char const *argv[])
     static RingBuffer<int> buffer( 100 );
 
     ::std::vector<::std::thread> arrWriteThread;
-    for ( int index = 0; index < 10; ++index ) {
+    for ( int index = 0; index < 1; ++index ) {
         arrWriteThread.emplace_back( [] ( int start ) {
                 while ( 1 )
                 {
@@ -264,11 +254,11 @@ int main(int argc, char const *argv[])
                     }
                     std::this_thread::sleep_for(::std::chrono::milliseconds(500));
                 }
-            }, index * 10) ;
+            }, index * 100 ) ;
     }
 
     ::std::vector<::std::thread> arrReadThread;
-    for ( int index = 0; index < 100; ++index ) {
+    for ( int index = 0; index < 10; ++index ) {
         arrReadThread.emplace_back( [] {
                 while ( 1 )
                 {
