@@ -3,6 +3,7 @@
 #include <thread>
 #include <vector>
 #include <mutex>
+#include <tuple>
 
 template<class T>
 class RingBuffer
@@ -21,24 +22,24 @@ class RingBuffer
         RingBuffer( ::std::size_t size );
         virtual ~RingBuffer();
 
-        bool                put( const T& );
-        bool                put( const T* const );
-        T                   get();
+        bool                            put( const T& );
+        bool                            put( const T* const );
+        ::std::tuple<T, bool>           get();
         
-        void                reset();
-        void                resize( ::std::size_t size );
+        void                            reset();
+        void                            resize( ::std::size_t size );
 
-        inline bool         empty();
-        inline bool         full();
+        inline bool                     empty();
+        inline bool                     full();
 
-        ::std::size_t       size()  const;
-        ::std::size_t       capacity()  const;
+        ::std::size_t                   size()  const;
+        ::std::size_t                   capacity()  const;
 
     protected:
-        virtual void        optimisticBuffer( ::std::size_t size );
+        virtual void                    optimisticBuffer( ::std::size_t size );
 
-        virtual bool        waitForFull();
-        virtual bool        waitForEmpty();
+        virtual bool                    waitForFull();
+        virtual bool                    waitForEmpty();
 
     private:
         inline size_t       locate( ::std::size_t cursor );
@@ -113,14 +114,14 @@ bool RingBuffer<T>::put( const T* const )
 }
 
 template<class T>
-T RingBuffer<T>::get()
+::std::tuple<T, bool> RingBuffer<T>::get()
 {
     // local the avaliable place
     ::std::size_t pos = 0;
     {
         do {
             while ( empty() ) {
-                if ( !waitForEmpty() ) return false;
+                if ( !waitForEmpty() ) return ::std::make_tuple( T(), false );
             }
             pos = m_rear.load();
 
@@ -149,7 +150,7 @@ T RingBuffer<T>::get()
     auto ret = m_circularBuffer[ locate(pos) ];
     m_statusBuffer[ locate(pos) ]     = NS_WRITEABLE;
 
-    return ret;
+    return ::std::make_tuple( ret, true );
 }
 
 template<class T>
@@ -246,8 +247,7 @@ int main(int argc, char const *argv[])
     ::std::vector<::std::thread> arrWriteThread;
     for ( int index = 0; index < 1; ++index ) {
         arrWriteThread.emplace_back( [] ( int start ) {
-                while ( 1 )
-                {
+                while ( 1 ) {
                     if ( !buffer.full() ) {
                         buffer.put( start++ );
                         fprintf( stderr, "=== thread %zx === put: %d, size: %zd\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ), start, buffer.size() );
@@ -260,10 +260,10 @@ int main(int argc, char const *argv[])
     ::std::vector<::std::thread> arrReadThread;
     for ( int index = 0; index < 10; ++index ) {
         arrReadThread.emplace_back( [] {
-                while ( 1 )
-                {
+                while ( 1 ) {
                     if ( !buffer.empty() ) {
-                        fprintf( stderr, "get: %d\n", buffer.get() );
+                        auto value = buffer.get();
+                        fprintf( stderr, "get: %d\n", std::get<1>( value ) ? std::get<0>( value ) : 0 );
                     }
                     std::this_thread::sleep_for(::std::chrono::milliseconds(500));
                 }
