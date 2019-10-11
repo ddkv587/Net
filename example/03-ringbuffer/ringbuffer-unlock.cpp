@@ -23,7 +23,6 @@ class RingBuffer
         virtual ~RingBuffer();
 
         bool                            put( const T& );
-        bool                            put( const T* const );
         ::std::tuple<T, bool>           get();
         
         void                            reset();
@@ -42,14 +41,13 @@ class RingBuffer
         virtual bool                    waitForEmpty();
 
     private:
-        inline size_t       locate( ::std::size_t cursor );
+        inline size_t                   locate( ::std::size_t cursor );
 
     private:
-        ::std::atomic_size_t        m_front;
-        ::std::atomic_size_t        m_rear;
-        ::std::size_t               m_size;
-        ::std::size_t               m_mask;
-        ::std::mutex                m_mutex;
+        ::std::atomic_size_t                m_front;
+        ::std::atomic_size_t                m_rear;
+        ::std::size_t                       m_mask;
+        ::std::mutex                        m_mutex;
 
         ::std::unique_ptr<T[]>              m_circularBuffer;
         ::std::unique_ptr<ENodeStatus[]>    m_statusBuffer;
@@ -59,7 +57,6 @@ template<class T>
 RingBuffer<T>::RingBuffer( ::std::size_t size )
     : m_front( 0 )
     , m_rear( 0 )
-    , m_size( 0 )
 {
     optimisticBuffer( size );
 }
@@ -74,30 +71,23 @@ template<class T>
 bool RingBuffer<T>::put( const T& node )
 {
     // local the avaliable place
-    ::std::size_t pos = 0;
-    {
-        do {
-            while ( full() ) {
-                if ( !waitForFull() ) return false;
-            }
-            pos = m_front.load();
-            
-            if ( m_statusBuffer[ locate(pos) ] == NS_READPENDING ) {
-                continue;   // wait for read complete
-            } else {
-                // update m_front
-                ::std::size_t cur = 0;
-                do {
-                    cur = m_front.load();
-                    if ( cur >= ( pos + 1 ) ) {
-                        fprintf( stderr, "=== thread %zd === modify out!!!!!!!!!!\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ) );
-                        break;
-                    }
-                } while ( !m_front.compare_exchange_weak( cur, pos + 1 ) );
-            }
-        } while ( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_WRITEABLE, NS_WRITEPENDING ) );
+    while ( full() ) {
+        if ( !waitForFull() ) return false;
     }
 
+    ::std::size_t pos = m_front.fetch_add(1);
+    while( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_WRITEABLE, NS_WRITEPENDING ) ) {
+        if ( m_statusBuffer[ locate(pos) ] == NS_READPENDING ) {
+            // wait for read complete
+            continue;
+        }
+
+        while ( full() ) {
+            if ( !waitForFull() ) return false;
+        }
+
+        pos = m_front.fetch_add(1);
+    }
     fprintf( stderr, "put pos: %ld, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
     // update data
@@ -108,47 +98,31 @@ bool RingBuffer<T>::put( const T& node )
 }
 
 template<class T>
-bool RingBuffer<T>::put( const T* const )
-{
-    return false;
-}
-
-template<class T>
 ::std::tuple<T, bool> RingBuffer<T>::get()
-{
-    // local the avaliable place
-    ::std::size_t pos = 0;
-    {
-        do {
-            while ( empty() ) {
-                if ( !waitForEmpty() ) return ::std::make_tuple( T(), false );
-            }
-            pos = m_rear.load();
+{   
+    while ( empty() ) {
+        if ( !waitForEmpty() ) return ::std::make_tuple( T(), false );
+    }
 
-            if ( m_statusBuffer[ locate(pos) ] == NS_WRITEPENDING ) {
-                continue;   // wait for write complete
-            } else {
-                // update m_rear
-                ::std::size_t cur = 0;
-                do {
-                    cur = m_rear.load();
-                    if ( cur >= ( pos + 1 ) ) {
-                        fprintf( stderr, "=== thread %zd === modify out!!!!!!!!!!\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ) );
-                        break;
-                    }
-                    if ( cur == m_front.load() ) {
-                        fprintf( stderr, "=== rear catch front !!!!!!!!!!\n" );
-                        break;
-                    }
-                } while ( !m_rear.compare_exchange_weak( cur, pos + 1 ) );
-            }
-        } while ( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_READABLE, NS_READPENDING ) );
+    // local the avaliable place
+    ::std::size_t pos = m_rear.fetch_add(1);
+    while( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_READABLE, NS_READPENDING ) ) {
+        if ( m_statusBuffer[ locate(pos) ] == NS_WRITEPENDING ) {
+            // wait for write complete
+            continue;
+        }
+        
+        while ( empty() ) {
+            if ( !waitForEmpty() ) return ::std::make_tuple( T(), false );
+        }
+
+        pos = m_rear.fetch_add(1);
     }
     fprintf( stderr, "get pos: %zd, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
     // update value
     auto ret = m_circularBuffer[ locate(pos) ];
-    m_statusBuffer[ locate(pos) ]     = NS_WRITEABLE;
+    m_statusBuffer[ locate(pos) ]   = NS_WRITEABLE;
 
     return ::std::make_tuple( ret, true );
 }
@@ -180,7 +154,7 @@ bool RingBuffer<T>::empty()
 template<class T>
 bool RingBuffer<T>::full()
 {
-    return ( ( m_front.load() - m_rear.load() ) >= m_mask );
+    return ( ( m_front.load() >= m_rear.load() && ( m_front.load() - m_rear.load() ) >= m_mask ) );
 }
 
 template<class T>
@@ -258,12 +232,16 @@ int main(int argc, char const *argv[])
     }
 
     ::std::vector<::std::thread> arrReadThread;
-    for ( int index = 0; index < 10; ++index ) {
+    for ( int index = 0; index < 1; ++index ) {
         arrReadThread.emplace_back( [] {
                 while ( 1 ) {
                     if ( !buffer.empty() ) {
                         auto value = buffer.get();
-                        fprintf( stderr, "get: %d\n", std::get<1>( value ) ? std::get<0>( value ) : 0 );
+                        if ( std::get<1>( value ) ) {
+                            fprintf( stderr, "get: %d\n", std::get<0>( value ) );
+                        } else {
+                            fprintf( stderr, "get value failed\n");
+                        }
                     }
                     std::this_thread::sleep_for(::std::chrono::milliseconds(500));
                 }
