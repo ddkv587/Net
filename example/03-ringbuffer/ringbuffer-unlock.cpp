@@ -28,9 +28,6 @@ class RingBuffer
         void                            reset();
         void                            resize( ::std::size_t size );
 
-        inline bool                     empty();
-        inline bool                     full();
-
         ::std::size_t                   size()  const;
         ::std::size_t                   capacity()  const;
 
@@ -71,19 +68,11 @@ template<class T>
 bool RingBuffer<T>::put( const T& node )
 {
     // local the avaliable place
-    while ( full() ) {
-        if ( !waitForFull() ) return false;
-    }
-
     ::std::size_t pos = m_front.fetch_add(1);
     while( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_WRITEABLE, NS_WRITEPENDING ) ) {
-        if ( m_statusBuffer[ locate(pos) ] == NS_READPENDING ) {
+        if ( m_statusBuffer[ locate(pos) ] == NS_READPENDING || m_statusBuffer[ locate(pos) ] == NS_READABLE ) {
             // wait for read complete
             continue;
-        }
-
-        while ( full() ) {
-            if ( !waitForFull() ) return false;
         }
 
         pos = m_front.fetch_add(1);
@@ -100,20 +89,12 @@ bool RingBuffer<T>::put( const T& node )
 template<class T>
 ::std::tuple<T, bool> RingBuffer<T>::get()
 {   
-    while ( empty() ) {
-        if ( !waitForEmpty() ) return ::std::make_tuple( T(), false );
-    }
-
     // local the avaliable place
     ::std::size_t pos = m_rear.fetch_add(1);
     while( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_READABLE, NS_READPENDING ) ) {
-        if ( m_statusBuffer[ locate(pos) ] == NS_WRITEPENDING ) {
+        if ( m_statusBuffer[ locate(pos) ] == NS_WRITEPENDING || m_statusBuffer[ locate(pos) ] == NS_WRITEABLE ) {
             // wait for write complete
             continue;
-        }
-        
-        while ( empty() ) {
-            if ( !waitForEmpty() ) return ::std::make_tuple( T(), false );
         }
 
         pos = m_rear.fetch_add(1);
@@ -143,18 +124,6 @@ template<class T>
 void RingBuffer<T>::resize( ::std::size_t size )
 {
     optimisticBuffer( size );
-}
-
-template<class T>
-bool RingBuffer<T>::empty()
-{
-    return ( m_rear.load() >= m_front.load() );
-}
-
-template<class T>
-bool RingBuffer<T>::full()
-{
-    return ( ( m_front.load() >= m_rear.load() && ( m_front.load() - m_rear.load() ) >= m_mask ) );
 }
 
 template<class T>
@@ -219,13 +188,13 @@ int main(int argc, char const *argv[])
     static RingBuffer<int> buffer( 100 );
 
     ::std::vector<::std::thread> arrWriteThread;
-    for ( int index = 0; index < 1; ++index ) {
+    for ( int index = 0; index < 10; ++index ) {
         arrWriteThread.emplace_back( [] ( int start ) {
                 while ( 1 ) {
-                    if ( !buffer.full() ) {
+              
                         buffer.put( start++ );
                         fprintf( stderr, "=== thread %zx === put: %d, size: %zd\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ), start, buffer.size() );
-                    }
+                
                     std::this_thread::sleep_for(::std::chrono::milliseconds(500));
                 }
             }, index * 100 ) ;
@@ -235,14 +204,14 @@ int main(int argc, char const *argv[])
     for ( int index = 0; index < 1; ++index ) {
         arrReadThread.emplace_back( [] {
                 while ( 1 ) {
-                    if ( !buffer.empty() ) {
+           
                         auto value = buffer.get();
                         if ( std::get<1>( value ) ) {
                             fprintf( stderr, "get: %d\n", std::get<0>( value ) );
                         } else {
                             fprintf( stderr, "get value failed\n");
                         }
-                    }
+        
                     std::this_thread::sleep_for(::std::chrono::milliseconds(500));
                 }
             }) ;
