@@ -11,11 +11,10 @@ class RingBuffer
     public:
         enum ENodeStatus
         {
-            NS_INVALID          = 0x00,
-            NS_READABLE         = 0x01,
-            NS_READPENDING      = 0x02,
-            NS_WRITEABLE        = 0x04,
-            NS_WRITEPENDING     = 0x08,
+            NS_WRITEABLE        = 0x00,
+            NS_WRITEPENDING     = 0x01,
+            NS_READABLE         = 0x02,
+            NS_READPENDING      = 0x04,
         };
 
     public:
@@ -70,12 +69,22 @@ bool RingBuffer<T>::put( const T& node )
     // local the avaliable place
     ::std::size_t pos = m_front.fetch_add(1);
     while( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_WRITEABLE, NS_WRITEPENDING ) ) {
-        if ( m_statusBuffer[ locate(pos) ] == NS_READPENDING || m_statusBuffer[ locate(pos) ] == NS_READABLE ) {
-            // wait for read complete
-            continue;
+        fprintf( stderr, "put 1111111 pos: %ld, status: %d, front: %ld, rear: %ld\n", locate(pos), m_statusBuffer[ locate(pos) ], m_front.load(), m_rear.load() );
+        
+        switch ( m_statusBuffer[ locate(pos) ] ) {
+        case NS_WRITEABLE:
+            break;
+        case NS_WRITEPENDING:
+            pos = m_front.fetch_add(1);
+            break;
+        case NS_READABLE:
+            //pos = m_front.fetch_add(1);
+            waitForFull();
+            break;
+        case NS_READPENDING:
+            ::std::this_thread::yield();
+            break;
         }
-
-        pos = m_front.fetch_add(1);
     }
     fprintf( stderr, "put pos: %ld, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
@@ -92,12 +101,22 @@ template<class T>
     // local the avaliable place
     ::std::size_t pos = m_rear.fetch_add(1);
     while( !__sync_bool_compare_and_swap( &m_statusBuffer[ locate(pos) ], NS_READABLE, NS_READPENDING ) ) {
-        if ( m_statusBuffer[ locate(pos) ] == NS_WRITEPENDING || m_statusBuffer[ locate(pos) ] == NS_WRITEABLE ) {
-            // wait for write complete
-            continue;
-        }
+        fprintf( stderr, "put 1111111 pos: %ld, status: %d, front: %ld, rear: %ld\n", locate(pos), m_statusBuffer[ locate(pos) ], m_front.load(), m_rear.load() );
 
-        pos = m_rear.fetch_add(1);
+        switch ( m_statusBuffer[ locate(pos) ] ) {
+        case NS_WRITEABLE:
+            //pos = m_rear.fetch_add(1);
+            waitForEmpty();
+            break;
+        case NS_WRITEPENDING:
+            ::std::this_thread::yield();
+            break;
+        case NS_READABLE:
+            break;
+        case NS_READPENDING:
+            pos = m_rear.fetch_add(1);
+            break;
+        }
     }
     fprintf( stderr, "get pos: %zd, front: %ld, rear: %ld\n", pos, m_front.load(), m_rear.load() );
 
@@ -162,8 +181,8 @@ void RingBuffer<T>::optimisticBuffer( ::std::size_t size )
 template<class T>
 bool RingBuffer<T>::waitForFull()
 {
-    ::std::this_thread::yield();
-    //std::this_thread::sleep_for(::std::chrono::milliseconds(500));
+    //::std::this_thread::yield();
+    std::this_thread::sleep_for(::std::chrono::milliseconds(100));
 
     return true;
 }
@@ -171,8 +190,8 @@ bool RingBuffer<T>::waitForFull()
 template<class T>
 bool RingBuffer<T>::waitForEmpty()
 {
-    ::std::this_thread::yield();
-    //std::this_thread::sleep_for(::std::chrono::milliseconds(500));
+    //::std::this_thread::yield();
+    std::this_thread::sleep_for(::std::chrono::milliseconds(100));
 
     return true;
 }
@@ -191,9 +210,8 @@ int main(int argc, char const *argv[])
     for ( int index = 0; index < 10; ++index ) {
         arrWriteThread.emplace_back( [] ( int start ) {
                 while ( 1 ) {
-              
-                        buffer.put( start++ );
-                        fprintf( stderr, "=== thread %zx === put: %d, size: %zd\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ), start, buffer.size() );
+                    buffer.put( start++ );
+                    fprintf( stderr, "=== thread %zx === put: %d, size: %zd\n", ::std::hash<std::thread::id>{}( ::std::this_thread::get_id() ), start, buffer.size() );
                 
                     std::this_thread::sleep_for(::std::chrono::milliseconds(500));
                 }
@@ -201,16 +219,15 @@ int main(int argc, char const *argv[])
     }
 
     ::std::vector<::std::thread> arrReadThread;
-    for ( int index = 0; index < 1; ++index ) {
+    for ( int index = 0; index < 10; ++index ) {
         arrReadThread.emplace_back( [] {
                 while ( 1 ) {
-           
-                        auto value = buffer.get();
-                        if ( std::get<1>( value ) ) {
-                            fprintf( stderr, "get: %d\n", std::get<0>( value ) );
-                        } else {
-                            fprintf( stderr, "get value failed\n");
-                        }
+                    auto value = buffer.get();
+                    if ( std::get<1>( value ) ) {
+                        fprintf( stderr, "get: %d\n", std::get<0>( value ) );
+                    } else {
+                        fprintf( stderr, "get value failed\n");
+                    }
         
                     std::this_thread::sleep_for(::std::chrono::milliseconds(500));
                 }
