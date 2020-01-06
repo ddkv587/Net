@@ -1,9 +1,9 @@
-sudo: true
-
 language: cpp
 compiler: gcc
 dist: trusty
 
 script:
+  - chmod a+x auto-build.sh
+  - chmod a+x auto-install.sh
   - ./auto-build.sh
   - ./auto-install.sh
